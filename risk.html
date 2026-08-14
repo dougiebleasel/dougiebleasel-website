@@ -236,6 +236,7 @@
       align-items: center;
       cursor: pointer;
       transition: .2s ease;
+      position: relative;
     }
 
     .risk-card:hover {
@@ -243,6 +244,42 @@
       border-color: var(--accent);
       background: #292B2C;
     }
+    .ai-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  padding: 5px 8px;
+
+  border-radius: 999px;
+
+  background: rgba(44,130,89,0.15);
+  border: 1px solid rgba(44,130,89,0.55);
+
+  color: #7ED9A9;
+
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  transition: 0.2s ease;
+}
+
+.ai-badge::before {
+  content: "✦";
+  font-size: 10px;
+}
+
+.risk-card:hover .ai-badge {
+  background: var(--accent);
+  color: white;
+  box-shadow: 0 0 20px rgba(44,130,89,0.30);
+}
 
     .risk-icon {
       width: 46px;
@@ -597,13 +634,28 @@
         </div>
 
         <div class="risk-card featured-risk" onclick="openDangerousGoods()">
-          <div class="risk-icon">DG</div>
 
-          <div class="risk-info">
-            <strong>Hazardous Substances & Dangerous Goods</strong>
-            <span>Includes AI risk tool →</span>
-          </div>
-        </div>
+  <div class="ai-badge">
+    AI Inside
+  </div>
+
+  <div class="risk-icon">
+    DG
+  </div>
+
+  <div class="risk-info">
+
+    <strong>
+      Hazardous Substances & Dangerous Goods
+    </strong>
+
+    <span>
+      Guided risk assessment →
+    </span>
+
+  </div>
+
+</div>
 
         <div class="risk-card" onclick="openRisk('Manual Handling')">
           <div class="risk-icon">MH</div>
