@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Integrated Management System</title>
+
+  <style>
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A9B2AE;
+      --border: rgba(244,246,245,0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* HEADER */
+
+    header {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 19px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .back {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .ask {
+      background: var(--accent);
+      padding: 11px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      color: white;
+    }
+
+    .ask:hover {
+      background: #359768;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 80px 6% 60px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 85% 20%, rgba(44,130,89,.18), transparent 27%),
+        linear-gradient(135deg, #0D0D0D, #10251D);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 45px 45px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(48px, 7vw, 92px);
+      line-height: .95;
+      letter-spacing: -4px;
+      max-width: 950px;
+    }
+
+    .hero p {
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 760px;
+      line-height: 1.6;
+    }
+
+    /* SEARCH */
+
+    .search-wrap {
+      padding: 0 6%;
+      margin-top: -25px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .search {
+      max-width: 850px;
+      background: var(--grey);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 18px 50px rgba(0,0,0,.25);
+    }
+
+    .search span {
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    .search input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: var(--white);
+      font-size: 15px;
+    }
+
+    .search input::placeholder {
+      color: #808984;
+    }
+
+    /* CONTENT */
+
+    main {
+      padding: 80px 6% 100px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 48px);
+      letter-spacing: -2px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* GRID */
+
+    .ims-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .ims-card {
+      min-height: 270px;
+      padding: 28px;
+      background: var(--grey);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: .25s ease;
+    }
+
+    .ims-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(44,130,89,.7);
+      background: #292B2C;
+    }
+
+    .ims-card::after {
+      content: "";
+      position: absolute;
+      height: 4px;
+      width: 0;
+      left: 0;
+      bottom: 0;
+      background: var(--accent);
+      transition: .25s ease;
+    }
+
+    .ims-card:hover::after {
+      width: 100%;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--dark-green);
+      color: var(--white);
+      font-weight: 900;
+      font-size: 17px;
+      margin-bottom: 45px;
+    }
+
+    .ims-card h3 {
+      font-size: 21px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .ims-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+      max-width: 260px;
+    }
+
+    .open {
+      display: inline-block;
+      margin-top: 22px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* AI PANEL */
+
+    .ai-panel {
+      margin-top: 70px;
+      background:
+        linear-gradient(135deg, var(--dark-green), var(--phthalo));
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .ai-panel h2 {
+      font-size: 35px;
+      margin-bottom: 14px;
+      letter-spacing: -1px;
+    }
+
+    .ai-panel p {
+      color: #CFD7D3;
+      line-height: 1.6;
+      max-width: 650px;
+    }
+
+    .ai-example {
+      background: rgba(13,13,13,.55);
+      padding: 22px;
+      border-radius: 9px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+
+    .ai-example small {
+      color: var(--accent);
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .question {
+      margin-top: 14px;
+      font-size: 15px;
+      color: var(--white);
+    }
+
+    .ai-button {
+      margin-top: 20px;
+      display: inline-block;
+      background: var(--accent);
+      padding: 12px 17px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 6%;
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media(max-width: 1050px) {
+      .ims-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .ai-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width: 650px) {
+      .ims-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .brand-text span {
+        display: none;
+      }
+
+      .back {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="brand">
+    <div class="logo">T</div>
+
+    <div class="brand-text">
+      <strong>Tiwili</strong>
+      <span>Integrated Management System</span>
+    </div>
+  </div>
+
+  <div class="header-actions">
+    <a class="back" href="index.html">← Douglas Bleasel</a>
+
+    <button class="ask" onclick="askIMS()">
+      ✦ Ask the IMS
+    </button>
+  </div>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="eyebrow">
+      Tiwili Digital IMS
+    </div>
+
+    <h1>
+      One system.<br>
+      Eight disciplines.<br>
+      Better decisions.
+    </h1>
+
+    <p>
+      A digital Integrated Management System bringing governance,
+      risk, safety, quality, environment and continuous improvement
+      into one connected system.
+    </p>
+
+  </div>
+
+</section>
+
+
+<div class="search-wrap">
+
+  <div class="search">
+    <span>⌕</span>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search the IMS..."
+      onkeyup="filterCards()"
+    >
+  </div>
+
+</div>
+
+
+<main>
+
+  <div class="section-heading">
+
+    <div>
+      <div class="eyebrow">Management System</div>
+      <h2>Explore the IMS</h2>
+    </div>
+
+    <p>8 management areas</p>
+
+  </div>
+
+
+  <div class="ims-grid" id="imsGrid">
+
+    <div class="ims-card" onclick="openArea('Governance Management')">
+      <div class="card-icon">G</div>
+
+      <h3>Governance Management</h3>
+
+      <p>
+        Leadership, accountability, organisational direction,
+        responsibilities and decision making.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="openArea('Document and Records Management')">
+      <div class="card-icon">D</div>
+
+      <h3>Document & Records Management</h3>
+
+      <p>
+        Controlled documents, records, approvals, revision history,
+        retention and access to current information.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="window.location.href='risk.html'">
+      <div class="card-icon">R</div>
+
+      <h3>Risk Management</h3>
+
+      <p>
+        Enterprise, operational, health and safety, environmental
+        and specialist risk management.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="openArea('Competency Management')">
+      <div class="card-icon">C</div>
+
+      <h3>Competency Management</h3>
+
+      <p>
+        Training, capability, competency requirements and
+        verification that people can perform their work safely.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="openArea('Consultation and Communication Management')">
+      <div class="card-icon">C</div>
+
+      <h3>Consultation & Communication</h3>
+
+      <p>
+        Engagement, consultation, communication and mechanisms
+        that keep people informed and involved.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="openArea('Incident Management')">
+      <div class="card-icon">I</div>
+
+      <h3>Incident, Near Miss & Hazard Management</h3>
+
+      <p>
+        Event reporting, classification, investigation,
+        corrective actions and organisational learning.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="openArea('Audit and Assurance Management')">
+      <div class="card-icon">A</div>
+
+      <h3>Audit, Inspection, Monitoring & Testing</h3>
+
+      <p>
+        Assurance activities that verify controls, requirements
+        and processes are operating as intended.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+
+    <div class="ims-card" onclick="openArea('Continuous Improvement Management')">
+      <div class="card-icon">P</div>
+
+      <h3>Performance & Continuous Improvement</h3>
+
+      <p>
+        Performance measurement, corrective actions, improvement
+        plans, management review and continual improvement.
+      </p>
+
+      <span class="open">Explore →</span>
+    </div>
+
+  </div>
+
+
+  <div class="ai-panel">
+
+    <div>
+      <div class="eyebrow">Coming Next</div>
+
+      <h2>Ask Tiwili</h2>
+
+      <p>
+        The IMS Assistant will search controlled management system
+        documents and provide answers with links back to the source.
+        If the system cannot find an answer, it will say so rather
+        than inventing one.
+      </p>
+    </div>
+
+    <div class="ai-example">
+
+      <small>Example question</small>
+
+      <div class="question">
+        “What do I need to do before starting work near traffic?”
+      </div>
+
+      <div class="ai-button" onclick="askIMS()">
+        ✦ Ask the IMS
+      </div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<footer>
+
+  <div>
+    Tiwili Digital Integrated Management System
+  </div>
+
+  <div>
+    Designed by Douglas Bleasel
+  </div>
+
+</footer>
+
+
+<script>
+
+  function filterCards() {
+
+    const input =
+      document.getElementById("searchInput")
+      .value
+      .toLowerCase();
+
+    const cards =
+      document.querySelectorAll(".ims-card");
+
+    cards.forEach(card => {
+
+      const text =
+        card.innerText.toLowerCase();
+
+      card.style.display =
+        text.includes(input)
+        ? "block"
+        : "none";
+
+    });
+
+  }
+
+
+  function openArea(area) {
+
+    alert(
+      area +
+      "\n\nThis section will be built next."
+    );
+
+  }
+
+
+  function askIMS() {
+
+    alert(
+      "Tiwili IMS Assistant\n\n" +
+      "The AI assistant will be connected once the document library is built."
+    );
+
+  }
+
+</script>
+
+</body>
+</html>
