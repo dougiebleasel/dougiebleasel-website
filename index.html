@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Douglas Bleasel | Governance, Risk & Digital Transformation</title>
 
   <style>
+
     :root {
       --phthalo-green: #0B3D2E;
       --dark-green: #123524;
@@ -39,18 +42,27 @@
       color: inherit;
     }
 
+
+    /* =========================
+       NAVIGATION
+       ========================= */
+
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       padding: 22px 7%;
+
       background: rgba(13, 13, 13, 0.88);
       backdrop-filter: blur(14px);
+
       border-bottom: 1px solid var(--border);
     }
 
@@ -80,51 +92,105 @@
       color: var(--white);
     }
 
+
+    /* =========================
+       HERO
+       ========================= */
+
     .hero {
       min-height: 100vh;
+
       display: flex;
       align-items: center;
+
       position: relative;
       overflow: hidden;
+
       padding: 140px 8% 90px;
+
       background:
-        radial-gradient(circle at 80% 30%, rgba(44, 130, 89, 0.18), transparent 30%),
-        radial-gradient(circle at 70% 80%, rgba(11, 61, 46, 0.22), transparent 35%),
+        radial-gradient(
+          circle at 82% 30%,
+          rgba(44, 130, 89, 0.20),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 70% 80%,
+          rgba(11, 61, 46, 0.24),
+          transparent 35%
+        ),
         var(--black);
     }
 
     .hero::after {
       content: "";
+
       position: absolute;
       inset: 0;
+
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(
+          rgba(255,255,255,0.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.025) 1px,
+          transparent 1px
+        );
+
       background-size: 50px 50px;
-      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent 90%);
+
+      mask-image:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,0.7),
+          transparent 90%
+        );
+
       pointer-events: none;
+    }
+
+    .hero-inner {
+      width: 100%;
+
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(300px, 0.75fr);
+
+      gap: 70px;
+      align-items: center;
+
+      position: relative;
+      z-index: 2;
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 1150px;
+      max-width: 1000px;
     }
 
     .eyebrow {
       color: var(--accent-green);
+
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 3px;
       font-weight: 700;
+
       margin-bottom: 22px;
     }
 
     h1 {
-      font-size: clamp(60px, 9vw, 125px);
+      font-size: clamp(58px, 7.5vw, 110px);
+
       line-height: 0.9;
       letter-spacing: -6px;
-      max-width: 1100px;
+
+      max-width: 1000px;
+
       text-transform: uppercase;
     }
 
@@ -134,7 +200,9 @@
 
     .hero-copy {
       margin-top: 34px;
-      max-width: 760px;
+
+      max-width: 700px;
+
       font-size: 21px;
       color: var(--muted);
     }
@@ -142,16 +210,107 @@
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
+
       gap: 14px;
+
       margin-top: 42px;
     }
 
+
+    /* =========================
+       HERO PHOTO
+       ========================= */
+
+    .hero-photo-wrap {
+      position: relative;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-width: 0;
+    }
+
+    .hero-photo-wrap::before {
+      content: "";
+
+      position: absolute;
+
+      width: 115%;
+      height: 90%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(44,130,89,0.28),
+          transparent 67%
+        );
+
+      z-index: -1;
+    }
+
+    .hero-photo {
+      display: block;
+
+      width: 100%;
+      max-width: 460px;
+
+      height: 610px;
+
+      object-fit: cover;
+      object-position: center top;
+
+      border-radius: 14px;
+
+      filter:
+        contrast(1.03)
+        saturate(0.92);
+
+      box-shadow:
+        0 35px 90px rgba(0,0,0,0.48);
+
+      border:
+        1px solid rgba(244,246,245,0.08);
+    }
+
+    .hero-photo-wrap::after {
+      content: "";
+
+      position: absolute;
+
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      height: 35%;
+
+      background:
+        linear-gradient(
+          to top,
+          rgba(13,13,13,0.90),
+          transparent
+        );
+
+      border-radius: 0 0 14px 14px;
+
+      pointer-events: none;
+    }
+
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
     .button {
       display: inline-block;
+
       padding: 15px 24px;
+
       border-radius: 4px;
+
       text-decoration: none;
       font-weight: 700;
+
       transition: 0.2s ease;
     }
 
@@ -175,6 +334,11 @@
       color: var(--accent-green);
     }
 
+
+    /* =========================
+       SECTIONS
+       ========================= */
+
     section {
       padding: 110px 8%;
     }
@@ -189,51 +353,83 @@
 
     .section-label {
       color: var(--accent-green);
+
       font-size: 13px;
       font-weight: 700;
+
       text-transform: uppercase;
       letter-spacing: 3px;
+
       margin-bottom: 14px;
     }
 
     h2 {
       font-size: clamp(42px, 6vw, 74px);
+
       line-height: 1;
       letter-spacing: -3px;
+
       margin-bottom: 50px;
+
       max-width: 900px;
     }
 
+
+    /* =========================
+       CAPABILITIES
+       ========================= */
+
     .capability-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 18px;
     }
 
     .card {
-      background: rgba(13, 13, 13, 0.45);
-      border: 1px solid var(--border);
+      background:
+        rgba(13, 13, 13, 0.45);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 8px;
+
       padding: 34px;
+
       min-height: 300px;
+
       position: relative;
       overflow: hidden;
+
       transition: 0.25s ease;
     }
 
     .card::before {
       content: "";
+
       position: absolute;
+
       inset: auto auto 0 0;
+
       width: 0;
       height: 3px;
-      background: var(--accent-green);
-      transition: 0.25s ease;
+
+      background:
+        var(--accent-green);
+
+      transition:
+        0.25s ease;
     }
 
     .card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(44, 130, 89, 0.6);
+      transform:
+        translateY(-7px);
+
+      border-color:
+        rgba(44,130,89,0.6);
     }
 
     .card:hover::before {
@@ -241,8 +437,11 @@
     }
 
     .card-number {
-      color: var(--accent-green);
+      color:
+        var(--accent-green);
+
       font-weight: 700;
+
       margin-bottom: 58px;
     }
 
@@ -256,39 +455,66 @@
       font-size: 15px;
     }
 
+
+    /* =========================
+       PLAYGROUND
+       ========================= */
+
     .playground-intro {
       max-width: 760px;
+
       color: var(--muted);
+
       font-size: 18px;
+
       margin-top: -25px;
       margin-bottom: 42px;
     }
 
     .tool-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 18px;
     }
 
     .tool {
-      background: var(--black);
-      border: 1px solid var(--border);
+      background:
+        var(--black);
+
+      border:
+        1px solid var(--border);
+
       border-radius: 8px;
+
       padding: 34px;
+
       min-height: 260px;
+
       cursor: pointer;
-      transition: 0.25s ease;
+
+      transition:
+        0.25s ease;
+
       position: relative;
     }
 
     .tool:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent-green);
+      transform:
+        translateY(-6px);
+
+      border-color:
+        var(--accent-green);
     }
 
     .tool-icon {
       font-size: 30px;
-      color: var(--accent-green);
+
+      color:
+        var(--accent-green);
+
       margin-bottom: 40px;
     }
 
@@ -298,80 +524,186 @@
     }
 
     .tool p {
-      color: var(--muted);
+      color:
+        var(--muted);
+
       font-size: 15px;
     }
 
     .tool-link {
       display: inline-block;
+
       margin-top: 24px;
-      color: var(--accent-green);
+
+      color:
+        var(--accent-green);
+
       font-weight: 700;
+
       font-size: 13px;
+
       text-transform: uppercase;
       letter-spacing: 1px;
     }
 
+
+    /* =========================
+       ABOUT
+       ========================= */
+
     .about {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+
+      grid-template-columns:
+        1.2fr 1fr;
+
       gap: 80px;
+
       align-items: start;
     }
 
     .about p {
       color: #D5DAD7;
+
       font-size: 19px;
+
       max-width: 780px;
     }
 
     .about-list {
-      border-top: 1px solid rgba(244,246,245,0.16);
+      border-top:
+        1px solid rgba(244,246,245,0.16);
     }
 
     .about-row {
       display: flex;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       gap: 30px;
+
       padding: 18px 0;
-      border-bottom: 1px solid rgba(244,246,245,0.16);
+
+      border-bottom:
+        1px solid rgba(244,246,245,0.16);
     }
 
     .about-row span:first-child {
       color: var(--muted);
     }
 
+
+    /* =========================
+       FOOTER
+       ========================= */
+
     footer {
       padding: 44px 8%;
+
       display: flex;
-      justify-content: space-between;
+
+      justify-content:
+        space-between;
+
       gap: 20px;
+
       color: var(--muted);
+
       font-size: 13px;
-      border-top: 1px solid var(--border);
+
+      border-top:
+        1px solid var(--border);
     }
 
-    @media (max-width: 1000px) {
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 1100px) {
+
+      .hero-inner {
+        grid-template-columns:
+          1.15fr 0.85fr;
+
+        gap: 40px;
+      }
+
+      h1 {
+        font-size:
+          clamp(55px, 7vw, 90px);
+
+        letter-spacing: -4px;
+      }
+
+      .hero-photo {
+        height: 540px;
+      }
+
+    }
+
+
+    @media (max-width: 900px) {
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-content {
+        max-width: 850px;
+      }
+
+      .hero-photo-wrap {
+        margin-top: 30px;
+      }
+
+      .hero-photo {
+        max-width: 420px;
+        height: auto;
+      }
+
       .capability-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
       }
 
       .tool-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns:
+          1fr 1fr;
       }
 
       .about {
         grid-template-columns: 1fr;
       }
 
-      h1 {
-        letter-spacing: -4px;
-      }
     }
 
+
     @media (max-width: 650px) {
+
       .nav-links {
         display: none;
+      }
+
+      .hero {
+        padding:
+          120px 7% 70px;
+      }
+
+      h1 {
+        font-size:
+          clamp(48px, 16vw, 70px);
+
+        letter-spacing: -3px;
+      }
+
+      .hero-copy {
+        font-size: 18px;
+      }
+
+      .hero-photo {
+        max-width: 100%;
       }
 
       .capability-grid,
@@ -379,108 +711,225 @@
         grid-template-columns: 1fr;
       }
 
-      h1 {
-        letter-spacing: -2px;
-      }
-
       footer {
         flex-direction: column;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
+  <!-- NAVIGATION -->
+
   <nav>
-    <div class="brand">DB<span>.</span></div>
+
+    <div class="brand">
+      DB<span>.</span>
+    </div>
 
     <div class="nav-links">
-      <a href="#work">What I Do</a>
-      <a href="#playground">Playground</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+
+      <a href="#work">
+        What I Do
+      </a>
+
+      <a href="#playground">
+        Playground
+      </a>
+
+      <a href="#about">
+        About
+      </a>
+
+      <a href="#contact">
+        Contact
+      </a>
+
     </div>
+
   </nav>
 
+
+  <!-- HERO -->
+
   <header class="hero">
-    <div class="hero-content">
-      <div class="eyebrow">Douglas Bleasel</div>
 
-      <h1>
-        I build systems<br>
-        that make work<br>
-        <span>work better.</span>
-      </h1>
+    <div class="hero-inner">
 
-      <p class="hero-copy">
-        Governance, risk, safety and digital transformation — combining
-        practical operational experience with technology, automation and data.
-      </p>
 
-      <div class="hero-actions">
-<a href="ims.html" class="button button-primary">
-  See My Demo IMS and tools (tiwili) →
-</a>
+      <!-- HERO TEXT -->
 
-        <a href="#work" class="button button-secondary">
-          What I do
-        </a>
+      <div class="hero-content">
+
+        <div class="eyebrow">
+          Douglas Bleasel
+        </div>
+
+        <h1>
+          I build systems<br>
+          that make work<br>
+          <span>work better.</span>
+        </h1>
+
+        <p class="hero-copy">
+          Governance, risk, safety and digital transformation —
+          combining practical operational experience with technology,
+          automation and data.
+        </p>
+
+        <div class="hero-actions">
+
+          <a
+            href="ims.html"
+            class="button button-primary"
+          >
+            See My Demo IMS & Tools — Tiwili →
+          </a>
+
+          <a
+            href="#work"
+            class="button button-secondary"
+          >
+            What I do
+          </a>
+
+        </div>
+
       </div>
+
+
+      <!-- HERO PHOTO -->
+
+      <div class="hero-photo-wrap">
+
+        <img
+          src="Dougie%20Professional.png"
+          alt="Douglas Bleasel"
+          class="hero-photo"
+        >
+
+      </div>
+
+
     </div>
+
   </header>
 
-  <section class="section-dark" id="work">
-    <div class="section-label">What I Do</div>
+
+  <!-- WHAT I DO -->
+
+  <section
+    class="section-dark"
+    id="work"
+  >
+
+    <div class="section-label">
+      What I Do
+    </div>
 
     <h2>
       Practical systems.<br>
       Better decisions.
     </h2>
 
+
     <div class="capability-grid">
 
-      <div class="card">
-        <div class="card-number">01</div>
-        <h3>Governance & Risk</h3>
-        <p>
-          Enterprise risk, compliance, assurance, audit and governance
-          frameworks designed around how organisations actually operate.
-        </p>
-      </div>
 
       <div class="card">
-        <div class="card-number">02</div>
-        <h3>Safety, Quality & Environment</h3>
+
+        <div class="card-number">
+          01
+        </div>
+
+        <h3>
+          Governance & Risk
+        </h3>
+
         <p>
-          Practical management systems, incident management, investigations
-          and ISO-based assurance.
+          Enterprise risk, compliance, assurance,
+          audit and governance frameworks designed
+          around how organisations actually operate.
         </p>
+
       </div>
 
-      <div class="card">
-        <div class="card-number">03</div>
-        <h3>Digital Transformation</h3>
-        <p>
-          Turning manual processes into intelligent workflows using automation,
-          low-code platforms and AI.
-        </p>
-      </div>
 
       <div class="card">
-        <div class="card-number">04</div>
-        <h3>Data & Insights</h3>
+
+        <div class="card-number">
+          02
+        </div>
+
+        <h3>
+          Safety, Quality & Environment
+        </h3>
+
         <p>
-          Dashboards and reporting that turn operational data into information
-          people can actually make decisions with.
+          Practical management systems, incident
+          management, investigations and ISO-based
+          assurance.
         </p>
+
       </div>
+
+
+      <div class="card">
+
+        <div class="card-number">
+          03
+        </div>
+
+        <h3>
+          Digital Transformation
+        </h3>
+
+        <p>
+          Turning manual processes into intelligent
+          workflows using automation, low-code
+          platforms and AI.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="card-number">
+          04
+        </div>
+
+        <h3>
+          Data & Insights
+        </h3>
+
+        <p>
+          Dashboards and reporting that turn
+          operational data into information people
+          can actually make decisions with.
+        </p>
+
+      </div>
+
 
     </div>
+
   </section>
 
+
+  <!-- INTERACTIVE PLAYGROUND -->
+
   <section id="playground">
-    <div class="section-label">Interactive Playground</div>
+
+    <div class="section-label">
+      Interactive Playground
+    </div>
 
     <h2>
       Don't just read about it.<br>
@@ -488,47 +937,111 @@
     </h2>
 
     <p class="playground-intro">
-      Interactive tools and small working examples showing how I approach
-      governance, risk, automation and operational problem solving.
+      Interactive tools and small working examples
+      showing how I approach governance, risk,
+      automation and operational problem solving.
     </p>
+
 
     <div class="tool-grid">
 
-      <div class="tool" onclick="showMessage('Risk Assessment')">
-        <div class="tool-icon">◈</div>
-        <h3>Risk Assessment</h3>
+
+      <div
+        class="tool"
+        onclick="showMessage('Risk Assessment')"
+      >
+
+        <div class="tool-icon">
+          ◈
+        </div>
+
+        <h3>
+          Risk Assessment
+        </h3>
+
         <p>
-          Explore a dynamic risk matrix by selecting likelihood and impact.
+          Explore a dynamic risk matrix by selecting
+          likelihood and impact.
         </p>
-        <span class="tool-link">Try it →</span>
+
+        <span class="tool-link">
+          Try it →
+        </span>
+
       </div>
 
-      <div class="tool" onclick="showMessage('Event Classifier')">
-        <div class="tool-icon">△</div>
-        <h3>Event Classifier</h3>
+
+      <div
+        class="tool"
+        onclick="showMessage('Event Classifier')"
+      >
+
+        <div class="tool-icon">
+          △
+        </div>
+
+        <h3>
+          Event Classifier
+        </h3>
+
         <p>
-          Work through a scenario and determine whether it is a hazard,
-          near miss or incident.
+          Work through a scenario and determine
+          whether it is a hazard, near miss
+          or incident.
         </p>
-        <span class="tool-link">Try it →</span>
+
+        <span class="tool-link">
+          Try it →
+        </span>
+
       </div>
 
-      <div class="tool" onclick="showMessage('Workflow Simulator')">
-        <div class="tool-icon">⌁</div>
-        <h3>Workflow Simulator</h3>
+
+      <div
+        class="tool"
+        onclick="showMessage('Workflow Simulator')"
+      >
+
+        <div class="tool-icon">
+          ⌁
+        </div>
+
+        <h3>
+          Workflow Simulator
+        </h3>
+
         <p>
-          See how a manual process can be transformed into an automated workflow.
+          See how a manual process can be transformed
+          into an automated workflow.
         </p>
-        <span class="tool-link">Try it →</span>
+
+        <span class="tool-link">
+          Try it →
+        </span>
+
       </div>
+
 
     </div>
+
   </section>
 
-  <section class="section-green" id="about">
+
+  <!-- ABOUT -->
+
+  <section
+    class="section-green"
+    id="about"
+  >
+
     <div class="about">
+
+
       <div>
-        <div class="section-label">About</div>
+
+        <div class="section-label">
+          About
+        </div>
 
         <h2>
           I like fixing the stuff
@@ -536,13 +1049,18 @@
         </h2>
 
         <p>
-          My work sits across governance, risk, safety, quality, environment
-          and digital transformation. I focus on making complex systems simpler,
-          more useful and easier for people to actually use.
+          My work sits across governance, risk,
+          safety, quality, environment and digital
+          transformation. I focus on making complex
+          systems simpler, more useful and easier
+          for people to actually use.
         </p>
+
       </div>
 
+
       <div class="about-list">
+
         <div class="about-row">
           <span>Focus</span>
           <span>Governance & Risk</span>
@@ -562,20 +1080,44 @@
           <span>Based</span>
           <span>Melbourne, Australia</span>
         </div>
+
       </div>
+
+
     </div>
+
   </section>
 
+
+  <!-- FOOTER -->
+
   <footer id="contact">
-    <div>© 2026 Douglas Bleasel</div>
-    <div>dougiebleasel.com</div>
+
+    <div>
+      © 2026 Douglas Bleasel
+    </div>
+
+    <div>
+      dougiebleasel.com
+    </div>
+
   </footer>
 
+
   <script>
+
     function showMessage(tool) {
-      alert(tool + "\n\nWe're building this interactive tool next.");
+
+      alert(
+        tool +
+        "\n\nWe're building this interactive tool next."
+      );
+
     }
+
   </script>
 
+
 </body>
+
 </html>
