@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Risk Management</title>
+
+  <style>
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,0.10);
+      --soft-green: rgba(44,130,89,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* HEADER */
+
+    header {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.95);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 19px;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .brand-text span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+    .ask {
+      background: var(--accent);
+      color: white;
+      border: 0;
+      padding: 11px 16px;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .ask:hover {
+      background: #359768;
+    }
+
+    /* HERO */
+
+    .hero {
+      padding: 85px 6% 70px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(44,130,89,.2), transparent 27%),
+        linear-gradient(135deg, #0D0D0D, #10251D);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 45px 45px;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1050px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(52px, 7vw, 90px);
+      line-height: .95;
+      letter-spacing: -4px;
+      max-width: 900px;
+    }
+
+    .hero p {
+      margin-top: 24px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    /* PAGE CONTENT */
+
+    main {
+      padding: 80px 6% 100px;
+    }
+
+    .risk-section {
+      margin-bottom: 90px;
+    }
+
+    .risk-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 35px;
+      margin-bottom: 30px;
+      align-items: stretch;
+    }
+
+    .section-summary {
+      border-radius: 10px;
+      padding: 30px;
+      background: var(--grey);
+      border: 1px solid var(--border);
+    }
+
+    .section-summary.general {
+      background: var(--grey);
+    }
+
+    .section-summary.safety {
+      background: var(--phthalo);
+    }
+
+    .section-summary.environment {
+      background: var(--dark-green);
+    }
+
+    .section-summary h2 {
+      font-size: 27px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-summary p {
+      color: #D0D5D2;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .risk-card {
+      min-height: 108px;
+      background: var(--grey);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .risk-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      background: #292B2C;
+    }
+
+    .risk-icon {
+      width: 46px;
+      min-width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: var(--dark-green);
+      color: white;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .risk-card:hover .risk-icon {
+      background: var(--accent);
+    }
+
+    .risk-info strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+
+    .risk-info span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* FEATURED TOOL */
+
+    .featured {
+      margin-top: 40px;
+      padding: 32px;
+      border-radius: 10px;
+      border: 1px solid rgba(44,130,89,.45);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.16),
+          rgba(11,61,46,.2)
+        );
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .featured-label {
+      color: var(--accent);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .featured h3 {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .featured p {
+      color: var(--muted);
+      max-width: 700px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .tool-button {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 13px 18px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tool-button:hover {
+      background: #359768;
+    }
+
+    footer {
+      padding: 30px 6%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1000px) {
+      .section-header {
+        grid-template-columns: 1fr;
+      }
+
+      .risk-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .featured {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .risk-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-actions .back {
+        display: none;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="brand">
+
+    <div class="logo">
+      T
+    </div>
+
+    <div class="brand-text">
+      <strong>Tiwili</strong>
+      <span>Risk Management</span>
+    </div>
+
+  </div>
+
+  <div class="header-actions">
+
+    <a href="ims.html" class="back">
+      ← Back to IMS
+    </a>
+
+    <button class="ask" onclick="askIMS()">
+      ✦ Ask the IMS
+    </button>
+
+  </div>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="eyebrow">
+      Tiwili Digital IMS
+    </div>
+
+    <h1>
+      Risk Management
+    </h1>
+
+    <p>
+      A connected approach to enterprise, operational, health and safety
+      and environmental risk — bringing requirements, controls, digital
+      forms and intelligent tools together in one place.
+    </p>
+
+  </div>
+
+</section>
+
+
+<main>
+
+
+  <!-- GENERAL RISK MANAGEMENT -->
+
+  <section class="risk-section">
+
+    <div class="section-header">
+
+      <div class="section-summary general">
+
+        <div class="eyebrow">
+          General
+        </div>
+
+        <h2>
+          General Risk Management
+        </h2>
+
+        <p>
+          Risks that apply across the organisation, including business
+          continuity, change, compliance, contractors and projects.
+        </p>
+
+      </div>
+
+
+      <div class="risk-grid">
+
+        <div class="risk-card" onclick="openRisk('Business Continuity & Disaster Recovery')">
+          <div class="risk-icon">BC</div>
+
+          <div class="risk-info">
+            <strong>Business Continuity & Disaster Recovery</strong>
+            <span>Explore risk controls →</span>
+          </div>
+        </div>
+
+
+        <div class="risk-card" onclick="openRisk('Change Management')">
+          <div class="risk-icon">CH</div>
+
+          <div class="risk-info">
+            <strong>Change Management</strong>
+            <span>Explore risk controls →</span>
+          </div>
+        </div>
+
+
+        <div class="risk-card" onclick="openRisk('Compliance Management')">
+          <div class="risk-icon">CO</div>
+
+          <div class="risk-info">
+            <strong>Compliance Management</strong>
+            <span>Explore risk controls →</span>
+          </div>
+        </div>
+
+
+        <div class="risk-card" onclick="openRisk('Contractor Management')">
+          <div class="risk-icon">CT</div>
+
+          <div class="risk-info">
+            <strong>Contractor Management</strong>
+            <span>Explore risk controls →</span>
+          </div>
+        </div>
+
+
+        <div class="risk-card" onclick="openRisk('Project Management')">
+          <div class="risk-icon">PR</div>
+
+          <div class="risk-info">
+            <strong>Project Management</strong>
+            <span>Explore risk controls →</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- HEALTH & SAFETY -->
+
+  <section class="risk-section">
+
+    <div class="section-header">
+
+      <div class="section-summary safety">
+
+        <div class="eyebrow">
+          Health & Safety
+        </div>
+
+        <h2>
+          Health & Safety Risk Management
+        </h2>
+
+        <p>
+          The main health and safety risks that may be encountered during
+          work activities. Each topic will eventually include requirements,
+          controls, documents, forms and digital tools.
+        </p>
+
+      </div>
+
+
+      <div class="risk-grid">
+
+        <div class="risk-card" onclick="openRisk('Alcohol & Other Drugs')">
+          <div class="risk-icon">AD</div>
+          <div class="risk-info">
+            <strong>Alcohol & Other Drugs</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Driving')">
+          <div class="risk-icon">DR</div>
+          <div class="risk-info">
+            <strong>Driving</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Electrical Works')">
+          <div class="risk-icon">EL</div>
+          <div class="risk-info">
+            <strong>Electrical Works</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Emergency Management')">
+          <div class="risk-icon">EM</div>
+          <div class="risk-info">
+            <strong>Emergency Management</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Ergonomics')">
+          <div class="risk-icon">ER</div>
+          <div class="risk-info">
+            <strong>Ergonomics</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Extreme Temperatures')">
+          <div class="risk-icon">ET</div>
+          <div class="risk-info">
+            <strong>Extreme Temperatures</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Fatigue')">
+          <div class="risk-icon">FA</div>
+          <div class="risk-info">
+            <strong>Fatigue</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card featured-risk" onclick="openDangerousGoods()">
+          <div class="risk-icon">DG</div>
+
+          <div class="risk-info">
+            <strong>Hazardous Substances & Dangerous Goods</strong>
+            <span>Includes AI risk tool →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Manual Handling')">
+          <div class="risk-icon">MH</div>
+          <div class="risk-info">
+            <strong>Manual Handling</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Personal Protective Equipment')">
+          <div class="risk-icon">PPE</div>
+          <div class="risk-info">
+            <strong>Personal Protective Equipment</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Plant & Equipment')">
+          <div class="risk-icon">PE</div>
+          <div class="risk-info">
+            <strong>Plant & Equipment</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Psychosocial')">
+          <div class="risk-icon">PS</div>
+          <div class="risk-info">
+            <strong>Psychosocial</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Public Interaction')">
+          <div class="risk-icon">PI</div>
+          <div class="risk-info">
+            <strong>Public Interaction</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Visitor Management')">
+          <div class="risk-icon">VM</div>
+          <div class="risk-info">
+            <strong>Visitor Management</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Working at Heights')">
+          <div class="risk-icon">WH</div>
+          <div class="risk-info">
+            <strong>Working at Heights</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Working From Home')">
+          <div class="risk-icon">WFH</div>
+          <div class="risk-info">
+            <strong>Working From Home</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+        <div class="risk-card" onclick="openRisk('Working Near Traffic')">
+          <div class="risk-icon">WT</div>
+          <div class="risk-info">
+            <strong>Working Near Traffic</strong>
+            <span>Explore →</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="featured">
+
+      <div>
+
+        <div class="featured-label">
+          Featured AI Tool
+        </div>
+
+        <h3>
+          Dangerous Goods Risk Management Assistant
+        </h3>
+
+        <p>
+          A guided tool designed to help identify dangerous goods hazards,
+          assess risk and develop appropriate controls using a structured
+          risk management approach.
+        </p>
+
+      </div>
+
+      <div
+        class="tool-button"
+        onclick="openDangerousGoods()"
+      >
+        Launch Tool →
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ENVIRONMENT -->
+
+  <section class="risk-section">
+
+    <div class="section-header">
+
+      <div class="section-summary environment">
+
+        <div class="eyebrow">
+          Environment
+        </div>
+
+        <h2>
+          Environmental Risk Management
+        </h2>
+
+        <p>
+          Environmental risks and impacts that may arise from organisational
+          activities, including emissions, waste and future environmental
+          risk categories.
+        </p>
+
+      </div>
+
+
+      <div class="risk-grid">
+
+        <div class="risk-card" onclick="openRisk('Carbon Emissions')">
+          <div class="risk-icon">CE</div>
+
+          <div class="risk-info">
+            <strong>Carbon Emissions</strong>
+            <span>Coming soon →</span>
+          </div>
+        </div>
+
+
+        <div class="risk-card" onclick="openRisk('Waste')">
+          <div class="risk-icon">WA</div>
+
+          <div class="risk-info">
+            <strong>Waste</strong>
+            <span>Coming soon →</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<footer>
+
+  <div>
+    Tiwili Digital Integrated Management System
+  </div>
+
+  <div>
+    Designed by Douglas Bleasel
+  </div>
+
+</footer>
+
+
+<script>
+
+  function openRisk(risk) {
+
+    alert(
+      risk +
+      "\n\nThis risk area will contain:\n\n" +
+      "• Overview\n" +
+      "• IMS Requirements\n" +
+      "• Controlled Documents\n" +
+      "• Digital Forms\n" +
+      "• Risk Controls\n" +
+      "• AI Tools"
+    );
+
+  }
+
+
+  function openDangerousGoods() {
+
+    alert(
+      "Hazardous Substances & Dangerous Goods\n\n" +
+      "This will be our first complete risk area and will include " +
+      "the Dangerous Goods Risk Management Assistant."
+    );
+
+  }
+
+
+  function askIMS() {
+
+    alert(
+      "Ask Tiwili\n\n" +
+      "The IMS AI Assistant will be connected to controlled documents " +
+      "once the document library is built."
+    );
+
+  }
+
+</script>
+
+</body>
+</html>
