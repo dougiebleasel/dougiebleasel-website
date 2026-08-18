@@ -1,0 +1,2809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Build My IMS</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --accent-light: #6FC55A;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,0.12);
+
+      --general: #3D6553;
+      --safety: #2C8259;
+      --environment: #547C46;
+      --digital: #49685C;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    /* =========================
+       HEADER
+       ========================= */
+
+    header {
+      min-height: 90px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 16px 5%;
+
+      border-bottom: 1px solid var(--border);
+
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(14px);
+
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo-lockup {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .logo-mark {
+      width: 48px;
+      height: 42px;
+
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .logo-dot {
+      width: 17px;
+      height: 17px;
+
+      border-radius: 50%;
+
+      background: var(--white);
+
+      position: absolute;
+    }
+
+    .logo-dot.one {
+      top: 0;
+      left: 15px;
+    }
+
+    .logo-dot.two {
+      left: 3px;
+      bottom: 1px;
+    }
+
+    .logo-dot.three {
+      right: 3px;
+      bottom: 1px;
+    }
+
+    .logo-copy {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .logo-name {
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: lowercase;
+    }
+
+    .logo-tagline {
+      margin-top: 8px;
+
+      font-size: 11px;
+
+      color: var(--accent-light);
+
+      text-transform: lowercase;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+
+    /* =========================
+       HERO
+       ========================= */
+
+    .hero {
+      padding: 70px 6% 60px;
+
+      position: relative;
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(44,130,89,.18),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #090D0B,
+          #081812
+        );
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,.025) 1px,
+          transparent 1px
+        );
+
+      background-size: 50px 50px;
+
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+
+      max-width: 950px;
+    }
+
+    .eyebrow {
+      color: var(--accent-light);
+
+      font-size: 12px;
+      font-weight: 800;
+
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(46px, 6vw, 78px);
+
+      line-height: .98;
+
+      letter-spacing: -4px;
+
+      max-width: 900px;
+    }
+
+    .hero p {
+      margin-top: 24px;
+
+      max-width: 780px;
+
+      color: var(--muted);
+
+      font-size: 18px;
+      line-height: 1.65;
+    }
+
+
+    /* =========================
+       MAIN
+       ========================= */
+
+    main {
+      max-width: 1180px;
+
+      margin: auto;
+
+      padding: 60px 5% 100px;
+    }
+
+
+    /* =========================
+       PROGRESS
+       ========================= */
+
+    .progress-wrap {
+      margin-bottom: 36px;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+
+      margin-bottom: 10px;
+
+      font-size: 12px;
+
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      height: 5px;
+
+      border-radius: 999px;
+
+      background: var(--grey);
+
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 20%;
+      height: 100%;
+
+      background: var(--accent-light);
+
+      transition: .3s ease;
+    }
+
+
+    /* =========================
+       QUESTION CARD
+       ========================= */
+
+    .question-card {
+      background:
+        linear-gradient(
+          180deg,
+          #151817,
+          #111312
+        );
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 14px;
+
+      padding: 42px;
+
+      min-height: 480px;
+
+      box-shadow:
+        0 30px 90px rgba(0,0,0,.22);
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .step-label {
+      color: var(--accent-light);
+
+      font-size: 12px;
+      font-weight: 800;
+
+      letter-spacing: 2px;
+      text-transform: uppercase;
+
+      margin-bottom: 14px;
+    }
+
+    .question-card h2 {
+      font-size: clamp(30px, 4vw, 46px);
+
+      line-height: 1.08;
+
+      letter-spacing: -2px;
+
+      margin-bottom: 12px;
+    }
+
+    .question-intro {
+      color: var(--muted);
+
+      max-width: 760px;
+
+      margin-bottom: 34px;
+
+      font-size: 16px;
+    }
+
+
+    /* =========================
+       INPUTS
+       ========================= */
+
+    .field {
+      margin-bottom: 24px;
+    }
+
+    label.field-label {
+      display: block;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      margin-bottom: 9px;
+    }
+
+    input[type="text"],
+    select {
+      width: 100%;
+
+      padding: 15px 16px;
+
+      border-radius: 7px;
+
+      border: 1px solid var(--border);
+
+      background: var(--grey);
+
+      color: var(--white);
+
+      outline: 0;
+
+      font-size: 15px;
+    }
+
+    input[type="text"]:focus,
+    select:focus {
+      border-color: var(--accent-light);
+    }
+
+
+    /* =========================
+       CHOICE CARDS
+       ========================= */
+
+    .choices {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 12px;
+    }
+
+    .choice {
+      border:
+        1px solid var(--border);
+
+      background: var(--grey);
+
+      border-radius: 8px;
+
+      padding: 17px 18px;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+
+      gap: 13px;
+
+      transition: .2s ease;
+    }
+
+    .choice:hover {
+      border-color: rgba(111,197,90,.55);
+    }
+
+    .choice.selected {
+      border-color: var(--accent-light);
+
+      background:
+        rgba(44,130,89,.18);
+    }
+
+    .choice input {
+      width: 17px;
+      height: 17px;
+
+      accent-color: var(--accent);
+    }
+
+    .choice-text strong {
+      display: block;
+
+      font-size: 14px;
+
+      margin-bottom: 3px;
+    }
+
+    .choice-text span {
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+
+    /* =========================
+       BUTTONS
+       ========================= */
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+
+      margin-top: 36px;
+    }
+
+    .button {
+      border: 0;
+
+      padding: 14px 22px;
+
+      border-radius: 6px;
+
+      cursor: pointer;
+
+      font-size: 14px;
+      font-weight: 800;
+
+      transition: .2s ease;
+    }
+
+    .button-primary {
+      background: var(--accent-light);
+
+      color: #0B1A11;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+
+      background: #7CD265;
+    }
+
+    .button-secondary {
+      background: transparent;
+
+      border: 1px solid var(--border);
+
+      color: var(--white);
+    }
+
+    .button-secondary:hover {
+      border-color: var(--accent);
+    }
+
+
+    /* =========================
+       RESULTS
+       ========================= */
+
+    #results {
+      display: none;
+    }
+
+    .results-hero {
+      padding: 38px;
+
+      margin-bottom: 28px;
+
+      border-radius: 12px;
+
+      border:
+        1px solid rgba(111,197,90,.35);
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--dark-green),
+          var(--phthalo)
+        );
+    }
+
+    .results-hero h2 {
+      font-size: 38px;
+
+      margin-bottom: 10px;
+    }
+
+    .results-hero p {
+      color: #D0D7D3;
+
+      max-width: 760px;
+    }
+
+    .company-name {
+      color: var(--accent-light);
+    }
+
+    .result-group {
+      margin-top: 42px;
+    }
+
+    .result-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+
+      margin-bottom: 16px;
+    }
+
+    .result-title h3 {
+      font-size: 24px;
+    }
+
+    .result-title span {
+      color: var(--muted);
+
+      font-size: 12px;
+    }
+
+    .result-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 12px;
+    }
+
+    .result-card {
+      padding: 20px;
+
+      border-radius: 8px;
+
+      background: var(--grey);
+
+      border: 1px solid var(--border);
+
+      position: relative;
+    }
+
+    .result-card strong {
+      display: block;
+
+      font-size: 14px;
+
+      margin-bottom: 6px;
+    }
+
+    .result-card p {
+      color: var(--muted);
+
+      font-size: 12px;
+
+      line-height: 1.5;
+    }
+
+    .included {
+      display: inline-block;
+
+      margin-bottom: 12px;
+
+      padding: 4px 8px;
+
+      border-radius: 999px;
+
+      font-size: 9px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
+
+      color: #8EE7B5;
+
+      background:
+        rgba(44,130,89,.16);
+
+      border:
+        1px solid rgba(44,130,89,.45);
+    }
+
+    .ai-badge {
+      position: absolute;
+
+      top: 13px;
+      right: 13px;
+
+      color: var(--accent-light);
+
+      font-size: 9px;
+      font-weight: 800;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+    }
+
+    .ai-badge::before {
+      content: "✦ ";
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      margin-top: 44px;
+    }
+
+
+    /* =========================
+       EXPLANATION
+       ========================= */
+
+    .why-box {
+      margin-top: 50px;
+
+      padding: 28px;
+
+      border-left:
+        3px solid var(--accent-light);
+
+      background:
+        rgba(44,130,89,.08);
+    }
+
+    .why-box h3 {
+      margin-bottom: 8px;
+    }
+
+    .why-box p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 850px) {
+
+      .choices {
+        grid-template-columns: 1fr;
+      }
+
+      .result-grid {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .back {
+        display: none;
+      }
+
+      .logo-name {
+        font-size: 23px;
+      }
+
+      .logo-tagline {
+        font-size: 9px;
+      }
+
+      .question-card {
+        padding: 26px;
+      }
+
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="logo-lockup">
+
+    <div class="logo-mark">
+      <div class="logo-dot one"></div>
+      <div class="logo-dot two"></div>
+      <div class="logo-dot three"></div>
+    </div>
+
+    <div class="logo-copy">
+
+      <div class="logo-name">
+        tiwili
+      </div>
+
+      <div class="logo-tagline">
+        talk it. walk it. live it.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <a
+    href="index.html"
+    class="back"
+  >
+    ← Back to Tiwili
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-content">
+
+    <div class="eyebrow">
+      Tiwili Configurator
+    </div>
+
+    <h1>
+      Tell us what you do.<br>
+      We'll build what you need.
+    </h1>
+
+    <p>
+      Answer a few simple questions about your organisation.
+      Tiwili will use your answers to recommend a management
+      system configuration suited to your activities, risks
+      and growth plans.
+    </p>
+
+  </div>
+
+</section>
+
+
+<main>
+
+
+  <!-- ========================
+       QUESTIONNAIRE
+       ======================== -->
+
+  <div id="questionnaire">
+
+
+    <div class="progress-wrap">
+
+      <div class="progress-info">
+
+        <span id="progressText">
+          Step 1 of 5
+        </span>
+
+        <span id="progressPercent">
+          20%
+        </span>
+
+      </div>
+
+      <div class="progress-bar">
+
+        <div
+          class="progress-fill"
+          id="progressFill"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="question-card">
+
+
+      <!-- STEP 1 -->
+
+      <div
+        class="step active"
+        data-step="1"
+      >
+
+        <div class="step-label">
+          About your business
+        </div>
+
+        <h2>
+          Let's start with the basics.
+        </h2>
+
+        <p class="question-intro">
+          This information helps us understand the size and stage
+          of your organisation.
+        </p>
+
+
+        <div class="field">
+
+          <label class="field-label">
+            Company name
+          </label>
+
+          <input
+            type="text"
+            id="companyName"
+            placeholder="e.g. Northstar Energy"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label class="field-label">
+            Approximately how many people work in the business?
+          </label>
+
+          <select id="companySize">
+
+            <option value="">
+              Select...
+            </option>
+
+            <option value="1-10">
+              1–10
+            </option>
+
+            <option value="11-50">
+              11–50
+            </option>
+
+            <option value="51-200">
+              51–200
+            </option>
+
+            <option value="201+">
+              More than 200
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label class="field-label">
+            Which best describes the business?
+          </label>
+
+          <select id="industry">
+
+            <option value="">
+              Select...
+            </option>
+
+            <option value="technology">
+              Technology / Software
+            </option>
+
+            <option value="mobility">
+              Mobility / Transport
+            </option>
+
+            <option value="energy">
+              Energy / Renewables
+            </option>
+
+            <option value="manufacturing">
+              Manufacturing / Hardware
+            </option>
+
+            <option value="infrastructure">
+              Infrastructure / Engineering
+            </option>
+
+            <option value="medtech">
+              Health / Medtech
+            </option>
+
+            <option value="other">
+              Other
+            </option>
+
+          </select>
+
+        </div>
+
+      </div>
+
+
+      <!-- STEP 2 -->
+
+      <div
+        class="step"
+        data-step="2"
+      >
+
+        <div class="step-label">
+          Operations
+        </div>
+
+        <h2>
+          What does your business actually do?
+        </h2>
+
+        <p class="question-intro">
+          Select everything that applies. These activities help us
+          determine which operational risk modules are relevant.
+        </p>
+
+
+        <div class="choices">
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="driving"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Employees drive for work
+              </strong>
+
+              <span>
+                Cars, vans, fleet or regular business travel.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="contractors"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                We use contractors
+              </strong>
+
+              <span>
+                Contractors or subcontractors perform work for us.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="electrical"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Electrical work
+              </strong>
+
+              <span>
+                Installation, maintenance, testing or electrical equipment.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="dangerousGoods"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Chemicals or dangerous goods
+              </strong>
+
+              <span>
+                Storage, transport, handling or use of hazardous materials.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="plant"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Plant and equipment
+              </strong>
+
+              <span>
+                Machinery, powered equipment or operational plant.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="manualHandling"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Physical or manual work
+              </strong>
+
+              <span>
+                Lifting, carrying, installation or repetitive physical tasks.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="public"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Work around the public
+              </strong>
+
+              <span>
+                Staff regularly interact with customers or members of the public.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="heights"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Working at height
+              </strong>
+
+              <span>
+                Ladders, elevated platforms, roofs or fall risks.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="traffic"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Work near traffic
+              </strong>
+
+              <span>
+                Roadside, mobile or traffic-exposed activities.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="remote"
+              class="activity"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Remote or lone work
+              </strong>
+
+              <span>
+                Employees may work alone, remotely or away from supervision.
+              </span>
+
+            </div>
+
+          </label>
+
+        </div>
+
+      </div>
+
+
+      <!-- STEP 3 -->
+
+      <div
+        class="step"
+        data-step="3"
+      >
+
+        <div class="step-label">
+          Environment and sustainability
+        </div>
+
+        <h2>
+          What environmental impacts apply?
+        </h2>
+
+        <p class="question-intro">
+          These answers determine which environmental and sustainability
+          capabilities Tiwili should recommend.
+        </p>
+
+
+        <div class="choices">
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="waste"
+              class="environment"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                We generate operational waste
+              </strong>
+
+              <span>
+                Packaging, equipment, materials or other waste streams.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="emissions"
+              class="environment"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                We need to track emissions
+              </strong>
+
+              <span>
+                Carbon or greenhouse gas reporting is relevant to the business.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="environmentalImpact"
+              class="environment"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Our operations can impact the environment
+              </strong>
+
+              <span>
+                Spills, pollution, land, water, noise or environmental disturbance.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="products"
+              class="environment"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                We manufacture or place products on the market
+              </strong>
+
+              <span>
+                Product stewardship or producer responsibility may apply.
+              </span>
+
+            </div>
+
+          </label>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- STEP 4 -->
+
+      <div
+        class="step"
+        data-step="4"
+      >
+
+        <div class="step-label">
+          Customers and assurance
+        </div>
+
+        <h2>
+          What are you trying to achieve?
+        </h2>
+
+        <p class="question-intro">
+          These answers help determine the level of governance,
+          assurance and certification readiness required.
+        </p>
+
+
+        <div class="choices">
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="majorClients"
+              class="businessNeed"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Win major corporate customers
+              </strong>
+
+              <span>
+                Customers expect formal governance and assurance.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="government"
+              class="businessNeed"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Government tenders or contracts
+              </strong>
+
+              <span>
+                We participate in public-sector procurement or tenders.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="regulated"
+              class="businessNeed"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Operate in a regulated environment
+              </strong>
+
+              <span>
+                We need to demonstrate compliance to regulators.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="investors"
+              class="businessNeed"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Investor or board assurance
+              </strong>
+
+              <span>
+                Governance and risk information is expected by investors or directors.
+              </span>
+
+            </div>
+
+          </label>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- STEP 5 -->
+
+      <div
+        class="step"
+        data-step="5"
+      >
+
+        <div class="step-label">
+          Standards and tools
+        </div>
+
+        <h2>
+          What level of system do you want?
+        </h2>
+
+        <p class="question-intro">
+          Select any standards or additional capabilities you
+          would like Tiwili to support.
+        </p>
+
+
+        <div class="choices">
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="iso9001"
+              class="standard"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                ISO 9001 readiness
+              </strong>
+
+              <span>
+                Quality management system readiness.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="iso14001"
+              class="standard"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                ISO 14001 readiness
+              </strong>
+
+              <span>
+                Environmental management system readiness.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="iso45001"
+              class="standard"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                ISO 45001 readiness
+              </strong>
+
+              <span>
+                Occupational health and safety management system readiness.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="riskRegister"
+              class="standard"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Risk Register
+              </strong>
+
+              <span>
+                Maintain and track organisational risks and controls.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="incident"
+              class="standard"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Digital incident reporting
+              </strong>
+
+              <span>
+                Reporting, investigation, actions and organisational learning.
+              </span>
+
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="bcdr"
+              class="standard"
+            >
+
+            <div class="choice-text">
+
+              <strong>
+                Business Continuity and Disaster Recovery
+              </strong>
+
+              <span>
+                Prepare for disruption and critical business events.
+              </span>
+
+            </div>
+
+          </label>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+
+      <div class="actions">
+
+        <button
+          class="button button-secondary"
+          id="backButton"
+          onclick="previousStep()"
+          style="visibility:hidden;"
+        >
+          ← Back
+        </button>
+
+
+        <button
+          class="button button-primary"
+          id="nextButton"
+          onclick="nextStep()"
+        >
+          Continue →
+        </button>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- ========================
+       RESULTS
+       ======================== -->
+
+  <div id="results">
+
+
+    <div class="results-hero">
+
+      <div class="eyebrow">
+        Recommended Configuration
+      </div>
+
+      <h2>
+        Your Tiwili IMS for
+        <span
+          class="company-name"
+          id="resultCompany"
+        >
+          your business
+        </span>
+      </h2>
+
+      <p>
+        Based on what you've told us, this is the management system
+        configuration we would recommend as a starting point.
+      </p>
+
+    </div>
+
+
+    <!-- CORE -->
+
+    <div class="result-group">
+
+      <div class="result-title">
+
+        <h3>
+          Core Tiwili IMS
+        </h3>
+
+        <span>
+          Included
+        </span>
+
+      </div>
+
+      <div
+        class="result-grid"
+        id="coreResults"
+      ></div>
+
+    </div>
+
+
+    <!-- RISK -->
+
+    <div
+      class="result-group"
+      id="riskGroup"
+    >
+
+      <div class="result-title">
+
+        <h3>
+          Recommended Risk Modules
+        </h3>
+
+        <span id="riskCount"></span>
+
+      </div>
+
+      <div
+        class="result-grid"
+        id="riskResults"
+      ></div>
+
+    </div>
+
+
+    <!-- SUSTAINABILITY -->
+
+    <div
+      class="result-group"
+      id="environmentGroup"
+    >
+
+      <div class="result-title">
+
+        <h3>
+          Sustainability and Environment
+        </h3>
+
+        <span id="environmentCount"></span>
+
+      </div>
+
+      <div
+        class="result-grid"
+        id="environmentResults"
+      ></div>
+
+    </div>
+
+
+    <!-- ASSURANCE -->
+
+    <div
+      class="result-group"
+      id="assuranceGroup"
+    >
+
+      <div class="result-title">
+
+        <h3>
+          Certification and Assurance
+        </h3>
+
+        <span id="assuranceCount"></span>
+
+      </div>
+
+      <div
+        class="result-grid"
+        id="assuranceResults"
+      ></div>
+
+    </div>
+
+
+    <!-- DIGITAL TOOLS -->
+
+    <div
+      class="result-group"
+      id="toolsGroup"
+    >
+
+      <div class="result-title">
+
+        <h3>
+          Recommended Digital and AI Tools
+        </h3>
+
+        <span id="toolsCount"></span>
+
+      </div>
+
+      <div
+        class="result-grid"
+        id="toolResults"
+      ></div>
+
+    </div>
+
+
+    <div class="why-box">
+
+      <h3>
+        What happens next?
+      </h3>
+
+      <p>
+        This first prototype uses a transparent rules engine to match
+        business activities to Tiwili modules. The next version will allow
+        the Tiwili AI Assistant to ask these questions conversationally,
+        while the same rules engine remains responsible for determining
+        the final product configuration.
+      </p>
+
+    </div>
+
+
+    <div class="result-actions">
+
+      <button
+        class="button button-primary"
+        onclick="restartConfigurator()"
+      >
+        Build another configuration
+      </button>
+
+      <a
+        href="ims.html"
+        class="button button-secondary"
+      >
+        Explore the Demo IMS →
+      </a>
+
+    </div>
+
+
+  </div>
+
+</main>
+
+
+<script>
+
+
+  /* =========================
+     STEP NAVIGATION
+     ========================= */
+
+  let currentStep = 1;
+  const totalSteps = 5;
+
+
+  function updateProgress() {
+
+    const percent =
+      Math.round(
+        (currentStep / totalSteps) * 100
+      );
+
+    document
+      .getElementById("progressFill")
+      .style.width =
+      percent + "%";
+
+    document
+      .getElementById("progressText")
+      .innerText =
+      "Step " +
+      currentStep +
+      " of " +
+      totalSteps;
+
+    document
+      .getElementById("progressPercent")
+      .innerText =
+      percent + "%";
+
+    document
+      .getElementById("backButton")
+      .style.visibility =
+      currentStep === 1
+      ? "hidden"
+      : "visible";
+
+    document
+      .getElementById("nextButton")
+      .innerText =
+      currentStep === totalSteps
+      ? "Build My IMS →"
+      : "Continue →";
+
+  }
+
+
+  function showStep(step) {
+
+    document
+      .querySelectorAll(".step")
+      .forEach(item => {
+        item.classList.remove("active");
+      });
+
+    document
+      .querySelector(
+        '.step[data-step="' +
+        step +
+        '"]'
+      )
+      .classList.add("active");
+
+    updateProgress();
+
+    window.scrollTo({
+      top: 220,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function nextStep() {
+
+    if (currentStep < totalSteps) {
+
+      currentStep++;
+
+      showStep(currentStep);
+
+    } else {
+
+      generateResults();
+
+    }
+
+  }
+
+
+  function previousStep() {
+
+    if (currentStep > 1) {
+
+      currentStep--;
+
+      showStep(currentStep);
+
+    }
+
+  }
+
+
+  /* =========================
+     VISUAL CHECKBOX SELECTION
+     ========================= */
+
+  document
+    .querySelectorAll(".choice input")
+    .forEach(input => {
+
+      input.addEventListener(
+        "change",
+        function() {
+
+          this
+            .closest(".choice")
+            .classList
+            .toggle(
+              "selected",
+              this.checked
+            );
+
+        }
+      );
+
+    });
+
+
+  /* =========================
+     DATA HELPERS
+     ========================= */
+
+  function selectedValues(className) {
+
+    return Array.from(
+      document.querySelectorAll(
+        "." +
+        className +
+        ":checked"
+      )
+    ).map(
+      item => item.value
+    );
+
+  }
+
+
+  function hasValue(array, value) {
+
+    return array.includes(value);
+
+  }
+
+
+  /* =========================
+     CARD CREATION
+     ========================= */
+
+  function createCard(
+    title,
+    description,
+    ai = false
+  ) {
+
+    return `
+      <div class="result-card">
+
+        ${ai
+          ? '<div class="ai-badge">AI Inside</div>'
+          : ''
+        }
+
+        <div class="included">
+          Recommended
+        </div>
+
+        <strong>
+          ${title}
+        </strong>
+
+        <p>
+          ${description}
+        </p>
+
+      </div>
+    `;
+
+  }
+
+
+  /* =========================
+     RULES ENGINE
+     ========================= */
+
+  function generateResults() {
+
+
+    const activities =
+      selectedValues("activity");
+
+    const environment =
+      selectedValues("environment");
+
+    const businessNeeds =
+      selectedValues("businessNeed");
+
+    const standards =
+      selectedValues("standard");
+
+
+    const companyName =
+      document
+        .getElementById("companyName")
+        .value
+        .trim();
+
+
+    /* COMPANY NAME */
+
+    document
+      .getElementById("resultCompany")
+      .innerText =
+      companyName ||
+      "your business";
+
+
+    /* =========================
+       CORE IMS
+       ========================= */
+
+    const core = [
+
+      [
+        "Governance Management",
+        "Policies, responsibilities, objectives and management accountability."
+      ],
+
+      [
+        "Document and Records Management",
+        "Controlled information, approvals, revisions, access and retention."
+      ],
+
+      [
+        "Risk Management",
+        "A common framework for identifying, assessing and controlling risk."
+      ],
+
+      [
+        "Competency Management",
+        "Training, capability and competency requirements."
+      ],
+
+      [
+        "Consultation and Communication",
+        "Structured communication and employee engagement."
+      ],
+
+      [
+        "Incident, Near Miss and Hazard Management",
+        "Event reporting, investigation and corrective action."
+      ],
+
+      [
+        "Audit and Assurance",
+        "Audits, inspections, monitoring and testing."
+      ],
+
+      [
+        "Performance and Continuous Improvement",
+        "Objectives, KPIs, corrective actions and management review."
+      ]
+
+    ];
+
+
+    document
+      .getElementById("coreResults")
+      .innerHTML =
+      core
+        .map(
+          item =>
+            createCard(
+              item[0],
+              item[1]
+            )
+        )
+        .join("");
+
+
+    /* =========================
+       RISK MODULE RULES
+       ========================= */
+
+    const risks = [];
+
+
+    if (hasValue(activities, "driving")) {
+
+      risks.push([
+        "Driving",
+        "Driver safety, vehicle controls, journey risk and fatigue considerations."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "contractors")) {
+
+      risks.push([
+        "Contractor Management",
+        "Selection, onboarding, competency, monitoring and contractor assurance."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "electrical")) {
+
+      risks.push([
+        "Electrical Works",
+        "Controls for electrical work, equipment and electrical hazards."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "dangerousGoods")) {
+
+      risks.push([
+        "Hazardous Substances and Dangerous Goods",
+        "Storage, handling, exposure, segregation and emergency controls.",
+        true
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "plant")) {
+
+      risks.push([
+        "Plant and Equipment",
+        "Safe selection, use, inspection and maintenance of plant and equipment."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "manualHandling")) {
+
+      risks.push([
+        "Manual Handling",
+        "Controls for lifting, carrying, repetitive work and musculoskeletal risk."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "public")) {
+
+      risks.push([
+        "Public Interaction",
+        "Controls for aggression, customer interaction and public-facing work."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "heights")) {
+
+      risks.push([
+        "Working at Heights",
+        "Fall prevention, access, equipment and elevated work requirements."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "traffic")) {
+
+      risks.push([
+        "Working Near Traffic",
+        "Controls for roadside work, vehicles, traffic and mobile operations."
+      ]);
+
+    }
+
+
+    if (hasValue(activities, "remote")) {
+
+      risks.push([
+        "Remote and Lone Work",
+        "Communication, escalation, emergency and worker welfare controls."
+      ]);
+
+    }
+
+
+    /* PSYCHOSOCIAL / FATIGUE BASED ON EMPLOYMENT */
+
+    const companySize =
+      document
+        .getElementById("companySize")
+        .value;
+
+
+    if (companySize) {
+
+      risks.push([
+        "Psychosocial Risk",
+        "Work design, workload, support, behaviour and psychological safety."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(activities, "driving") ||
+      hasValue(activities, "remote")
+    ) {
+
+      risks.push([
+        "Fatigue",
+        "Working hours, travel, scheduling and fatigue risk controls."
+      ]);
+
+    }
+
+
+    document
+      .getElementById("riskResults")
+      .innerHTML =
+      risks.length
+      ? risks
+          .map(
+            item =>
+              createCard(
+                item[0],
+                item[1],
+                item[2] || false
+              )
+          )
+          .join("")
+      : createCard(
+          "General Operational Risk",
+          "No specific high-risk operational activities were selected."
+        );
+
+
+    document
+      .getElementById("riskCount")
+      .innerText =
+      risks.length +
+      " modules";
+
+
+    /* =========================
+       ENVIRONMENT
+       ========================= */
+
+    const envModules = [];
+
+
+    if (hasValue(environment, "waste")) {
+
+      envModules.push([
+        "Waste Management",
+        "Waste identification, handling, disposal and reduction."
+      ]);
+
+    }
+
+
+    if (hasValue(environment, "emissions")) {
+
+      envModules.push([
+        "Carbon and GHG Management",
+        "Emissions data collection, reporting and reduction planning."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        environment,
+        "environmentalImpact"
+      )
+    ) {
+
+      envModules.push([
+        "Environmental Risk Management",
+        "Identification and control of environmental aspects and impacts."
+      ]);
+
+    }
+
+
+    if (hasValue(environment, "products")) {
+
+      envModules.push([
+        "Product Stewardship and EPR",
+        "Future-ready product responsibility and compliance capability."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        standards,
+        "iso14001"
+      )
+    ) {
+
+      envModules.push([
+        "ISO 14001 Environmental Management",
+        "Environmental management system requirements and certification readiness."
+      ]);
+
+    }
+
+
+    const environmentGroup =
+      document.getElementById(
+        "environmentGroup"
+      );
+
+
+    if (envModules.length) {
+
+      environmentGroup.style.display =
+        "block";
+
+      document
+        .getElementById(
+          "environmentResults"
+        )
+        .innerHTML =
+        envModules
+          .map(
+            item =>
+              createCard(
+                item[0],
+                item[1]
+              )
+          )
+          .join("");
+
+      document
+        .getElementById(
+          "environmentCount"
+        )
+        .innerText =
+        envModules.length +
+        " modules";
+
+    } else {
+
+      environmentGroup.style.display =
+        "none";
+
+    }
+
+
+    /* =========================
+       ISO / ASSURANCE
+       ========================= */
+
+    const assurance = [];
+
+
+    if (
+      hasValue(
+        standards,
+        "iso9001"
+      )
+    ) {
+
+      assurance.push([
+        "ISO 9001 Readiness",
+        "Quality management system preparation and certification readiness."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        standards,
+        "iso14001"
+      )
+    ) {
+
+      assurance.push([
+        "ISO 14001 Readiness",
+        "Environmental management system preparation and certification readiness."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        standards,
+        "iso45001"
+      )
+    ) {
+
+      assurance.push([
+        "ISO 45001 Readiness",
+        "Occupational health and safety management system preparation and certification readiness."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        businessNeeds,
+        "government"
+      ) ||
+      hasValue(
+        businessNeeds,
+        "majorClients"
+      )
+    ) {
+
+      assurance.push([
+        "Customer and Tender Assurance",
+        "Structured evidence to support customer due diligence, tenders and procurement."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        businessNeeds,
+        "regulated"
+      )
+    ) {
+
+      assurance.push([
+        "Compliance Management",
+        "Structured identification and monitoring of regulatory obligations."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        businessNeeds,
+        "investors"
+      )
+    ) {
+
+      assurance.push([
+        "Board and Investor Reporting",
+        "Governance, risk and performance reporting suitable for executive oversight."
+      ]);
+
+    }
+
+
+    const assuranceGroup =
+      document.getElementById(
+        "assuranceGroup"
+      );
+
+
+    if (assurance.length) {
+
+      assuranceGroup.style.display =
+        "block";
+
+      document
+        .getElementById(
+          "assuranceResults"
+        )
+        .innerHTML =
+        assurance
+          .map(
+            item =>
+              createCard(
+                item[0],
+                item[1]
+              )
+          )
+          .join("");
+
+      document
+        .getElementById(
+          "assuranceCount"
+        )
+        .innerText =
+        assurance.length +
+        " recommendations";
+
+    } else {
+
+      assuranceGroup.style.display =
+        "none";
+
+    }
+
+
+    /* =========================
+       DIGITAL AND AI TOOLS
+       ========================= */
+
+    const tools = [];
+
+
+    tools.push([
+      "Tiwili IMS Assistant",
+      "Ask questions about controlled management system content and receive source-based answers.",
+      true
+    ]);
+
+
+    if (
+      risks.length ||
+      hasValue(
+        standards,
+        "riskRegister"
+      )
+    ) {
+
+      tools.push([
+        "AI Risk Assessment Helper",
+        "Guide users through hazards, consequences, controls and residual risk.",
+        true
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        activities,
+        "dangerousGoods"
+      )
+    ) {
+
+      tools.push([
+        "Dangerous Goods Risk Assistant",
+        "AI-supported assessment of hazardous substances and dangerous goods risks.",
+        true
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        standards,
+        "incident"
+      )
+    ) {
+
+      tools.push([
+        "Digital Incident Reporting",
+        "Report and classify incidents, hazards and near misses online."
+      ]);
+
+      tools.push([
+        "AI Investigation Assistant",
+        "Guide investigators through evidence, causes and corrective actions.",
+        true
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        standards,
+        "riskRegister"
+      )
+    ) {
+
+      tools.push([
+        "Digital Risk Register",
+        "Track organisational risks, controls, treatments and owners."
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        standards,
+        "bcdr"
+      )
+    ) {
+
+      tools.push([
+        "Business Continuity and Disaster Recovery",
+        "Digital plans, scenarios, exercises and improvement actions."
+      ]);
+
+    }
+
+
+    document
+      .getElementById(
+        "toolResults"
+      )
+      .innerHTML =
+      tools
+        .map(
+          item =>
+            createCard(
+              item[0],
+              item[1],
+              item[2] || false
+            )
+        )
+        .join("");
+
+
+    document
+      .getElementById(
+        "toolsCount"
+      )
+      .innerText =
+      tools.length +
+      " tools";
+
+
+    /* =========================
+       SHOW RESULTS
+       ========================= */
+
+    document
+      .getElementById(
+        "questionnaire"
+      )
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById(
+        "results"
+      )
+      .style.display =
+      "block";
+
+
+    window.scrollTo({
+      top: 160,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  /* =========================
+     RESTART
+     ========================= */
+
+  function restartConfigurator() {
+
+    document
+      .querySelectorAll(
+        'input[type="checkbox"]'
+      )
+      .forEach(
+        item => {
+          item.checked = false;
+
+          item
+            .closest(".choice")
+            ?.classList
+            .remove("selected");
+        }
+      );
+
+
+    document
+      .getElementById(
+        "companyName"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "companySize"
+      )
+      .value = "";
+
+
+    document
+      .getElementById(
+        "industry"
+      )
+      .value = "";
+
+
+    currentStep = 1;
+
+    showStep(1);
+
+
+    document
+      .getElementById(
+        "results"
+      )
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById(
+        "questionnaire"
+      )
+      .style.display =
+      "block";
+
+
+    window.scrollTo({
+      top: 160,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  updateProgress();
+
+
+</script>
+
+
+</body>
+
+</html>
