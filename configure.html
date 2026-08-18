@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -20,11 +19,6 @@
       --white: #F4F6F5;
       --muted: #A8B2AD;
       --border: rgba(244,246,245,0.12);
-
-      --general: #3D6553;
-      --safety: #2C8259;
-      --environment: #547C46;
-      --digital: #49685C;
     }
 
     * {
@@ -51,24 +45,17 @@
     }
 
 
-    /* =========================
-       HEADER
-       ========================= */
+    /* HEADER */
 
     header {
       min-height: 90px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       padding: 16px 5%;
-
       border-bottom: 1px solid var(--border);
-
       background: rgba(13,13,13,0.95);
       backdrop-filter: blur(14px);
-
       position: sticky;
       top: 0;
       z-index: 1000;
@@ -83,7 +70,6 @@
     .logo-mark {
       width: 48px;
       height: 42px;
-
       position: relative;
       flex-shrink: 0;
     }
@@ -91,11 +77,8 @@
     .logo-dot {
       width: 17px;
       height: 17px;
-
       border-radius: 50%;
-
       background: var(--white);
-
       position: absolute;
     }
 
@@ -129,11 +112,8 @@
 
     .logo-tagline {
       margin-top: 8px;
-
       font-size: 11px;
-
       color: var(--accent-light);
-
       text-transform: lowercase;
     }
 
@@ -147,13 +127,10 @@
     }
 
 
-    /* =========================
-       HERO
-       ========================= */
+    /* HERO */
 
     .hero {
       padding: 70px 6% 60px;
-
       position: relative;
       overflow: hidden;
 
@@ -174,7 +151,6 @@
 
     .hero::after {
       content: "";
-
       position: absolute;
       inset: 0;
 
@@ -190,67 +166,50 @@
         );
 
       background-size: 50px 50px;
-
       pointer-events: none;
     }
 
     .hero-content {
       position: relative;
       z-index: 2;
-
       max-width: 950px;
     }
 
     .eyebrow {
       color: var(--accent-light);
-
       font-size: 12px;
       font-weight: 800;
-
       letter-spacing: 2px;
       text-transform: uppercase;
-
       margin-bottom: 18px;
     }
 
     h1 {
       font-size: clamp(46px, 6vw, 78px);
-
       line-height: .98;
-
       letter-spacing: -4px;
-
       max-width: 900px;
     }
 
     .hero p {
       margin-top: 24px;
-
       max-width: 780px;
-
       color: var(--muted);
-
       font-size: 18px;
       line-height: 1.65;
     }
 
 
-    /* =========================
-       MAIN
-       ========================= */
+    /* MAIN */
 
     main {
       max-width: 1180px;
-
       margin: auto;
-
       padding: 60px 5% 100px;
     }
 
 
-    /* =========================
-       PROGRESS
-       ========================= */
+    /* PROGRESS */
 
     .progress-wrap {
       margin-bottom: 36px;
@@ -259,37 +218,27 @@
     .progress-info {
       display: flex;
       justify-content: space-between;
-
       margin-bottom: 10px;
-
       font-size: 12px;
-
       color: var(--muted);
     }
 
     .progress-bar {
       height: 5px;
-
       border-radius: 999px;
-
       background: var(--grey);
-
       overflow: hidden;
     }
 
     .progress-fill {
       width: 20%;
       height: 100%;
-
       background: var(--accent-light);
-
       transition: .3s ease;
     }
 
 
-    /* =========================
-       QUESTION CARD
-       ========================= */
+    /* QUESTION CARD */
 
     .question-card {
       background:
@@ -299,13 +248,9 @@
           #111312
         );
 
-      border:
-        1px solid var(--border);
-
+      border: 1px solid var(--border);
       border-radius: 14px;
-
       padding: 42px;
-
       min-height: 480px;
 
       box-shadow:
@@ -322,70 +267,50 @@
 
     .step-label {
       color: var(--accent-light);
-
       font-size: 12px;
       font-weight: 800;
-
       letter-spacing: 2px;
       text-transform: uppercase;
-
       margin-bottom: 14px;
     }
 
     .question-card h2 {
       font-size: clamp(30px, 4vw, 46px);
-
       line-height: 1.08;
-
       letter-spacing: -2px;
-
       margin-bottom: 12px;
     }
 
     .question-intro {
       color: var(--muted);
-
       max-width: 760px;
-
       margin-bottom: 34px;
-
       font-size: 16px;
     }
 
 
-    /* =========================
-       INPUTS
-       ========================= */
+    /* INPUTS */
 
     .field {
-      margin-bottom: 24px;
+      margin-bottom: 30px;
     }
 
     label.field-label {
       display: block;
-
       font-size: 13px;
       font-weight: 700;
-
-      margin-bottom: 9px;
+      margin-bottom: 10px;
     }
 
     input[type="text"],
     select {
       width: 100%;
-
       padding: 15px 16px;
-
       border-radius: 7px;
-
       border: 1px solid var(--border);
-
       background: var(--grey);
-
       color: var(--white);
-
       outline: 0;
-
       font-size: 15px;
     }
 
@@ -395,36 +320,23 @@
     }
 
 
-    /* =========================
-       CHOICE CARDS
-       ========================= */
+    /* CHOICE CARDS */
 
     .choices {
       display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
 
     .choice {
-      border:
-        1px solid var(--border);
-
+      border: 1px solid var(--border);
       background: var(--grey);
-
       border-radius: 8px;
-
       padding: 17px 18px;
-
       cursor: pointer;
-
       display: flex;
       align-items: center;
-
       gap: 13px;
-
       transition: .2s ease;
     }
 
@@ -434,77 +346,60 @@
 
     .choice.selected {
       border-color: var(--accent-light);
-
-      background:
-        rgba(44,130,89,.18);
+      background: rgba(44,130,89,.18);
     }
 
     .choice input {
       width: 17px;
       height: 17px;
-
       accent-color: var(--accent);
+      flex-shrink: 0;
     }
 
     .choice-text strong {
       display: block;
-
       font-size: 14px;
-
       margin-bottom: 3px;
     }
 
     .choice-text span {
       color: var(--muted);
-
       font-size: 12px;
     }
 
 
-    /* =========================
-       BUTTONS
-       ========================= */
+    /* BUTTONS */
 
     .actions {
       display: flex;
       justify-content: space-between;
       gap: 15px;
-
       margin-top: 36px;
     }
 
     .button {
       border: 0;
-
       padding: 14px 22px;
-
       border-radius: 6px;
-
       cursor: pointer;
-
       font-size: 14px;
       font-weight: 800;
-
       transition: .2s ease;
     }
 
     .button-primary {
       background: var(--accent-light);
-
       color: #0B1A11;
     }
 
     .button-primary:hover {
       transform: translateY(-2px);
-
       background: #7CD265;
     }
 
     .button-secondary {
       background: transparent;
-
       border: 1px solid var(--border);
-
       color: var(--white);
     }
 
@@ -513,9 +408,7 @@
     }
 
 
-    /* =========================
-       RESULTS
-       ========================= */
+    /* RESULTS */
 
     #results {
       display: none;
@@ -523,13 +416,9 @@
 
     .results-hero {
       padding: 38px;
-
       margin-bottom: 28px;
-
       border-radius: 12px;
-
-      border:
-        1px solid rgba(111,197,90,.35);
+      border: 1px solid rgba(111,197,90,.35);
 
       background:
         linear-gradient(
@@ -541,13 +430,11 @@
 
     .results-hero h2 {
       font-size: 38px;
-
       margin-bottom: 10px;
     }
 
     .results-hero p {
       color: #D0D7D3;
-
       max-width: 760px;
     }
 
@@ -563,7 +450,6 @@
       display: flex;
       justify-content: space-between;
       align-items: end;
-
       margin-bottom: 16px;
     }
 
@@ -573,85 +459,57 @@
 
     .result-title span {
       color: var(--muted);
-
       font-size: 12px;
     }
 
     .result-grid {
       display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
 
     .result-card {
       padding: 20px;
-
       border-radius: 8px;
-
       background: var(--grey);
-
       border: 1px solid var(--border);
-
       position: relative;
     }
 
     .result-card strong {
       display: block;
-
       font-size: 14px;
-
       margin-bottom: 6px;
     }
 
     .result-card p {
       color: var(--muted);
-
       font-size: 12px;
-
       line-height: 1.5;
     }
 
     .included {
       display: inline-block;
-
       margin-bottom: 12px;
-
       padding: 4px 8px;
-
       border-radius: 999px;
-
       font-size: 9px;
       font-weight: 800;
-
       text-transform: uppercase;
-
       letter-spacing: 1px;
-
       color: #8EE7B5;
-
-      background:
-        rgba(44,130,89,.16);
-
-      border:
-        1px solid rgba(44,130,89,.45);
+      background: rgba(44,130,89,.16);
+      border: 1px solid rgba(44,130,89,.45);
     }
 
     .ai-badge {
       position: absolute;
-
       top: 13px;
       right: 13px;
-
       color: var(--accent-light);
-
       font-size: 9px;
       font-weight: 800;
-
       letter-spacing: 1px;
-
       text-transform: uppercase;
     }
 
@@ -662,27 +520,18 @@
     .result-actions {
       display: flex;
       flex-wrap: wrap;
-
       gap: 12px;
-
       margin-top: 44px;
     }
 
 
-    /* =========================
-       EXPLANATION
-       ========================= */
+    /* EXPLANATION */
 
     .why-box {
       margin-top: 50px;
-
       padding: 28px;
-
-      border-left:
-        3px solid var(--accent-light);
-
-      background:
-        rgba(44,130,89,.08);
+      border-left: 3px solid var(--accent-light);
+      background: rgba(44,130,89,.08);
     }
 
     .why-box h3 {
@@ -696,9 +545,7 @@
     }
 
 
-    /* =========================
-       RESPONSIVE
-       ========================= */
+    /* RESPONSIVE */
 
     @media (max-width: 850px) {
 
@@ -707,8 +554,7 @@
       }
 
       .result-grid {
-        grid-template-columns:
-          repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
       }
 
     }
@@ -746,12 +592,10 @@
     }
 
   </style>
-
 </head>
 
 
 <body>
-
 
 <header>
 
@@ -764,24 +608,13 @@
     </div>
 
     <div class="logo-copy">
-
-      <div class="logo-name">
-        tiwili
-      </div>
-
-      <div class="logo-tagline">
-        talk it. walk it. live it.
-      </div>
-
+      <div class="logo-name">tiwili</div>
+      <div class="logo-tagline">talk it. walk it. live it.</div>
     </div>
 
   </div>
 
-
-  <a
-    href="index.html"
-    class="back"
-  >
+  <a href="index.html" class="back">
     ← Back to Tiwili
   </a>
 
@@ -815,35 +648,17 @@
 
 <main>
 
-
-  <!-- ========================
-       QUESTIONNAIRE
-       ======================== -->
-
   <div id="questionnaire">
-
 
     <div class="progress-wrap">
 
       <div class="progress-info">
-
-        <span id="progressText">
-          Step 1 of 5
-        </span>
-
-        <span id="progressPercent">
-          20%
-        </span>
-
+        <span id="progressText">Step 1 of 5</span>
+        <span id="progressPercent">20%</span>
       </div>
 
       <div class="progress-bar">
-
-        <div
-          class="progress-fill"
-          id="progressFill"
-        ></div>
-
+        <div class="progress-fill" id="progressFill"></div>
       </div>
 
     </div>
@@ -852,24 +667,23 @@
     <div class="question-card">
 
 
-      <!-- STEP 1 -->
+      <!-- =====================
+           STEP 1
+           ===================== -->
 
-      <div
-        class="step active"
-        data-step="1"
-      >
+      <div class="step active" data-step="1">
 
         <div class="step-label">
           About your business
         </div>
 
         <h2>
-          Let's start with the basics.
+          Let's understand your business.
         </h2>
 
         <p class="question-intro">
-          This information helps us understand the size and stage
-          of your organisation.
+          Tell us a little about your organisation, where you operate
+          and how your business works.
         </p>
 
 
@@ -965,15 +779,202 @@
 
         </div>
 
+
+        <!-- JURISDICTION -->
+
+        <div class="field">
+
+          <label class="field-label">
+            Where does your business operate?
+          </label>
+
+          <div class="choices">
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="australia"
+                class="jurisdiction"
+              >
+
+              <div class="choice-text">
+                <strong>Australia</strong>
+                <span>We operate in Australia.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="eu"
+                class="jurisdiction"
+              >
+
+              <div class="choice-text">
+                <strong>European Union</strong>
+                <span>We operate within the EU.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="uk"
+                class="jurisdiction"
+              >
+
+              <div class="choice-text">
+                <strong>United Kingdom</strong>
+                <span>We operate in the UK.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="other"
+                class="jurisdiction"
+              >
+
+              <div class="choice-text">
+                <strong>Other / Multiple</strong>
+                <span>We operate elsewhere or across several regions.</span>
+              </div>
+
+            </label>
+
+          </div>
+
+        </div>
+
+
+        <!-- BUSINESS PROFILE -->
+
+        <div class="field">
+
+          <label class="field-label">
+            Which of these describe your business?
+          </label>
+
+          <div class="choices">
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="employees"
+                class="businessProfile"
+              >
+
+              <div class="choice-text">
+                <strong>We employ people</strong>
+                <span>Employees work directly for the organisation.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="physicalSites"
+                class="businessProfile"
+              >
+
+              <div class="choice-text">
+                <strong>We operate physical workplaces</strong>
+                <span>Offices, depots, warehouses, workshops or operational sites.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="customerSites"
+                class="businessProfile"
+              >
+
+              <div class="choice-text">
+                <strong>We work at customer sites</strong>
+                <span>Our people perform work at locations controlled by customers.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="manufacture"
+                class="businessProfile"
+              >
+
+              <div class="choice-text">
+                <strong>We manufacture products</strong>
+                <span>We make, assemble or produce physical products.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="import"
+                class="businessProfile"
+              >
+
+              <div class="choice-text">
+                <strong>We import products</strong>
+                <span>We bring products, equipment or materials into a market.</span>
+              </div>
+
+            </label>
+
+
+            <label class="choice">
+
+              <input
+                type="checkbox"
+                value="regulated"
+                class="businessProfile"
+              >
+
+              <div class="choice-text">
+                <strong>We know we're regulated</strong>
+                <span>Licences, permits or industry-specific requirements apply.</span>
+              </div>
+
+            </label>
+
+          </div>
+
+        </div>
+
       </div>
 
 
-      <!-- STEP 2 -->
+      <!-- =====================
+           STEP 2
+           ===================== -->
 
-      <div
-        class="step"
-        data-step="2"
-      >
+      <div class="step" data-step="2">
 
         <div class="step-label">
           Operations
@@ -984,12 +985,13 @@
         </h2>
 
         <p class="question-intro">
-          Select everything that applies. These activities help us
-          determine which operational risk modules are relevant.
+          Select everything that applies. Tiwili will only show
+          operational questions that appear relevant to your business.
         </p>
 
 
-        <div class="choices">
+        <div class="choices" id="operationalChoices">
+
 
           <label class="choice">
 
@@ -1000,15 +1002,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Employees drive for work
-              </strong>
-
-              <span>
-                Cars, vans, fleet or regular business travel.
-              </span>
-
+              <strong>Employees drive for work</strong>
+              <span>Cars, vans, fleet or regular business travel.</span>
             </div>
 
           </label>
@@ -1023,15 +1018,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                We use contractors
-              </strong>
-
-              <span>
-                Contractors or subcontractors perform work for us.
-              </span>
-
+              <strong>We use contractors</strong>
+              <span>Contractors or subcontractors perform work for us.</span>
             </div>
 
           </label>
@@ -1046,15 +1034,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Electrical work
-              </strong>
-
-              <span>
-                Installation, maintenance, testing or electrical equipment.
-              </span>
-
+              <strong>Electrical work</strong>
+              <span>Installation, maintenance, testing or electrical equipment.</span>
             </div>
 
           </label>
@@ -1069,21 +1050,16 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Chemicals or dangerous goods
-              </strong>
-
-              <span>
-                Storage, transport, handling or use of hazardous materials.
-              </span>
-
+              <strong>Chemicals or dangerous goods</strong>
+              <span>Storage, transport, handling or use of hazardous materials.</span>
             </div>
 
           </label>
 
 
-          <label class="choice">
+          <!-- CONDITIONAL -->
+
+          <label class="choice high-risk-question">
 
             <input
               type="checkbox"
@@ -1092,21 +1068,14 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Plant and equipment
-              </strong>
-
-              <span>
-                Machinery, powered equipment or operational plant.
-              </span>
-
+              <strong>Plant and equipment</strong>
+              <span>Machinery, powered equipment or operational plant.</span>
             </div>
 
           </label>
 
 
-          <label class="choice">
+          <label class="choice high-risk-question">
 
             <input
               type="checkbox"
@@ -1115,15 +1084,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Physical or manual work
-              </strong>
-
-              <span>
-                Lifting, carrying, installation or repetitive physical tasks.
-              </span>
-
+              <strong>Physical or manual work</strong>
+              <span>Lifting, carrying, installation or repetitive physical tasks.</span>
             </div>
 
           </label>
@@ -1138,21 +1100,14 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Work around the public
-              </strong>
-
-              <span>
-                Staff regularly interact with customers or members of the public.
-              </span>
-
+              <strong>Work around the public</strong>
+              <span>Staff regularly interact with customers or members of the public.</span>
             </div>
 
           </label>
 
 
-          <label class="choice">
+          <label class="choice high-risk-question">
 
             <input
               type="checkbox"
@@ -1161,21 +1116,14 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Working at height
-              </strong>
-
-              <span>
-                Ladders, elevated platforms, roofs or fall risks.
-              </span>
-
+              <strong>Working at height</strong>
+              <span>Ladders, elevated platforms, roofs or fall risks.</span>
             </div>
 
           </label>
 
 
-          <label class="choice">
+          <label class="choice high-risk-question">
 
             <input
               type="checkbox"
@@ -1184,15 +1132,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Work near traffic
-              </strong>
-
-              <span>
-                Roadside, mobile or traffic-exposed activities.
-              </span>
-
+              <strong>Work near traffic</strong>
+              <span>Roadside, mobile or traffic-exposed activities.</span>
             </div>
 
           </label>
@@ -1207,15 +1148,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Remote or lone work
-              </strong>
-
-              <span>
-                Employees may work alone, remotely or away from supervision.
-              </span>
-
+              <strong>Remote or lone work</strong>
+              <span>Employees may work alone, remotely or away from supervision.</span>
             </div>
 
           </label>
@@ -1225,12 +1159,11 @@
       </div>
 
 
-      <!-- STEP 3 -->
+      <!-- =====================
+           STEP 3
+           ===================== -->
 
-      <div
-        class="step"
-        data-step="3"
-      >
+      <div class="step" data-step="3">
 
         <div class="step-label">
           Environment and sustainability
@@ -1248,7 +1181,6 @@
 
         <div class="choices">
 
-
           <label class="choice">
 
             <input
@@ -1258,15 +1190,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                We generate operational waste
-              </strong>
-
-              <span>
-                Packaging, equipment, materials or other waste streams.
-              </span>
-
+              <strong>We generate operational waste</strong>
+              <span>Packaging, equipment, materials or other waste streams.</span>
             </div>
 
           </label>
@@ -1281,15 +1206,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                We need to track emissions
-              </strong>
-
-              <span>
-                Carbon or greenhouse gas reporting is relevant to the business.
-              </span>
-
+              <strong>We need to track emissions</strong>
+              <span>Carbon or greenhouse gas reporting is relevant to the business.</span>
             </div>
 
           </label>
@@ -1304,15 +1222,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Our operations can impact the environment
-              </strong>
-
-              <span>
-                Spills, pollution, land, water, noise or environmental disturbance.
-              </span>
-
+              <strong>Our operations can impact the environment</strong>
+              <span>Spills, pollution, land, water, noise or environmental disturbance.</span>
             </div>
 
           </label>
@@ -1327,31 +1238,22 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                We manufacture or place products on the market
-              </strong>
-
-              <span>
-                Product stewardship or producer responsibility may apply.
-              </span>
-
+              <strong>We manufacture or place products on the market</strong>
+              <span>Product stewardship or producer responsibility may apply.</span>
             </div>
 
           </label>
-
 
         </div>
 
       </div>
 
 
-      <!-- STEP 4 -->
+      <!-- =====================
+           STEP 4
+           ===================== -->
 
-      <div
-        class="step"
-        data-step="4"
-      >
+      <div class="step" data-step="4">
 
         <div class="step-label">
           Customers and assurance
@@ -1369,7 +1271,6 @@
 
         <div class="choices">
 
-
           <label class="choice">
 
             <input
@@ -1379,15 +1280,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Win major corporate customers
-              </strong>
-
-              <span>
-                Customers expect formal governance and assurance.
-              </span>
-
+              <strong>Win major corporate customers</strong>
+              <span>Customers expect formal governance and assurance.</span>
             </div>
 
           </label>
@@ -1402,15 +1296,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Government tenders or contracts
-              </strong>
-
-              <span>
-                We participate in public-sector procurement or tenders.
-              </span>
-
+              <strong>Government tenders or contracts</strong>
+              <span>We participate in public-sector procurement or tenders.</span>
             </div>
 
           </label>
@@ -1425,15 +1312,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Operate in a regulated environment
-              </strong>
-
-              <span>
-                We need to demonstrate compliance to regulators.
-              </span>
-
+              <strong>Operate in a regulated environment</strong>
+              <span>We need to demonstrate compliance to regulators.</span>
             </div>
 
           </label>
@@ -1448,31 +1328,22 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Investor or board assurance
-              </strong>
-
-              <span>
-                Governance and risk information is expected by investors or directors.
-              </span>
-
+              <strong>Investor or board assurance</strong>
+              <span>Governance and risk information is expected by investors or directors.</span>
             </div>
 
           </label>
-
 
         </div>
 
       </div>
 
 
-      <!-- STEP 5 -->
+      <!-- =====================
+           STEP 5
+           ===================== -->
 
-      <div
-        class="step"
-        data-step="5"
-      >
+      <div class="step" data-step="5">
 
         <div class="step-label">
           Standards and tools
@@ -1490,7 +1361,6 @@
 
         <div class="choices">
 
-
           <label class="choice">
 
             <input
@@ -1500,15 +1370,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                ISO 9001 readiness
-              </strong>
-
-              <span>
-                Quality management system readiness.
-              </span>
-
+              <strong>ISO 9001 readiness</strong>
+              <span>Quality management system readiness.</span>
             </div>
 
           </label>
@@ -1523,15 +1386,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                ISO 14001 readiness
-              </strong>
-
-              <span>
-                Environmental management system readiness.
-              </span>
-
+              <strong>ISO 14001 readiness</strong>
+              <span>Environmental management system readiness.</span>
             </div>
 
           </label>
@@ -1546,15 +1402,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                ISO 45001 readiness
-              </strong>
-
-              <span>
-                Occupational health and safety management system readiness.
-              </span>
-
+              <strong>ISO 45001 readiness</strong>
+              <span>Occupational health and safety management system readiness.</span>
             </div>
 
           </label>
@@ -1569,15 +1418,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Risk Register
-              </strong>
-
-              <span>
-                Maintain and track organisational risks and controls.
-              </span>
-
+              <strong>Risk Register</strong>
+              <span>Maintain and track organisational risks and controls.</span>
             </div>
 
           </label>
@@ -1592,15 +1434,8 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Digital incident reporting
-              </strong>
-
-              <span>
-                Reporting, investigation, actions and organisational learning.
-              </span>
-
+              <strong>Digital incident reporting</strong>
+              <span>Reporting, investigation, actions and organisational learning.</span>
             </div>
 
           </label>
@@ -1615,19 +1450,11 @@
             >
 
             <div class="choice-text">
-
-              <strong>
-                Business Continuity and Disaster Recovery
-              </strong>
-
-              <span>
-                Prepare for disruption and critical business events.
-              </span>
-
+              <strong>Business Continuity and Disaster Recovery</strong>
+              <span>Prepare for disruption and critical business events.</span>
             </div>
 
           </label>
-
 
         </div>
 
@@ -1658,7 +1485,6 @@
 
       </div>
 
-
     </div>
 
   </div>
@@ -1670,7 +1496,6 @@
 
   <div id="results">
 
-
     <div class="results-hero">
 
       <div class="eyebrow">
@@ -1679,10 +1504,7 @@
 
       <h2>
         Your Tiwili IMS for
-        <span
-          class="company-name"
-          id="resultCompany"
-        >
+        <span class="company-name" id="resultCompany">
           your business
         </span>
       </h2>
@@ -1695,20 +1517,11 @@
     </div>
 
 
-    <!-- CORE -->
-
     <div class="result-group">
 
       <div class="result-title">
-
-        <h3>
-          Core Tiwili IMS
-        </h3>
-
-        <span>
-          Included
-        </span>
-
+        <h3>Core Tiwili IMS</h3>
+        <span>Included</span>
       </div>
 
       <div
@@ -1719,21 +1532,14 @@
     </div>
 
 
-    <!-- RISK -->
-
     <div
       class="result-group"
       id="riskGroup"
     >
 
       <div class="result-title">
-
-        <h3>
-          Recommended Risk Modules
-        </h3>
-
+        <h3>Recommended Risk Modules</h3>
         <span id="riskCount"></span>
-
       </div>
 
       <div
@@ -1744,21 +1550,14 @@
     </div>
 
 
-    <!-- SUSTAINABILITY -->
-
     <div
       class="result-group"
       id="environmentGroup"
     >
 
       <div class="result-title">
-
-        <h3>
-          Sustainability and Environment
-        </h3>
-
+        <h3>Sustainability and Environment</h3>
         <span id="environmentCount"></span>
-
       </div>
 
       <div
@@ -1769,21 +1568,14 @@
     </div>
 
 
-    <!-- ASSURANCE -->
-
     <div
       class="result-group"
       id="assuranceGroup"
     >
 
       <div class="result-title">
-
-        <h3>
-          Certification and Assurance
-        </h3>
-
+        <h3>Certification and Assurance</h3>
         <span id="assuranceCount"></span>
-
       </div>
 
       <div
@@ -1794,21 +1586,14 @@
     </div>
 
 
-    <!-- DIGITAL TOOLS -->
-
     <div
       class="result-group"
       id="toolsGroup"
     >
 
       <div class="result-title">
-
-        <h3>
-          Recommended Digital and AI Tools
-        </h3>
-
+        <h3>Recommended Digital and AI Tools</h3>
         <span id="toolsCount"></span>
-
       </div>
 
       <div
@@ -1822,15 +1607,14 @@
     <div class="why-box">
 
       <h3>
-        What happens next?
+        Why this configuration?
       </h3>
 
       <p>
-        This first prototype uses a transparent rules engine to match
-        business activities to Tiwili modules. The next version will allow
-        the Tiwili AI Assistant to ask these questions conversationally,
-        while the same rules engine remains responsible for determining
-        the final product configuration.
+        Tiwili uses your business profile, operating activities,
+        risks, locations and objectives to determine which parts
+        of the management system are relevant to you. As your
+        organisation changes, the configuration can change with it.
       </p>
 
     </div>
@@ -1853,7 +1637,6 @@
       </a>
 
     </div>
-
 
   </div>
 
@@ -1927,8 +1710,10 @@
         step +
         '"]'
       )
-      .classList.add("active");
+      .classList
+      .add("active");
 
+    updateConditionalQuestions();
     updateProgress();
 
     window.scrollTo({
@@ -1944,7 +1729,6 @@
     if (currentStep < totalSteps) {
 
       currentStep++;
-
       showStep(currentStep);
 
     } else {
@@ -1961,7 +1745,6 @@
     if (currentStep > 1) {
 
       currentStep--;
-
       showStep(currentStep);
 
     }
@@ -2015,10 +1798,105 @@
 
 
   function hasValue(array, value) {
-
     return array.includes(value);
+  }
+
+
+  /* =========================
+     CONDITIONAL QUESTIONING
+     ========================= */
+
+  function updateConditionalQuestions() {
+
+    const industry =
+      document
+        .getElementById("industry")
+        .value;
+
+    const profile =
+      selectedValues(
+        "businessProfile"
+      );
+
+
+    const operationalIndustries = [
+      "mobility",
+      "energy",
+      "manufacturing",
+      "infrastructure"
+    ];
+
+
+    const hasOperationalProfile =
+      profile.includes("physicalSites") ||
+      profile.includes("customerSites") ||
+      profile.includes("manufacture");
+
+
+    const showHighRisk =
+      operationalIndustries.includes(
+        industry
+      ) ||
+      hasOperationalProfile;
+
+
+    document
+      .querySelectorAll(
+        ".high-risk-question"
+      )
+      .forEach(question => {
+
+        question.style.display =
+          showHighRisk
+            ? "flex"
+            : "none";
+
+
+        if (!showHighRisk) {
+
+          const checkbox =
+            question.querySelector(
+              'input[type="checkbox"]'
+            );
+
+
+          if (checkbox) {
+
+            checkbox.checked = false;
+
+            question
+              .classList
+              .remove("selected");
+
+          }
+
+        }
+
+      });
 
   }
+
+
+  document
+    .getElementById("industry")
+    .addEventListener(
+      "change",
+      updateConditionalQuestions
+    );
+
+
+  document
+    .querySelectorAll(
+      ".businessProfile"
+    )
+    .forEach(input => {
+
+      input.addEventListener(
+        "change",
+        updateConditionalQuestions
+      );
+
+    });
 
 
   /* =========================
@@ -2034,7 +1912,8 @@
     return `
       <div class="result-card">
 
-        ${ai
+        ${
+          ai
           ? '<div class="ai-badge">AI Inside</div>'
           : ''
         }
@@ -2076,6 +1955,12 @@
     const standards =
       selectedValues("standard");
 
+    const profile =
+      selectedValues("businessProfile");
+
+    const jurisdictions =
+      selectedValues("jurisdiction");
+
 
     const companyName =
       document
@@ -2084,7 +1969,11 @@
         .trim();
 
 
-    /* COMPANY NAME */
+    const companySize =
+      document
+        .getElementById("companySize")
+        .value;
+
 
     document
       .getElementById("resultCompany")
@@ -2157,13 +2046,18 @@
 
 
     /* =========================
-       RISK MODULE RULES
+       RISK MODULES
        ========================= */
 
     const risks = [];
 
 
-    if (hasValue(activities, "driving")) {
+    if (
+      hasValue(
+        activities,
+        "driving"
+      )
+    ) {
 
       risks.push([
         "Driving",
@@ -2173,7 +2067,12 @@
     }
 
 
-    if (hasValue(activities, "contractors")) {
+    if (
+      hasValue(
+        activities,
+        "contractors"
+      )
+    ) {
 
       risks.push([
         "Contractor Management",
@@ -2183,7 +2082,12 @@
     }
 
 
-    if (hasValue(activities, "electrical")) {
+    if (
+      hasValue(
+        activities,
+        "electrical"
+      )
+    ) {
 
       risks.push([
         "Electrical Works",
@@ -2193,7 +2097,12 @@
     }
 
 
-    if (hasValue(activities, "dangerousGoods")) {
+    if (
+      hasValue(
+        activities,
+        "dangerousGoods"
+      )
+    ) {
 
       risks.push([
         "Hazardous Substances and Dangerous Goods",
@@ -2204,7 +2113,12 @@
     }
 
 
-    if (hasValue(activities, "plant")) {
+    if (
+      hasValue(
+        activities,
+        "plant"
+      )
+    ) {
 
       risks.push([
         "Plant and Equipment",
@@ -2214,7 +2128,12 @@
     }
 
 
-    if (hasValue(activities, "manualHandling")) {
+    if (
+      hasValue(
+        activities,
+        "manualHandling"
+      )
+    ) {
 
       risks.push([
         "Manual Handling",
@@ -2224,7 +2143,12 @@
     }
 
 
-    if (hasValue(activities, "public")) {
+    if (
+      hasValue(
+        activities,
+        "public"
+      )
+    ) {
 
       risks.push([
         "Public Interaction",
@@ -2234,7 +2158,12 @@
     }
 
 
-    if (hasValue(activities, "heights")) {
+    if (
+      hasValue(
+        activities,
+        "heights"
+      )
+    ) {
 
       risks.push([
         "Working at Heights",
@@ -2244,7 +2173,12 @@
     }
 
 
-    if (hasValue(activities, "traffic")) {
+    if (
+      hasValue(
+        activities,
+        "traffic"
+      )
+    ) {
 
       risks.push([
         "Working Near Traffic",
@@ -2254,7 +2188,12 @@
     }
 
 
-    if (hasValue(activities, "remote")) {
+    if (
+      hasValue(
+        activities,
+        "remote"
+      )
+    ) {
 
       risks.push([
         "Remote and Lone Work",
@@ -2264,15 +2203,15 @@
     }
 
 
-    /* PSYCHOSOCIAL / FATIGUE BASED ON EMPLOYMENT */
+    /* EMPLOYEE-BASED MODULES */
 
-    const companySize =
-      document
-        .getElementById("companySize")
-        .value;
-
-
-    if (companySize) {
+    if (
+      hasValue(
+        profile,
+        "employees"
+      ) ||
+      companySize
+    ) {
 
       risks.push([
         "Psychosocial Risk",
@@ -2283,8 +2222,14 @@
 
 
     if (
-      hasValue(activities, "driving") ||
-      hasValue(activities, "remote")
+      hasValue(
+        activities,
+        "driving"
+      ) ||
+      hasValue(
+        activities,
+        "remote"
+      )
     ) {
 
       risks.push([
@@ -2311,7 +2256,7 @@
           .join("")
       : createCard(
           "General Operational Risk",
-          "No specific high-risk operational activities were selected."
+          "No specific high-risk operational activities were identified."
         );
 
 
@@ -2329,7 +2274,12 @@
     const envModules = [];
 
 
-    if (hasValue(environment, "waste")) {
+    if (
+      hasValue(
+        environment,
+        "waste"
+      )
+    ) {
 
       envModules.push([
         "Waste Management",
@@ -2339,7 +2289,12 @@
     }
 
 
-    if (hasValue(environment, "emissions")) {
+    if (
+      hasValue(
+        environment,
+        "emissions"
+      )
+    ) {
 
       envModules.push([
         "Carbon and GHG Management",
@@ -2364,11 +2319,24 @@
     }
 
 
-    if (hasValue(environment, "products")) {
+    if (
+      hasValue(
+        environment,
+        "products"
+      ) ||
+      hasValue(
+        profile,
+        "manufacture"
+      ) ||
+      hasValue(
+        profile,
+        "import"
+      )
+    ) {
 
       envModules.push([
         "Product Stewardship and EPR",
-        "Future-ready product responsibility and compliance capability."
+        "Product responsibility, lifecycle obligations and producer responsibility capability."
       ]);
 
     }
@@ -2390,9 +2358,10 @@
 
 
     const environmentGroup =
-      document.getElementById(
-        "environmentGroup"
-      );
+      document
+        .getElementById(
+          "environmentGroup"
+        );
 
 
     if (envModules.length) {
@@ -2432,7 +2401,7 @@
 
 
     /* =========================
-       ISO / ASSURANCE
+       ASSURANCE
        ========================= */
 
     const assurance = [];
@@ -2506,6 +2475,10 @@
       hasValue(
         businessNeeds,
         "regulated"
+      ) ||
+      hasValue(
+        profile,
+        "regulated"
       )
     ) {
 
@@ -2532,10 +2505,23 @@
     }
 
 
+    if (
+      jurisdictions.length > 1
+    ) {
+
+      assurance.push([
+        "Multi-Jurisdiction Compliance",
+        "A structured approach to managing obligations across multiple operating regions."
+      ]);
+
+    }
+
+
     const assuranceGroup =
-      document.getElementById(
-        "assuranceGroup"
-      );
+      document
+        .getElementById(
+          "assuranceGroup"
+        );
 
 
     if (assurance.length) {
@@ -2633,6 +2619,7 @@
         "Report and classify incidents, hazards and near misses online."
       ]);
 
+
       tools.push([
         "AI Investigation Assistant",
         "Guide investigators through evidence, causes and corrective actions.",
@@ -2698,9 +2685,7 @@
       " tools";
 
 
-    /* =========================
-       SHOW RESULTS
-       ========================= */
+    /* SHOW RESULTS */
 
     document
       .getElementById(
@@ -2736,16 +2721,16 @@
       .querySelectorAll(
         'input[type="checkbox"]'
       )
-      .forEach(
-        item => {
-          item.checked = false;
+      .forEach(item => {
 
-          item
-            .closest(".choice")
-            ?.classList
-            .remove("selected");
-        }
-      );
+        item.checked = false;
+
+        item
+          .closest(".choice")
+          ?.classList
+          .remove("selected");
+
+      });
 
 
     document
@@ -2770,6 +2755,8 @@
 
 
     currentStep = 1;
+
+    updateConditionalQuestions();
 
     showStep(1);
 
@@ -2798,12 +2785,13 @@
   }
 
 
+  /* INITIALISE */
+
+  updateConditionalQuestions();
   updateProgress();
 
 
 </script>
 
-
 </body>
-
 </html>
