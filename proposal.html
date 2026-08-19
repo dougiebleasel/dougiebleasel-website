@@ -345,6 +345,21 @@
       margin-top: 14px;
     }
 
+    .submit-error {
+      display: none;
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 7px;
+      background: rgba(160,50,50,.18);
+      border: 1px solid rgba(210,80,80,.35);
+      color: #FFC6C6;
+      font-size: 12px;
+    }
+
+    .submit-error.active {
+      display: block;
+    }
+
     .confirmation {
       display: none;
       border: 1px solid rgba(111,197,90,.42);
@@ -541,6 +556,7 @@
 
           <button
             class="button"
+            id="proposalButton"
             onclick="submitProposal()"
           >
             Request My Proposal →
@@ -556,9 +572,14 @@
         </div>
 
 
+        <div
+          class="submit-error"
+          id="submitError"
+        ></div>
+
         <div class="privacy-note">
-          Prototype note: this version stores the enquiry in your browser only.
-          It does not yet email or transmit the enquiry anywhere.
+          Your proposal request will be sent securely to Tiwili together with
+          the business profile and recommendation you've already created.
         </div>
 
       </div>
@@ -922,7 +943,7 @@
   }
 
 
-  function submitProposal() {
+  async function submitProposal() {
 
     const name =
       document
@@ -1010,80 +1031,130 @@
     };
 
 
-    let enquiries = [];
+    const button =
+      document
+        .getElementById(
+          "proposalButton"
+        );
+
+
+    const errorBox =
+      document
+        .getElementById(
+          "submitError"
+        );
+
+
+    errorBox
+      .classList
+      .remove("active");
+
+
+    button.disabled = true;
+    button.innerText = "Sending...";
 
 
     try {
 
-      enquiries =
-        JSON.parse(
-          localStorage.getItem(
-            "tiwiliEnquiries"
-          ) || "[]"
+      const response =
+        await fetch(
+          "/api/proposal",
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify(
+                enquiry
+              )
+
+          }
         );
 
-      if (
-        !Array.isArray(
-          enquiries
-        )
-      ) {
 
-        enquiries = [];
+      const data =
+        await response.json();
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.error ||
+          "Tiwili could not send your proposal request."
+        );
 
       }
 
+
+      localStorage.setItem(
+        "tiwiliLastEnquiry",
+        JSON.stringify(
+          enquiry
+        )
+      );
+
+
+      document
+        .getElementById(
+          "proposalForm"
+        )
+        .style.display =
+        "none";
+
+
+      document
+        .getElementById(
+          "confirmation"
+        )
+        .classList
+        .add("active");
+
+
+      document
+        .getElementById(
+          "confirmationCopy"
+        )
+        .innerText =
+        "Your " +
+        selectedService +
+        " proposal request for " +
+        selectedCompany +
+        " has been sent to Tiwili. We already have the discovery profile and recommended system, so you won't need to repeat the process.";
+
+
+      window.scrollTo({
+        top: 180,
+        behavior: "smooth"
+      });
+
+
     } catch (error) {
 
-      enquiries = [];
+      console.error(
+        error
+      );
+
+
+      errorBox.innerText =
+        error.message;
+
+
+      errorBox
+        .classList
+        .add("active");
+
+
+    } finally {
+
+      button.disabled = false;
+      button.innerText = "Request My Proposal →";
 
     }
-
-
-    enquiries.push(
-      enquiry
-    );
-
-
-    localStorage.setItem(
-      "tiwiliEnquiries",
-      JSON.stringify(
-        enquiries
-      )
-    );
-
-
-    document
-      .getElementById(
-        "proposalForm"
-      )
-      .style.display =
-      "none";
-
-
-    document
-      .getElementById(
-        "confirmation"
-      )
-      .classList
-      .add("active");
-
-
-    document
-      .getElementById(
-        "confirmationCopy"
-      )
-      .innerText =
-      "Your " +
-      selectedService +
-      " proposal request for " +
-      selectedCompany +
-      " has been saved in this browser. The next version can send this complete discovery and recommendation directly to Tiwili.";
-
-
-    window.scrollTo({
-      top: 180,
-      behavior: "smooth"
-    });
 
   }
 
