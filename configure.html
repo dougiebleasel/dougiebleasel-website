@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -43,9 +44,6 @@
       color: inherit;
       text-decoration: none;
     }
-
-
-    /* HEADER */
 
     header {
       min-height: 90px;
@@ -126,9 +124,6 @@
       color: var(--white);
     }
 
-
-    /* HERO */
-
     .hero {
       padding: 70px 6% 60px;
       position: relative;
@@ -199,17 +194,11 @@
       line-height: 1.65;
     }
 
-
-    /* MAIN */
-
     main {
       max-width: 1180px;
       margin: auto;
       padding: 60px 5% 100px;
     }
-
-
-    /* PROGRESS */
 
     .progress-wrap {
       margin-bottom: 36px;
@@ -236,9 +225,6 @@
       background: var(--accent-light);
       transition: .3s ease;
     }
-
-
-    /* QUESTION CARD */
 
     .question-card {
       background:
@@ -288,9 +274,6 @@
       font-size: 16px;
     }
 
-
-    /* INPUTS */
-
     .field {
       margin-bottom: 30px;
     }
@@ -318,9 +301,6 @@
     select:focus {
       border-color: var(--accent-light);
     }
-
-
-    /* CHOICE CARDS */
 
     .choices {
       display: grid;
@@ -367,8 +347,64 @@
       font-size: 12px;
     }
 
+    /* FOLLOW-UP QUESTIONS */
 
-    /* BUTTONS */
+    .follow-up {
+      display: none;
+      margin-top: 22px;
+      margin-bottom: 28px;
+      padding: 24px;
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.12),
+          rgba(11,61,46,.18)
+        );
+
+      border: 1px solid rgba(111,197,90,.28);
+    }
+
+    .follow-up.active {
+      display: block;
+      animation: revealFollowUp .28s ease;
+    }
+
+    @keyframes revealFollowUp {
+
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+    }
+
+    .follow-up-label {
+      color: var(--accent-light);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .follow-up h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .follow-up p {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 18px;
+      max-width: 720px;
+    }
 
     .actions {
       display: flex;
@@ -406,9 +442,6 @@
     .button-secondary:hover {
       border-color: var(--accent);
     }
-
-
-    /* RESULTS */
 
     #results {
       display: none;
@@ -517,16 +550,6 @@
       content: "✦ ";
     }
 
-    .result-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 44px;
-    }
-
-
-    /* EXPLANATION */
-
     .why-box {
       margin-top: 50px;
       padding: 28px;
@@ -544,8 +567,12 @@
       line-height: 1.65;
     }
 
-
-    /* RESPONSIVE */
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 44px;
+    }
 
     @media (max-width: 850px) {
 
@@ -592,10 +619,12 @@
     }
 
   </style>
+
 </head>
 
 
 <body>
+
 
 <header>
 
@@ -636,9 +665,9 @@
 
     <p>
       Answer a few simple questions about your organisation.
-      Tiwili will use your answers to recommend a management
-      system configuration suited to your activities, risks
-      and growth plans.
+      Tiwili will adapt the questions as it learns more about
+      your business and recommend a management system suited
+      to your activities, risks and growth plans.
     </p>
 
   </div>
@@ -648,550 +677,158 @@
 
 <main>
 
-  <div id="questionnaire">
 
-    <div class="progress-wrap">
+<div id="questionnaire">
 
-      <div class="progress-info">
-        <span id="progressText">Step 1 of 5</span>
-        <span id="progressPercent">20%</span>
-      </div>
 
-      <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
-      </div>
+  <div class="progress-wrap">
 
+    <div class="progress-info">
+      <span id="progressText">Step 1 of 5</span>
+      <span id="progressPercent">20%</span>
     </div>
 
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
 
-    <div class="question-card">
+  </div>
 
 
-      <!-- =====================
-           STEP 1
-           ===================== -->
+  <div class="question-card">
 
-      <div class="step active" data-step="1">
 
-        <div class="step-label">
-          About your business
-        </div>
+    <!-- STEP 1 -->
 
-        <h2>
-          Let's understand your business.
-        </h2>
+    <div class="step active" data-step="1">
 
-        <p class="question-intro">
-          Tell us a little about your organisation, where you operate
-          and how your business works.
-        </p>
+      <div class="step-label">
+        About your business
+      </div>
 
+      <h2>
+        Let's understand your business.
+      </h2>
 
-        <div class="field">
+      <p class="question-intro">
+        Tell us a little about your organisation, where you operate
+        and how your business works.
+      </p>
 
-          <label class="field-label">
-            Company name
-          </label>
 
-          <input
-            type="text"
-            id="companyName"
-            placeholder="e.g. Northstar Energy"
-          >
+      <div class="field">
 
-        </div>
+        <label class="field-label">
+          Company name
+        </label>
 
-
-        <div class="field">
-
-          <label class="field-label">
-            Approximately how many people work in the business?
-          </label>
-
-          <select id="companySize">
-
-            <option value="">
-              Select...
-            </option>
-
-            <option value="1-10">
-              1–10
-            </option>
-
-            <option value="11-50">
-              11–50
-            </option>
-
-            <option value="51-200">
-              51–200
-            </option>
-
-            <option value="201+">
-              More than 200
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <div class="field">
-
-          <label class="field-label">
-            Which best describes the business?
-          </label>
-
-          <select id="industry">
-
-            <option value="">
-              Select...
-            </option>
-
-            <option value="technology">
-              Technology / Software
-            </option>
-
-            <option value="mobility">
-              Mobility / Transport
-            </option>
-
-            <option value="energy">
-              Energy / Renewables
-            </option>
-
-            <option value="manufacturing">
-              Manufacturing / Hardware
-            </option>
-
-            <option value="infrastructure">
-              Infrastructure / Engineering
-            </option>
-
-            <option value="medtech">
-              Health / Medtech
-            </option>
-
-            <option value="other">
-              Other
-            </option>
-
-          </select>
-
-        </div>
-
-
-        <!-- JURISDICTION -->
-
-        <div class="field">
-
-          <label class="field-label">
-            Where does your business operate?
-          </label>
-
-          <div class="choices">
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="australia"
-                class="jurisdiction"
-              >
-
-              <div class="choice-text">
-                <strong>Australia</strong>
-                <span>We operate in Australia.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="eu"
-                class="jurisdiction"
-              >
-
-              <div class="choice-text">
-                <strong>European Union</strong>
-                <span>We operate within the EU.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="uk"
-                class="jurisdiction"
-              >
-
-              <div class="choice-text">
-                <strong>United Kingdom</strong>
-                <span>We operate in the UK.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="other"
-                class="jurisdiction"
-              >
-
-              <div class="choice-text">
-                <strong>Other / Multiple</strong>
-                <span>We operate elsewhere or across several regions.</span>
-              </div>
-
-            </label>
-
-          </div>
-
-        </div>
-
-
-        <!-- BUSINESS PROFILE -->
-
-        <div class="field">
-
-          <label class="field-label">
-            Which of these describe your business?
-          </label>
-
-          <div class="choices">
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="employees"
-                class="businessProfile"
-              >
-
-              <div class="choice-text">
-                <strong>We employ people</strong>
-                <span>Employees work directly for the organisation.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="physicalSites"
-                class="businessProfile"
-              >
-
-              <div class="choice-text">
-                <strong>We operate physical workplaces</strong>
-                <span>Offices, depots, warehouses, workshops or operational sites.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="customerSites"
-                class="businessProfile"
-              >
-
-              <div class="choice-text">
-                <strong>We work at customer sites</strong>
-                <span>Our people perform work at locations controlled by customers.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="manufacture"
-                class="businessProfile"
-              >
-
-              <div class="choice-text">
-                <strong>We manufacture products</strong>
-                <span>We make, assemble or produce physical products.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="import"
-                class="businessProfile"
-              >
-
-              <div class="choice-text">
-                <strong>We import products</strong>
-                <span>We bring products, equipment or materials into a market.</span>
-              </div>
-
-            </label>
-
-
-            <label class="choice">
-
-              <input
-                type="checkbox"
-                value="regulated"
-                class="businessProfile"
-              >
-
-              <div class="choice-text">
-                <strong>We know we're regulated</strong>
-                <span>Licences, permits or industry-specific requirements apply.</span>
-              </div>
-
-            </label>
-
-          </div>
-
-        </div>
+        <input
+          type="text"
+          id="companyName"
+          placeholder="e.g. Northstar Energy"
+        >
 
       </div>
 
 
-      <!-- =====================
-           STEP 2
-           ===================== -->
+      <div class="field">
 
-      <div class="step" data-step="2">
+        <label class="field-label">
+          Approximately how many people work in the business?
+        </label>
 
-        <div class="step-label">
-          Operations
-        </div>
+        <select id="companySize">
 
-        <h2>
-          What does your business actually do?
-        </h2>
+          <option value="">
+            Select...
+          </option>
 
-        <p class="question-intro">
-          Select everything that applies. Tiwili will only show
-          operational questions that appear relevant to your business.
-        </p>
+          <option value="1-10">
+            1–10
+          </option>
 
+          <option value="11-50">
+            11–50
+          </option>
 
-        <div class="choices" id="operationalChoices">
+          <option value="51-200">
+            51–200
+          </option>
 
+          <option value="201+">
+            More than 200
+          </option>
 
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="driving"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Employees drive for work</strong>
-              <span>Cars, vans, fleet or regular business travel.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="contractors"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>We use contractors</strong>
-              <span>Contractors or subcontractors perform work for us.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="electrical"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Electrical work</strong>
-              <span>Installation, maintenance, testing or electrical equipment.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="dangerousGoods"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Chemicals or dangerous goods</strong>
-              <span>Storage, transport, handling or use of hazardous materials.</span>
-            </div>
-
-          </label>
-
-
-          <!-- CONDITIONAL -->
-
-          <label class="choice high-risk-question">
-
-            <input
-              type="checkbox"
-              value="plant"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Plant and equipment</strong>
-              <span>Machinery, powered equipment or operational plant.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice high-risk-question">
-
-            <input
-              type="checkbox"
-              value="manualHandling"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Physical or manual work</strong>
-              <span>Lifting, carrying, installation or repetitive physical tasks.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="public"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Work around the public</strong>
-              <span>Staff regularly interact with customers or members of the public.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice high-risk-question">
-
-            <input
-              type="checkbox"
-              value="heights"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Working at height</strong>
-              <span>Ladders, elevated platforms, roofs or fall risks.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice high-risk-question">
-
-            <input
-              type="checkbox"
-              value="traffic"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Work near traffic</strong>
-              <span>Roadside, mobile or traffic-exposed activities.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="remote"
-              class="activity"
-            >
-
-            <div class="choice-text">
-              <strong>Remote or lone work</strong>
-              <span>Employees may work alone, remotely or away from supervision.</span>
-            </div>
-
-          </label>
-
-        </div>
+        </select>
 
       </div>
 
 
-      <!-- =====================
-           STEP 3
-           ===================== -->
+      <div class="field">
 
-      <div class="step" data-step="3">
+        <label class="field-label">
+          Which best describes the business?
+        </label>
 
-        <div class="step-label">
-          Environment and sustainability
-        </div>
+        <select id="industry">
 
-        <h2>
-          What environmental impacts apply?
-        </h2>
+          <option value="">
+            Select...
+          </option>
 
-        <p class="question-intro">
-          These answers determine which environmental and sustainability
-          capabilities Tiwili should recommend.
-        </p>
+          <option value="technology">
+            Technology / Software
+          </option>
 
+          <option value="mobility">
+            Mobility / Transport
+          </option>
+
+          <option value="energy">
+            Energy / Renewables
+          </option>
+
+          <option value="manufacturing">
+            Manufacturing / Hardware
+          </option>
+
+          <option value="infrastructure">
+            Infrastructure / Engineering
+          </option>
+
+          <option value="medtech">
+            Health / Medtech
+          </option>
+
+          <option value="other">
+            Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label class="field-label">
+          Where does your business operate?
+        </label>
 
         <div class="choices">
 
+
           <label class="choice">
 
             <input
               type="checkbox"
-              value="waste"
-              class="environment"
+              value="australia"
+              class="jurisdiction"
             >
 
             <div class="choice-text">
-              <strong>We generate operational waste</strong>
-              <span>Packaging, equipment, materials or other waste streams.</span>
+              <strong>Australia</strong>
+              <span>We operate in Australia.</span>
             </div>
 
           </label>
@@ -1201,13 +838,13 @@
 
             <input
               type="checkbox"
-              value="emissions"
-              class="environment"
+              value="eu"
+              class="jurisdiction"
             >
 
             <div class="choice-text">
-              <strong>We need to track emissions</strong>
-              <span>Carbon or greenhouse gas reporting is relevant to the business.</span>
+              <strong>European Union</strong>
+              <span>We operate within the EU.</span>
             </div>
 
           </label>
@@ -1217,13 +854,13 @@
 
             <input
               type="checkbox"
-              value="environmentalImpact"
-              class="environment"
+              value="uk"
+              class="jurisdiction"
             >
 
             <div class="choice-text">
-              <strong>Our operations can impact the environment</strong>
-              <span>Spills, pollution, land, water, noise or environmental disturbance.</span>
+              <strong>United Kingdom</strong>
+              <span>We operate in the UK.</span>
             </div>
 
           </label>
@@ -1233,55 +870,43 @@
 
             <input
               type="checkbox"
-              value="products"
-              class="environment"
+              value="other"
+              class="jurisdiction"
             >
 
             <div class="choice-text">
-              <strong>We manufacture or place products on the market</strong>
-              <span>Product stewardship or producer responsibility may apply.</span>
+              <strong>Other / Multiple</strong>
+              <span>We operate elsewhere or across several regions.</span>
             </div>
 
           </label>
+
 
         </div>
 
       </div>
 
 
-      <!-- =====================
-           STEP 4
-           ===================== -->
+      <div class="field">
 
-      <div class="step" data-step="4">
-
-        <div class="step-label">
-          Customers and assurance
-        </div>
-
-        <h2>
-          What are you trying to achieve?
-        </h2>
-
-        <p class="question-intro">
-          These answers help determine the level of governance,
-          assurance and certification readiness required.
-        </p>
-
+        <label class="field-label">
+          Which of these describe your business?
+        </label>
 
         <div class="choices">
+
 
           <label class="choice">
 
             <input
               type="checkbox"
-              value="majorClients"
-              class="businessNeed"
+              value="employees"
+              class="businessProfile"
             >
 
             <div class="choice-text">
-              <strong>Win major corporate customers</strong>
-              <span>Customers expect formal governance and assurance.</span>
+              <strong>We employ people</strong>
+              <span>Employees work directly for the organisation.</span>
             </div>
 
           </label>
@@ -1291,13 +916,61 @@
 
             <input
               type="checkbox"
-              value="government"
-              class="businessNeed"
+              value="physicalSites"
+              class="businessProfile"
             >
 
             <div class="choice-text">
-              <strong>Government tenders or contracts</strong>
-              <span>We participate in public-sector procurement or tenders.</span>
+              <strong>We operate physical workplaces</strong>
+              <span>Offices, depots, warehouses, workshops or operational sites.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="customerSites"
+              class="businessProfile"
+            >
+
+            <div class="choice-text">
+              <strong>We work at customer sites</strong>
+              <span>Our people perform work at locations controlled by customers.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="manufacture"
+              class="businessProfile"
+            >
+
+            <div class="choice-text">
+              <strong>We manufacture products</strong>
+              <span>We make, assemble or produce physical products.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="import"
+              class="businessProfile"
+            >
+
+            <div class="choice-text">
+              <strong>We import products</strong>
+              <span>We bring products, equipment or materials into a market.</span>
             </div>
 
           </label>
@@ -1308,70 +981,249 @@
             <input
               type="checkbox"
               value="regulated"
-              class="businessNeed"
+              class="businessProfile"
             >
 
             <div class="choice-text">
-              <strong>Operate in a regulated environment</strong>
-              <span>We need to demonstrate compliance to regulators.</span>
+              <strong>We know we're regulated</strong>
+              <span>Licences, permits or industry-specific requirements apply.</span>
             </div>
 
           </label>
 
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="investors"
-              class="businessNeed"
-            >
-
-            <div class="choice-text">
-              <strong>Investor or board assurance</strong>
-              <span>Governance and risk information is expected by investors or directors.</span>
-            </div>
-
-          </label>
 
         </div>
 
       </div>
 
+    </div>
 
-      <!-- =====================
-           STEP 5
-           ===================== -->
 
-      <div class="step" data-step="5">
+    <!-- STEP 2 -->
 
-        <div class="step-label">
-          Standards and tools
+    <div class="step" data-step="2">
+
+      <div class="step-label">
+        Operations
+      </div>
+
+      <h2>
+        What does your business actually do?
+      </h2>
+
+      <p class="question-intro">
+        Select everything that applies. Tiwili will ask additional
+        questions where it needs to understand an activity in more detail.
+      </p>
+
+
+      <div class="choices">
+
+
+        <!-- DRIVING -->
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="driving"
+            class="activity"
+            id="drivingActivity"
+          >
+
+          <div class="choice-text">
+            <strong>Employees drive for work</strong>
+            <span>Cars, vans, fleet or regular business travel.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="contractors"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>We use contractors</strong>
+            <span>Contractors or subcontractors perform work for us.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="electrical"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Electrical work</strong>
+            <span>Installation, maintenance, testing or electrical equipment.</span>
+          </div>
+
+        </label>
+
+
+        <!-- DANGEROUS GOODS -->
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="dangerousGoods"
+            class="activity"
+            id="dangerousGoodsActivity"
+          >
+
+          <div class="choice-text">
+            <strong>Chemicals or dangerous goods</strong>
+            <span>Storage, transport, handling or use of hazardous materials.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice high-risk-question">
+
+          <input
+            type="checkbox"
+            value="plant"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Plant and equipment</strong>
+            <span>Machinery, powered equipment or operational plant.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice high-risk-question">
+
+          <input
+            type="checkbox"
+            value="manualHandling"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Physical or manual work</strong>
+            <span>Lifting, carrying, installation or repetitive physical tasks.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="public"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Work around the public</strong>
+            <span>Staff regularly interact with customers or members of the public.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice high-risk-question">
+
+          <input
+            type="checkbox"
+            value="heights"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Working at height</strong>
+            <span>Ladders, elevated platforms, roofs or fall risks.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice high-risk-question">
+
+          <input
+            type="checkbox"
+            value="traffic"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Work near traffic</strong>
+            <span>Roadside, mobile or traffic-exposed activities.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="remote"
+            class="activity"
+          >
+
+          <div class="choice-text">
+            <strong>Remote or lone work</strong>
+            <span>Employees may work alone, remotely or away from supervision.</span>
+          </div>
+
+        </label>
+
+
+      </div>
+
+
+      <!-- DRIVING FOLLOW-UP -->
+
+      <div
+        class="follow-up"
+        id="drivingFollowUp"
+      >
+
+        <div class="follow-up-label">
+          A little more detail
         </div>
 
-        <h2>
-          What level of system do you want?
-        </h2>
+        <h3>
+          What type of driving is involved?
+        </h3>
 
-        <p class="question-intro">
-          Select any standards or additional capabilities you
-          would like Tiwili to support.
+        <p>
+          Select everything that applies. This helps Tiwili determine
+          the level of driving and fatigue controls that may be required.
         </p>
 
 
         <div class="choices">
 
+
           <label class="choice">
 
             <input
               type="checkbox"
-              value="iso9001"
-              class="standard"
+              value="occasional"
+              class="drivingDetail"
             >
 
             <div class="choice-text">
-              <strong>ISO 9001 readiness</strong>
-              <span>Quality management system readiness.</span>
+              <strong>Occasional business travel</strong>
+              <span>Infrequent travel by car for meetings or business purposes.</span>
             </div>
 
           </label>
@@ -1381,13 +1233,13 @@
 
             <input
               type="checkbox"
-              value="iso14001"
-              class="standard"
+              value="regular"
+              class="drivingDetail"
             >
 
             <div class="choice-text">
-              <strong>ISO 14001 readiness</strong>
-              <span>Environmental management system readiness.</span>
+              <strong>Regular driving</strong>
+              <span>Driving is a normal and recurring part of employees' work.</span>
             </div>
 
           </label>
@@ -1397,13 +1249,13 @@
 
             <input
               type="checkbox"
-              value="iso45001"
-              class="standard"
+              value="fleet"
+              class="drivingDetail"
             >
 
             <div class="choice-text">
-              <strong>ISO 45001 readiness</strong>
-              <span>Occupational health and safety management system readiness.</span>
+              <strong>Commercial fleet</strong>
+              <span>The business owns, leases or manages multiple vehicles.</span>
             </div>
 
           </label>
@@ -1413,242 +1265,609 @@
 
             <input
               type="checkbox"
-              value="riskRegister"
-              class="standard"
+              value="heavyVehicles"
+              class="drivingDetail"
             >
 
             <div class="choice-text">
-              <strong>Risk Register</strong>
-              <span>Maintain and track organisational risks and controls.</span>
+              <strong>Heavy vehicles</strong>
+              <span>Trucks or other heavy commercial vehicles are used.</span>
             </div>
 
           </label>
 
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="incident"
-              class="standard"
-            >
-
-            <div class="choice-text">
-              <strong>Digital incident reporting</strong>
-              <span>Reporting, investigation, actions and organisational learning.</span>
-            </div>
-
-          </label>
-
-
-          <label class="choice">
-
-            <input
-              type="checkbox"
-              value="bcdr"
-              class="standard"
-            >
-
-            <div class="choice-text">
-              <strong>Business Continuity and Disaster Recovery</strong>
-              <span>Prepare for disruption and critical business events.</span>
-            </div>
-
-          </label>
 
         </div>
 
       </div>
 
 
-      <!-- NAVIGATION -->
+      <!-- DANGEROUS GOODS FOLLOW-UP -->
 
-      <div class="actions">
+      <div
+        class="follow-up"
+        id="dangerousGoodsFollowUp"
+      >
 
-        <button
-          class="button button-secondary"
-          id="backButton"
-          onclick="previousStep()"
-          style="visibility:hidden;"
-        >
-          ← Back
-        </button>
+        <div class="follow-up-label">
+          A little more detail
+        </div>
+
+        <h3>
+          What do you do with chemicals or dangerous goods?
+        </h3>
+
+        <p>
+          Select all that apply. The answer can affect storage,
+          transport, emergency, product and compliance requirements.
+        </p>
 
 
-        <button
-          class="button button-primary"
-          id="nextButton"
-          onclick="nextStep()"
-        >
-          Continue →
-        </button>
+        <div class="choices">
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="store"
+              class="dangerousGoodsDetail"
+            >
+
+            <div class="choice-text">
+              <strong>Store them</strong>
+              <span>Materials are stored at our workplaces or facilities.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="transport"
+              class="dangerousGoodsDetail"
+            >
+
+            <div class="choice-text">
+              <strong>Transport them</strong>
+              <span>Materials are transported between sites or to customers.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="use"
+              class="dangerousGoodsDetail"
+            >
+
+            <div class="choice-text">
+              <strong>Use them in operations</strong>
+              <span>Employees use or handle the materials during work.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="import"
+              class="dangerousGoodsDetail"
+            >
+
+            <div class="choice-text">
+              <strong>Import them</strong>
+              <span>We import chemicals or dangerous goods into a market.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="manufacture"
+              class="dangerousGoodsDetail"
+            >
+
+            <div class="choice-text">
+              <strong>Manufacture them</strong>
+              <span>We manufacture, formulate or produce hazardous materials.</span>
+            </div>
+
+          </label>
+
+
+          <label class="choice">
+
+            <input
+              type="checkbox"
+              value="unsure"
+              class="dangerousGoodsDetail"
+            >
+
+            <div class="choice-text">
+              <strong>I'm not sure</strong>
+              <span>We may need help determining what requirements apply.</span>
+            </div>
+
+          </label>
+
+
+        </div>
 
       </div>
 
     </div>
 
-  </div>
 
+    <!-- STEP 3 -->
 
-  <!-- ========================
-       RESULTS
-       ======================== -->
+    <div class="step" data-step="3">
 
-  <div id="results">
-
-    <div class="results-hero">
-
-      <div class="eyebrow">
-        Recommended Configuration
+      <div class="step-label">
+        Environment and sustainability
       </div>
 
       <h2>
-        Your Tiwili IMS for
-        <span class="company-name" id="resultCompany">
-          your business
-        </span>
+        What environmental impacts apply?
       </h2>
 
-      <p>
-        Based on what you've told us, this is the management system
-        configuration we would recommend as a starting point.
+      <p class="question-intro">
+        These answers determine which environmental and sustainability
+        capabilities Tiwili should recommend.
       </p>
 
-    </div>
+
+      <div class="choices">
 
 
-    <div class="result-group">
+        <label class="choice">
 
-      <div class="result-title">
-        <h3>Core Tiwili IMS</h3>
-        <span>Included</span>
+          <input
+            type="checkbox"
+            value="waste"
+            class="environment"
+          >
+
+          <div class="choice-text">
+            <strong>We generate operational waste</strong>
+            <span>Packaging, equipment, materials or other waste streams.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="emissions"
+            class="environment"
+          >
+
+          <div class="choice-text">
+            <strong>We need to track emissions</strong>
+            <span>Carbon or greenhouse gas reporting is relevant to the business.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="environmentalImpact"
+            class="environment"
+          >
+
+          <div class="choice-text">
+            <strong>Our operations can impact the environment</strong>
+            <span>Spills, pollution, land, water, noise or environmental disturbance.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="products"
+            class="environment"
+          >
+
+          <div class="choice-text">
+            <strong>We manufacture or place products on the market</strong>
+            <span>Product stewardship or producer responsibility may apply.</span>
+          </div>
+
+        </label>
+
+
       </div>
 
-      <div
-        class="result-grid"
-        id="coreResults"
-      ></div>
-
     </div>
 
 
-    <div
-      class="result-group"
-      id="riskGroup"
-    >
+    <!-- STEP 4 -->
 
-      <div class="result-title">
-        <h3>Recommended Risk Modules</h3>
-        <span id="riskCount"></span>
+    <div class="step" data-step="4">
+
+      <div class="step-label">
+        Customers and assurance
       </div>
 
-      <div
-        class="result-grid"
-        id="riskResults"
-      ></div>
+      <h2>
+        What are you trying to achieve?
+      </h2>
 
-    </div>
-
-
-    <div
-      class="result-group"
-      id="environmentGroup"
-    >
-
-      <div class="result-title">
-        <h3>Sustainability and Environment</h3>
-        <span id="environmentCount"></span>
-      </div>
-
-      <div
-        class="result-grid"
-        id="environmentResults"
-      ></div>
-
-    </div>
-
-
-    <div
-      class="result-group"
-      id="assuranceGroup"
-    >
-
-      <div class="result-title">
-        <h3>Certification and Assurance</h3>
-        <span id="assuranceCount"></span>
-      </div>
-
-      <div
-        class="result-grid"
-        id="assuranceResults"
-      ></div>
-
-    </div>
-
-
-    <div
-      class="result-group"
-      id="toolsGroup"
-    >
-
-      <div class="result-title">
-        <h3>Recommended Digital and AI Tools</h3>
-        <span id="toolsCount"></span>
-      </div>
-
-      <div
-        class="result-grid"
-        id="toolResults"
-      ></div>
-
-    </div>
-
-
-    <div class="why-box">
-
-      <h3>
-        Why this configuration?
-      </h3>
-
-      <p>
-        Tiwili uses your business profile, operating activities,
-        risks, locations and objectives to determine which parts
-        of the management system are relevant to you. As your
-        organisation changes, the configuration can change with it.
+      <p class="question-intro">
+        These answers help determine the level of governance,
+        assurance and certification readiness required.
       </p>
 
+
+      <div class="choices">
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="majorClients"
+            class="businessNeed"
+          >
+
+          <div class="choice-text">
+            <strong>Win major corporate customers</strong>
+            <span>Customers expect formal governance and assurance.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="government"
+            class="businessNeed"
+          >
+
+          <div class="choice-text">
+            <strong>Government tenders or contracts</strong>
+            <span>We participate in public-sector procurement or tenders.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="regulated"
+            class="businessNeed"
+          >
+
+          <div class="choice-text">
+            <strong>Operate in a regulated environment</strong>
+            <span>We need to demonstrate compliance to regulators.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="investors"
+            class="businessNeed"
+          >
+
+          <div class="choice-text">
+            <strong>Investor or board assurance</strong>
+            <span>Governance and risk information is expected by investors or directors.</span>
+          </div>
+
+        </label>
+
+
+      </div>
+
     </div>
 
 
-    <div class="result-actions">
+    <!-- STEP 5 -->
+
+    <div class="step" data-step="5">
+
+      <div class="step-label">
+        Standards and tools
+      </div>
+
+      <h2>
+        What level of system do you want?
+      </h2>
+
+      <p class="question-intro">
+        Select any standards or additional capabilities you
+        would like Tiwili to support.
+      </p>
+
+
+      <div class="choices">
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="iso9001"
+            class="standard"
+          >
+
+          <div class="choice-text">
+            <strong>ISO 9001 readiness</strong>
+            <span>Quality management system readiness.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="iso14001"
+            class="standard"
+          >
+
+          <div class="choice-text">
+            <strong>ISO 14001 readiness</strong>
+            <span>Environmental management system readiness.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="iso45001"
+            class="standard"
+          >
+
+          <div class="choice-text">
+            <strong>ISO 45001 readiness</strong>
+            <span>Occupational health and safety management system readiness.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="riskRegister"
+            class="standard"
+          >
+
+          <div class="choice-text">
+            <strong>Risk Register</strong>
+            <span>Maintain and track organisational risks and controls.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="incident"
+            class="standard"
+          >
+
+          <div class="choice-text">
+            <strong>Digital incident reporting</strong>
+            <span>Reporting, investigation, actions and organisational learning.</span>
+          </div>
+
+        </label>
+
+
+        <label class="choice">
+
+          <input
+            type="checkbox"
+            value="bcdr"
+            class="standard"
+          >
+
+          <div class="choice-text">
+            <strong>Business Continuity and Disaster Recovery</strong>
+            <span>Prepare for disruption and critical business events.</span>
+          </div>
+
+        </label>
+
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="button button-secondary"
+        id="backButton"
+        onclick="previousStep()"
+        style="visibility:hidden;"
+      >
+        ← Back
+      </button>
+
 
       <button
         class="button button-primary"
-        onclick="restartConfigurator()"
+        id="nextButton"
+        onclick="nextStep()"
       >
-        Build another configuration
+        Continue →
       </button>
-
-      <a
-        href="ims.html"
-        class="button button-secondary"
-      >
-        Explore the Demo IMS →
-      </a>
 
     </div>
 
+
   </div>
+
+</div>
+
+
+<!-- RESULTS -->
+
+<div id="results">
+
+
+  <div class="results-hero">
+
+    <div class="eyebrow">
+      Recommended Configuration
+    </div>
+
+    <h2>
+      Your Tiwili IMS for
+      <span class="company-name" id="resultCompany">
+        your business
+      </span>
+    </h2>
+
+    <p>
+      Based on what you've told us, this is the management system
+      configuration we would recommend as a starting point.
+    </p>
+
+  </div>
+
+
+  <div class="result-group">
+
+    <div class="result-title">
+      <h3>Core Tiwili IMS</h3>
+      <span>Included</span>
+    </div>
+
+    <div class="result-grid" id="coreResults"></div>
+
+  </div>
+
+
+  <div class="result-group" id="riskGroup">
+
+    <div class="result-title">
+      <h3>Recommended Risk Modules</h3>
+      <span id="riskCount"></span>
+    </div>
+
+    <div class="result-grid" id="riskResults"></div>
+
+  </div>
+
+
+  <div class="result-group" id="environmentGroup">
+
+    <div class="result-title">
+      <h3>Sustainability and Environment</h3>
+      <span id="environmentCount"></span>
+    </div>
+
+    <div class="result-grid" id="environmentResults"></div>
+
+  </div>
+
+
+  <div class="result-group" id="assuranceGroup">
+
+    <div class="result-title">
+      <h3>Certification and Assurance</h3>
+      <span id="assuranceCount"></span>
+    </div>
+
+    <div class="result-grid" id="assuranceResults"></div>
+
+  </div>
+
+
+  <div class="result-group" id="toolsGroup">
+
+    <div class="result-title">
+      <h3>Recommended Digital and AI Tools</h3>
+      <span id="toolsCount"></span>
+    </div>
+
+    <div class="result-grid" id="toolResults"></div>
+
+  </div>
+
+
+  <div class="why-box">
+
+    <h3>
+      Why this configuration?
+    </h3>
+
+    <p>
+      Tiwili uses your business profile, operating activities,
+      follow-up answers, locations and objectives to determine
+      which parts of the management system are relevant to you.
+      As your organisation changes, the configuration can change with it.
+    </p>
+
+  </div>
+
+
+  <div class="result-actions">
+
+    <button
+      class="button button-primary"
+      onclick="restartConfigurator()"
+    >
+      Build another configuration
+    </button>
+
+    <a
+      href="ims.html"
+      class="button button-secondary"
+    >
+      Explore the Demo IMS →
+    </a>
+
+  </div>
+
+
+</div>
+
 
 </main>
 
 
 <script>
 
-
-  /* =========================
-     STEP NAVIGATION
-     ========================= */
 
   let currentStep = 1;
   const totalSteps = 5;
@@ -1714,6 +1933,7 @@
       .add("active");
 
     updateConditionalQuestions();
+    updateFollowUps();
     updateProgress();
 
     window.scrollTo({
@@ -1752,10 +1972,6 @@
   }
 
 
-  /* =========================
-     VISUAL CHECKBOX SELECTION
-     ========================= */
-
   document
     .querySelectorAll(".choice input")
     .forEach(input => {
@@ -1778,10 +1994,6 @@
     });
 
 
-  /* =========================
-     DATA HELPERS
-     ========================= */
-
   function selectedValues(className) {
 
     return Array.from(
@@ -1803,7 +2015,7 @@
 
 
   /* =========================
-     CONDITIONAL QUESTIONING
+     CONDITIONAL QUESTIONS
      ========================= */
 
   function updateConditionalQuestions() {
@@ -1848,8 +2060,8 @@
 
         question.style.display =
           showHighRisk
-            ? "flex"
-            : "none";
+          ? "flex"
+          : "none";
 
 
         if (!showHighRisk) {
@@ -1877,8 +2089,126 @@
   }
 
 
+  /* =========================
+     DYNAMIC FOLLOW-UPS
+     ========================= */
+
+  function clearFollowUp(className) {
+
+    document
+      .querySelectorAll(
+        "." + className
+      )
+      .forEach(input => {
+
+        input.checked = false;
+
+        input
+          .closest(".choice")
+          ?.classList
+          .remove("selected");
+
+      });
+
+  }
+
+
+  function updateFollowUps() {
+
+    const driving =
+      document
+        .getElementById(
+          "drivingActivity"
+        )
+        .checked;
+
+
+    const dangerousGoods =
+      document
+        .getElementById(
+          "dangerousGoodsActivity"
+        )
+        .checked;
+
+
+    const drivingBox =
+      document
+        .getElementById(
+          "drivingFollowUp"
+        );
+
+
+    const dgBox =
+      document
+        .getElementById(
+          "dangerousGoodsFollowUp"
+        );
+
+
+    if (driving) {
+
+      drivingBox
+        .classList
+        .add("active");
+
+    } else {
+
+      drivingBox
+        .classList
+        .remove("active");
+
+      clearFollowUp(
+        "drivingDetail"
+      );
+
+    }
+
+
+    if (dangerousGoods) {
+
+      dgBox
+        .classList
+        .add("active");
+
+    } else {
+
+      dgBox
+        .classList
+        .remove("active");
+
+      clearFollowUp(
+        "dangerousGoodsDetail"
+      );
+
+    }
+
+  }
+
+
   document
-    .getElementById("industry")
+    .getElementById(
+      "drivingActivity"
+    )
+    .addEventListener(
+      "change",
+      updateFollowUps
+    );
+
+
+  document
+    .getElementById(
+      "dangerousGoodsActivity"
+    )
+    .addEventListener(
+      "change",
+      updateFollowUps
+    );
+
+
+  document
+    .getElementById(
+      "industry"
+    )
     .addEventListener(
       "change",
       updateConditionalQuestions
@@ -1900,7 +2230,7 @@
 
 
   /* =========================
-     CARD CREATION
+     RESULT CARDS
      ========================= */
 
   function createCard(
@@ -1946,6 +2276,16 @@
     const activities =
       selectedValues("activity");
 
+    const drivingDetails =
+      selectedValues(
+        "drivingDetail"
+      );
+
+    const dangerousGoodsDetails =
+      selectedValues(
+        "dangerousGoodsDetail"
+      );
+
     const environment =
       selectedValues("environment");
 
@@ -1982,9 +2322,7 @@
       "your business";
 
 
-    /* =========================
-       CORE IMS
-       ========================= */
+    /* CORE */
 
     const core = [
 
@@ -2032,7 +2370,9 @@
 
 
     document
-      .getElementById("coreResults")
+      .getElementById(
+        "coreResults"
+      )
       .innerHTML =
       core
         .map(
@@ -2045,9 +2385,7 @@
         .join("");
 
 
-    /* =========================
-       RISK MODULES
-       ========================= */
+    /* RISK MODULES */
 
     const risks = [];
 
@@ -2059,9 +2397,39 @@
       )
     ) {
 
+      let drivingDescription =
+        "Driver safety, journey risk and vehicle controls.";
+
+
+      if (
+        hasValue(
+          drivingDetails,
+          "fleet"
+        )
+      ) {
+
+        drivingDescription =
+          "Fleet governance, vehicle controls, driver management and journey risk.";
+
+      }
+
+
+      if (
+        hasValue(
+          drivingDetails,
+          "heavyVehicles"
+        )
+      ) {
+
+        drivingDescription =
+          "Enhanced driving controls covering heavy vehicles, driver competency, fatigue and journey risk.";
+
+      }
+
+
       risks.push([
         "Driving",
-        "Driver safety, vehicle controls, journey risk and fatigue considerations."
+        drivingDescription
       ]);
 
     }
@@ -2104,9 +2472,56 @@
       )
     ) {
 
+      let dgDescription =
+        "Hazardous substances and dangerous goods identification, handling and control.";
+
+
+      if (
+        hasValue(
+          dangerousGoodsDetails,
+          "store"
+        )
+      ) {
+
+        dgDescription +=
+          " Storage and segregation requirements are relevant.";
+
+      }
+
+
+      if (
+        hasValue(
+          dangerousGoodsDetails,
+          "transport"
+        )
+      ) {
+
+        dgDescription +=
+          " Transport controls are relevant.";
+
+      }
+
+
+      if (
+        hasValue(
+          dangerousGoodsDetails,
+          "import"
+        ) ||
+        hasValue(
+          dangerousGoodsDetails,
+          "manufacture"
+        )
+      ) {
+
+        dgDescription +=
+          " Product and regulatory obligations may also apply.";
+
+      }
+
+
       risks.push([
         "Hazardous Substances and Dangerous Goods",
-        "Storage, handling, exposure, segregation and emergency controls.",
+        dgDescription,
         true
       ]);
 
@@ -2203,8 +2618,6 @@
     }
 
 
-    /* EMPLOYEE-BASED MODULES */
-
     if (
       hasValue(
         profile,
@@ -2223,8 +2636,16 @@
 
     if (
       hasValue(
-        activities,
-        "driving"
+        drivingDetails,
+        "regular"
+      ) ||
+      hasValue(
+        drivingDetails,
+        "fleet"
+      ) ||
+      hasValue(
+        drivingDetails,
+        "heavyVehicles"
       ) ||
       hasValue(
         activities,
@@ -2240,8 +2661,25 @@
     }
 
 
+    if (
+      hasValue(
+        dangerousGoodsDetails,
+        "store"
+      )
+    ) {
+
+      risks.push([
+        "Emergency Management",
+        "Emergency response, spills, fire and hazardous material incident preparedness."
+      ]);
+
+    }
+
+
     document
-      .getElementById("riskResults")
+      .getElementById(
+        "riskResults"
+      )
       .innerHTML =
       risks.length
       ? risks
@@ -2261,15 +2699,15 @@
 
 
     document
-      .getElementById("riskCount")
+      .getElementById(
+        "riskCount"
+      )
       .innerText =
       risks.length +
       " modules";
 
 
-    /* =========================
-       ENVIRONMENT
-       ========================= */
+    /* ENVIRONMENT */
 
     const envModules = [];
 
@@ -2331,6 +2769,14 @@
       hasValue(
         profile,
         "import"
+      ) ||
+      hasValue(
+        dangerousGoodsDetails,
+        "import"
+      ) ||
+      hasValue(
+        dangerousGoodsDetails,
+        "manufacture"
       )
     ) {
 
@@ -2366,8 +2812,11 @@
 
     if (envModules.length) {
 
-      environmentGroup.style.display =
+      environmentGroup
+        .style
+        .display =
         "block";
+
 
       document
         .getElementById(
@@ -2384,6 +2833,7 @@
           )
           .join("");
 
+
       document
         .getElementById(
           "environmentCount"
@@ -2394,15 +2844,15 @@
 
     } else {
 
-      environmentGroup.style.display =
+      environmentGroup
+        .style
+        .display =
         "none";
 
     }
 
 
-    /* =========================
-       ASSURANCE
-       ========================= */
+    /* ASSURANCE */
 
     const assurance = [];
 
@@ -2526,8 +2976,11 @@
 
     if (assurance.length) {
 
-      assuranceGroup.style.display =
+      assuranceGroup
+        .style
+        .display =
         "block";
+
 
       document
         .getElementById(
@@ -2544,6 +2997,7 @@
           )
           .join("");
 
+
       document
         .getElementById(
           "assuranceCount"
@@ -2554,15 +3008,15 @@
 
     } else {
 
-      assuranceGroup.style.display =
+      assuranceGroup
+        .style
+        .display =
         "none";
 
     }
 
 
-    /* =========================
-       DIGITAL AND AI TOOLS
-       ========================= */
+    /* TOOLS */
 
     const tools = [];
 
@@ -2601,6 +3055,22 @@
       tools.push([
         "Dangerous Goods Risk Assistant",
         "AI-supported assessment of hazardous substances and dangerous goods risks.",
+        true
+      ]);
+
+    }
+
+
+    if (
+      hasValue(
+        dangerousGoodsDetails,
+        "unsure"
+      )
+    ) {
+
+      tools.push([
+        "Dangerous Goods Discovery Review",
+        "Guided support to determine whether dangerous goods obligations apply.",
         true
       ]);
 
@@ -2685,13 +3155,12 @@
       " tools";
 
 
-    /* SHOW RESULTS */
-
     document
       .getElementById(
         "questionnaire"
       )
-      .style.display =
+      .style
+      .display =
       "none";
 
 
@@ -2699,7 +3168,8 @@
       .getElementById(
         "results"
       )
-      .style.display =
+      .style
+      .display =
       "block";
 
 
@@ -2710,10 +3180,6 @@
 
   }
 
-
-  /* =========================
-     RESTART
-     ========================= */
 
   function restartConfigurator() {
 
@@ -2757,7 +3223,7 @@
     currentStep = 1;
 
     updateConditionalQuestions();
-
+    updateFollowUps();
     showStep(1);
 
 
@@ -2765,7 +3231,8 @@
       .getElementById(
         "results"
       )
-      .style.display =
+      .style
+      .display =
       "none";
 
 
@@ -2773,7 +3240,8 @@
       .getElementById(
         "questionnaire"
       )
-      .style.display =
+      .style
+      .display =
       "block";
 
 
@@ -2785,13 +3253,14 @@
   }
 
 
-  /* INITIALISE */
-
   updateConditionalQuestions();
+  updateFollowUps();
   updateProgress();
 
 
 </script>
 
+
 </body>
+
 </html>
