@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Tiwili | AI IMS Discovery
+  </title>
+
+
+  <style>
+
+    :root {
+
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --accent-light: #6FC55A;
+
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+
+      --muted: #A8B2AD;
+
+      --border:
+        rgba(244,246,245,0.12);
+
+    }
+
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+      padding: 0;
+
+    }
+
+
+    body {
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background:
+        var(--black);
+
+      color:
+        var(--white);
+
+      min-height: 100vh;
+
+      line-height: 1.5;
+
+    }
+
+
+    a {
+
+      color: inherit;
+      text-decoration: none;
+
+    }
+
+
+    /* HEADER */
+
+    header {
+
+      min-height: 90px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      padding:
+        16px 5%;
+
+      border-bottom:
+        1px solid var(--border);
+
+      background:
+        rgba(13,13,13,0.96);
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+    }
+
+
+    .logo-lockup {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
+    }
+
+
+    .logo-mark {
+
+      width: 48px;
+      height: 42px;
+
+      position: relative;
+
+    }
+
+
+    .logo-dot {
+
+      width: 17px;
+      height: 17px;
+
+      border-radius: 50%;
+
+      background:
+        var(--white);
+
+      position: absolute;
+
+    }
+
+
+    .logo-dot.one {
+
+      top: 0;
+      left: 15px;
+
+    }
+
+
+    .logo-dot.two {
+
+      bottom: 1px;
+      left: 3px;
+
+    }
+
+
+    .logo-dot.three {
+
+      bottom: 1px;
+      right: 3px;
+
+    }
+
+
+    .logo-name {
+
+      font-size: 30px;
+
+      font-weight: 700;
+
+      letter-spacing: 3px;
+
+      text-transform: lowercase;
+
+    }
+
+
+    .logo-tagline {
+
+      margin-top: 6px;
+
+      font-size: 11px;
+
+      color:
+        var(--accent-light);
+
+    }
+
+
+    .back {
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
+
+    }
+
+
+    /* HERO */
+
+    .hero {
+
+      padding:
+        58px 6% 48px;
+
+      border-bottom:
+        1px solid var(--border);
+
+      background:
+
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(44,130,89,.20),
+          transparent 28%
+        ),
+
+        linear-gradient(
+          135deg,
+          #090D0B,
+          #081812
+        );
+
+    }
+
+
+    .eyebrow {
+
+      color:
+        var(--accent-light);
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      letter-spacing: 2px;
+
+      text-transform: uppercase;
+
+      margin-bottom: 14px;
+
+    }
+
+
+    h1 {
+
+      max-width: 900px;
+
+      font-size:
+        clamp(
+          40px,
+          5vw,
+          68px
+        );
+
+      line-height: 1;
+
+      letter-spacing: -3px;
+
+    }
+
+
+    .hero p {
+
+      margin-top: 20px;
+
+      max-width: 720px;
+
+      color:
+        var(--muted);
+
+      font-size: 17px;
+
+    }
+
+
+    /* MAIN */
+
+    main {
+
+      max-width: 1150px;
+
+      margin: auto;
+
+      padding:
+        50px 5% 100px;
+
+    }
+
+
+    .layout {
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0,1.55fr)
+        minmax(280px,.65fr);
+
+      gap: 22px;
+
+      align-items: start;
+
+    }
+
+
+    /* CHAT */
+
+    .chat {
+
+      border:
+        1px solid var(--border);
+
+      background:
+        linear-gradient(
+          180deg,
+          #151817,
+          #111312
+        );
+
+      border-radius: 14px;
+
+      overflow: hidden;
+
+      min-height: 600px;
+
+      display: flex;
+
+      flex-direction: column;
+
+    }
+
+
+    .chat-header {
+
+      padding: 18px 22px;
+
+      border-bottom:
+        1px solid var(--border);
+
+      display: flex;
+
+      justify-content:
+        space-between;
+
+      align-items: center;
+
+    }
+
+
+    .ai-label {
+
+      display: inline-flex;
+
+      gap: 6px;
+
+      align-items: center;
+
+      padding:
+        5px 9px;
+
+      border-radius: 999px;
+
+      border:
+        1px solid rgba(
+          111,
+          197,
+          90,
+          .45
+        );
+
+      color:
+        var(--accent-light);
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .ai-label::before {
+
+      content: "✦";
+
+    }
+
+
+    .status {
+
+      font-size: 11px;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .messages {
+
+      flex: 1;
+
+      padding: 24px;
+
+      overflow-y: auto;
+
+      max-height: 510px;
+
+    }
+
+
+    .message {
+
+      max-width: 82%;
+
+      padding:
+        13px 16px;
+
+      border-radius: 10px;
+
+      margin-bottom: 16px;
+
+      font-size: 14px;
+
+      line-height: 1.55;
+
+    }
+
+
+    .message.ai {
+
+      background:
+        var(--grey);
+
+      border:
+        1px solid var(--border);
+
+      margin-right: auto;
+
+    }
+
+
+    .message.user {
+
+      background:
+        var(--dark-green);
+
+      border:
+        1px solid rgba(
+          111,
+          197,
+          90,
+          .2
+        );
+
+      margin-left: auto;
+
+    }
+
+
+    .typing {
+
+      color:
+        var(--muted);
+
+      font-style: italic;
+
+    }
+
+
+    .input-area {
+
+      display: flex;
+
+      gap: 10px;
+
+      padding: 18px;
+
+      border-top:
+        1px solid var(--border);
+
+      background:
+        #101211;
+
+    }
+
+
+    textarea {
+
+      flex: 1;
+
+      min-height: 52px;
+
+      max-height: 130px;
+
+      resize: vertical;
+
+      padding:
+        13px 14px;
+
+      color:
+        var(--white);
+
+      background:
+        var(--grey);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 7px;
+
+      outline: none;
+
+      font-family: inherit;
+
+      font-size: 14px;
+
+    }
+
+
+    textarea:focus {
+
+      border-color:
+        var(--accent-light);
+
+    }
+
+
+    button {
+
+      border: 0;
+
+      border-radius: 7px;
+
+      padding:
+        0 20px;
+
+      background:
+        var(--accent-light);
+
+      color:
+        #0B1A11;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+    }
+
+
+    button:disabled {
+
+      opacity: .45;
+      cursor: not-allowed;
+
+    }
+
+
+    /* PROFILE */
+
+    .profile-panel {
+
+      position: sticky;
+
+      top: 112px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 12px;
+
+      background:
+        var(--grey);
+
+      padding: 22px;
+
+    }
+
+
+    .profile-panel h2 {
+
+      font-size: 20px;
+
+      margin-bottom: 6px;
+
+    }
+
+
+    .profile-panel > p {
+
+      color:
+        var(--muted);
+
+      font-size: 12px;
+
+      margin-bottom: 20px;
+
+    }
+
+
+    .profile-item {
+
+      padding:
+        13px 0;
+
+      border-top:
+        1px solid var(--border);
+
+    }
+
+
+    .profile-label {
+
+      color:
+        var(--accent-light);
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .profile-value {
+
+      color:
+        var(--white);
+
+      font-size: 13px;
+
+    }
+
+
+    .unknown {
+
+      color:
+        #737C78;
+
+    }
+
+
+    .ready-box {
+
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 17px;
+
+      border:
+        1px solid rgba(
+          111,
+          197,
+          90,
+          .42
+        );
+
+      border-radius: 8px;
+
+      background:
+        rgba(
+          44,
+          130,
+          89,
+          .12
+        );
+
+    }
+
+
+    .ready-box.active {
+
+      display: block;
+
+    }
+
+
+    .ready-box strong {
+
+      display: block;
+
+      margin-bottom: 7px;
+
+      color:
+        var(--accent-light);
+
+    }
+
+
+    .ready-box p {
+
+      color:
+        var(--muted);
+
+      font-size: 12px;
+
+      margin-bottom: 14px;
+
+    }
+
+
+    .ready-box button {
+
+      width: 100%;
+
+      min-height: 42px;
+
+    }
+
+
+    .error {
+
+      margin:
+        0 18px 16px;
+
+      padding: 12px;
+
+      border-radius: 7px;
+
+      background:
+        rgba(
+          160,
+          50,
+          50,
+          .18
+        );
+
+      border:
+        1px solid rgba(
+          210,
+          80,
+          80,
+          .35
+        );
+
+      color:
+        #FFC6C6;
+
+      font-size: 12px;
+
+      display: none;
+
+    }
+
+
+    @media (
+      max-width: 850px
+    ) {
+
+      .layout {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .profile-panel {
+
+        position: static;
+
+      }
+
+    }
+
+
+    @media (
+      max-width: 600px
+    ) {
+
+      .back {
+
+        display: none;
+
+      }
+
+
+      .message {
+
+        max-width: 92%;
+
+      }
+
+
+      .input-area {
+
+        flex-direction: column;
+
+      }
+
+
+      button {
+
+        min-height: 46px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="logo-lockup">
+
+    <div class="logo-mark">
+      <div class="logo-dot one"></div>
+      <div class="logo-dot two"></div>
+      <div class="logo-dot three"></div>
+    </div>
+
+
+    <div>
+
+      <div class="logo-name">
+        tiwili
+      </div>
+
+      <div class="logo-tagline">
+        talk it. walk it. live it.
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <a
+    href="configure.html"
+    class="back"
+  >
+    ← Use standard configurator
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="eyebrow">
+    AI Business Discovery
+  </div>
+
+  <h1>
+    Tell Tiwili what
+    your business does.
+  </h1>
+
+  <p>
+    Have a normal conversation. Tiwili will ask the questions
+    it needs, build a structured business profile in the
+    background and use that profile to configure your IMS.
+  </p>
+
+</section>
+
+
+<main>
+
+  <div class="layout">
+
+
+    <div class="chat">
+
+      <div class="chat-header">
+
+        <div class="ai-label">
+          AI Inside
+        </div>
+
+        <div
+          class="status"
+          id="status"
+        >
+          Ready
+        </div>
+
+      </div>
+
+
+      <div
+        class="messages"
+        id="messages"
+      ></div>
+
+
+      <div
+        class="error"
+        id="errorBox"
+      ></div>
+
+
+      <div class="input-area">
+
+        <textarea
+          id="userInput"
+          placeholder="Tell Tiwili about your business..."
+        ></textarea>
+
+        <button
+          id="sendButton"
+          onclick="sendMessage()"
+        >
+          Send →
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <aside class="profile-panel">
+
+      <div class="eyebrow">
+        Live profile
+      </div>
+
+      <h2>
+        What Tiwili knows
+      </h2>
+
+      <p>
+        This information is extracted from your conversation.
+      </p>
+
+
+      <div
+        id="profileDisplay"
+      ></div>
+
+
+      <div
+        class="ready-box"
+        id="readyBox"
+      >
+
+        <strong>
+          Enough to build your IMS.
+        </strong>
+
+        <p>
+          Tiwili now has enough information for a first-pass
+          management system recommendation.
+        </p>
+
+        <button
+          onclick="continueToConfigurator()"
+        >
+          Build My IMS →
+        </button>
+
+      </div>
+
+    </aside>
+
+  </div>
+
+</main>
+
+
+<script>
+
+
+  let messages = [];
+
+
+  let profile = {
+
+    companyName: "",
+
+    companySize: "",
+
+    industry: "",
+
+    jurisdictions: [],
+
+    businessProfile: [],
+
+    activities: [],
+
+    drivingDetails: [],
+
+    dangerousGoodsDetails: [],
+
+    environment: [],
+
+    businessNeeds: [],
+
+    standards: []
+
+  };
+
+
+  let busy = false;
+
+
+  function addMessage(
+    role,
+    content,
+    temporary = false
+  ) {
+
+    const box =
+      document
+        .getElementById(
+          "messages"
+        );
+
+
+    const div =
+      document
+        .createElement(
+          "div"
+        );
+
+
+    div.className =
+      "message " +
+      (
+        role === "assistant"
+        ? "ai"
+        : "user"
+      );
+
+
+    if (temporary) {
+
+      div.classList.add(
+        "typing"
+      );
+
+      div.id =
+        "typingMessage";
+
+    }
+
+
+    div.innerText =
+      content;
+
+
+    box.appendChild(
+      div
+    );
+
+
+    box.scrollTop =
+      box.scrollHeight;
+
+  }
+
+
+  function removeTyping() {
+
+    const typing =
+      document
+        .getElementById(
+          "typingMessage"
+        );
+
+
+    if (typing) {
+
+      typing.remove();
+
+    }
+
+  }
+
+
+  function displayValue(
+    value
+  ) {
+
+    if (
+      Array.isArray(value)
+    ) {
+
+      return value.length
+        ? value.join(", ")
+        : "Not yet known";
+
+    }
+
+
+    return value
+      ? value
+      : "Not yet known";
+
+  }
+
+
+  function updateProfileDisplay() {
+
+    const fields = [
+
+      [
+        "Company",
+        profile.companyName
+      ],
+
+      [
+        "Size",
+        profile.companySize
+      ],
+
+      [
+        "Industry",
+        profile.industry
+      ],
+
+      [
+        "Locations",
+        profile.jurisdictions
+      ],
+
+      [
+        "Business profile",
+        profile.businessProfile
+      ],
+
+      [
+        "Activities",
+        profile.activities
+      ],
+
+      [
+        "Driving",
+        profile.drivingDetails
+      ],
+
+      [
+        "Dangerous goods",
+        profile.dangerousGoodsDetails
+      ],
+
+      [
+        "Environment",
+        profile.environment
+      ],
+
+      [
+        "Business goals",
+        profile.businessNeeds
+      ],
+
+      [
+        "Standards and tools",
+        profile.standards
+      ]
+
+    ];
+
+
+    const html =
+      fields
+        .map(item => {
+
+          const value =
+            displayValue(
+              item[1]
+            );
+
+
+          const unknown =
+            value ===
+            "Not yet known";
+
+
+          return `
+            <div class="profile-item">
+
+              <div class="profile-label">
+                ${item[0]}
+              </div>
+
+              <div
+                class="profile-value
+                ${unknown ? "unknown" : ""}"
+              >
+                ${value}
+              </div>
+
+            </div>
+          `;
+
+        })
+        .join("");
+
+
+    document
+      .getElementById(
+        "profileDisplay"
+      )
+      .innerHTML =
+      html;
+
+  }
+
+
+  function showError(
+    message
+  ) {
+
+    const box =
+      document
+        .getElementById(
+          "errorBox"
+        );
+
+
+    box.innerText =
+      message;
+
+
+    box.style.display =
+      "block";
+
+  }
+
+
+  function clearError() {
+
+    document
+      .getElementById(
+        "errorBox"
+      )
+      .style
+      .display =
+      "none";
+
+  }
+
+
+  async function callAI() {
+
+    clearError();
+
+
+    busy = true;
+
+
+    document
+      .getElementById(
+        "sendButton"
+      )
+      .disabled =
+      true;
+
+
+    document
+      .getElementById(
+        "status"
+      )
+      .innerText =
+      "Thinking...";
+
+
+    addMessage(
+      "assistant",
+      "Tiwili is thinking...",
+      true
+    );
+
+
+    try {
+
+
+      const response =
+        await fetch(
+          "/api/interview",
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body:
+              JSON.stringify({
+                messages,
+                profile
+              })
+
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      removeTyping();
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.error ||
+          "The AI interviewer could not respond."
+        );
+
+      }
+
+
+      if (data.profile) {
+
+        profile = {
+          ...profile,
+          ...data.profile
+        };
+
+      }
+
+
+      updateProfileDisplay();
+
+
+      if (
+        data.assistantMessage
+      ) {
+
+        messages.push({
+
+          role:
+            "assistant",
+
+          content:
+            data.assistantMessage
+
+        });
+
+
+        addMessage(
+          "assistant",
+          data.assistantMessage
+        );
+
+      }
+
+
+      if (
+        data.complete
+      ) {
+
+        document
+          .getElementById(
+            "readyBox"
+          )
+          .classList
+          .add("active");
+
+
+        document
+          .getElementById(
+            "status"
+          )
+          .innerText =
+          "Profile ready";
+
+      } else {
+
+        document
+          .getElementById(
+            "status"
+          )
+          .innerText =
+          "Interviewing";
+
+      }
+
+
+    } catch (error) {
+
+
+      removeTyping();
+
+
+      console.error(
+        error
+      );
+
+
+      showError(
+        error.message
+      );
+
+
+      document
+        .getElementById(
+          "status"
+        )
+        .innerText =
+        "Error";
+
+
+    } finally {
+
+
+      busy = false;
+
+
+      document
+        .getElementById(
+          "sendButton"
+        )
+        .disabled =
+        false;
+
+
+      document
+        .getElementById(
+          "userInput"
+        )
+        .focus();
+
+
+    }
+
+  }
+
+
+  async function sendMessage() {
+
+
+    if (busy) {
+      return;
+    }
+
+
+    const input =
+      document
+        .getElementById(
+          "userInput"
+        );
+
+
+    const text =
+      input
+        .value
+        .trim();
+
+
+    if (!text) {
+      return;
+    }
+
+
+    input.value =
+      "";
+
+
+    messages.push({
+
+      role:
+        "user",
+
+      content:
+        text
+
+    });
+
+
+    addMessage(
+      "user",
+      text
+    );
+
+
+    await callAI();
+
+  }
+
+
+  document
+    .getElementById(
+      "userInput"
+    )
+    .addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Enter" &&
+          !event.shiftKey
+        ) {
+
+          event.preventDefault();
+
+          sendMessage();
+
+        }
+
+      }
+    );
+
+
+  function continueToConfigurator() {
+
+    localStorage.setItem(
+      "tiwiliAIProfile",
+      JSON.stringify(profile)
+    );
+
+
+    alert(
+      "Profile saved.\n\n" +
+      "Next we will connect this directly to the existing " +
+      "Tiwili rules engine."
+    );
+
+  }
+
+
+  updateProfileDisplay();
+
+
+  callAI();
+
+
+</script>
+
+
+</body>
+
+</html>
