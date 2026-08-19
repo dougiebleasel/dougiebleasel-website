@@ -115,6 +115,20 @@
       text-transform: lowercase;
     }
 
+    .tiwili-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .tiwili-brand img {
+      display: block;
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
     .back {
       color: var(--muted);
       font-size: 13px;
@@ -574,6 +588,141 @@
       margin-top: 44px;
     }
 
+
+    /* COMMERCIAL BRIDGE */
+
+    .commercial-section {
+      margin-top: 72px;
+      padding-top: 58px;
+      border-top: 1px solid var(--border);
+    }
+
+    .commercial-intro {
+      max-width: 840px;
+      margin-bottom: 28px;
+    }
+
+    .commercial-intro h2 {
+      font-size: clamp(34px, 4.5vw, 56px);
+      line-height: 1.02;
+      letter-spacing: -3px;
+      margin-bottom: 16px;
+    }
+
+    .commercial-intro p {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.65;
+      max-width: 760px;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .service-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-height: 520px;
+      padding: 26px;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #171A18, #111312);
+      border: 1px solid var(--border);
+      box-shadow: 0 18px 50px rgba(0,0,0,.16);
+    }
+
+    .service-card.featured {
+      border-color: rgba(111,197,90,.55);
+      background: linear-gradient(180deg, rgba(18,53,36,.72), #111312);
+    }
+
+    .service-kicker {
+      color: var(--accent-light);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .service-card h3 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .service-price {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .service-price span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+    }
+
+    .service-card > p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .service-list {
+      list-style: none;
+      margin: 4px 0 24px;
+      padding: 0;
+    }
+
+    .service-list li {
+      position: relative;
+      padding: 8px 0 8px 22px;
+      color: #D7DEDA;
+      font-size: 12px;
+      border-top: 1px solid rgba(244,246,245,.06);
+    }
+
+    .service-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent-light);
+      font-weight: 800;
+    }
+
+    .service-card .button {
+      margin-top: auto;
+      width: 100%;
+      text-align: center;
+    }
+
+    .commercial-note {
+      margin-top: 24px;
+      padding: 24px 26px;
+      border-radius: 10px;
+      background: rgba(44,130,89,.08);
+      border: 1px solid rgba(111,197,90,.20);
+    }
+
+    .commercial-note strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--white);
+    }
+
+    .commercial-note p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
     @media (max-width: 850px) {
 
       .choices {
@@ -582,6 +731,14 @@
 
       .result-grid {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        min-height: auto;
       }
 
     }
@@ -616,6 +773,15 @@
         width: 100%;
       }
 
+      .tiwili-brand img {
+        width: 210px;
+      }
+
+      .commercial-section {
+        margin-top: 52px;
+        padding-top: 42px;
+      }
+
     }
 
   </style>
@@ -628,20 +794,12 @@
 
 <header>
 
-  <div class="logo-lockup">
-
-    <div class="logo-mark">
-      <div class="logo-dot one"></div>
-      <div class="logo-dot two"></div>
-      <div class="logo-dot three"></div>
-    </div>
-
-    <div class="logo-copy">
-      <div class="logo-name">tiwili</div>
-      <div class="logo-tagline">talk it. walk it. live it.</div>
-    </div>
-
-  </div>
+  <a href="index.html" class="tiwili-brand">
+    <img
+      src="tiwili-logo.png.png"
+      alt="tiwili - talk it. walk it. live it."
+    >
+  </a>
 
   <a href="index.html" class="back">
     ← Back to Tiwili
@@ -1841,6 +1999,154 @@
   </div>
 
 
+
+  <!-- COMMERCIAL BRIDGE -->
+
+  <section class="commercial-section" id="commercialOptions">
+
+    <div class="commercial-intro">
+
+      <div class="eyebrow">
+        Put your system into action
+      </div>
+
+      <h2>
+        Your system. Your way.
+      </h2>
+
+      <p>
+        We've identified the management system your organisation needs.
+        Now choose how you'd like Tiwili to help you put it into practice.
+      </p>
+
+    </div>
+
+    <div class="service-grid">
+
+      <article class="service-card">
+
+        <div class="service-kicker">
+          Guide Me
+        </div>
+
+        <h3>
+          Own the implementation.
+        </h3>
+
+        <div class="service-price">
+          From $299/month
+          <span>Indicative platform pricing</span>
+        </div>
+
+        <p>
+          Best for organisations that want the framework, tools and AI
+          support to build and maintain their own management system.
+        </p>
+
+        <ul class="service-list">
+          <li>Tiwili IMS framework</li>
+          <li>Policies and procedure templates</li>
+          <li>Risk and compliance tools</li>
+          <li>AI guidance</li>
+          <li>Digital registers and forms</li>
+          <li>Ongoing system updates</li>
+        </ul>
+
+        <a href="ims.html" class="button button-secondary">
+          Explore Tiwili →
+        </a>
+
+      </article>
+
+      <article class="service-card featured">
+
+        <div class="service-kicker">
+          Build With Me
+        </div>
+
+        <h3>
+          Build it around what you already use.
+        </h3>
+
+        <div class="service-price">
+          From $12,000
+          <span>Scoped to your organisation</span>
+        </div>
+
+        <p>
+          Best for organisations that want expert support, tailored
+          documentation and integration with their existing technology.
+        </p>
+
+        <ul class="service-list">
+          <li>Everything in Guide Me</li>
+          <li>Gap assessment</li>
+          <li>Tailored documentation</li>
+          <li>Implementation workshops</li>
+          <li>Existing software integration</li>
+          <li>ISO readiness support</li>
+        </ul>
+
+        <button class="button button-primary" onclick="selectService('Build With Me')">
+          Build With Tiwili →
+        </button>
+
+      </article>
+
+      <article class="service-card">
+
+        <div class="service-kicker">
+          Build It For Me
+        </div>
+
+        <h3>
+          Make the problem go away.
+        </h3>
+
+        <div class="service-price">
+          From $30,000
+          <span>Complete implementation</span>
+        </div>
+
+        <p>
+          Best for organisations that want Tiwili to design and implement
+          the complete management system around their business and risks.
+        </p>
+
+        <ul class="service-list">
+          <li>Complete tailored IMS</li>
+          <li>Risk and compliance framework</li>
+          <li>Registers and workflows</li>
+          <li>AI and automation</li>
+          <li>Implementation support</li>
+          <li>ISO audit readiness</li>
+        </ul>
+
+        <button class="button button-primary" onclick="selectService('Build It For Me')">
+          Build My System →
+        </button>
+
+      </article>
+
+    </div>
+
+    <div class="commercial-note">
+
+      <strong>
+        Not sure which path is right for <span id="commercialCompany">your organisation</span>?
+      </strong>
+
+      <p>
+        That's okay. Tiwili already understands your business profile and
+        recommended system. The next step can use that information to help
+        scope the right implementation approach without making you repeat
+        everything you've already told us.
+      </p>
+
+    </div>
+
+  </section>
+
   <div class="result-actions">
 
     <button
@@ -2321,6 +2627,13 @@
       .innerText =
       companyName ||
       "your business";
+
+
+    document
+      .getElementById("commercialCompany")
+      .innerText =
+      companyName ||
+      "your organisation";
 
 
     /* CORE */
@@ -3420,6 +3733,40 @@
       );
 
     }
+
+  }
+
+
+
+  /* =========================
+     COMMERCIAL PATH
+     ========================= */
+
+  function selectService(serviceName) {
+
+    const companyName =
+      document
+        .getElementById("companyName")
+        .value
+        .trim();
+
+    localStorage.setItem(
+      "tiwiliSelectedService",
+      serviceName
+    );
+
+    localStorage.setItem(
+      "tiwiliSelectedCompany",
+      companyName || "your organisation"
+    );
+
+    alert(
+      serviceName +
+      " selected for " +
+      (companyName || "your organisation") +
+      ".\n\n" +
+      "Next we can turn this into a short proposal and contact step without asking you to repeat the discovery process."
+    );
 
   }
 
