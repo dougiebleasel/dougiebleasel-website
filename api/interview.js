@@ -54,148 +54,38 @@ Prefer plain questions such as:
 If the customer says they do not know something, that is acceptable.
 Record uncertainty and ask a simpler follow-up where useful.
 
-IMPORTANT:
 Never claim that Tiwili guarantees regulatory compliance or ISO certification.
-
-Extract information into this structure:
-
-companyName
-companySize
-industry
-jurisdictions
-businessProfile
-activities
-drivingDetails
-dangerousGoodsDetails
-environment
-businessNeeds
-standards
-
-Allowed values:
-
-industry:
-technology
-mobility
-energy
-manufacturing
-infrastructure
-medtech
-other
-
-jurisdictions:
-australia
-eu
-uk
-other
-
-businessProfile:
-employees
-physicalSites
-customerSites
-manufacture
-import
-regulated
-
-activities:
-driving
-contractors
-electrical
-dangerousGoods
-plant
-manualHandling
-public
-heights
-traffic
-remote
-
-drivingDetails:
-occasional
-regular
-fleet
-heavyVehicles
-
-dangerousGoodsDetails:
-store
-transport
-use
-import
-manufacture
-unsure
-
-environment:
-waste
-emissions
-environmentalImpact
-products
-
-businessNeeds:
-majorClients
-government
-regulated
-investors
-
-standards:
-iso9001
-iso14001
-iso45001
-riskRegister
-incident
-bcdr
-
-Return ONLY valid JSON in this exact shape:
-
-{
-  "assistantMessage": "Your conversational response and next question",
-  "profile": {
-    "companyName": "",
-    "companySize": "",
-    "industry": "",
-    "jurisdictions": [],
-    "businessProfile": [],
-    "activities": [],
-    "drivingDetails": [],
-    "dangerousGoodsDetails": [],
-    "environment": [],
-    "businessNeeds": [],
-    "standards": []
-  },
-  "complete": false
-}
 
 Preserve previously known profile information unless the customer corrects it.
 
 Set complete=true only when you have enough information to produce a
 reasonable first-pass IMS configuration.
 
-You do NOT need every field completed.
-
 A useful minimum usually includes:
 - what the organisation does;
 - where it operates;
 - whether it has employees;
-- whether it performs physical/operational work;
+- whether it performs physical or operational work;
 - major operational activities;
-- major customer/regulatory objectives.
+- major customer or regulatory objectives.
 
 Current known profile:
 ${JSON.stringify(profile)}
 `;
 
 
-    const conversation = messages
-      .map(message => {
-        return `${message.role.toUpperCase()}: ${message.content}`;
-      })
-      .join("\n");
-
-
-    const input = `
-${systemPrompt}
-
-Conversation so far:
-
-${conversation || "No conversation yet. Begin the interview."}
-`;
+    const conversation = messages.map(message => ({
+      role: message.role === "assistant" ? "assistant" : "user",
+      content: [
+        {
+          type:
+            message.role === "assistant"
+              ? "output_text"
+              : "input_text",
+          text: message.content
+        }
+      ]
+    }));
 
 
     const response = await fetch(
@@ -210,9 +100,221 @@ ${conversation || "No conversation yet. Begin the interview."}
         },
 
         body: JSON.stringify({
-          model: "gpt-5-mini",
-          input: input
+
+          model: "gpt-5.6-luna",
+
+          instructions: systemPrompt,
+
+          input: conversation.length
+            ? conversation
+            : "Begin the interview.",
+
+          text: {
+
+            format: {
+
+              type: "json_schema",
+
+              name: "tiwili_business_profile",
+
+              strict: true,
+
+              schema: {
+
+                type: "object",
+
+                additionalProperties: false,
+
+                properties: {
+
+                  assistantMessage: {
+                    type: "string"
+                  },
+
+                  profile: {
+
+                    type: "object",
+
+                    additionalProperties: false,
+
+                    properties: {
+
+                      companyName: {
+                        type: "string"
+                      },
+
+                      companySize: {
+                        type: "string"
+                      },
+
+                      industry: {
+                        type: "string",
+                        enum: [
+                          "",
+                          "technology",
+                          "mobility",
+                          "energy",
+                          "manufacturing",
+                          "infrastructure",
+                          "medtech",
+                          "other"
+                        ]
+                      },
+
+                      jurisdictions: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "australia",
+                            "eu",
+                            "uk",
+                            "other"
+                          ]
+                        }
+                      },
+
+                      businessProfile: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "employees",
+                            "physicalSites",
+                            "customerSites",
+                            "manufacture",
+                            "import",
+                            "regulated"
+                          ]
+                        }
+                      },
+
+                      activities: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "driving",
+                            "contractors",
+                            "electrical",
+                            "dangerousGoods",
+                            "plant",
+                            "manualHandling",
+                            "public",
+                            "heights",
+                            "traffic",
+                            "remote"
+                          ]
+                        }
+                      },
+
+                      drivingDetails: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "occasional",
+                            "regular",
+                            "fleet",
+                            "heavyVehicles"
+                          ]
+                        }
+                      },
+
+                      dangerousGoodsDetails: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "store",
+                            "transport",
+                            "use",
+                            "import",
+                            "manufacture",
+                            "unsure"
+                          ]
+                        }
+                      },
+
+                      environment: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "waste",
+                            "emissions",
+                            "environmentalImpact",
+                            "products"
+                          ]
+                        }
+                      },
+
+                      businessNeeds: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "majorClients",
+                            "government",
+                            "regulated",
+                            "investors"
+                          ]
+                        }
+                      },
+
+                      standards: {
+                        type: "array",
+                        items: {
+                          type: "string",
+                          enum: [
+                            "iso9001",
+                            "iso14001",
+                            "iso45001",
+                            "riskRegister",
+                            "incident",
+                            "bcdr"
+                          ]
+                        }
+                      }
+
+                    },
+
+                    required: [
+                      "companyName",
+                      "companySize",
+                      "industry",
+                      "jurisdictions",
+                      "businessProfile",
+                      "activities",
+                      "drivingDetails",
+                      "dangerousGoodsDetails",
+                      "environment",
+                      "businessNeeds",
+                      "standards"
+                    ]
+
+                  },
+
+                  complete: {
+                    type: "boolean"
+                  }
+
+                },
+
+                required: [
+                  "assistantMessage",
+                  "profile",
+                  "complete"
+                ]
+
+              }
+
+            }
+
+          }
+
         })
+
       }
     );
 
@@ -260,8 +362,7 @@ ${conversation || "No conversation yet. Begin the interview."}
               content.type === "output_text"
             ) {
 
-              outputText +=
-                content.text;
+              outputText += content.text;
 
             }
 
@@ -274,12 +375,19 @@ ${conversation || "No conversation yet. Begin the interview."}
     }
 
 
-    outputText =
-      outputText
-        .replace(/^```json\s*/i, "")
-        .replace(/^```\s*/i, "")
-        .replace(/\s*```$/i, "")
-        .trim();
+    if (!outputText) {
+
+      console.error(
+        "No output text returned:",
+        JSON.stringify(data)
+      );
+
+      return res.status(500).json({
+        error:
+          "The AI returned no usable response."
+      });
+
+    }
 
 
     let result;
@@ -290,10 +398,10 @@ ${conversation || "No conversation yet. Begin the interview."}
       result =
         JSON.parse(outputText);
 
-    } catch (parseError) {
+    } catch (error) {
 
       console.error(
-        "Could not parse AI JSON:",
+        "Structured output parse failure:",
         outputText
       );
 
