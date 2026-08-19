@@ -1932,246 +1932,10 @@
       .classList
       .add("active");
 
-   /* =========================
-   BUILD FROM AI PROFILE
-   ========================= */
-
-function selectValuesFromProfile(
-  className,
-  values
-) {
-
-  if (!Array.isArray(values)) {
-    return;
-  }
-
-
-  document
-    .querySelectorAll(
-      "." + className
-    )
-    .forEach(input => {
-
-      const selected =
-        values.includes(
-          input.value
-        );
-
-
-      input.checked =
-        selected;
-
-
-      const choice =
-        input.closest(
-          ".choice"
-        );
-
-
-      if (choice) {
-
-        choice.classList.toggle(
-          "selected",
-          selected
-        );
-
-      }
-
-    });
-
-}
-
-
-function buildFromAIProfile() {
-
-  const params =
-    new URLSearchParams(
-      window.location.search
-    );
-
-
-  const source =
-    params.get("source");
-
-
-  if (source !== "ai") {
-    return;
-  }
-
-
-  const storedProfile =
-    localStorage.getItem(
-      "tiwiliAIProfile"
-    );
-
-
-  if (!storedProfile) {
-    return;
-  }
-
-
-  try {
-
-    const aiProfile =
-      JSON.parse(
-        storedProfile
-      );
-
-
-    /* COMPANY */
-
-    if (aiProfile.companyName) {
-
-      document
-        .getElementById(
-          "companyName"
-        )
-        .value =
-        aiProfile.companyName;
-
-    }
-
-
-    if (aiProfile.companySize) {
-
-      const sizeSelect =
-        document.getElementById(
-          "companySize"
-        );
-
-
-      const validSizes = [
-        "1-10",
-        "11-50",
-        "51-200",
-        "201+"
-      ];
-
-
-      if (
-        validSizes.includes(
-          aiProfile.companySize
-        )
-      ) {
-
-        sizeSelect.value =
-          aiProfile.companySize;
-
-      }
-
-    }
-
-
-    if (aiProfile.industry) {
-
-      const industrySelect =
-        document.getElementById(
-          "industry"
-        );
-
-
-      const validIndustries = [
-        "technology",
-        "mobility",
-        "energy",
-        "manufacturing",
-        "infrastructure",
-        "medtech",
-        "other"
-      ];
-
-
-      if (
-        validIndustries.includes(
-          aiProfile.industry
-        )
-      ) {
-
-        industrySelect.value =
-          aiProfile.industry;
-
-      }
-
-    }
-
-
-    /* PROFILE VALUES */
-
-    selectValuesFromProfile(
-      "jurisdiction",
-      aiProfile.jurisdictions
-    );
-
-
-    selectValuesFromProfile(
-      "businessProfile",
-      aiProfile.businessProfile
-    );
-
-
-    selectValuesFromProfile(
-      "activity",
-      aiProfile.activities
-    );
-
-
-    selectValuesFromProfile(
-      "drivingDetail",
-      aiProfile.drivingDetails
-    );
-
-
-    selectValuesFromProfile(
-      "dangerousGoodsDetail",
-      aiProfile.dangerousGoodsDetails
-    );
-
-
-    selectValuesFromProfile(
-      "environment",
-      aiProfile.environment
-    );
-
-
-    selectValuesFromProfile(
-      "businessNeed",
-      aiProfile.businessNeeds
-    );
-
-
-    selectValuesFromProfile(
-      "standard",
-      aiProfile.standards
-    );
-
-
-    /* UPDATE CONDITIONAL LOGIC */
-
     updateConditionalQuestions();
-
     updateFollowUps();
+    updateProgress();
 
-
-    /* BUILD THE IMS */
-
-    generateResults();
-
-
-  } catch (error) {
-
-    console.error(
-      "Could not load AI profile:",
-      error
-    );
-
-  }
-
-}
-updateConditionalQuestions();
-updateFollowUps();
-updateProgress();
-
-buildFromAIProfile();
 
     window.scrollTo({
       top: 220,
@@ -3418,6 +3182,248 @@ buildFromAIProfile();
   }
 
 
+
+  /* =========================
+     AI PROFILE IMPORT
+     ========================= */
+
+  function selectValuesFromProfile(
+    className,
+    values
+  ) {
+
+    if (!Array.isArray(values)) {
+      return;
+    }
+
+    document
+      .querySelectorAll(
+        "." + className
+      )
+      .forEach(input => {
+
+        const selected =
+          values.includes(
+            input.value
+          );
+
+        input.checked =
+          selected;
+
+        const choice =
+          input.closest(".choice");
+
+        if (choice) {
+
+          choice.classList.toggle(
+            "selected",
+            selected
+          );
+
+        }
+
+      });
+
+  }
+
+
+  function buildFromAIProfile() {
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    if (
+      params.get("source") !== "ai"
+    ) {
+      return;
+    }
+
+
+    const storedProfile =
+      localStorage.getItem(
+        "tiwiliAIProfile"
+      );
+
+
+    if (!storedProfile) {
+
+      console.warn(
+        "AI source selected but no Tiwili AI profile was found."
+      );
+
+      return;
+
+    }
+
+
+    try {
+
+      const aiProfile =
+        JSON.parse(
+          storedProfile
+        );
+
+
+      /* COMPANY */
+
+      if (aiProfile.companyName) {
+
+        document
+          .getElementById(
+            "companyName"
+          )
+          .value =
+          aiProfile.companyName;
+
+      }
+
+
+      if (aiProfile.companySize) {
+
+        const sizeSelect =
+          document.getElementById(
+            "companySize"
+          );
+
+        const validSizes = [
+          "1-10",
+          "11-50",
+          "51-200",
+          "201+"
+        ];
+
+        if (
+          validSizes.includes(
+            aiProfile.companySize
+          )
+        ) {
+
+          sizeSelect.value =
+            aiProfile.companySize;
+
+        }
+
+      }
+
+
+      if (aiProfile.industry) {
+
+        const industrySelect =
+          document.getElementById(
+            "industry"
+          );
+
+        const validIndustries = [
+          "technology",
+          "mobility",
+          "energy",
+          "manufacturing",
+          "infrastructure",
+          "medtech",
+          "other"
+        ];
+
+        if (
+          validIndustries.includes(
+            aiProfile.industry
+          )
+        ) {
+
+          industrySelect.value =
+            aiProfile.industry;
+
+        }
+
+      }
+
+
+      /* IMPORT MAIN STRUCTURED ANSWERS */
+
+      selectValuesFromProfile(
+        "jurisdiction",
+        aiProfile.jurisdictions
+      );
+
+      selectValuesFromProfile(
+        "businessProfile",
+        aiProfile.businessProfile
+      );
+
+      selectValuesFromProfile(
+        "activity",
+        aiProfile.activities
+      );
+
+
+      /*
+       * Run conditional logic after the main activity/profile
+       * values are loaded so relevant questions and follow-ups
+       * are active before importing their detail values.
+       */
+
+      updateConditionalQuestions();
+      updateFollowUps();
+
+
+      /* IMPORT FOLLOW-UP ANSWERS */
+
+      selectValuesFromProfile(
+        "drivingDetail",
+        aiProfile.drivingDetails
+      );
+
+      selectValuesFromProfile(
+        "dangerousGoodsDetail",
+        aiProfile.dangerousGoodsDetails
+      );
+
+
+      /* IMPORT REMAINING ANSWERS */
+
+      selectValuesFromProfile(
+        "environment",
+        aiProfile.environment
+      );
+
+      selectValuesFromProfile(
+        "businessNeed",
+        aiProfile.businessNeeds
+      );
+
+      selectValuesFromProfile(
+        "standard",
+        aiProfile.standards
+      );
+
+
+      console.log(
+        "Tiwili AI profile loaded:",
+        aiProfile
+      );
+
+
+      /*
+       * Skip the questionnaire and build the recommendation
+       * directly from the AI-discovered profile.
+       */
+
+      generateResults();
+
+
+    } catch (error) {
+
+      console.error(
+        "Could not load Tiwili AI profile:",
+        error
+      );
+
+    }
+
+  }
+
+
   function restartConfigurator() {
 
     document
@@ -3457,6 +3463,28 @@ buildFromAIProfile();
       .value = "";
 
 
+    /* Leave AI mode when starting again manually */
+
+    const url =
+      new URL(
+        window.location.href
+      );
+
+    url.searchParams.delete(
+      "source"
+    );
+
+    window.history.replaceState(
+      {},
+      "",
+      url.pathname
+    );
+
+    localStorage.removeItem(
+      "tiwiliAIProfile"
+    );
+
+
     currentStep = 1;
 
     updateConditionalQuestions();
@@ -3493,6 +3521,8 @@ buildFromAIProfile();
   updateConditionalQuestions();
   updateFollowUps();
   updateProgress();
+
+  buildFromAIProfile();
 
 
 </script>
