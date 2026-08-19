@@ -210,7 +210,7 @@ ${conversation || "No conversation yet. Begin the interview."}
         },
 
         body: JSON.stringify({
-          model: "gpt-5.6-luna",
+          model: "gpt-5-mini",
           input: input
         })
       }
