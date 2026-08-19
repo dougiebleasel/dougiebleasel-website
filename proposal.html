@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Request My Proposal</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --accent-light: #6FC55A;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 5%;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.96);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .tiwili-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .tiwili-brand img {
+      display: block;
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+    .hero {
+      padding: 62px 6% 52px;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 80% 20%, rgba(44,130,89,.20), transparent 30%),
+        linear-gradient(135deg, #090D0B, #081812);
+    }
+
+    .hero-inner {
+      max-width: 980px;
+    }
+
+    .eyebrow {
+      color: var(--accent-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 5.5vw, 72px);
+      line-height: .98;
+      letter-spacing: -4px;
+      max-width: 900px;
+    }
+
+    .hero p {
+      margin-top: 20px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: auto;
+      padding: 52px 5% 100px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, .8fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .panel {
+      background:
+        linear-gradient(
+          180deg,
+          #151817,
+          #111312
+        );
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .summary-panel {
+      position: sticky;
+      top: 112px;
+    }
+
+    .selected-service {
+      border: 1px solid rgba(111,197,90,.34);
+      background: rgba(44,130,89,.10);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .selected-service .label {
+      color: var(--accent-light);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 7px;
+    }
+
+    .selected-service h2 {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+
+    .price {
+      color: var(--white);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .price span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 400;
+      display: block;
+      margin-top: 3px;
+    }
+
+    .section-title {
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    .summary-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .summary-row {
+      padding: 13px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-row:first-child {
+      border-top: 0;
+    }
+
+    .summary-label {
+      color: var(--accent-light);
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      color: var(--white);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .recommendation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .recommendation-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--grey);
+      padding: 16px;
+    }
+
+    .recommendation-card strong {
+      display: block;
+      color: var(--white);
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .recommendation-card span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .form-intro h2 {
+      font-size: clamp(30px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+
+    .form-intro p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      margin-bottom: 28px;
+      max-width: 680px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      background: var(--grey);
+      color: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 14px 15px;
+      outline: 0;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent-light);
+    }
+
+    .button {
+      border: 0;
+      border-radius: 7px;
+      min-height: 50px;
+      padding: 0 22px;
+      background: var(--accent-light);
+      color: #0B1A11;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.07);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .privacy-note {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+      margin-top: 14px;
+    }
+
+    .confirmation {
+      display: none;
+      border: 1px solid rgba(111,197,90,.42);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.14),
+          rgba(11,61,46,.22)
+        );
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .confirmation.active {
+      display: block;
+    }
+
+    .confirmation h2 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .confirmation p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .tiwili-brand img {
+        width: 210px;
+      }
+
+      .back {
+        display: none;
+      }
+
+      .recommendation-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<header>
+
+  <a href="index.html" class="tiwili-brand">
+    <img
+      src="tiwili-logo.png.png"
+      alt="tiwili - talk it. walk it. live it."
+    >
+  </a>
+
+  <a href="configure.html" class="back">
+    ← Back to recommendation
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      Tiwili Proposal
+    </div>
+
+    <h1>
+      Let's build it.
+    </h1>
+
+    <p id="heroCopy">
+      We've already done the discovery work. Now we just need to know who
+      to speak with so we can turn your recommended system into an
+      implementation approach.
+    </p>
+
+  </div>
+
+</section>
+
+
+<main>
+
+  <div class="layout">
+
+
+    <section class="panel">
+
+      <div id="proposalForm">
+
+        <div class="form-intro">
+
+          <div class="eyebrow">
+            Next step
+          </div>
+
+          <h2>
+            Request your proposal.
+          </h2>
+
+          <p>
+            Tiwili already has your business profile, selected service and
+            recommended management system. You don't need to fill all of that
+            in again.
+          </p>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="contactName">
+            Your name
+          </label>
+
+          <input
+            type="text"
+            id="contactName"
+            placeholder="Name"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="contactEmail">
+            Work email
+          </label>
+
+          <input
+            type="email"
+            id="contactEmail"
+            placeholder="name@company.com"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="contactPhone">
+            Phone
+          </label>
+
+          <input
+            type="tel"
+            id="contactPhone"
+            placeholder="Optional"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="contactNotes">
+            Anything you'd like us to know?
+          </label>
+
+          <textarea
+            id="contactNotes"
+            placeholder="Optional — timing, certification deadlines, customer requirements, current systems, or anything else useful."
+          ></textarea>
+
+        </div>
+
+
+        <div class="actions">
+
+          <button
+            class="button"
+            onclick="submitProposal()"
+          >
+            Request My Proposal →
+          </button>
+
+          <a
+            href="configure.html"
+            class="button button-secondary"
+          >
+            Back
+          </a>
+
+        </div>
+
+
+        <div class="privacy-note">
+          Prototype note: this version stores the enquiry in your browser only.
+          It does not yet email or transmit the enquiry anywhere.
+        </div>
+
+      </div>
+
+
+      <div
+        class="confirmation"
+        id="confirmation"
+      >
+
+        <div class="eyebrow">
+          Request saved
+        </div>
+
+        <h2>
+          Thanks — we've got the next step ready.
+        </h2>
+
+        <p id="confirmationCopy">
+          Your proposal request has been saved in this browser.
+        </p>
+
+        <div class="actions">
+
+          <a
+            href="index.html"
+            class="button"
+          >
+            Back to Tiwili →
+          </a>
+
+          <a
+            href="ai-configure.html"
+            class="button button-secondary"
+          >
+            Start another discovery
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <aside class="panel summary-panel">
+
+      <div class="selected-service">
+
+        <div class="label">
+          Selected approach
+        </div>
+
+        <h2 id="selectedService">
+          Build With Me
+        </h2>
+
+        <div class="price" id="selectedPrice">
+          From $12,000
+          <span>Indicative starting investment</span>
+        </div>
+
+      </div>
+
+
+      <h3 class="section-title">
+        What Tiwili already knows
+      </h3>
+
+      <p class="section-copy">
+        This summary comes from the discovery conversation and the
+        recommendation engine.
+      </p>
+
+
+      <div
+        class="summary-list"
+        id="profileSummary"
+      ></div>
+
+
+      <h3 class="section-title">
+        Recommended system
+      </h3>
+
+      <div
+        class="recommendation-grid"
+        id="recommendationSummary"
+      ></div>
+
+    </aside>
+
+
+  </div>
+
+</main>
+
+
+<script>
+
+  const selectedService =
+    localStorage.getItem(
+      "tiwiliSelectedService"
+    ) || "Build With Me";
+
+
+  const selectedCompany =
+    localStorage.getItem(
+      "tiwiliSelectedCompany"
+    ) || "your organisation";
+
+
+  let profile = {};
+  let recommendation = {};
+
+
+  try {
+
+    profile =
+      JSON.parse(
+        localStorage.getItem(
+          "tiwiliAIProfile"
+        ) || "{}"
+      );
+
+  } catch (error) {
+
+    profile = {};
+
+  }
+
+
+  try {
+
+    recommendation =
+      JSON.parse(
+        localStorage.getItem(
+          "tiwiliRecommendation"
+        ) || "{}"
+      );
+
+  } catch (error) {
+
+    recommendation = {};
+
+  }
+
+
+  const servicePrices = {
+
+    "Build With Me":
+      "From $12,000",
+
+    "Build It For Me":
+      "From $30,000"
+
+  };
+
+
+  function displayArray(value) {
+
+    if (
+      Array.isArray(value) &&
+      value.length
+    ) {
+
+      return value.join(", ");
+
+    }
+
+    return "Not specified";
+
+  }
+
+
+  function renderProposal() {
+
+    document
+      .getElementById(
+        "selectedService"
+      )
+      .innerText =
+      selectedService;
+
+
+    document
+      .getElementById(
+        "selectedPrice"
+      )
+      .innerHTML =
+      (
+        servicePrices[
+          selectedService
+        ] ||
+        "Indicative pricing"
+      ) +
+      '<span>Indicative starting investment</span>';
+
+
+    document
+      .getElementById(
+        "heroCopy"
+      )
+      .innerText =
+      "We've already done the discovery work for " +
+      selectedCompany +
+      ". Now we just need to know who to speak with so we can turn the recommended system into an implementation approach.";
+
+
+    const profileRows = [
+
+      [
+        "Company",
+        profile.companyName ||
+        selectedCompany
+      ],
+
+      [
+        "Company size",
+        profile.companySize ||
+        "Not specified"
+      ],
+
+      [
+        "Industry",
+        profile.industry ||
+        "Not specified"
+      ],
+
+      [
+        "Jurisdictions",
+        displayArray(
+          profile.jurisdictions
+        )
+      ],
+
+      [
+        "Activities",
+        displayArray(
+          profile.activities
+        )
+      ],
+
+      [
+        "Business goals",
+        displayArray(
+          profile.businessNeeds
+        )
+      ],
+
+      [
+        "Standards and tools",
+        displayArray(
+          profile.standards
+        )
+      ]
+
+    ];
+
+
+    document
+      .getElementById(
+        "profileSummary"
+      )
+      .innerHTML =
+      profileRows
+        .map(
+          item => `
+            <div class="summary-row">
+              <div class="summary-label">
+                ${item[0]}
+              </div>
+              <div class="summary-value">
+                ${item[1]}
+              </div>
+            </div>
+          `
+        )
+        .join("");
+
+
+    const groups = [
+
+      [
+        "Core IMS",
+        recommendation.core
+      ],
+
+      [
+        "Risk modules",
+        recommendation.risks
+      ],
+
+      [
+        "Environment",
+        recommendation.environment
+      ],
+
+      [
+        "Assurance",
+        recommendation.assurance
+      ],
+
+      [
+        "Digital and AI",
+        recommendation.tools
+      ]
+
+    ];
+
+
+    const cards =
+      groups
+        .filter(
+          item =>
+            Array.isArray(item[1]) &&
+            item[1].length
+        )
+        .map(
+          item => {
+
+            const names =
+              item[1]
+                .map(
+                  module =>
+                    Array.isArray(module)
+                      ? module[0]
+                      : module.title ||
+                        String(module)
+                )
+                .join(", ");
+
+            return `
+              <div class="recommendation-card">
+                <strong>
+                  ${item[0]} · ${item[1].length}
+                </strong>
+                <span>
+                  ${names}
+                </span>
+              </div>
+            `;
+
+          }
+        );
+
+
+    document
+      .getElementById(
+        "recommendationSummary"
+      )
+      .innerHTML =
+      cards.length
+        ? cards.join("")
+        : `
+          <div class="empty">
+            Recommendation summary is not available in this browser session.
+          </div>
+        `;
+
+  }
+
+
+  function submitProposal() {
+
+    const name =
+      document
+        .getElementById(
+          "contactName"
+        )
+        .value
+        .trim();
+
+
+    const email =
+      document
+        .getElementById(
+          "contactEmail"
+        )
+        .value
+        .trim();
+
+
+    const phone =
+      document
+        .getElementById(
+          "contactPhone"
+        )
+        .value
+        .trim();
+
+
+    const notes =
+      document
+        .getElementById(
+          "contactNotes"
+        )
+        .value
+        .trim();
+
+
+    if (!name) {
+
+      alert(
+        "Please enter your name."
+      );
+
+      return;
+
+    }
+
+
+    if (
+      !email ||
+      !email.includes("@")
+    ) {
+
+      alert(
+        "Please enter a valid work email."
+      );
+
+      return;
+
+    }
+
+
+    const enquiry = {
+
+      createdAt:
+        new Date().toISOString(),
+
+      company:
+        selectedCompany,
+
+      service:
+        selectedService,
+
+      contact: {
+        name,
+        email,
+        phone,
+        notes
+      },
+
+      profile,
+
+      recommendation
+
+    };
+
+
+    let enquiries = [];
+
+
+    try {
+
+      enquiries =
+        JSON.parse(
+          localStorage.getItem(
+            "tiwiliEnquiries"
+          ) || "[]"
+        );
+
+      if (
+        !Array.isArray(
+          enquiries
+        )
+      ) {
+
+        enquiries = [];
+
+      }
+
+    } catch (error) {
+
+      enquiries = [];
+
+    }
+
+
+    enquiries.push(
+      enquiry
+    );
+
+
+    localStorage.setItem(
+      "tiwiliEnquiries",
+      JSON.stringify(
+        enquiries
+      )
+    );
+
+
+    document
+      .getElementById(
+        "proposalForm"
+      )
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById(
+        "confirmation"
+      )
+      .classList
+      .add("active");
+
+
+    document
+      .getElementById(
+        "confirmationCopy"
+      )
+      .innerText =
+      "Your " +
+      selectedService +
+      " proposal request for " +
+      selectedCompany +
+      " has been saved in this browser. The next version can send this complete discovery and recommendation directly to Tiwili.";
+
+
+    window.scrollTo({
+      top: 180,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  renderProposal();
+
+</script>
+
+
+</body>
+
+</html>
