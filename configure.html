@@ -3469,6 +3469,30 @@
       " tools";
 
 
+    /* SAVE THE COMPLETE RECOMMENDATION FOR THE PROPOSAL PAGE */
+
+    const recommendation = {
+      companyName:
+        companyName ||
+        "your organisation",
+
+      core,
+      risks,
+      environment:
+        envModules,
+      assurance,
+      tools
+    };
+
+
+    localStorage.setItem(
+      "tiwiliRecommendation",
+      JSON.stringify(
+        recommendation
+      )
+    );
+
+
     document
       .getElementById(
         "questionnaire"
@@ -3760,13 +3784,8 @@
       companyName || "your organisation"
     );
 
-    alert(
-      serviceName +
-      " selected for " +
-      (companyName || "your organisation") +
-      ".\n\n" +
-      "Next we can turn this into a short proposal and contact step without asking you to repeat the discovery process."
-    );
+    window.location.href =
+      "proposal.html";
 
   }
 
