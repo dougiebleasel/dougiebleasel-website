@@ -102,6 +102,24 @@
       text-transform: lowercase;
     }
 
+    .tiwili-brand {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .tiwili-brand img {
+      display: block;
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .footer-logo img {
+      width: 220px;
+    }
+
     /* =========================
        NAVIGATION
        ========================= */
@@ -594,12 +612,12 @@
         padding: 14px 5%;
       }
 
-      .logo-name {
-        font-size: 24px;
+      .tiwili-brand img {
+        width: 210px;
       }
 
-      .logo-tagline {
-        font-size: 10px;
+      .footer-logo img {
+        width: 190px;
       }
 
       .nav-links {
@@ -659,20 +677,12 @@
 
   <nav>
 
-    <div class="logo-lockup">
-
-      <div class="logo-mark">
-        <div class="logo-dot one"></div>
-        <div class="logo-dot two"></div>
-        <div class="logo-dot three"></div>
-      </div>
-
-      <div class="logo-copy">
-        <div class="logo-name">tiwili</div>
-        <div class="logo-tagline">talk it. walk it. live it.</div>
-      </div>
-
-    </div>
+    <a href="index.html" class="tiwili-brand">
+      <img
+        src="tiwili-logo.png.png"
+        alt="tiwili - talk it. walk it. live it."
+      >
+    </a>
 
 
     <div class="nav-links">
@@ -726,7 +736,7 @@
 <div class="hero-actions">
 
   <a
-    href="configure.html"
+    href="ai-configure.html"
     class="button button-primary"
   >
     build my ims →
@@ -997,20 +1007,12 @@
 
     <div class="footer-brand">
 
-      <div class="logo-lockup">
-
-        <div class="logo-mark">
-          <div class="logo-dot one"></div>
-          <div class="logo-dot two"></div>
-          <div class="logo-dot three"></div>
-        </div>
-
-        <div class="logo-copy">
-          <div class="logo-name">tiwili</div>
-          <div class="logo-tagline">talk it. walk it. live it.</div>
-        </div>
-
-      </div>
+      <a href="index.html" class="tiwili-brand footer-logo">
+        <img
+          src="tiwili-logo.png.png"
+          alt="tiwili - talk it. walk it. live it."
+        >
+      </a>
 
       <p>
         Practical risk and management systems for startups and growing
