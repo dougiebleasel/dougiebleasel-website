@@ -1,3 +1,5 @@
+const riskManagementMaster =
+  require("../masters/risk-management");
 module.exports = async function handler(req, res) {
 
   if (req.method !== "POST") {
