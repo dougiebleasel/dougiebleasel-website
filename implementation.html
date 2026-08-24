@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Implementation Setup</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --accent-light: #6FC55A;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 5%;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.96);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .tiwili-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .tiwili-brand img {
+      display: block;
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+    .hero {
+      padding: 64px 6% 54px;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(44,130,89,.20),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #090D0B,
+          #081812
+        );
+    }
+
+    .hero-inner {
+      max-width: 980px;
+    }
+
+    .eyebrow {
+      color: var(--accent-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 5.5vw, 72px);
+      line-height: .98;
+      letter-spacing: -4px;
+      max-width: 900px;
+    }
+
+    .hero p {
+      margin-top: 20px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 54px 5% 100px;
+    }
+
+    .context-box {
+      padding: 20px 22px;
+      border: 1px solid rgba(111,197,90,.25);
+      background: rgba(44,130,89,.08);
+      border-radius: 10px;
+      margin-bottom: 36px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .context-box strong {
+      color: var(--accent-light);
+    }
+
+    .configuration {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 13px;
+    }
+
+    .config-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(13,13,13,.4);
+      color: var(--white);
+      font-size: 11px;
+    }
+
+    .section {
+      margin-top: 46px;
+      padding-top: 6px;
+    }
+
+    .section-header {
+      margin-bottom: 22px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(28px, 3vw, 40px);
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label.field-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .hint {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 400;
+      margin-top: 3px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 48px;
+      background: var(--grey);
+      color: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 12px 14px;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 105px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--accent-light);
+    }
+
+    select option {
+      background: var(--grey);
+      color: var(--white);
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .choice {
+      position: relative;
+      padding: 18px;
+      min-height: 125px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: #151817;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .choice:hover {
+      border-color: rgba(111,197,90,.45);
+    }
+
+    .choice.selected {
+      border-color: var(--accent-light);
+      background: rgba(18,53,36,.65);
+    }
+
+    .choice input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .choice strong {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    .choice span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-top: 48px;
+    }
+
+    .ready-box {
+      margin-top: 52px;
+      padding: 30px;
+      border-radius: 13px;
+      border: 1px solid rgba(111,197,90,.35);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.14),
+          rgba(11,61,46,.22)
+        );
+    }
+
+    .ready-box h2 {
+      font-size: 32px;
+      letter-spacing: -1.5px;
+      margin-bottom: 10px;
+    }
+
+    .ready-box p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      max-width: 720px;
+    }
+
+    .ingredients {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .ingredient {
+      padding: 14px;
+      border: 1px solid var(--border);
+      background: rgba(13,13,13,.35);
+      border-radius: 8px;
+    }
+
+    .ingredient-number {
+      color: var(--accent-light);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .ingredient strong {
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      border-radius: 7px;
+      min-height: 50px;
+      padding: 0 24px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .button-primary {
+      background: var(--accent-light);
+      color: #0B1A11;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.07);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .button-secondary:hover {
+      border-color: var(--accent);
+    }
+
+    .error-box {
+      display: none;
+      margin-top: 18px;
+      padding: 12px 14px;
+      border-radius: 7px;
+      background: rgba(160,50,50,.18);
+      border: 1px solid rgba(210,80,80,.35);
+      color: #FFC6C6;
+      font-size: 12px;
+    }
+
+    .error-box.active {
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ingredients {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .tiwili-brand img {
+        width: 210px;
+      }
+
+      .back {
+        display: none;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <a
+    href="index.html"
+    class="tiwili-brand"
+  >
+
+    <img
+      src="tiwili-logo.png.png"
+      alt="tiwili - talk it. walk it. live it."
+    >
+
+  </a>
+
+
+  <a
+    href="system-config.html"
+    class="back"
+  >
+    ← Back to system configuration
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      Implementation Discovery
+    </div>
+
+    <h1>
+      Now let's make it yours.
+    </h1>
+
+    <p>
+      We already know what your business does and what management system
+      you need. Now we need a little more detail about how your organisation
+      actually works so Tiwili can build the system around you.
+    </p>
+
+  </div>
+
+</section>
+
+
+<main>
+
+
+  <div class="context-box">
+
+    Setting up the management system for
+
+    <strong id="companyDisplay">
+      your organisation
+    </strong>.
+
+    <div
+      class="configuration"
+      id="configurationDisplay"
+    ></div>
+
+  </div>
+
+
+  <!-- ORGANISATION -->
+
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        01 · Organisation
+      </div>
+
+      <h2>
+        Tell us how you're structured.
+      </h2>
+
+      <p>
+        These details allow Tiwili to use the correct company name,
+        scope and organisational context throughout your system.
+      </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="legalEntity"
+        >
+          Legal entity name
+        </label>
+
+        <input
+          type="text"
+          id="legalEntity"
+          placeholder="e.g. Acme Services Pty Ltd"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="workforceSize"
+        >
+          Approximate workforce
+        </label>
+
+        <input
+          type="number"
+          id="workforceSize"
+          min="1"
+          placeholder="e.g. 45"
+        >
+
+      </div>
+
+
+      <div class="field full">
+
+        <label
+          class="field-label"
+          for="locations"
+        >
+          Main locations or sites
+
+          <span class="hint">
+            Separate multiple locations with commas.
+          </span>
+
+        </label>
+
+        <input
+          type="text"
+          id="locations"
+          placeholder="e.g. Melbourne, Sydney, Brisbane"
+        >
+
+      </div>
+
+
+      <div class="field full">
+
+        <label
+          class="field-label"
+          for="businessUnits"
+        >
+          Business units or major teams
+
+          <span class="hint">
+            Optional. Only include these if they matter to how the system operates.
+          </span>
+
+        </label>
+
+        <input
+          type="text"
+          id="businessUnits"
+          placeholder="e.g. Operations, Projects, Engineering, Corporate"
+        >
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <div class="divider"></div>
+
+
+  <!-- LANGUAGE -->
+
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        02 · Your Language
+      </div>
+
+      <h2>
+        What do you call your people?
+      </h2>
+
+      <p>
+        A management system shouldn't sound like it belongs to somebody else.
+        Tell Tiwili the terminology your organisation actually uses.
+      </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="peopleTerm"
+        >
+          Your people are called
+        </label>
+
+        <select id="peopleTerm">
+
+          <option value="employees">
+            Employees
+          </option>
+
+          <option value="workers">
+            Workers
+          </option>
+
+          <option value="team members">
+            Team members
+          </option>
+
+          <option value="people">
+            People
+          </option>
+
+          <option value="staff">
+            Staff
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="managerTerm"
+        >
+          Front-line managers are called
+        </label>
+
+        <select id="managerTerm">
+
+          <option value="managers">
+            Managers
+          </option>
+
+          <option value="supervisors">
+            Supervisors
+          </option>
+
+          <option value="team leaders">
+            Team Leaders
+          </option>
+
+          <option value="people leaders">
+            People Leaders
+          </option>
+
+          <option value="line managers">
+            Line Managers
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="functionTerm"
+        >
+          What do you call the management system function?
+        </label>
+
+        <select id="functionTerm">
+
+          <option value="HSEQ">
+            HSEQ
+          </option>
+
+          <option value="WHS">
+            WHS
+          </option>
+
+          <option value="SHEQ">
+            SHEQ
+          </option>
+
+          <option value="Governance">
+            Governance
+          </option>
+
+          <option value="Risk and Compliance">
+            Risk & Compliance
+          </option>
+
+          <option value="Quality">
+            Quality
+          </option>
+
+          <option value="Management Systems">
+            Management Systems
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="systemName"
+        >
+          What should we call the system?
+
+          <span class="hint">
+            IMS is fine if you don't have a preferred name.
+          </span>
+
+        </label>
+
+        <input
+          type="text"
+          id="systemName"
+          value="Integrated Management System"
+        >
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <div class="divider"></div>
+
+
+  <!-- RESPONSIBILITIES -->
+
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        03 · Responsibilities
+      </div>
+
+      <h2>
+        Who makes the decisions?
+      </h2>
+
+      <p>
+        Use role titles rather than people's names where possible.
+        Tiwili will use these roles consistently throughout procedures,
+        workflows and approval requirements.
+      </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="imsOwner"
+        >
+          Who owns the management system?
+        </label>
+
+        <input
+          type="text"
+          id="imsOwner"
+          placeholder="e.g. Operations Manager"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="documentApprover"
+        >
+          Who approves controlled documents?
+        </label>
+
+        <input
+          type="text"
+          id="documentApprover"
+          placeholder="e.g. Managing Director"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="highRiskApprover"
+        >
+          Who can accept high risks?
+        </label>
+
+        <input
+          type="text"
+          id="highRiskApprover"
+          placeholder="e.g. General Manager"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="incidentOwner"
+        >
+          Who oversees serious incident investigations?
+        </label>
+
+        <input
+          type="text"
+          id="incidentOwner"
+          placeholder="e.g. HSEQ Manager"
+        >
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <div class="divider"></div>
+
+
+  <!-- CURRENT SYSTEM -->
+
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        04 · What You Already Have
+      </div>
+
+      <h2>
+        We don't need to reinvent everything.
+      </h2>
+
+      <p>
+        Tell us what already exists. Later, Tiwili will be able to analyse
+        existing documents and data and decide what should be retained,
+        improved or replaced.
+      </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="existingIMS"
+        >
+          Do you already have a management system?
+        </label>
+
+        <select id="existingIMS">
+
+          <option value="no">
+            No
+          </option>
+
+          <option value="partial">
+            Partially
+          </option>
+
+          <option value="yes">
+            Yes
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="existingRiskMatrix"
+        >
+          Do you already use a risk matrix?
+        </label>
+
+        <select id="existingRiskMatrix">
+
+          <option value="no">
+            No
+          </option>
+
+          <option value="yes-3x3">
+            Yes — 3 × 3
+          </option>
+
+          <option value="yes-4x4">
+            Yes — 4 × 4
+          </option>
+
+          <option value="yes-5x5">
+            Yes — 5 × 5
+          </option>
+
+          <option value="yes-other">
+            Yes — Other
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field full">
+
+        <label
+          class="field-label"
+          for="existingMaterial"
+        >
+          What existing material do you have?
+
+          <span class="hint">
+            Procedures, policies, registers, forms, spreadsheets or other systems.
+          </span>
+
+        </label>
+
+        <textarea
+          id="existingMaterial"
+          placeholder="e.g. WHS Manual, Risk Register spreadsheet, Incident Form, Contractor Procedure..."
+        ></textarea>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <div class="divider"></div>
+
+
+  <!-- TECHNOLOGY -->
+
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        05 · Technology
+      </div>
+
+      <h2>
+        Where does your business already work?
+      </h2>
+
+      <p>
+        This becomes especially important for Tiwili Embedded.
+        We want the management system to fit your technology rather than
+        forcing your people into another disconnected platform.
+      </p>
+
+    </div>
+
+
+    <div class="form-grid">
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="technologySuite"
+        >
+          Main technology environment
+        </label>
+
+        <select id="technologySuite">
+
+          <option value="microsoft-365">
+            Microsoft 365
+          </option>
+
+          <option value="google-workspace">
+            Google Workspace
+          </option>
+
+          <option value="mixed">
+            Mixed environment
+          </option>
+
+          <option value="other">
+            Other
+          </option>
+
+          <option value="unknown">
+            Not sure
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label
+          class="field-label"
+          for="documentStorage"
+        >
+          Where are documents currently stored?
+        </label>
+
+        <input
+          type="text"
+          id="documentStorage"
+          placeholder="e.g. SharePoint, Teams, Google Drive"
+        >
+
+      </div>
+
+
+      <div class="field full">
+
+        <label
+          class="field-label"
+          for="existingTools"
+        >
+          Existing systems we should know about
+
+          <span class="hint">
+            Optional — HR, CRM, safety, risk, project, ERP or reporting platforms.
+          </span>
+
+        </label>
+
+        <textarea
+          id="existingTools"
+          placeholder="e.g. Xero, Employment Hero, Salesforce, HammerTech, Power BI..."
+        ></textarea>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <div class="divider"></div>
+
+
+  <!-- BUILD APPROACH -->
+
+
+  <section class="section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        06 · Build Approach
+      </div>
+
+      <h2>
+        How should we treat what already exists?
+      </h2>
+
+      <p>
+        This tells the generation engine whether it should start fresh
+        or preserve more of the organisation's existing structure and language.
+      </p>
+
+    </div>
+
+
+    <div
+      class="choice-grid"
+      id="buildApproachChoices"
+    >
+
+
+      <label
+        class="choice"
+        data-value="fresh"
+      >
+
+        <input
+          type="radio"
+          name="buildApproach"
+          value="fresh"
+        >
+
+        <strong>
+          Build Fresh
+        </strong>
+
+        <span>
+          Start with the Tiwili architecture and build the system cleanly
+          around the organisation.
+        </span>
+
+      </label>
+
+
+      <label
+        class="choice selected"
+        data-value="balanced"
+      >
+
+        <input
+          type="radio"
+          name="buildApproach"
+          value="balanced"
+          checked
+        >
+
+        <strong>
+          Keep What Works
+        </strong>
+
+        <span>
+          Use the Tiwili architecture but retain useful existing terminology,
+          structures and material where appropriate.
+        </span>
+
+      </label>
+
+
+      <label
+        class="choice"
+        data-value="preserve"
+      >
+
+        <input
+          type="radio"
+          name="buildApproach"
+          value="preserve"
+        >
+
+        <strong>
+          Preserve & Improve
+        </strong>
+
+        <span>
+          Keep the existing system structure wherever practical and focus
+          Tiwili on gaps, simplification and improvement.
+        </span>
+
+      </label>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- READY -->
+
+
+  <section class="ready-box">
+
+    <div class="eyebrow">
+      Generation Inputs
+    </div>
+
+    <h2>
+      We're almost ready to build.
+    </h2>
+
+    <p>
+      When you continue, Tiwili will save this implementation profile.
+      Together with the original business discovery and your system
+      configuration, this gives the generation engine the context it needs
+      to create your management system.
+    </p>
+
+
+    <div class="ingredients">
+
+      <div class="ingredient">
+
+        <div class="ingredient-number">
+          Input 01
+        </div>
+
+        <strong>
+          Business Discovery
+        </strong>
+
+      </div>
+
+
+      <div class="ingredient">
+
+        <div class="ingredient-number">
+          Input 02
+        </div>
+
+        <strong>
+          System Configuration
+        </strong>
+
+      </div>
+
+
+      <div class="ingredient">
+
+        <div class="ingredient-number">
+          Input 03
+        </div>
+
+        <strong>
+          Implementation Profile
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="error-box"
+      id="errorBox"
+    ></div>
+
+
+    <div class="actions">
+
+      <a
+        href="system-config.html"
+        class="button button-secondary"
+      >
+        ← Back
+      </a>
+
+      <button
+        type="button"
+        class="button button-primary"
+        onclick="saveImplementation()"
+      >
+        Save & Continue →
+      </button>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
+<script>
+
+
+  let aiProfile = {};
+  let systemConfig = {};
+
+
+  try {
+
+    aiProfile =
+      JSON.parse(
+        localStorage.getItem(
+          "tiwiliAIProfile"
+        ) || "{}"
+      );
+
+  } catch (error) {
+
+    aiProfile = {};
+
+  }
+
+
+  try {
+
+    systemConfig =
+      JSON.parse(
+        localStorage.getItem(
+          "tiwiliSystemConfig"
+        ) || "{}"
+      );
+
+  } catch (error) {
+
+    systemConfig = {};
+
+  }
+
+
+  const companyName =
+    aiProfile.companyName ||
+    systemConfig.companyName ||
+    localStorage.getItem(
+      "tiwiliSelectedCompany"
+    ) ||
+    "your organisation";
+
+
+  document
+    .getElementById(
+      "companyDisplay"
+    )
+    .innerText =
+    companyName;
+
+
+  function prettyValue(value) {
+
+    const labels = {
+
+      "lean":
+        "Lean",
+
+      "balanced":
+        "Balanced",
+
+      "detailed":
+        "Detailed",
+
+      "on-demand":
+        "On Demand AI",
+
+      "assisted":
+        "Assisted AI",
+
+      "guided":
+        "Guided AI",
+
+      "light":
+        "Light Governance",
+
+      "controlled":
+        "Controlled Governance",
+
+      "assured":
+        "Assured Governance"
+
+    };
+
+
+    return labels[value] ||
+      value ||
+      "Not configured";
+
+  }
+
+
+  const configurationDisplay =
+    document.getElementById(
+      "configurationDisplay"
+    );
+
+
+  configurationDisplay.innerHTML = `
+
+    <span class="config-pill">
+      Voice:
+      ${prettyValue(
+        systemConfig.voice
+      )}
+    </span>
+
+    <span class="config-pill">
+      ${prettyValue(
+        systemConfig.ai
+      )}
+    </span>
+
+    <span class="config-pill">
+      ${prettyValue(
+        systemConfig.governance
+      )}
+    </span>
+
+  `;
+
+
+  /*
+   * Pre-fill what we already know.
+   */
+
+
+  if (
+    aiProfile.companyName
+  ) {
+
+    document
+      .getElementById(
+        "legalEntity"
+      )
+      .value =
+      aiProfile.companyName;
+
+  }
+
+
+  /*
+   * Build approach selection.
+   */
+
+
+  let buildApproach =
+    "balanced";
+
+
+  document
+    .querySelectorAll(
+      "#buildApproachChoices .choice"
+    )
+    .forEach(choice => {
+
+      choice.addEventListener(
+        "click",
+        function() {
+
+          buildApproach =
+            this.dataset.value;
+
+
+          document
+            .querySelectorAll(
+              "#buildApproachChoices .choice"
+            )
+            .forEach(item => {
+
+              item
+                .classList
+                .remove(
+                  "selected"
+                );
+
+            });
+
+
+          this
+            .classList
+            .add(
+              "selected"
+            );
+
+
+          const input =
+            this.querySelector(
+              "input"
+            );
+
+
+          input.checked = true;
+
+        }
+      );
+
+    });
+
+
+  /*
+   * Helper to convert comma separated
+   * fields into arrays.
+   */
+
+
+  function commaList(value) {
+
+    return value
+      .split(",")
+      .map(
+        item =>
+          item.trim()
+      )
+      .filter(Boolean);
+
+  }
+
+
+  /*
+   * Save implementation profile.
+   */
+
+
+  function saveImplementation() {
+
+
+    const legalEntity =
+      document
+        .getElementById(
+          "legalEntity"
+        )
+        .value
+        .trim();
+
+
+    const workforceSize =
+      document
+        .getElementById(
+          "workforceSize"
+        )
+        .value
+        .trim();
+
+
+    const locations =
+      document
+        .getElementById(
+          "locations"
+        )
+        .value
+        .trim();
+
+
+    const imsOwner =
+      document
+        .getElementById(
+          "imsOwner"
+        )
+        .value
+        .trim();
+
+
+    const documentApprover =
+      document
+        .getElementById(
+          "documentApprover"
+        )
+        .value
+        .trim();
+
+
+    const highRiskApprover =
+      document
+        .getElementById(
+          "highRiskApprover"
+        )
+        .value
+        .trim();
+
+
+    const errorBox =
+      document
+        .getElementById(
+          "errorBox"
+        );
+
+
+    errorBox
+      .classList
+      .remove(
+        "active"
+      );
+
+
+    /*
+     * Keep required questions fairly light.
+     * This is implementation discovery,
+     * not an interrogation.
+     */
+
+
+    const missing = [];
+
+
+    if (!legalEntity) {
+
+      missing.push(
+        "legal entity name"
+      );
+
+    }
+
+
+    if (!workforceSize) {
+
+      missing.push(
+        "approximate workforce"
+      );
+
+    }
+
+
+    if (!locations) {
+
+      missing.push(
+        "main location or site"
+      );
+
+    }
+
+
+    if (!imsOwner) {
+
+      missing.push(
+        "management system owner"
+      );
+
+    }
+
+
+    if (!documentApprover) {
+
+      missing.push(
+        "document approver"
+      );
+
+    }
+
+
+    if (!highRiskApprover) {
+
+      missing.push(
+        "high-risk approver"
+      );
+
+    }
+
+
+    if (
+      missing.length
+    ) {
+
+      errorBox.innerText =
+        "Before we build your system, please complete: " +
+        missing.join(", ") +
+        ".";
+
+
+      errorBox
+        .classList
+        .add(
+          "active"
+        );
+
+
+      errorBox
+        .scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+
+
+      return;
+
+    }
+
+
+    const implementationProfile = {
+
+
+      organisation: {
+
+        legalEntity,
+
+        workforceSize:
+          Number(
+            workforceSize
+          ),
+
+        locations:
+          commaList(
+            locations
+          ),
+
+        businessUnits:
+          commaList(
+            document
+              .getElementById(
+                "businessUnits"
+              )
+              .value
+          )
+
+      },
+
+
+      terminology: {
+
+        people:
+          document
+            .getElementById(
+              "peopleTerm"
+            )
+            .value,
+
+        managers:
+          document
+            .getElementById(
+              "managerTerm"
+            )
+            .value,
+
+        function:
+          document
+            .getElementById(
+              "functionTerm"
+            )
+            .value,
+
+        systemName:
+          document
+            .getElementById(
+              "systemName"
+            )
+            .value
+            .trim() ||
+          "Integrated Management System"
+
+      },
+
+
+      responsibilities: {
+
+        imsOwner,
+
+        documentApprover,
+
+        highRiskApprover,
+
+        incidentOwner:
+          document
+            .getElementById(
+              "incidentOwner"
+            )
+            .value
+            .trim()
+
+      },
+
+
+      existingSystem: {
+
+        hasIMS:
+          document
+            .getElementById(
+              "existingIMS"
+            )
+            .value,
+
+        riskMatrix:
+          document
+            .getElementById(
+              "existingRiskMatrix"
+            )
+            .value,
+
+        material:
+          document
+            .getElementById(
+              "existingMaterial"
+            )
+            .value
+            .trim()
+
+      },
+
+
+      technology: {
+
+        suite:
+          document
+            .getElementById(
+              "technologySuite"
+            )
+            .value,
+
+        documentStorage:
+          document
+            .getElementById(
+              "documentStorage"
+            )
+            .value
+            .trim(),
+
+        existingTools:
+          document
+            .getElementById(
+              "existingTools"
+            )
+            .value
+            .trim()
+
+      },
+
+
+      buildApproach,
+
+      savedAt:
+        new Date()
+          .toISOString()
+
+    };
+
+
+    localStorage.setItem(
+      "tiwiliImplementationProfile",
+      JSON.stringify(
+        implementationProfile
+      )
+    );
+
+
+    /*
+     * Next step will become:
+     *
+     * window.location.href =
+     *   "build.html";
+     *
+     * For now we confirm that our
+     * generation inputs are ready.
+     */
+
+
+    alert(
+      "Implementation profile saved.\n\n" +
+      "Tiwili now has all three generation inputs:\n\n" +
+      "✓ Business Discovery\n" +
+      "✓ System Configuration\n" +
+      "✓ Implementation Profile\n\n" +
+      "Next: Build the first Risk Management module."
+    );
+
+  }
+
+
+</script>
+
+
+</body>
+
+</html>
