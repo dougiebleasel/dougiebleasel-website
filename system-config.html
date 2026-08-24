@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Configure Your System</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --accent-light: #6FC55A;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 5%;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,0.96);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .tiwili-brand {
+      display: flex;
+      align-items: center;
+    }
+
+    .tiwili-brand img {
+      display: block;
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+    .hero {
+      padding: 64px 6% 54px;
+      border-bottom: 1px solid var(--border);
+
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(44,130,89,.20),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #090D0B,
+          #081812
+        );
+    }
+
+    .hero-inner {
+      max-width: 980px;
+    }
+
+    .eyebrow {
+      color: var(--accent-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 5.5vw, 72px);
+      line-height: .98;
+      letter-spacing: -4px;
+      max-width: 880px;
+    }
+
+    .hero p {
+      margin-top: 20px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: auto;
+      padding: 54px 5% 100px;
+    }
+
+    .company-context {
+      margin-bottom: 34px;
+      padding: 20px 22px;
+      border-radius: 10px;
+      border: 1px solid rgba(111,197,90,.25);
+      background: rgba(44,130,89,.08);
+    }
+
+    .company-context strong {
+      color: var(--accent-light);
+    }
+
+    .config-section {
+      margin-top: 42px;
+    }
+
+    .section-header {
+      margin-bottom: 18px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(28px, 3vw, 40px);
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 760px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .option-card {
+      position: relative;
+      min-height: 245px;
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background:
+        linear-gradient(
+          180deg,
+          #171A18,
+          #111312
+        );
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .option-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(111,197,90,.5);
+    }
+
+    .option-card.selected {
+      border-color: var(--accent-light);
+      background:
+        linear-gradient(
+          180deg,
+          rgba(18,53,36,.82),
+          #111312
+        );
+    }
+
+    .option-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .recommended {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      display: none;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(111,197,90,.42);
+      color: var(--accent-light);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .option-card.recommended-option .recommended {
+      display: inline-block;
+    }
+
+    .option-kicker {
+      color: var(--accent-light);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .option-card h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .option-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .example {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+      color: #D7DEDA;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .summary-box {
+      margin-top: 54px;
+      padding: 28px;
+      border-radius: 12px;
+      border: 1px solid rgba(111,197,90,.35);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.14),
+          rgba(11,61,46,.22)
+        );
+    }
+
+    .summary-box h2 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .summary-item {
+      padding: 15px;
+      border-radius: 8px;
+      background: rgba(13,13,13,.35);
+      border: 1px solid var(--border);
+    }
+
+    .summary-label {
+      color: var(--accent-light);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+      margin-bottom: 5px;
+    }
+
+    .summary-value {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      border: 0;
+      border-radius: 7px;
+      min-height: 50px;
+      padding: 0 24px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .button-primary {
+      background: var(--accent-light);
+      color: #0B1A11;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.07);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .button-secondary:hover {
+      border-color: var(--accent);
+    }
+
+    @media (max-width: 850px) {
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .tiwili-brand img {
+        width: 210px;
+      }
+
+      .back {
+        display: none;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <a href="index.html" class="tiwili-brand">
+    <img
+      src="tiwili-logo.png.png"
+      alt="tiwili - talk it. walk it. live it."
+    >
+  </a>
+
+  <a href="configure.html" class="back">
+    ← Back to recommendation
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      Configure Your System
+    </div>
+
+    <h1>
+      How do you want your Tiwili to work?
+    </h1>
+
+    <p>
+      The management system itself is only part of the answer.
+      Choose how it should communicate, how much help AI should provide
+      and how much approval and governance should sit around everyday work.
+    </p>
+
+  </div>
+
+</section>
+
+
+<main>
+
+
+  <div class="company-context">
+
+    Configuring Tiwili for
+    <strong id="companyNameDisplay">
+      your organisation
+    </strong>.
+
+    We've suggested settings based on the business profile you've already built.
+    You can change any of them.
+
+  </div>
+
+
+  <!-- VOICE -->
+
+
+  <section class="config-section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        01 · System Voice
+      </div>
+
+      <h2>
+        How should your IMS communicate?
+      </h2>
+
+      <p>
+        This controls how much explanation, guidance and supporting context
+        appears throughout your policies, procedures and system content.
+      </p>
+
+    </div>
+
+
+    <div class="option-grid">
+
+
+      <label
+        class="option-card"
+        data-group="voice"
+        data-value="lean"
+      >
+
+        <input
+          type="radio"
+          name="voice"
+          value="lean"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Lean
+        </div>
+
+        <h3>
+          Short. Practical. Direct.
+        </h3>
+
+        <p>
+          Minimum necessary documentation with clear requirements
+          and very little unnecessary explanation.
+        </p>
+
+        <div class="example">
+          “Managers must review high and significant risks at least quarterly.”
+        </div>
+
+      </label>
+
+
+      <label
+        class="option-card"
+        data-group="voice"
+        data-value="balanced"
+      >
+
+        <input
+          type="radio"
+          name="voice"
+          value="balanced"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Balanced
+        </div>
+
+        <h3>
+          Practical with context.
+        </h3>
+
+        <p>
+          Clear requirements supported by enough explanation to help
+          users understand what is expected and why.
+        </p>
+
+        <div class="example">
+          “Managers review high and significant risks quarterly to confirm controls remain effective.”
+        </div>
+
+      </label>
+
+
+      <label
+        class="option-card"
+        data-group="voice"
+        data-value="detailed"
+      >
+
+        <input
+          type="radio"
+          name="voice"
+          value="detailed"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Detailed
+        </div>
+
+        <h3>
+          More guidance and explanation.
+        </h3>
+
+        <p>
+          Additional context, examples and guidance suitable for
+          larger, complex or highly assured environments.
+        </p>
+
+        <div class="example">
+          More supporting guidance, examples, explanatory notes and defined expectations.
+        </div>
+
+      </label>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- AI -->
+
+
+  <section class="config-section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        02 · AI Assistance
+      </div>
+
+      <h2>
+        How involved should Tiwili AI be?
+      </h2>
+
+      <p>
+        AI can stay quietly in the background or actively guide users through
+        processes such as risk assessment, investigations and compliance tasks.
+      </p>
+
+    </div>
+
+
+    <div class="option-grid">
+
+
+      <label
+        class="option-card"
+        data-group="ai"
+        data-value="on-demand"
+      >
+
+        <input
+          type="radio"
+          name="ai"
+          value="on-demand"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          On Demand
+        </div>
+
+        <h3>
+          AI when you ask for it.
+        </h3>
+
+        <p>
+          Tiwili stays out of the way unless a user deliberately asks
+          for assistance.
+        </p>
+
+        <div class="example">
+          ✦ Ask Tiwili
+        </div>
+
+      </label>
+
+
+      <label
+        class="option-card"
+        data-group="ai"
+        data-value="assisted"
+      >
+
+        <input
+          type="radio"
+          name="ai"
+          value="assisted"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Assisted
+        </div>
+
+        <h3>
+          Help at useful moments.
+        </h3>
+
+        <p>
+          AI appears where it can make a task easier but the user remains
+          in control of the process.
+        </p>
+
+        <div class="example">
+          ✦ Need help identifying hazards?
+        </div>
+
+      </label>
+
+
+      <label
+        class="option-card"
+        data-group="ai"
+        data-value="guided"
+      >
+
+        <input
+          type="radio"
+          name="ai"
+          value="guided"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Guided
+        </div>
+
+        <h3>
+          Let Tiwili walk you through it.
+        </h3>
+
+        <p>
+          AI actively guides users through important activities,
+          questions and decisions step by step.
+        </p>
+
+        <div class="example">
+          “Let's assess this risk. First, tell me what work is being performed.”
+        </div>
+
+      </label>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- GOVERNANCE -->
+
+
+  <section class="config-section">
+
+    <div class="section-header">
+
+      <div class="eyebrow">
+        03 · Governance
+      </div>
+
+      <h2>
+        How much approval and sign-off do you want?
+      </h2>
+
+      <p>
+        This controls normal workflow, approvals, escalation and traceability.
+        Mandatory regulatory and critical-risk controls remain regardless of this setting.
+      </p>
+
+    </div>
+
+
+    <div class="option-grid">
+
+
+      <label
+        class="option-card"
+        data-group="governance"
+        data-value="light"
+      >
+
+        <input
+          type="radio"
+          name="governance"
+          value="light"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Light
+        </div>
+
+        <h3>
+          Keep approvals minimal.
+        </h3>
+
+        <p>
+          Everyday activities are recorded with minimal sign-off.
+          Escalation is reserved for higher-risk or significant matters.
+        </p>
+
+        <div class="example">
+          Submit → Record
+        </div>
+
+      </label>
+
+
+      <label
+        class="option-card"
+        data-group="governance"
+        data-value="controlled"
+      >
+
+        <input
+          type="radio"
+          name="governance"
+          value="controlled"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Controlled
+        </div>
+
+        <h3>
+          Practical management oversight.
+        </h3>
+
+        <p>
+          Routine manager review with escalation for higher-risk matters,
+          significant changes and formal approvals.
+        </p>
+
+        <div class="example">
+          Submit → Manager Review → Close
+        </div>
+
+      </label>
+
+
+      <label
+        class="option-card"
+        data-group="governance"
+        data-value="assured"
+      >
+
+        <input
+          type="radio"
+          name="governance"
+          value="assured"
+        >
+
+        <div class="recommended">
+          Recommended
+        </div>
+
+        <div class="option-kicker">
+          Assured
+        </div>
+
+        <h3>
+          Formal governance and traceability.
+        </h3>
+
+        <p>
+          More structured evidence, approval levels, escalation,
+          reviews and documented assurance.
+        </p>
+
+        <div class="example">
+          Submit → Manager → Functional Owner → Assurance → Approval
+        </div>
+
+      </label>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- SUMMARY -->
+
+
+  <div class="summary-box">
+
+    <div class="eyebrow">
+      Your Configuration
+    </div>
+
+    <h2>
+      This is how your Tiwili will behave.
+    </h2>
+
+
+    <div class="summary-grid">
+
+      <div class="summary-item">
+        <div class="summary-label">
+          System Voice
+        </div>
+        <div
+          class="summary-value"
+          id="summaryVoice"
+        >
+          Balanced
+        </div>
+      </div>
+
+
+      <div class="summary-item">
+        <div class="summary-label">
+          AI Assistance
+        </div>
+        <div
+          class="summary-value"
+          id="summaryAI"
+        >
+          Assisted
+        </div>
+      </div>
+
+
+      <div class="summary-item">
+        <div class="summary-label">
+          Governance
+        </div>
+        <div
+          class="summary-value"
+          id="summaryGovernance"
+        >
+          Controlled
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <a
+        href="configure.html"
+        class="button button-secondary"
+      >
+        ← Back
+      </a>
+
+      <button
+        class="button button-primary"
+        onclick="saveConfiguration()"
+      >
+        Continue →
+      </button>
+
+    </div>
+
+  </div>
+
+
+</main>
+
+
+<script>
+
+
+  let profile = {};
+
+
+  try {
+
+    profile =
+      JSON.parse(
+        localStorage.getItem(
+          "tiwiliAIProfile"
+        ) || "{}"
+      );
+
+  } catch (error) {
+
+    profile = {};
+
+  }
+
+
+  const companyName =
+    profile.companyName ||
+    localStorage.getItem(
+      "tiwiliSelectedCompany"
+    ) ||
+    "your organisation";
+
+
+  document
+    .getElementById(
+      "companyNameDisplay"
+    )
+    .innerText =
+    companyName;
+
+
+  /*
+   * Tiwili recommendation logic.
+   *
+   * For now this is deliberately simple.
+   * We can make this much smarter later.
+   */
+
+
+  let recommended = {
+
+    voice: "balanced",
+
+    ai: "assisted",
+
+    governance: "controlled"
+
+  };
+
+
+  const companySize =
+    profile.companySize || "";
+
+
+  const standards =
+    Array.isArray(
+      profile.standards
+    )
+      ? profile.standards
+      : [];
+
+
+  const businessNeeds =
+    Array.isArray(
+      profile.businessNeeds
+    )
+      ? profile.businessNeeds
+      : [];
+
+
+  const activities =
+    Array.isArray(
+      profile.activities
+    )
+      ? profile.activities
+      : [];
+
+
+  const jurisdictions =
+    Array.isArray(
+      profile.jurisdictions
+    )
+      ? profile.jurisdictions
+      : [];
+
+
+  const higherAssurance =
+    standards.length > 0 ||
+    businessNeeds.includes(
+      "government"
+    ) ||
+    businessNeeds.includes(
+      "regulated"
+    ) ||
+    jurisdictions.length > 1;
+
+
+  const operationallyComplex =
+    activities.length >= 4;
+
+
+  if (
+    companySize === "1-10" &&
+    !higherAssurance
+  ) {
+
+    recommended.voice =
+      "lean";
+
+    recommended.ai =
+      "guided";
+
+    recommended.governance =
+      "light";
+
+  }
+
+
+  if (
+    higherAssurance
+  ) {
+
+    recommended.voice =
+      "balanced";
+
+    recommended.governance =
+      "controlled";
+
+  }
+
+
+  if (
+    companySize === "201+" ||
+    (
+      higherAssurance &&
+      operationallyComplex
+    )
+  ) {
+
+    recommended.voice =
+      "detailed";
+
+    recommended.ai =
+      "assisted";
+
+    recommended.governance =
+      "assured";
+
+  }
+
+
+  let config = {
+
+    voice:
+      recommended.voice,
+
+    ai:
+      recommended.ai,
+
+    governance:
+      recommended.governance
+
+  };
+
+
+  function prettyValue(
+    value
+  ) {
+
+    const labels = {
+
+      "lean":
+        "Lean",
+
+      "balanced":
+        "Balanced",
+
+      "detailed":
+        "Detailed",
+
+      "on-demand":
+        "On Demand",
+
+      "assisted":
+        "Assisted",
+
+      "guided":
+        "Guided",
+
+      "light":
+        "Light",
+
+      "controlled":
+        "Controlled",
+
+      "assured":
+        "Assured"
+
+    };
+
+
+    return labels[value] ||
+      value;
+
+  }
+
+
+  function refreshUI() {
+
+
+    document
+      .querySelectorAll(
+        ".option-card"
+      )
+      .forEach(card => {
+
+        const group =
+          card.dataset.group;
+
+        const value =
+          card.dataset.value;
+
+
+        card
+          .classList
+          .toggle(
+            "selected",
+            config[group] === value
+          );
+
+
+        const input =
+          card.querySelector(
+            "input"
+          );
+
+
+        input.checked =
+          config[group] === value;
+
+
+        card
+          .classList
+          .toggle(
+            "recommended-option",
+            recommended[group] === value
+          );
+
+      });
+
+
+    document
+      .getElementById(
+        "summaryVoice"
+      )
+      .innerText =
+      prettyValue(
+        config.voice
+      );
+
+
+    document
+      .getElementById(
+        "summaryAI"
+      )
+      .innerText =
+      prettyValue(
+        config.ai
+      );
+
+
+    document
+      .getElementById(
+        "summaryGovernance"
+      )
+      .innerText =
+      prettyValue(
+        config.governance
+      );
+
+  }
+
+
+  document
+    .querySelectorAll(
+      ".option-card"
+    )
+    .forEach(card => {
+
+      card
+        .addEventListener(
+          "click",
+          function() {
+
+            const group =
+              this.dataset.group;
+
+            const value =
+              this.dataset.value;
+
+
+            config[group] =
+              value;
+
+
+            refreshUI();
+
+          }
+        );
+
+    });
+
+
+  function saveConfiguration() {
+
+
+    const savedConfig = {
+
+      voice:
+        config.voice,
+
+      ai:
+        config.ai,
+
+      governance:
+        config.governance,
+
+      recommended: {
+        ...recommended
+      },
+
+      companyName,
+
+      savedAt:
+        new Date()
+          .toISOString()
+
+    };
+
+
+    localStorage.setItem(
+      "tiwiliSystemConfig",
+      JSON.stringify(
+        savedConfig
+      )
+    );
+
+
+    /*
+     * We haven't built the next page yet.
+     *
+     * For now this confirms the settings
+     * were saved successfully.
+     */
+
+    alert(
+      "Your Tiwili configuration has been saved.\n\n" +
+      "Voice: " +
+      prettyValue(
+        config.voice
+      ) +
+      "\n" +
+      "AI: " +
+      prettyValue(
+        config.ai
+      ) +
+      "\n" +
+      "Governance: " +
+      prettyValue(
+        config.governance
+      )
+    );
+
+  }
+
+
+  refreshUI();
+
+
+</script>
+
+
+</body>
+
+</html>
