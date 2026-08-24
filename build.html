@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tiwili | Build Your System</title>
+
+  <style>
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --accent-light: #6FC55A;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 5%;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
+    }
+
+    .brand img {
+      display: block;
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      padding: 70px 6% 55px;
+      border-bottom: 1px solid var(--border);
+
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(44,130,89,.22),
+          transparent 32%
+        ),
+        linear-gradient(
+          135deg,
+          #090D0B,
+          #081812
+        );
+    }
+
+    .hero-inner {
+      max-width: 950px;
+    }
+
+    .eyebrow {
+      color: var(--accent-light);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(46px, 6vw, 76px);
+      line-height: .96;
+      letter-spacing: -4px;
+      max-width: 900px;
+    }
+
+    .hero p {
+      margin-top: 22px;
+      color: var(--muted);
+      max-width: 730px;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .build-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #141715;
+    }
+
+    .build-top {
+      padding: 30px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .build-top h2 {
+      font-size: 32px;
+      letter-spacing: -1.5px;
+      margin-bottom: 8px;
+    }
+
+    .build-top p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .input-card {
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(13,13,13,.45);
+    }
+
+    .input-label {
+      color: var(--accent-light);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .input-card strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .input-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .build-area {
+      padding: 42px 30px;
+      text-align: center;
+    }
+
+    .build-icon {
+      width: 82px;
+      height: 82px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(111,197,90,.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      background: rgba(44,130,89,.1);
+    }
+
+    .build-area h3 {
+      font-size: 27px;
+      margin-bottom: 9px;
+    }
+
+    .build-area > p {
+      color: var(--muted);
+      font-size: 13px;
+      max-width: 600px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    .build-button {
+      margin-top: 25px;
+      min-height: 54px;
+      padding: 0 28px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--accent-light);
+      color: #0B1A11;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .build-button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.06);
+    }
+
+    .build-button:disabled {
+      opacity: .5;
+      cursor: default;
+      transform: none;
+    }
+
+    .status {
+      display: none;
+      margin-top: 32px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    .status.active {
+      display: block;
+    }
+
+    .progress {
+      height: 5px;
+      background: rgba(244,246,245,.08);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--accent-light);
+      transition: width .7s ease;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #68716C;
+      font-size: 12px;
+      transition: .25s;
+    }
+
+    .status-item.active {
+      color: var(--white);
+    }
+
+    .status-item.complete {
+      color: var(--accent-light);
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .error {
+      display: none;
+      margin-top: 25px;
+      padding: 14px;
+      border: 1px solid rgba(220,80,80,.4);
+      background: rgba(180,50,50,.12);
+      border-radius: 8px;
+      color: #FFC8C8;
+      font-size: 12px;
+      text-align: left;
+    }
+
+    .error.active {
+      display: block;
+    }
+
+    /* OUTPUT */
+
+    .output {
+      display: none;
+      margin-top: 40px;
+    }
+
+    .output.active {
+      display: block;
+    }
+
+    .success-banner {
+      padding: 28px;
+      border: 1px solid rgba(111,197,90,.4);
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.18),
+          rgba(18,53,36,.3)
+        );
+      border-radius: 12px;
+      margin-bottom: 22px;
+    }
+
+    .success-banner h2 {
+      font-size: 32px;
+      letter-spacing: -1.5px;
+      margin-bottom: 7px;
+    }
+
+    .success-banner p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .draft-pill {
+      display: inline-block;
+      margin-top: 13px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(111,197,90,.35);
+      color: var(--accent-light);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 18px;
+    }
+
+    .module-nav {
+      align-self: start;
+      position: sticky;
+      top: 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      background: #141715;
+    }
+
+    .module-nav strong {
+      display: block;
+      font-size: 11px;
+      color: var(--accent-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    .module-nav a {
+      display: block;
+      padding: 8px 0;
+      color: var(--muted);
+      font-size: 12px;
+      border-bottom: 1px solid rgba(244,246,245,.06);
+    }
+
+    .module-nav a:hover {
+      color: var(--white);
+    }
+
+    .module-content {
+      min-width: 0;
+    }
+
+    .content-section {
+      margin-bottom: 14px;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #141715;
+    }
+
+    .content-section h2 {
+      font-size: 23px;
+      margin-bottom: 13px;
+      letter-spacing: -.7px;
+    }
+
+    .content-section h3 {
+      font-size: 16px;
+      margin: 18px 0 8px;
+    }
+
+    .content-section p {
+      color: #D2D9D5;
+      font-size: 13px;
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+
+    .content-section ul,
+    .content-section ol {
+      padding-left: 20px;
+      margin-top: 10px;
+    }
+
+    .content-section li {
+      color: #D2D9D5;
+      font-size: 13px;
+      line-height: 1.65;
+      margin-bottom: 5px;
+    }
+
+    .role {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 7px;
+      background: rgba(244,246,245,.035);
+    }
+
+    .role strong {
+      color: var(--accent-light);
+      font-size: 12px;
+    }
+
+    .tool-card {
+      margin-top: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(13,13,13,.35);
+    }
+
+    .tool-card strong {
+      color: var(--accent-light);
+    }
+
+    .qa-pass {
+      color: var(--accent-light);
+      font-weight: 800;
+    }
+
+    .qa-warning {
+      color: #E6C96B;
+    }
+
+    @media (max-width: 800px) {
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .module-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .module-nav {
+        position: static;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .brand img {
+        width: 210px;
+      }
+
+      .back {
+        display: none;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<header>
+
+  <a href="index.html" class="brand">
+    <img
+      src="tiwili-logo.png.png"
+      alt="tiwili - talk it. walk it. live it."
+    >
+  </a>
+
+  <a href="implementation.html" class="back">
+    ← Back to implementation setup
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      Tiwili Generation Engine
+    </div>
+
+    <h1>
+      Ready to build.
+    </h1>
+
+    <p>
+      Tiwili now has the business context, system configuration
+      and implementation information needed to create your first
+      management system module.
+    </p>
+
+  </div>
+
+</section>
+
+
+<main>
+
+  <div class="build-card">
+
+    <div class="build-top">
+
+      <div class="eyebrow">
+        Generation Inputs
+      </div>
+
+      <h2 id="buildTitle">
+        Risk Management
+      </h2>
+
+      <p>
+        Your module will be generated from the controlled Tiwili
+        Risk Management Master and tailored using your organisation's
+        confirmed information.
+      </p>
+
+
+      <div class="input-grid">
+
+        <div class="input-card">
+          <div class="input-label">
+            Organisation
+          </div>
+          <strong id="organisationName">
+            Loading...
+          </strong>
+          <span>
+            Business profile
+          </span>
+        </div>
+
+        <div class="input-card">
+          <div class="input-label">
+            System Voice
+          </div>
+          <strong id="voiceDisplay">
+            Loading...
+          </strong>
+          <span>
+            Documentation style
+          </span>
+        </div>
+
+        <div class="input-card">
+          <div class="input-label">
+            AI + Governance
+          </div>
+          <strong id="behaviourDisplay">
+            Loading...
+          </strong>
+          <span>
+            System behaviour
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="build-area">
+
+      <div class="build-icon">
+        ✦
+      </div>
+
+      <h3>
+        Build your Risk Management module
+      </h3>
+
+      <p>
+        Tiwili will apply the controlled master requirements,
+        tailor the system to your organisation and run a quality
+        check before presenting the draft.
+      </p>
+
+      <button
+        id="buildButton"
+        class="build-button"
+        onclick="buildRiskModule()"
+      >
+        Build My System →
+      </button>
+
+
+      <div
+        class="status"
+        id="status"
+      >
+
+        <div class="progress">
+          <div
+            class="progress-bar"
+            id="progressBar"
+          ></div>
+        </div>
+
+
+        <div class="status-list">
+
+          <div
+            class="status-item"
+            id="step1"
+          >
+            <span class="dot"></span>
+            Reading your business profile
+          </div>
+
+          <div
+            class="status-item"
+            id="step2"
+          >
+            <span class="dot"></span>
+            Loading the Tiwili Risk Management Master
+          </div>
+
+          <div
+            class="status-item"
+            id="step3"
+          >
+            <span class="dot"></span>
+            Applying system voice and governance
+          </div>
+
+          <div
+            class="status-item"
+            id="step4"
+          >
+            <span class="dot"></span>
+            Tailoring roles, terminology and risk framework
+          </div>
+
+          <div
+            class="status-item"
+            id="step5"
+          >
+            <span class="dot"></span>
+            Building tools and AI assistance
+          </div>
+
+          <div
+            class="status-item"
+            id="step6"
+          >
+            <span class="dot"></span>
+            Running Tiwili quality checks
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="error"
+        id="errorBox"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div
+    class="output"
+    id="output"
+  >
+
+    <div class="success-banner">
+
+      <div class="eyebrow">
+        Generation Complete
+      </div>
+
+      <h2 id="outputTitle">
+        Risk Management
+      </h2>
+
+      <p>
+        Your first Tiwili management system module has been generated.
+      </p>
+
+      <span class="draft-pill">
+        Draft · Review Required
+      </span>
+
+    </div>
+
+
+    <div class="module-grid">
+
+      <nav class="module-nav">
+
+        <strong>
+          Module
+        </strong>
+
+        <a href="#purpose">
+          Purpose
+        </a>
+
+        <a href="#scope">
+          Scope
+        </a>
+
+        <a href="#principles">
+          Principles
+        </a>
+
+        <a href="#responsibilities">
+          Responsibilities
+        </a>
+
+        <a href="#identification">
+          Risk Identification
+        </a>
+
+        <a href="#evaluation">
+          Evaluation
+        </a>
+
+        <a href="#controls">
+          Controls
+        </a>
+
+        <a href="#treatment">
+          Treatment
+        </a>
+
+        <a href="#acceptance">
+          Acceptance & Escalation
+        </a>
+
+        <a href="#review">
+          Monitoring & Review
+        </a>
+
+        <a href="#matrix">
+          Risk Matrix
+        </a>
+
+        <a href="#register">
+          Risk Register
+        </a>
+
+        <a href="#ai">
+          AI Tools
+        </a>
+
+        <a href="#qa">
+          Quality Check
+        </a>
+
+      </nav>
+
+
+      <div
+        class="module-content"
+        id="moduleContent"
+      ></div>
+
+    </div>
+
+  </div>
+
+</main>
+
+
+<script>
+
+  let businessProfile = {};
+  let systemConfig = {};
+  let implementationProfile = {};
+
+
+  function readStorage(key) {
+
+    try {
+      return JSON.parse(
+        localStorage.getItem(key) || "{}"
+      );
+    } catch (error) {
+      return {};
+    }
+
+  }
+
+
+  businessProfile =
+    readStorage("tiwiliAIProfile");
+
+  systemConfig =
+    readStorage("tiwiliSystemConfig");
+
+  implementationProfile =
+    readStorage("tiwiliImplementationProfile");
+
+
+  const organisation =
+    implementationProfile
+      ?.organisation
+      ?.legalEntity
+    ||
+    businessProfile.companyName
+    ||
+    systemConfig.companyName
+    ||
+    "Your organisation";
+
+
+  function pretty(value) {
+
+    const labels = {
+
+      "lean": "Lean",
+      "balanced": "Balanced",
+      "detailed": "Detailed",
+
+      "on-demand": "On Demand",
+      "assisted": "Assisted",
+      "guided": "Guided",
+
+      "light": "Light",
+      "controlled": "Controlled",
+      "assured": "Assured"
+
+    };
+
+    return labels[value] || value || "Not configured";
+
+  }
+
+
+  document
+    .getElementById("organisationName")
+    .innerText =
+    organisation;
+
+
+  document
+    .getElementById("voiceDisplay")
+    .innerText =
+    pretty(systemConfig.voice);
+
+
+  document
+    .getElementById("behaviourDisplay")
+    .innerText =
+    pretty(systemConfig.ai)
+    + " AI · "
+    + pretty(systemConfig.governance);
+
+
+  function wait(ms) {
+    return new Promise(
+      resolve =>
+        setTimeout(resolve, ms)
+    );
+  }
+
+
+  function setStep(number) {
+
+    for (
+      let i = 1;
+      i <= 6;
+      i++
+    ) {
+
+      const item =
+        document.getElementById(
+          "step" + i
+        );
+
+      item.classList.remove(
+        "active",
+        "complete"
+      );
+
+      if (i < number) {
+        item.classList.add(
+          "complete"
+        );
+      }
+
+      if (i === number) {
+        item.classList.add(
+          "active"
+        );
+      }
+
+    }
+
+
+    const percentages = {
+      1: 10,
+      2: 25,
+      3: 42,
+      4: 58,
+      5: 75,
+      6: 90,
+      7: 100
+    };
+
+
+    document
+      .getElementById(
+        "progressBar"
+      )
+      .style
+      .width =
+      percentages[number] + "%";
+
+  }
+
+
+  async function buildRiskModule() {
+
+    const button =
+      document.getElementById(
+        "buildButton"
+      );
+
+    const status =
+      document.getElementById(
+        "status"
+      );
+
+    const errorBox =
+      document.getElementById(
+        "errorBox"
+      );
+
+    const output =
+      document.getElementById(
+        "output"
+      );
+
+
+    errorBox.classList.remove(
+      "active"
+    );
+
+    output.classList.remove(
+      "active"
+    );
+
+    button.disabled = true;
+    button.innerText =
+      "Building your system...";
+
+    status.classList.add(
+      "active"
+    );
+
+
+    try {
+
+      setStep(1);
+      await wait(400);
+
+      setStep(2);
+      await wait(450);
+
+      setStep(3);
+      await wait(450);
+
+      setStep(4);
+
+
+      const response =
+        await fetch(
+          "/api/generate-risk",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+              businessProfile,
+
+              systemConfig,
+
+              implementationProfile
+
+            })
+          }
+        );
+
+
+      let data = {};
+
+      try {
+        data =
+          await response.json();
+      } catch (error) {
+        throw new Error(
+          "The generation service returned an invalid response."
+        );
+      }
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          data.error ||
+          "Tiwili could not generate the module."
+        );
+
+      }
+
+
+      setStep(5);
+      await wait(500);
+
+      setStep(6);
+      await wait(500);
+
+      setStep(7);
+
+      for (
+        let i = 1;
+        i <= 6;
+        i++
+      ) {
+
+        document
+          .getElementById(
+            "step" + i
+          )
+          .classList
+          .add(
+            "complete"
+          );
+
+      }
+
+
+      /*
+       * Save the generated module.
+       * This will later become the customer's workspace data.
+       */
+
+      localStorage.setItem(
+        "tiwiliGeneratedRiskModule",
+        JSON.stringify(data)
+      );
+
+
+      renderModule(
+        data.module
+      );
+
+
+      output.classList.add(
+        "active"
+      );
+
+
+      output.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+
+      button.innerText =
+        "Rebuild Module";
+
+      button.disabled = false;
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      errorBox.innerText =
+        error.message ||
+        "Something went wrong while building your system.";
+
+      errorBox.classList.add(
+        "active"
+      );
+
+      button.innerText =
+        "Try Again";
+
+      button.disabled = false;
+
+    }
+
+  }
+
+
+  function safeArray(value) {
+    return Array.isArray(value)
+      ? value
+      : [];
+  }
+
+
+  function list(items) {
+
+    if (!items || !items.length) {
+      return "<p>Not specified.</p>";
+    }
+
+    return `
+      <ul>
+        ${items
+          .map(
+            item =>
+              `<li>${escapeHTML(
+                typeof item === "string"
+                  ? item
+                  : JSON.stringify(item)
+              )}</li>`
+          )
+          .join("")}
+      </ul>
+    `;
+
+  }
+
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  function section(
+    id,
+    title,
+    content
+  ) {
+
+    return `
+      <section
+        class="content-section"
+        id="${id}"
+      >
+        <h2>${title}</h2>
+        ${content}
+      </section>
+    `;
+
+  }
+
+
+  function renderModule(payload) {
+
+    /*
+     * generate-risk.js currently returns:
+     *
+     * {
+     *   success: true,
+     *   generatedAt: ...,
+     *   module: generatedModule
+     * }
+     *
+     * Therefore payload here is the generatedModule.
+     */
+
+    const generated =
+      payload || {};
+
+
+    const meta =
+      generated.module || {};
+
+    const procedure =
+      generated.procedure || {};
+
+    const matrix =
+      generated.riskMatrix || {};
+
+    const register =
+      generated.riskRegister || {};
+
+    const assessment =
+      generated.riskAssessment || {};
+
+    const aiTools =
+      safeArray(
+        generated.aiTools
+      );
+
+    const governance =
+      generated.governance || {};
+
+    const qa =
+      generated.qa || {};
+
+
+    document
+      .getElementById(
+        "outputTitle"
+      )
+      .innerText =
+      (
+        meta.organisation
+          ? meta.organisation + " · "
+          : ""
+      )
+      +
+      (
+        meta.name ||
+        "Risk Management"
+      );
+
+
+    let html = "";
+
+
+    html += section(
+      "purpose",
+      "1. Purpose",
+      `<p>${escapeHTML(
+        procedure.purpose || ""
+      )}</p>`
+    );
+
+
+    html += section(
+      "scope",
+      "2. Scope",
+      `<p>${escapeHTML(
+        procedure.scope || ""
+      )}</p>`
+    );
+
+
+    html += section(
+      "principles",
+      "3. Risk Management Principles",
+      list(
+        safeArray(
+          procedure.principles
+        )
+      )
+    );
+
+
+    let responsibilitiesHTML = "";
+
+    safeArray(
+      procedure.responsibilities
+    )
+    .forEach(role => {
+
+      responsibilitiesHTML += `
+        <div class="role">
+
+          <strong>
+            ${escapeHTML(
+              role.role || "Role"
+            )}
+          </strong>
+
+          ${list(
+            safeArray(
+              role.responsibilities
+            )
+          )}
+
+        </div>
+      `;
+
+    });
+
+
+    html += section(
+      "responsibilities",
+      "4. Roles & Responsibilities",
+      responsibilitiesHTML ||
+      "<p>No roles generated.</p>"
+    );
+
+
+    const identification =
+      procedure.riskIdentification
+      || {};
+
+
+    html += section(
+      "identification",
+      "5. Risk Identification",
+      `
+        <p>
+          ${escapeHTML(
+            identification.content || ""
+          )}
+        </p>
+
+        <h3>
+          Relevant Risk Categories
+        </h3>
+
+        ${list(
+          safeArray(
+            identification.categories
+          )
+        )}
+      `
+    );
+
+
+    html += section(
+      "evaluation",
+      "6. Risk Analysis & Evaluation",
+      `<p>${escapeHTML(
+        procedure.analysisAndEvaluation
+        || ""
+      )}</p>`
+    );
+
+
+    const controls =
+      procedure.controls || {};
+
+
+    html += section(
+      "controls",
+      "7. Risk Controls",
+      `
+        <p>
+          ${escapeHTML(
+            controls.content || ""
+          )}
+        </p>
+
+        <h3>
+          Hierarchy of Controls
+        </h3>
+
+        ${list(
+          safeArray(
+            controls.hierarchy
+          )
+        )}
+      `
+    );
+
+
+    html += section(
+      "treatment",
+      "8. Risk Treatment",
+      `<p>${escapeHTML(
+        procedure.treatment || ""
+      )}</p>`
+    );
+
+
+    html += section(
+      "acceptance",
+      "9. Risk Acceptance & Escalation",
+      `
+        <p>
+          ${escapeHTML(
+            procedure.acceptanceAndEscalation
+            || ""
+          )}
+        </p>
+
+        <h3>
+          Governance Workflow
+        </h3>
+
+        ${list(
+          safeArray(
+            governance.workflow
+          )
+        )}
+
+        <h3>
+          Escalation Rules
+        </h3>
+
+        ${list(
+          safeArray(
+            governance.escalationRules
+          )
+        )}
+      `
+    );
+
+
+    html += section(
+      "review",
+      "10. Monitoring & Review",
+      `
+        <p>
+          ${escapeHTML(
+            procedure.monitoringAndReview
+            || ""
+          )}
+        </p>
+
+        <h3>
+          Communication & Consultation
+        </h3>
+
+        <p>
+          ${escapeHTML(
+            procedure.communicationAndConsultation
+            || ""
+          )}
+        </p>
+
+        <h3>
+          Records
+        </h3>
+
+        ${list(
+          safeArray(
+            procedure.records
+          )
+        )}
+      `
+    );
+
+
+    html += section(
+      "matrix",
+      "11. Risk Matrix",
+      `
+        <p>
+          ${escapeHTML(
+            matrix.recommendedApproach
+            || ""
+          )}
+        </p>
+
+        <h3>
+          Rating Method
+        </h3>
+
+        <p>
+          ${escapeHTML(
+            matrix.ratingMethod
+            || ""
+          )}
+        </p>
+
+        <h3>
+          Likelihood Scale
+        </h3>
+
+        ${list(
+          safeArray(
+            matrix.likelihoodScale
+          )
+        )}
+
+        <h3>
+          Consequence Scale
+        </h3>
+
+        ${list(
+          safeArray(
+            matrix.consequenceScale
+          )
+        )}
+
+        ${
+          matrix.note
+            ? `
+              <h3>Note</h3>
+              <p>
+                ${escapeHTML(
+                  matrix.note
+                )}
+              </p>
+            `
+            : ""
+        }
+      `
+    );
+
+
+    html += section(
+      "register",
+      "12. Risk Register",
+      `
+        <p>
+          The following fields form the generated
+          Risk Register structure.
+        </p>
+
+        ${list(
+          safeArray(
+            register.fields
+          )
+        )}
+
+        <h3>
+          Risk Assessment Process
+        </h3>
+
+        ${list(
+          safeArray(
+            assessment.steps
+          )
+        )}
+      `
+    );
+
+
+    let aiHTML = "";
+
+    aiTools.forEach(tool => {
+
+      aiHTML += `
+        <div class="tool-card">
+
+          <strong>
+            ✦ ${escapeHTML(
+              tool.name || "Tiwili AI"
+            )}
+          </strong>
+
+          <p>
+            ${escapeHTML(
+              tool.purpose || ""
+            )}
+          </p>
+
+          ${
+            tool.interaction
+              ? `
+                <p>
+                  <b>Interaction:</b>
+                  ${escapeHTML(
+                    tool.interaction
+                  )}
+                </p>
+              `
+              : ""
+          }
+
+        </div>
+      `;
+
+    });
+
+
+    html += section(
+      "ai",
+      "13. Tiwili AI Tools",
+      aiHTML ||
+      "<p>AI assistance is available on demand.</p>"
+    );
+
+
+    const warnings =
+      safeArray(
+        qa.warnings
+      );
+
+
+    html += section(
+      "qa",
+      "14. Tiwili Quality Check",
+      `
+        <p class="qa-pass">
+          ✓ Mandatory sections:
+          ${
+            qa.mandatorySectionsPresent
+              ? "Passed"
+              : "Review required"
+          }
+        </p>
+
+        <p class="qa-pass">
+          ✓ Required tools:
+          ${
+            qa.requiredToolsPresent
+              ? "Passed"
+              : "Review required"
+          }
+        </p>
+
+        <p class="qa-pass">
+          ✓ Role consistency:
+          ${
+            qa.rolesConsistent
+              ? "Passed"
+              : "Review required"
+          }
+        </p>
+
+        <p class="qa-pass">
+          ✓ Customer terminology:
+          ${
+            qa.customerTerminologyUsed
+              ? "Passed"
+              : "Review required"
+          }
+        </p>
+
+        ${
+          warnings.length
+            ? `
+              <h3 class="qa-warning">
+                Review Notes
+              </h3>
+
+              ${list(warnings)}
+            `
+            : `
+              <p>
+                No generation warnings were returned.
+              </p>
+            `
+        }
+      `
+    );
+
+
+    document
+      .getElementById(
+        "moduleContent"
+      )
+      .innerHTML =
+      html;
+
+  }
+
+</script>
+
+</body>
+</html>
