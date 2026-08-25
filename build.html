@@ -492,6 +492,73 @@
   font-weight: 800;
   color: var(--white);
 }
+
+.risk-matrix-wrap {
+  margin-top: 18px;
+  overflow-x: auto;
+}
+
+.risk-matrix {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.risk-matrix th,
+.risk-matrix td {
+  border: 1px solid var(--border);
+  text-align: center;
+  padding: 12px 8px;
+  font-size: 11px;
+}
+
+.risk-matrix th {
+  background: rgba(244,246,245,.04);
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.risk-matrix .matrix-axis {
+  color: var(--accent-light);
+}
+
+.risk-matrix .matrix-cell {
+  font-weight: 800;
+  color: #0D0D0D;
+}
+
+.matrix-low {
+  background: #A9C23F;
+}
+
+.matrix-moderate {
+  background: #1D8296;
+  color: #FFFFFF !important;
+}
+
+.matrix-high {
+  background: #D98B3A;
+}
+
+.matrix-significant {
+  background: #C94A4A;
+  color: #FFFFFF !important;
+}
+
+.matrix-score {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.matrix-rating {
+  display: block;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+    
     @media (max-width: 800px) {
       .input-grid {
         grid-template-columns: 1fr;
@@ -1698,6 +1765,220 @@ function renderScaleTable(
 
 }
 
+function getRiskRating(
+  score
+) {
+
+  if (
+    score >= 75
+  ) {
+
+    return {
+      name: "Significant",
+      className: "matrix-significant"
+    };
+
+  }
+
+
+  if (
+    score >= 45
+  ) {
+
+    return {
+      name: "High",
+      className: "matrix-high"
+    };
+
+  }
+
+
+  if (
+    score >= 20
+  ) {
+
+    return {
+      name: "Moderate",
+      className: "matrix-moderate"
+    };
+
+  }
+
+
+  return {
+    name: "Low",
+    className: "matrix-low"
+  };
+
+}
+
+
+function renderRiskMatrix(
+  likelihoodScale,
+  consequenceScale
+) {
+
+  if (
+    !Array.isArray(
+      likelihoodScale
+    )
+    ||
+    !likelihoodScale.length
+    ||
+    !Array.isArray(
+      consequenceScale
+    )
+    ||
+    !consequenceScale.length
+  ) {
+
+    return "<p>Risk matrix not available.</p>";
+
+  }
+
+
+  const likelihoodRows =
+    [...likelihoodScale]
+      .sort(
+        (a, b) =>
+          Number(b.score)
+          -
+          Number(a.score)
+      );
+
+
+  const consequenceColumns =
+    [...consequenceScale]
+      .sort(
+        (a, b) =>
+          Number(a.score)
+          -
+          Number(b.score)
+      );
+
+
+  return `
+    <div class="risk-matrix-wrap">
+
+      <table class="risk-matrix">
+
+        <thead>
+
+          <tr>
+
+            <th class="matrix-axis">
+              Likelihood ↓
+              <br>
+              Impact →
+            </th>
+
+            ${consequenceColumns
+              .map(
+                impact => `
+                  <th>
+                    ${escapeHTML(
+                      impact.label
+                      ||
+                      ""
+                    )}
+                    <br>
+                    ${escapeHTML(
+                      impact.score
+                      ??
+                      ""
+                    )}
+                  </th>
+                `
+              )
+              .join("")}
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          ${likelihoodRows
+            .map(
+              likelihood => {
+
+                return `
+                  <tr>
+
+                    <th>
+                      ${escapeHTML(
+                        likelihood.label
+                        ||
+                        ""
+                      )}
+                      <br>
+                      ${escapeHTML(
+                        likelihood.score
+                        ??
+                        ""
+                      )}
+                    </th>
+
+                    ${consequenceColumns
+                      .map(
+                        impact => {
+
+                          const score =
+                            Number(
+                              likelihood.score
+                            )
+                            *
+                            Number(
+                              impact.score
+                            );
+
+
+                          const rating =
+                            getRiskRating(
+                              score
+                            );
+
+
+                          return `
+                            <td
+                              class="
+                                matrix-cell
+                                ${rating.className}
+                              "
+                            >
+
+                              <span class="matrix-score">
+                                ${score}
+                              </span>
+
+                              <span class="matrix-rating">
+                                ${rating.name}
+                              </span>
+
+                            </td>
+                          `;
+
+                        }
+                      )
+                      .join("")}
+
+                  </tr>
+                `;
+
+              }
+            )
+            .join("")}
+
+        </tbody>
+
+      </table>
+
+    </div>
+  `;
+
+}
+
   function section(
     id,
     title,
@@ -2075,6 +2356,19 @@ ${renderScaleTable(
   ),
   "Consequence",
   "Score"
+)}
+
+<h3>
+  Risk Matrix
+</h3>
+
+${renderRiskMatrix(
+  safeArray(
+    matrix.likelihoodScale
+  ),
+  safeArray(
+    matrix.consequenceScale
+  )
 )}
 
         ${
