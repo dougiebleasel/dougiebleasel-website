@@ -1405,7 +1405,10 @@ renderModule(
   }
 
 
-  function renderModule(payload) {
+function renderModule(
+  payload,
+  validation
+) {
 
     /*
      * generate-risk.js currently returns:
@@ -1445,10 +1448,6 @@ renderModule(
 
     const governance =
       generated.governance || {};
-
-    const qa =
-      generated.qa || {};
-
 
     document
       .getElementById(
@@ -1816,64 +1815,176 @@ renderModule(
       );
 
 
-    html += section(
-      "qa",
-      "14. Tiwili Quality Check",
-      `
-        <p class="qa-pass">
-          ✓ Mandatory sections:
-          ${
-            qa.mandatorySectionsPresent
-              ? "Passed"
-              : "Review required"
-          }
-        </p>
+ const validationResult =
+  validation?.result || {};
+
+const validationPasses =
+  safeArray(
+    validation?.passes
+  );
+
+const validationWarnings =
+  safeArray(
+    validation?.warnings
+  );
+
+const validationFailures =
+  safeArray(
+    validation?.failures
+  );
+
+
+let validatorHTML = `
+
+  <p class="${
+    validationResult.publishable
+      ? "qa-pass"
+      : "qa-warning"
+  }">
+
+    ${
+      validationResult.publishable
+        ? "✓"
+        : "!"
+    }
+
+    Validation status:
+    ${escapeHTML(
+      validationResult.status ||
+      "Unknown"
+    )}
+
+  </p>
+
+`;
+
+
+if (
+  validationResult.counts
+) {
+
+  validatorHTML += `
+
+    <p>
+      ${Number(
+        validationResult.counts.passed || 0
+      )}
+      checks passed ·
+
+      ${Number(
+        validationResult.counts.warnings || 0
+      )}
+      warnings ·
+
+      ${Number(
+        validationResult.counts.failures || 0
+      )}
+      failures
+    </p>
+
+  `;
+
+}
+
+
+if (
+  validationPasses.length
+) {
+
+  validatorHTML += `
+    <h3>
+      Passed Checks
+    </h3>
+  `;
+
+
+  validationPasses.forEach(
+    item => {
+
+      validatorHTML += `
 
         <p class="qa-pass">
-          ✓ Required tools:
-          ${
-            qa.requiredToolsPresent
-              ? "Passed"
-              : "Review required"
-          }
+          ✓
+          ${escapeHTML(
+            item.message || ""
+          )}
         </p>
 
-        <p class="qa-pass">
-          ✓ Role consistency:
-          ${
-            qa.rolesConsistent
-              ? "Passed"
-              : "Review required"
-          }
+      `;
+
+    }
+  );
+
+}
+
+
+if (
+  validationWarnings.length
+) {
+
+  validatorHTML += `
+    <h3 class="qa-warning">
+      Review Notes
+    </h3>
+  `;
+
+
+  validationWarnings.forEach(
+    item => {
+
+      validatorHTML += `
+
+        <p class="qa-warning">
+          !
+          ${escapeHTML(
+            item.message || ""
+          )}
         </p>
 
-        <p class="qa-pass">
-          ✓ Customer terminology:
-          ${
-            qa.customerTerminologyUsed
-              ? "Passed"
-              : "Review required"
-          }
+      `;
+
+    }
+  );
+
+}
+
+
+if (
+  validationFailures.length
+) {
+
+  validatorHTML += `
+    <h3 class="qa-warning">
+      Validation Failures
+    </h3>
+  `;
+
+
+  validationFailures.forEach(
+    item => {
+
+      validatorHTML += `
+
+        <p class="qa-warning">
+          !
+          ${escapeHTML(
+            item.message || ""
+          )}
         </p>
 
-        ${
-          warnings.length
-            ? `
-              <h3 class="qa-warning">
-                Review Notes
-              </h3>
+      `;
 
-              ${list(warnings)}
-            `
-            : `
-              <p>
-                No generation warnings were returned.
-              </p>
-            `
-        }
-      `
-    );
+    }
+  );
 
+}
+
+
+html += section(
+  "qa",
+  "14. Tiwili Quality Check",
+  validatorHTML
+);
 
     document
       .getElementById(
