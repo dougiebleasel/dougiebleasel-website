@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certicium | Your Organisation</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --bright-green: #6FC55A;
+      --dark-grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,.11);
+      --card: #141715;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 37px;
+      height: 37px;
+      border: 1px solid rgba(111,197,90,.35);
+      background: rgba(44,130,89,.13);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-green);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .brand-name span {
+      color: var(--bright-green);
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .eyebrow {
+      color: var(--bright-green);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+    }
+
+    .intro h1 {
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+      max-width: 800px;
+    }
+
+    .intro p {
+      margin-top: 17px;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .setup-progress {
+      display: flex;
+      gap: 7px;
+      margin-top: 27px;
+    }
+
+    .progress-step {
+      height: 4px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(244,246,245,.08);
+    }
+
+    .progress-step.active {
+      background: var(--bright-green);
+    }
+
+    .form-section {
+      margin-bottom: 18px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .section-number {
+      color: var(--bright-green);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .form-section h2 {
+      font-size: 25px;
+      letter-spacing: -1px;
+    }
+
+    .section-description {
+      margin-top: 7px;
+      margin-bottom: 25px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      max-width: 680px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #D7DDD9;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hint {
+      display: block;
+      margin-top: -3px;
+      margin-bottom: 8px;
+      color: #747D78;
+      font-size: 9px;
+      font-weight: 400;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      outline: none;
+      background: #0F1210;
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgba(111,197,90,.6);
+    }
+
+    select option {
+      background: #0F1210;
+      color: var(--white);
+    }
+
+    .other-field {
+      display: none;
+      margin-top: 8px;
+    }
+
+    .other-field.active {
+      display: block;
+    }
+
+    .dictionary-preview {
+      display: grid;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .dictionary-row {
+      display: grid;
+      grid-template-columns: 1fr 35px 1fr;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 7px;
+      background: rgba(244,246,245,.035);
+    }
+
+    .dictionary-row .generic {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .dictionary-row .arrow {
+      text-align: center;
+      color: var(--bright-green);
+      font-size: 11px;
+    }
+
+    .dictionary-row .customer {
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .governance-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .governance-row {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      align-items: center;
+      gap: 20px;
+      padding: 14px;
+      border: 1px solid rgba(244,246,245,.06);
+      border-radius: 8px;
+      background: rgba(13,13,13,.3);
+    }
+
+    .governance-row strong {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+
+    .governance-row p {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .review-box {
+      padding: 20px;
+      border: 1px solid rgba(111,197,90,.25);
+      border-radius: 9px;
+      background: rgba(44,130,89,.08);
+    }
+
+    .review-box strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+    }
+
+    .review-box p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .review-list {
+      margin-top: 16px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .review-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: rgba(13,13,13,.35);
+      color: #D7DDD9;
+      font-size: 10px;
+    }
+
+    .review-item span {
+      color: var(--bright-green);
+      font-weight: 800;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .primary-button {
+      min-height: 50px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--bright-green);
+      color: #0B1A11;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary-button:hover {
+      filter: brightness(1.06);
+    }
+
+    .required {
+      color: var(--bright-green);
+    }
+
+    @media (max-width: 750px) {
+
+      .field-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .governance-row {
+        grid-template-columns: 1fr;
+      }
+
+      .dictionary-row {
+        grid-template-columns: 1fr;
+      }
+
+      .dictionary-row .arrow {
+        text-align: left;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+  <div class="brand">
+
+    <div class="brand-mark">
+      Ce
+    </div>
+
+    <div class="brand-name">
+      Certicium<span>.</span>
+    </div>
+
+  </div>
+
+  <a
+    href="setup.html"
+    class="back"
+  >
+    ← Setup Dashboard
+  </a>
+
+</header>
+
+
+<main>
+
+
+  <section class="intro">
+
+    <div class="eyebrow">
+      Setup 01 · Your Organisation
+    </div>
+
+    <h1>
+      Teach Certicium how your organisation works.
+    </h1>
+
+    <p>
+      We'll use this information throughout your management system.
+      Define your organisation, the language your people actually use
+      and who is responsible for key management system decisions.
+    </p>
+
+    <div class="setup-progress">
+
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+
+    </div>
+
+  </section>
+
+
+  <form id="organisationForm">
+
+
+    <!-- =========================
+         SECTION 1
+         ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        01 · Organisation
+      </div>
+
+      <h2>
+        About your organisation
+      </h2>
+
+      <p class="section-description">
+        Start with the organisation that this management system
+        will apply to.
+      </p>
+
+
+      <div class="field-grid">
+
+        <div class="field">
+
+          <label for="legalEntity">
+            Legal entity
+            <span class="required">*</span>
+          </label>
+
+          <input
+            type="text"
+            id="legalEntity"
+            placeholder="e.g. Example Company Pty Ltd"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="tradingName">
+            Trading name
+          </label>
+
+          <span class="hint">
+            Leave blank if the same as the legal entity.
+          </span>
+
+          <input
+            type="text"
+            id="tradingName"
+            placeholder="e.g. Example Company"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="mostSeniorRole">
+            Most senior role
+            <span class="required">*</span>
+          </label>
+
+          <span class="hint">
+            The most senior accountable executive for this management system.
+          </span>
+
+          <input
+            type="text"
+            id="mostSeniorRole"
+            placeholder="e.g. CEO, Managing Director, General Manager"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="businessUnits">
+            Business unit or division
+          </label>
+
+          <span class="hint">
+            Optional. Use this if the IMS applies to a particular part of the business.
+          </span>
+
+          <input
+            type="text"
+            id="businessUnits"
+            placeholder="e.g. Australia & New Zealand Operations"
+          >
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SECTION 2
+         ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        02 · Organisation Dictionary
+      </div>
+
+      <h2>
+        What do your people call things?
+      </h2>
+
+      <p class="section-description">
+        Certicium won't force generic management-system language onto
+        your organisation. Tell us the terminology your people already use.
+      </p>
+
+
+      <div class="field-grid">
+
+
+        <div class="field">
+
+          <label for="leadershipTeam">
+            Senior leadership group
+            <span class="required">*</span>
+          </label>
+
+          <select
+            id="leadershipTeam"
+            required
+            onchange="handleOther(this, 'leadershipTeamOther')"
+          >
+            <option value="">
+              Select...
+            </option>
+            <option value="Executive Leadership Team">
+              Executive Leadership Team
+            </option>
+            <option value="Senior Leadership Team">
+              Senior Leadership Team
+            </option>
+            <option value="Leadership Team">
+              Leadership Team
+            </option>
+            <option value="Executive Team">
+              Executive Team
+            </option>
+            <option value="Board">
+              Board
+            </option>
+            <option value="other">
+              Something else
+            </option>
+          </select>
+
+          <input
+            type="text"
+            id="leadershipTeamOther"
+            class="other-field"
+            placeholder="Enter your terminology"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="managerTerm">
+            People responsible for teams
+            <span class="required">*</span>
+          </label>
+
+          <select
+            id="managerTerm"
+            required
+            onchange="handleOther(this, 'managerTermOther')"
+          >
+            <option value="">
+              Select...
+            </option>
+            <option value="Managers">
+              Managers
+            </option>
+            <option value="Leaders">
+              Leaders
+            </option>
+            <option value="People Leaders">
+              People Leaders
+            </option>
+            <option value="Team Leaders">
+              Team Leaders
+            </option>
+            <option value="Supervisors">
+              Supervisors
+            </option>
+            <option value="other">
+              Something else
+            </option>
+          </select>
+
+          <input
+            type="text"
+            id="managerTermOther"
+            class="other-field"
+            placeholder="Enter your terminology"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="workforceTerm">
+            Your workforce
+            <span class="required">*</span>
+          </label>
+
+          <select
+            id="workforceTerm"
+            required
+            onchange="handleOther(this, 'workforceTermOther')"
+          >
+            <option value="">
+              Select...
+            </option>
+            <option value="Employees">
+              Employees
+            </option>
+            <option value="Workers">
+              Workers
+            </option>
+            <option value="Team Members">
+              Team Members
+            </option>
+            <option value="People">
+              People
+            </option>
+            <option value="Staff">
+              Staff
+            </option>
+            <option value="other">
+              Something else
+            </option>
+          </select>
+
+          <input
+            type="text"
+            id="workforceTermOther"
+            class="other-field"
+            placeholder="Enter your terminology"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="hseqTerm">
+            HSEQ / management system function
+            <span class="required">*</span>
+          </label>
+
+          <select
+            id="hseqTerm"
+            required
+            onchange="handleOther(this, 'hseqTermOther')"
+          >
+            <option value="">
+              Select...
+            </option>
+            <option value="HSEQ Team">
+              HSEQ Team
+            </option>
+            <option value="HSE Team">
+              HSE Team
+            </option>
+            <option value="WHS Team">
+              WHS Team
+            </option>
+            <option value="SHEQ Team">
+              SHEQ Team
+            </option>
+            <option value="Safety Team">
+              Safety Team
+            </option>
+            <option value="Quality Team">
+              Quality Team
+            </option>
+            <option value="Risk & Compliance">
+              Risk & Compliance
+            </option>
+            <option value="none">
+              We don't have a dedicated function
+            </option>
+            <option value="other">
+              Something else
+            </option>
+          </select>
+
+          <input
+            type="text"
+            id="hseqTermOther"
+            class="other-field"
+            placeholder="Enter your terminology"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="dictionary-preview">
+
+        <div class="dictionary-row">
+          <div class="generic">
+            Senior Management
+          </div>
+          <div class="arrow">
+            →
+          </div>
+          <div
+            class="customer"
+            id="previewLeadership"
+          >
+            Your leadership terminology
+          </div>
+        </div>
+
+
+        <div class="dictionary-row">
+          <div class="generic">
+            Managers
+          </div>
+          <div class="arrow">
+            →
+          </div>
+          <div
+            class="customer"
+            id="previewManagers"
+          >
+            Your manager terminology
+          </div>
+        </div>
+
+
+        <div class="dictionary-row">
+          <div class="generic">
+            Workers
+          </div>
+          <div class="arrow">
+            →
+          </div>
+          <div
+            class="customer"
+            id="previewWorkforce"
+          >
+            Your workforce terminology
+          </div>
+        </div>
+
+
+        <div class="dictionary-row">
+          <div class="generic">
+            HSEQ Team
+          </div>
+          <div class="arrow">
+            →
+          </div>
+          <div
+            class="customer"
+            id="previewHSEQ"
+          >
+            Your management system function
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SECTION 3
+         ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        03 · Governance
+      </div>
+
+      <h2>
+        Who is responsible?
+      </h2>
+
+      <p class="section-description">
+        These responsibilities will be used throughout policies,
+        procedures, workflows and approvals. Use role or group names,
+        rather than individual people's names.
+      </p>
+
+
+      <div class="governance-grid">
+
+
+        <div class="governance-row">
+
+          <div>
+            <strong>
+              Management system owner
+            </strong>
+            <p>
+              Overall responsibility for maintaining and improving the IMS.
+            </p>
+          </div>
+
+          <input
+            type="text"
+            id="imsOwner"
+            placeholder="e.g. HSEQ Manager"
+            required
+          >
+
+        </div>
+
+
+        <div class="governance-row">
+
+          <div>
+            <strong>
+              Policy approver
+            </strong>
+            <p>
+              Role or group authorised to approve management system policies.
+            </p>
+          </div>
+
+          <input
+            type="text"
+            id="policyApprover"
+            placeholder="e.g. Managing Director"
+            required
+          >
+
+        </div>
+
+
+        <div class="governance-row">
+
+          <div>
+            <strong>
+              Risk Management owner
+            </strong>
+            <p>
+              Role or function responsible for the Risk Management framework.
+            </p>
+          </div>
+
+          <input
+            type="text"
+            id="riskOwner"
+            placeholder="e.g. HSEQ Team"
+            required
+          >
+
+        </div>
+
+
+        <div class="governance-row">
+
+          <div>
+            <strong>
+              Significant risk authority
+            </strong>
+            <p>
+              Role or group authorised to accept or escalate Significant risks.
+            </p>
+          </div>
+
+          <input
+            type="text"
+            id="significantRiskAuthority"
+            placeholder="e.g. Executive Leadership Team"
+            required
+          >
+
+        </div>
+
+
+        <div class="governance-row">
+
+          <div>
+            <strong>
+              Incident Management owner
+            </strong>
+            <p>
+              Role or function responsible for incident governance and investigation.
+            </p>
+          </div>
+
+          <input
+            type="text"
+            id="incidentOwner"
+            placeholder="e.g. HSEQ Team"
+            required
+          >
+
+        </div>
+
+
+        <div class="governance-row">
+
+          <div>
+            <strong>
+              Corrective action oversight
+            </strong>
+            <p>
+              Role or function responsible for monitoring actions through to closure.
+            </p>
+          </div>
+
+          <input
+            type="text"
+            id="actionOwner"
+            placeholder="e.g. HSEQ Team"
+            required
+          >
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SECTION 4
+         ========================= -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        04 · Review
+      </div>
+
+      <h2>
+        Your Certicium language
+      </h2>
+
+      <p class="section-description">
+        This becomes part of your organisation profile and will be
+        reused throughout your management system.
+      </p>
+
+
+      <div class="review-box">
+
+        <strong>
+          Certicium will use your terminology.
+        </strong>
+
+        <p>
+          Generated policies, procedures, tools and AI assistants
+          will use the organisation language you've defined above
+          rather than generic terminology.
+        </p>
+
+
+        <div
+          class="review-list"
+          id="reviewList"
+        >
+
+          <div class="review-item">
+            Complete the fields above to preview your organisation language.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          onclick="window.location.href='setup.html'"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Save & Return to Setup →
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </form>
+
+
+</main>
+
+
+<script>
+
+  function handleOther(
+    select,
+    otherId
+  ) {
+
+    const other =
+      document.getElementById(
+        otherId
+      );
+
+
+    if (
+      select.value === "other"
+    ) {
+
+      other.classList.add(
+        "active"
+      );
+
+      other.required =
+        true;
+
+    } else {
+
+      other.classList.remove(
+        "active"
+      );
+
+      other.required =
+        false;
+
+    }
+
+
+    updatePreview();
+
+  }
+
+
+  function getTerm(
+    selectId,
+    otherId
+  ) {
+
+    const select =
+      document.getElementById(
+        selectId
+      );
+
+
+    const other =
+      document.getElementById(
+        otherId
+      );
+
+
+    if (
+      select.value === "other"
+    ) {
+
+      return other.value.trim();
+
+    }
+
+
+    if (
+      select.value === "none"
+    ) {
+
+      return "No dedicated function";
+
+    }
+
+
+    return select.value;
+
+  }
+
+
+  function updatePreview() {
+
+    const leadership =
+      getTerm(
+        "leadershipTeam",
+        "leadershipTeamOther"
+      );
+
+
+    const managers =
+      getTerm(
+        "managerTerm",
+        "managerTermOther"
+      );
+
+
+    const workforce =
+      getTerm(
+        "workforceTerm",
+        "workforceTermOther"
+      );
+
+
+    const hseq =
+      getTerm(
+        "hseqTerm",
+        "hseqTermOther"
+      );
+
+
+    document
+      .getElementById(
+        "previewLeadership"
+      )
+      .innerText =
+      leadership
+      ||
+      "Your leadership terminology";
+
+
+    document
+      .getElementById(
+        "previewManagers"
+      )
+      .innerText =
+      managers
+      ||
+      "Your manager terminology";
+
+
+    document
+      .getElementById(
+        "previewWorkforce"
+      )
+      .innerText =
+      workforce
+      ||
+      "Your workforce terminology";
+
+
+    document
+      .getElementById(
+        "previewHSEQ"
+      )
+      .innerText =
+      hseq
+      ||
+      "Your management system function";
+
+
+    const reviewItems = [];
+
+
+    if (
+      leadership
+    ) {
+
+      reviewItems.push(
+        `Senior Management → <span>${escapeHTML(
+          leadership
+        )}</span>`
+      );
+
+    }
+
+
+    if (
+      managers
+    ) {
+
+      reviewItems.push(
+        `Managers → <span>${escapeHTML(
+          managers
+        )}</span>`
+      );
+
+    }
+
+
+    if (
+      workforce
+    ) {
+
+      reviewItems.push(
+        `Workers → <span>${escapeHTML(
+          workforce
+        )}</span>`
+      );
+
+    }
+
+
+    if (
+      hseq
+    ) {
+
+      reviewItems.push(
+        `HSEQ Team → <span>${escapeHTML(
+          hseq
+        )}</span>`
+      );
+
+    }
+
+
+    const reviewList =
+      document.getElementById(
+        "reviewList"
+      );
+
+
+    if (
+      reviewItems.length
+    ) {
+
+      reviewList.innerHTML =
+        reviewItems
+          .map(
+            item =>
+              `
+                <div class="review-item">
+                  ${item}
+                </div>
+              `
+          )
+          .join("");
+
+    } else {
+
+      reviewList.innerHTML = `
+        <div class="review-item">
+          Complete the fields above to preview your organisation language.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  function escapeHTML(
+    value
+  ) {
+
+    return String(
+      value ?? ""
+    )
+      .replaceAll(
+        "&",
+        "&amp;"
+      )
+      .replaceAll(
+        "<",
+        "&lt;"
+      )
+      .replaceAll(
+        ">",
+        "&gt;"
+      )
+      .replaceAll(
+        '"',
+        "&quot;"
+      )
+      .replaceAll(
+        "'",
+        "&#039;"
+      );
+
+  }
+
+
+  /*
+   * UPDATE PREVIEW AS USER TYPES
+   */
+
+
+  document
+    .querySelectorAll(
+      "select, input"
+    )
+    .forEach(
+      field => {
+
+        field.addEventListener(
+          "input",
+          updatePreview
+        );
+
+        field.addEventListener(
+          "change",
+          updatePreview
+        );
+
+      }
+    );
+
+
+  /*
+   * LOAD EXISTING PROFILE
+   */
+
+
+  function loadExistingProfile() {
+
+    let profile = {};
+
+
+    try {
+
+      profile =
+        JSON.parse(
+          localStorage.getItem(
+            "certiciumOrganisationProfile"
+          )
+          ||
+          "{}"
+        );
+
+    } catch (error) {
+
+      profile = {};
+
+    }
+
+
+    if (
+      !profile
+      ||
+      !Object.keys(
+        profile
+      ).length
+    ) {
+
+      /*
+       * PRE-FILL ORGANISATION FROM OLD PROTOTYPE
+       */
+
+      try {
+
+        const oldProfile =
+          JSON.parse(
+            localStorage.getItem(
+              "tiwiliImplementationProfile"
+            )
+            ||
+            "{}"
+          );
+
+
+        if (
+          oldProfile
+            ?.organisation
+            ?.legalEntity
+        ) {
+
+          document
+            .getElementById(
+              "legalEntity"
+            )
+            .value =
+            oldProfile
+              .organisation
+              .legalEntity;
+
+        }
+
+      } catch (error) {}
+
+      return;
+
+    }
+
+
+    document
+      .getElementById(
+        "legalEntity"
+      )
+      .value =
+      profile.legalEntity
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "tradingName"
+      )
+      .value =
+      profile.tradingName
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "mostSeniorRole"
+      )
+      .value =
+      profile.mostSeniorRole
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "businessUnits"
+      )
+      .value =
+      profile.businessUnits
+      ||
+      "";
+
+
+    loadSelectTerm(
+      "leadershipTeam",
+      "leadershipTeamOther",
+      profile.dictionary?.leadershipTeam
+    );
+
+
+    loadSelectTerm(
+      "managerTerm",
+      "managerTermOther",
+      profile.dictionary?.managers
+    );
+
+
+    loadSelectTerm(
+      "workforceTerm",
+      "workforceTermOther",
+      profile.dictionary?.workforce
+    );
+
+
+    loadSelectTerm(
+      "hseqTerm",
+      "hseqTermOther",
+      profile.dictionary?.hseqFunction
+    );
+
+
+    document
+      .getElementById(
+        "imsOwner"
+      )
+      .value =
+      profile.governance?.imsOwner
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "policyApprover"
+      )
+      .value =
+      profile.governance?.policyApprover
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "riskOwner"
+      )
+      .value =
+      profile.governance?.riskOwner
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "significantRiskAuthority"
+      )
+      .value =
+      profile.governance?.significantRiskAuthority
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "incidentOwner"
+      )
+      .value =
+      profile.governance?.incidentOwner
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "actionOwner"
+      )
+      .value =
+      profile.governance?.actionOwner
+      ||
+      "";
+
+
+    updatePreview();
+
+  }
+
+
+  function loadSelectTerm(
+    selectId,
+    otherId,
+    value
+  ) {
+
+    if (
+      !value
+    ) {
+
+      return;
+
+    }
+
+
+    const select =
+      document.getElementById(
+        selectId
+      );
+
+
+    const other =
+      document.getElementById(
+        otherId
+      );
+
+
+    if (
+      value ===
+      "No dedicated function"
+    ) {
+
+      select.value =
+        "none";
+
+      return;
+
+    }
+
+
+    const optionExists =
+      Array
+        .from(
+          select.options
+        )
+        .some(
+          option =>
+            option.value ===
+            value
+        );
+
+
+    if (
+      optionExists
+    ) {
+
+      select.value =
+        value;
+
+    } else {
+
+      select.value =
+        "other";
+
+      other.value =
+        value;
+
+      other.classList.add(
+        "active"
+      );
+
+      other.required =
+        true;
+
+    }
+
+  }
+
+
+  /*
+   * SAVE PROFILE
+   */
+
+
+  document
+    .getElementById(
+      "organisationForm"
+    )
+    .addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const profile = {
+
+          setupComplete:
+            true,
+
+          legalEntity:
+            document
+              .getElementById(
+                "legalEntity"
+              )
+              .value
+              .trim(),
+
+          tradingName:
+            document
+              .getElementById(
+                "tradingName"
+              )
+              .value
+              .trim(),
+
+          mostSeniorRole:
+            document
+              .getElementById(
+                "mostSeniorRole"
+              )
+              .value
+              .trim(),
+
+          businessUnits:
+            document
+              .getElementById(
+                "businessUnits"
+              )
+              .value
+              .trim(),
+
+
+          dictionary: {
+
+            leadershipTeam:
+              getTerm(
+                "leadershipTeam",
+                "leadershipTeamOther"
+              ),
+
+            managers:
+              getTerm(
+                "managerTerm",
+                "managerTermOther"
+              ),
+
+            workforce:
+              getTerm(
+                "workforceTerm",
+                "workforceTermOther"
+              ),
+
+            hseqFunction:
+              getTerm(
+                "hseqTerm",
+                "hseqTermOther"
+              )
+
+          },
+
+
+          governance: {
+
+            imsOwner:
+              document
+                .getElementById(
+                  "imsOwner"
+                )
+                .value
+                .trim(),
+
+            policyApprover:
+              document
+                .getElementById(
+                  "policyApprover"
+                )
+                .value
+                .trim(),
+
+            riskOwner:
+              document
+                .getElementById(
+                  "riskOwner"
+                )
+                .value
+                .trim(),
+
+            significantRiskAuthority:
+              document
+                .getElementById(
+                  "significantRiskAuthority"
+                )
+                .value
+                .trim(),
+
+            incidentOwner:
+              document
+                .getElementById(
+                  "incidentOwner"
+                )
+                .value
+                .trim(),
+
+            actionOwner:
+              document
+                .getElementById(
+                  "actionOwner"
+                )
+                .value
+                .trim()
+
+          }
+
+        };
+
+
+        localStorage.setItem(
+          "certiciumOrganisationProfile",
+          JSON.stringify(
+            profile
+          )
+        );
+
+
+        window.location.href =
+          "setup.html";
+
+      }
+    );
+
+
+  loadExistingProfile();
+
+  updatePreview();
+
+</script>
+
+
+</body>
+
+</html>
