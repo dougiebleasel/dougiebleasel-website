@@ -461,6 +461,37 @@
       color: #E6C96B;
     }
 
+   .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  font-size: 12px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th {
+  color: var(--accent-light);
+  background: rgba(44,130,89,.10);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+}
+
+.data-table td {
+  color: #D2D9D5;
+}
+
+.risk-level {
+  font-weight: 800;
+  color: var(--white);
+}
     @media (max-width: 800px) {
       .input-grid {
         grid-template-columns: 1fr;
@@ -1488,6 +1519,184 @@
 
   }
 
+  function renderEscalationRules(
+  rules
+) {
+
+  if (
+    !Array.isArray(rules)
+    ||
+    !rules.length
+  ) {
+
+    return "<p>Not specified.</p>";
+
+  }
+
+
+  return `
+    <table class="data-table">
+
+      <thead>
+        <tr>
+          <th>
+            Risk Level
+          </th>
+
+          <th>
+            Approval / Action
+          </th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        ${rules.map(
+          rule => {
+
+            if (
+              typeof rule === "string"
+            ) {
+
+              return `
+                <tr>
+                  <td colspan="2">
+                    ${escapeHTML(rule)}
+                  </td>
+                </tr>
+              `;
+
+            }
+
+
+            return `
+              <tr>
+
+                <td class="risk-level">
+                  ${escapeHTML(
+                    rule.riskLevel
+                    ||
+                    rule.level
+                    ||
+                    ""
+                  )}
+                </td>
+
+                <td>
+                  ${escapeHTML(
+                    rule.action
+                    ||
+                    rule.approvalRequired
+                    ||
+                    rule.requirement
+                    ||
+                    ""
+                  )}
+                </td>
+
+              </tr>
+            `;
+
+          }
+        ).join("")}
+
+      </tbody>
+
+    </table>
+  `;
+
+}
+
+
+function renderScaleTable(
+  items,
+  firstHeading,
+  secondHeading
+) {
+
+  if (
+    !Array.isArray(items)
+    ||
+    !items.length
+  ) {
+
+    return "<p>Not specified.</p>";
+
+  }
+
+
+  return `
+    <table class="data-table">
+
+      <thead>
+        <tr>
+
+          <th>
+            ${escapeHTML(firstHeading)}
+          </th>
+
+          <th>
+            ${escapeHTML(secondHeading)}
+          </th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+
+        ${items.map(
+          item => {
+
+            if (
+              typeof item === "string"
+            ) {
+
+              return `
+                <tr>
+                  <td colspan="2">
+                    ${escapeHTML(item)}
+                  </td>
+                </tr>
+              `;
+
+            }
+
+
+            return `
+              <tr>
+
+                <td>
+                  ${escapeHTML(
+                    item.label
+                    ||
+                    item.name
+                    ||
+                    ""
+                  )}
+                </td>
+
+                <td>
+                  ${escapeHTML(
+                    item.score
+                    ??
+                    item.value
+                    ??
+                    ""
+                  )}
+                </td>
+
+              </tr>
+            `;
+
+          }
+        ).join("")}
+
+      </tbody>
+
+    </table>
+  `;
+
+}
 
   function section(
     id,
@@ -1772,11 +1981,11 @@
           Escalation Rules
         </h3>
 
-        ${list(
-          safeArray(
-            governance.escalationRules
-          )
-        )}
+${renderEscalationRules(
+  safeArray(
+    governance.escalationRules
+  )
+)}
       `
     );
 
@@ -1849,21 +2058,24 @@
           Likelihood Scale
         </h3>
 
-        ${list(
-          safeArray(
-            matrix.likelihoodScale
-          )
-        )}
-
+       ${renderScaleTable(
+  safeArray(
+    matrix.likelihoodScale
+  ),
+  "Likelihood",
+  "Score"
+)}
         <h3>
           Consequence Scale
         </h3>
 
-        ${list(
-          safeArray(
-            matrix.consequenceScale
-          )
-        )}
+${renderScaleTable(
+  safeArray(
+    matrix.consequenceScale
+  ),
+  "Consequence",
+  "Score"
+)}
 
         ${
           matrix.note
