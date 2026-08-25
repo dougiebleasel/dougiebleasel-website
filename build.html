@@ -1063,75 +1063,210 @@ await wait(400);
 
 setStep(6);
 
-const validationResponse =
-  await fetch(
-    "/api/validate-risk",
-    {
-      method: "POST",
-
-      headers: {
-        "Content-Type":
-          "application/json"
-      },
-
-      body: JSON.stringify({
-
-        generatedModule:
-          data.module,
-
-        businessProfile,
-
-        systemConfig,
-
-        implementationProfile
-
-      })
-    }
-  );
+let workingModule =
+  data.module;
 
 
-let validation = {};
+async function validateModule(
+  moduleToValidate
+) {
 
-try {
+  const response =
+    await fetch(
+      "/api/validate-risk",
+      {
 
-  validation =
-    await validationResponse.json();
+        method: "POST",
 
-} catch (error) {
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
 
-  throw new Error(
-    "The Tiwili validator returned an invalid response."
-  );
+        body:
+          JSON.stringify({
+
+            generatedModule:
+              moduleToValidate,
+
+            businessProfile,
+
+            systemConfig,
+
+            implementationProfile
+
+          })
+
+      }
+    );
+
+
+  let validationResult = {};
+
+
+  try {
+
+    validationResult =
+      await response.json();
+
+  } catch (error) {
+
+    throw new Error(
+      "The Tiwili validator returned an invalid response."
+    );
+
+  }
+
+
+  if (!response.ok) {
+
+    throw new Error(
+      validationResult.error ||
+      "Tiwili could not validate the generated module."
+    );
+
+  }
+
+
+  return validationResult;
 
 }
 
 
-if (!validationResponse.ok) {
+/*
+ * First validation pass
+ */
 
-  throw new Error(
-    validation.error ||
-    "Tiwili could not validate the generated module."
+let validation =
+  await validateModule(
+    workingModule
+  );
+
+
+console.log(
+  "Tiwili validation pass 1:",
+  validation
+);
+
+
+/*
+ * If validation fails or requires repair,
+ * send only the failed items to the repair engine.
+ */
+
+if (
+  validation.result?.status === "FAIL" ||
+  validation.result?.status === "REPAIR_REQUIRED"
+) {
+
+  const repairResponse =
+    await fetch(
+      "/api/repair-risk",
+      {
+
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json"
+        },
+
+        body:
+          JSON.stringify({
+
+            generatedModule:
+              workingModule,
+
+            validation,
+
+            businessProfile,
+
+            systemConfig,
+
+            implementationProfile
+
+          })
+
+      }
+    );
+
+
+  let repairData = {};
+
+
+  try {
+
+    repairData =
+      await repairResponse.json();
+
+  } catch (error) {
+
+    throw new Error(
+      "The Tiwili repair engine returned an invalid response."
+    );
+
+  }
+
+
+  if (!repairResponse.ok) {
+
+    throw new Error(
+      repairData.error ||
+      "Tiwili could not repair the generated module."
+    );
+
+  }
+
+
+  workingModule =
+    repairData.module;
+
+
+  /*
+   * Validate the repaired module again.
+   */
+
+  validation =
+    await validateModule(
+      workingModule
+    );
+
+
+  console.log(
+    "Tiwili validation pass 2:",
+    validation
   );
 
 }
 
 
 /*
- * Attach validation results to the
- * generated package.
+ * Do not show the customer a module
+ * that still fails validation.
  */
 
+if (
+  validation.result?.publishable !== true
+) {
+
+  throw new Error(
+    "Tiwili generated the module, but it did not pass quality validation. Please rebuild the module."
+  );
+
+}
+
+
+/*
+ * Replace the original generated module
+ * with the validated/repaired version.
+ */
+
+data.module =
+  workingModule;
+
+
 data.validation =
-  validation;
-
-
-console.log(
-  "Tiwili validation:",
-  validation
-);
-
-
-setStep(7);
+  validation;setStep(7);
 await wait(300);
 
       for (
