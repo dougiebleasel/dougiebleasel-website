@@ -1052,13 +1052,87 @@
       }
 
 
-      setStep(5);
-      await wait(500);
+setStep(5);
+await wait(400);
 
-      setStep(6);
-      await wait(500);
 
-      setStep(7);
+/*
+ * Validate the generated module against
+ * the controlled Tiwili Master.
+ */
+
+setStep(6);
+
+const validationResponse =
+  await fetch(
+    "/api/validate-risk",
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type":
+          "application/json"
+      },
+
+      body: JSON.stringify({
+
+        generatedModule:
+          data.module,
+
+        businessProfile,
+
+        systemConfig,
+
+        implementationProfile
+
+      })
+    }
+  );
+
+
+let validation = {};
+
+try {
+
+  validation =
+    await validationResponse.json();
+
+} catch (error) {
+
+  throw new Error(
+    "The Tiwili validator returned an invalid response."
+  );
+
+}
+
+
+if (!validationResponse.ok) {
+
+  throw new Error(
+    validation.error ||
+    "Tiwili could not validate the generated module."
+  );
+
+}
+
+
+/*
+ * Attach validation results to the
+ * generated package.
+ */
+
+data.validation =
+  validation;
+
+
+console.log(
+  "Tiwili validation:",
+  validation
+);
+
+
+setStep(7);
+await wait(300);
 
       for (
         let i = 1;
