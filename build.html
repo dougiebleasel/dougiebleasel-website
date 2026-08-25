@@ -302,8 +302,6 @@
       display: block;
     }
 
-    /* OUTPUT */
-
     .output {
       display: none;
       margin-top: 40px;
@@ -542,7 +540,7 @@
         Generation Inputs
       </div>
 
-      <h2 id="buildTitle">
+      <h2>
         Risk Management
       </h2>
 
@@ -559,36 +557,48 @@
           <div class="input-label">
             Organisation
           </div>
+
           <strong id="organisationName">
             Loading...
           </strong>
+
           <span>
             Business profile
           </span>
         </div>
 
+
         <div class="input-card">
+
           <div class="input-label">
             System Voice
           </div>
+
           <strong id="voiceDisplay">
             Loading...
           </strong>
+
           <span>
             Documentation style
           </span>
+
         </div>
 
+
         <div class="input-card">
+
           <div class="input-label">
             AI + Governance
           </div>
+
           <strong id="behaviourDisplay">
             Loading...
           </strong>
+
           <span>
             System behaviour
           </span>
+
         </div>
 
       </div>
@@ -612,6 +622,7 @@
         check before presenting the draft.
       </p>
 
+
       <button
         id="buildButton"
         class="build-button"
@@ -627,10 +638,12 @@
       >
 
         <div class="progress">
+
           <div
             class="progress-bar"
             id="progressBar"
           ></div>
+
         </div>
 
 
@@ -733,61 +746,20 @@
           Module
         </strong>
 
-        <a href="#purpose">
-          Purpose
-        </a>
-
-        <a href="#scope">
-          Scope
-        </a>
-
-        <a href="#principles">
-          Principles
-        </a>
-
-        <a href="#responsibilities">
-          Responsibilities
-        </a>
-
-        <a href="#identification">
-          Risk Identification
-        </a>
-
-        <a href="#evaluation">
-          Evaluation
-        </a>
-
-        <a href="#controls">
-          Controls
-        </a>
-
-        <a href="#treatment">
-          Treatment
-        </a>
-
-        <a href="#acceptance">
-          Acceptance & Escalation
-        </a>
-
-        <a href="#review">
-          Monitoring & Review
-        </a>
-
-        <a href="#matrix">
-          Risk Matrix
-        </a>
-
-        <a href="#register">
-          Risk Register
-        </a>
-
-        <a href="#ai">
-          AI Tools
-        </a>
-
-        <a href="#qa">
-          Quality Check
-        </a>
+        <a href="#purpose">Purpose</a>
+        <a href="#scope">Scope</a>
+        <a href="#principles">Principles</a>
+        <a href="#responsibilities">Responsibilities</a>
+        <a href="#identification">Risk Identification</a>
+        <a href="#evaluation">Evaluation</a>
+        <a href="#controls">Controls</a>
+        <a href="#treatment">Treatment</a>
+        <a href="#acceptance">Acceptance and Escalation</a>
+        <a href="#review">Monitoring and Review</a>
+        <a href="#matrix">Risk Matrix</a>
+        <a href="#register">Risk Register</a>
+        <a href="#ai">AI Tools</a>
+        <a href="#qa">Quality Check</a>
 
       </nav>
 
@@ -814,24 +786,36 @@
   function readStorage(key) {
 
     try {
+
       return JSON.parse(
         localStorage.getItem(key) || "{}"
       );
+
     } catch (error) {
+
       return {};
+
     }
 
   }
 
 
   businessProfile =
-    readStorage("tiwiliAIProfile");
+    readStorage(
+      "tiwiliAIProfile"
+    );
+
 
   systemConfig =
-    readStorage("tiwiliSystemConfig");
+    readStorage(
+      "tiwiliSystemConfig"
+    );
+
 
   implementationProfile =
-    readStorage("tiwiliImplementationProfile");
+    readStorage(
+      "tiwiliImplementationProfile"
+    );
 
 
   const organisation =
@@ -864,36 +848,60 @@
 
     };
 
-    return labels[value] || value || "Not configured";
+
+    return labels[value]
+      ||
+      value
+      ||
+      "Not configured";
 
   }
 
 
   document
-    .getElementById("organisationName")
+    .getElementById(
+      "organisationName"
+    )
     .innerText =
     organisation;
 
 
   document
-    .getElementById("voiceDisplay")
+    .getElementById(
+      "voiceDisplay"
+    )
     .innerText =
-    pretty(systemConfig.voice);
+    pretty(
+      systemConfig.voice
+    );
 
 
   document
-    .getElementById("behaviourDisplay")
+    .getElementById(
+      "behaviourDisplay"
+    )
     .innerText =
-    pretty(systemConfig.ai)
-    + " AI · "
-    + pretty(systemConfig.governance);
+    pretty(
+      systemConfig.ai
+    )
+    +
+    " AI · "
+    +
+    pretty(
+      systemConfig.governance
+    );
 
 
   function wait(ms) {
+
     return new Promise(
       resolve =>
-        setTimeout(resolve, ms)
+        setTimeout(
+          resolve,
+          ms
+        )
     );
+
   }
 
 
@@ -910,21 +918,32 @@
           "step" + i
         );
 
+
       item.classList.remove(
         "active",
         "complete"
       );
 
-      if (i < number) {
+
+      if (
+        i < number
+      ) {
+
         item.classList.add(
           "complete"
         );
+
       }
 
-      if (i === number) {
+
+      if (
+        i === number
+      ) {
+
         item.classList.add(
           "active"
         );
+
       }
 
     }
@@ -947,7 +966,77 @@
       )
       .style
       .width =
-      percentages[number] + "%";
+      percentages[number] +
+      "%";
+
+  }
+
+
+  async function validateModule(
+    moduleToValidate
+  ) {
+
+    const response =
+      await fetch(
+        "/api/validate-risk",
+        {
+
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
+
+          body:
+            JSON.stringify({
+
+              generatedModule:
+                moduleToValidate,
+
+              businessProfile,
+
+              systemConfig,
+
+              implementationProfile
+
+            })
+
+        }
+      );
+
+
+    let validationResult = {};
+
+
+    try {
+
+      validationResult =
+        await response.json();
+
+    } catch (error) {
+
+      throw new Error(
+        "The Tiwili validator returned an invalid response."
+      );
+
+    }
+
+
+    if (
+      !response.ok
+    ) {
+
+      throw new Error(
+        validationResult.error
+        ||
+        "Tiwili could not validate the generated module."
+      );
+
+    }
+
+
+    return validationResult;
 
   }
 
@@ -959,15 +1048,18 @@
         "buildButton"
       );
 
+
     const status =
       document.getElementById(
         "status"
       );
 
+
     const errorBox =
       document.getElementById(
         "errorBox"
       );
+
 
     const output =
       document.getElementById(
@@ -979,13 +1071,19 @@
       "active"
     );
 
+
     output.classList.remove(
       "active"
     );
 
-    button.disabled = true;
+
+    button.disabled =
+      true;
+
+
     button.innerText =
       "Building your system...";
+
 
     status.classList.add(
       "active"
@@ -1010,6 +1108,7 @@
         await fetch(
           "/api/generate-risk",
           {
+
             method: "POST",
 
             headers: {
@@ -1017,257 +1116,211 @@
                 "application/json"
             },
 
-            body: JSON.stringify({
+            body:
+              JSON.stringify({
 
-              businessProfile,
+                businessProfile,
 
-              systemConfig,
+                systemConfig,
 
-              implementationProfile
+                implementationProfile
 
-            })
+              })
+
           }
         );
 
 
       let data = {};
 
+
       try {
+
         data =
           await response.json();
+
       } catch (error) {
+
         throw new Error(
           "The generation service returned an invalid response."
         );
+
       }
 
 
-      if (!response.ok) {
+      if (
+        !response.ok
+      ) {
 
         throw new Error(
-          data.error ||
+          data.error
+          ||
           "Tiwili could not generate the module."
         );
 
       }
 
 
-setStep(5);
-await wait(400);
+      setStep(5);
+      await wait(400);
 
 
-/*
- * Validate the generated module against
- * the controlled Tiwili Master.
- */
-
-setStep(6);
-
-let workingModule =
-  data.module;
+      setStep(6);
 
 
-async function validateModule(
-  moduleToValidate
-) {
-
-  const response =
-    await fetch(
-      "/api/validate-risk",
-      {
-
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body:
-          JSON.stringify({
-
-            generatedModule:
-              moduleToValidate,
-
-            businessProfile,
-
-            systemConfig,
-
-            implementationProfile
-
-          })
-
-      }
-    );
+      let workingModule =
+        data.module;
 
 
-  let validationResult = {};
+      /*
+       * FIRST VALIDATION
+       */
 
 
-  try {
-
-    validationResult =
-      await response.json();
-
-  } catch (error) {
-
-    throw new Error(
-      "The Tiwili validator returned an invalid response."
-    );
-
-  }
+      let validation =
+        await validateModule(
+          workingModule
+        );
 
 
-  if (!response.ok) {
-
-    throw new Error(
-      validationResult.error ||
-      "Tiwili could not validate the generated module."
-    );
-
-  }
+      console.log(
+        "Tiwili validation pass 1:",
+        validation
+      );
 
 
-  return validationResult;
-
-}
-
-
-/*
- * First validation pass
- */
-
-let validation =
-  await validateModule(
-    workingModule
-  );
+      /*
+       * AUTOMATIC REPAIR
+       */
 
 
-console.log(
-  "Tiwili validation pass 1:",
-  validation
-);
+      if (
+        validation
+          .result
+          ?.status ===
+          "FAIL"
+        ||
+        validation
+          .result
+          ?.status ===
+          "REPAIR_REQUIRED"
+      ) {
+
+        const repairResponse =
+          await fetch(
+            "/api/repair-risk",
+            {
+
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify({
+
+                  generatedModule:
+                    workingModule,
+
+                  validation,
+
+                  businessProfile,
+
+                  systemConfig,
+
+                  implementationProfile
+
+                })
+
+            }
+          );
 
 
-/*
- * If validation fails or requires repair,
- * send only the failed items to the repair engine.
- */
+        let repairData = {};
 
-if (
-  validation.result?.status === "FAIL" ||
-  validation.result?.status === "REPAIR_REQUIRED"
-) {
 
-  const repairResponse =
-    await fetch(
-      "/api/repair-risk",
-      {
+        try {
 
-        method: "POST",
+          repairData =
+            await repairResponse.json();
 
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
+        } catch (error) {
 
-        body:
-          JSON.stringify({
+          throw new Error(
+            "The Tiwili repair engine returned an invalid response."
+          );
 
-            generatedModule:
-              workingModule,
+        }
 
-            validation,
 
-            businessProfile,
+        if (
+          !repairResponse.ok
+        ) {
 
-            systemConfig,
+          throw new Error(
+            repairData.error
+            ||
+            "Tiwili could not repair the generated module."
+          );
 
-            implementationProfile
+        }
 
-          })
+
+        workingModule =
+          repairData.module;
+
+
+        /*
+         * SECOND VALIDATION
+         */
+
+
+        validation =
+          await validateModule(
+            workingModule
+          );
+
+
+        console.log(
+          "Tiwili validation pass 2:",
+          validation
+        );
 
       }
-    );
 
 
-  let repairData = {};
+      /*
+       * DO NOT SHOW FAILED OUTPUT
+       */
 
 
-  try {
+      if (
+        validation
+          .result
+          ?.publishable !==
+        true
+      ) {
 
-    repairData =
-      await repairResponse.json();
+        throw new Error(
+          "Tiwili generated the module, but it did not pass quality validation. Please rebuild the module."
+        );
 
-  } catch (error) {
-
-    throw new Error(
-      "The Tiwili repair engine returned an invalid response."
-    );
-
-  }
-
-
-  if (!repairResponse.ok) {
-
-    throw new Error(
-      repairData.error ||
-      "Tiwili could not repair the generated module."
-    );
-
-  }
+      }
 
 
-  workingModule =
-    repairData.module;
+      data.module =
+        workingModule;
 
 
-  /*
-   * Validate the repaired module again.
-   */
-
-  validation =
-    await validateModule(
-      workingModule
-    );
+      data.validation =
+        validation;
 
 
-  console.log(
-    "Tiwili validation pass 2:",
-    validation
-  );
+      setStep(7);
+      await wait(300);
 
-}
-
-
-/*
- * Do not show the customer a module
- * that still fails validation.
- */
-
-if (
-  validation.result?.publishable !== true
-) {
-
-  throw new Error(
-    "Tiwili generated the module, but it did not pass quality validation. Please rebuild the module."
-  );
-
-}
-
-
-/*
- * Replace the original generated module
- * with the validated/repaired version.
- */
-
-data.module =
-  workingModule;
-
-
-data.validation =
-  validation;setStep(7);
-await wait(300);
 
       for (
         let i = 1;
@@ -1287,21 +1340,18 @@ await wait(300);
       }
 
 
-      /*
-       * Save the generated module.
-       * This will later become the customer's workspace data.
-       */
-
       localStorage.setItem(
         "tiwiliGeneratedRiskModule",
-        JSON.stringify(data)
+        JSON.stringify(
+          data
+        )
       );
 
 
-renderModule(
-  data.module,
-  data.validation
-);
+      renderModule(
+        data.module,
+        data.validation
+      );
 
 
       output.classList.add(
@@ -1318,70 +1368,123 @@ renderModule(
       button.innerText =
         "Rebuild Module";
 
-      button.disabled = false;
+
+      button.disabled =
+        false;
 
 
     } catch (error) {
 
-      console.error(error);
+      console.error(
+        error
+      );
+
 
       errorBox.innerText =
-        error.message ||
+        error.message
+        ||
         "Something went wrong while building your system.";
+
 
       errorBox.classList.add(
         "active"
       );
 
+
       button.innerText =
         "Try Again";
 
-      button.disabled = false;
+
+      button.disabled =
+        false;
 
     }
 
   }
 
 
-  function safeArray(value) {
-    return Array.isArray(value)
+  function safeArray(
+    value
+  ) {
+
+    return Array.isArray(
+      value
+    )
       ? value
       : [];
+
   }
 
 
-  function list(items) {
+  function escapeHTML(
+    value
+  ) {
 
-    if (!items || !items.length) {
+    return String(
+      value ?? ""
+    )
+      .replaceAll(
+        "&",
+        "&amp;"
+      )
+      .replaceAll(
+        "<",
+        "&lt;"
+      )
+      .replaceAll(
+        ">",
+        "&gt;"
+      )
+      .replaceAll(
+        '"',
+        "&quot;"
+      )
+      .replaceAll(
+        "'",
+        "&#039;"
+      );
+
+  }
+
+
+  function list(
+    items
+  ) {
+
+    if (
+      !items
+      ||
+      !items.length
+    ) {
+
       return "<p>Not specified.</p>";
+
     }
+
 
     return `
       <ul>
+
         ${items
           .map(
             item =>
-              `<li>${escapeHTML(
-                typeof item === "string"
-                  ? item
-                  : JSON.stringify(item)
-              )}</li>`
+              `
+                <li>
+                  ${escapeHTML(
+                    typeof item ===
+                    "string"
+                      ? item
+                      : JSON.stringify(
+                          item
+                        )
+                  )}
+                </li>
+              `
           )
           .join("")}
+
       </ul>
     `;
-
-  }
-
-
-  function escapeHTML(value) {
-
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
 
   }
 
@@ -1397,30 +1500,23 @@ renderModule(
         class="content-section"
         id="${id}"
       >
-        <h2>${title}</h2>
+
+        <h2>
+          ${title}
+        </h2>
+
         ${content}
+
       </section>
     `;
 
   }
 
 
-function renderModule(
-  payload,
-  validation
-) {
-
-    /*
-     * generate-risk.js currently returns:
-     *
-     * {
-     *   success: true,
-     *   generatedAt: ...,
-     *   module: generatedModule
-     * }
-     *
-     * Therefore payload here is the generatedModule.
-     */
+  function renderModule(
+    payload,
+    validation
+  ) {
 
     const generated =
       payload || {};
@@ -1429,25 +1525,32 @@ function renderModule(
     const meta =
       generated.module || {};
 
+
     const procedure =
       generated.procedure || {};
+
 
     const matrix =
       generated.riskMatrix || {};
 
+
     const register =
       generated.riskRegister || {};
 
+
     const assessment =
       generated.riskAssessment || {};
+
 
     const aiTools =
       safeArray(
         generated.aiTools
       );
 
+
     const governance =
       generated.governance || {};
+
 
     document
       .getElementById(
@@ -1456,12 +1559,14 @@ function renderModule(
       .innerText =
       (
         meta.organisation
-          ? meta.organisation + " · "
+          ? meta.organisation
+            + " · "
           : ""
       )
       +
       (
-        meta.name ||
+        meta.name
+        ||
         "Risk Management"
       );
 
@@ -1472,18 +1577,26 @@ function renderModule(
     html += section(
       "purpose",
       "1. Purpose",
-      `<p>${escapeHTML(
-        procedure.purpose || ""
-      )}</p>`
+      `
+        <p>
+          ${escapeHTML(
+            procedure.purpose || ""
+          )}
+        </p>
+      `
     );
 
 
     html += section(
       "scope",
       "2. Scope",
-      `<p>${escapeHTML(
-        procedure.scope || ""
-      )}</p>`
+      `
+        <p>
+          ${escapeHTML(
+            procedure.scope || ""
+          )}
+        </p>
+      `
     );
 
 
@@ -1498,45 +1611,51 @@ function renderModule(
     );
 
 
-    let responsibilitiesHTML = "";
+    let responsibilitiesHTML =
+      "";
+
 
     safeArray(
       procedure.responsibilities
     )
-    .forEach(role => {
+    .forEach(
+      role => {
 
-      responsibilitiesHTML += `
-        <div class="role">
+        responsibilitiesHTML += `
+          <div class="role">
 
-          <strong>
-            ${escapeHTML(
-              role.role || "Role"
+            <strong>
+              ${escapeHTML(
+                role.role || "Role"
+              )}
+            </strong>
+
+            ${list(
+              safeArray(
+                role.responsibilities
+              )
             )}
-          </strong>
 
-          ${list(
-            safeArray(
-              role.responsibilities
-            )
-          )}
+          </div>
+        `;
 
-        </div>
-      `;
-
-    });
+      }
+    );
 
 
     html += section(
       "responsibilities",
-      "4. Roles & Responsibilities",
-      responsibilitiesHTML ||
+      "4. Roles and Responsibilities",
+      responsibilitiesHTML
+      ||
       "<p>No roles generated.</p>"
     );
 
 
     const identification =
       procedure.riskIdentification
-      || {};
+      ||
+      {};
 
 
     html += section(
@@ -1545,7 +1664,9 @@ function renderModule(
       `
         <p>
           ${escapeHTML(
-            identification.content || ""
+            identification.content
+            ||
+            ""
           )}
         </p>
 
@@ -1564,16 +1685,24 @@ function renderModule(
 
     html += section(
       "evaluation",
-      "6. Risk Analysis & Evaluation",
-      `<p>${escapeHTML(
-        procedure.analysisAndEvaluation
-        || ""
-      )}</p>`
+      "6. Risk Analysis and Evaluation",
+      `
+        <p>
+          ${escapeHTML(
+            procedure
+              .analysisAndEvaluation
+            ||
+            ""
+          )}
+        </p>
+      `
     );
 
 
     const controls =
-      procedure.controls || {};
+      procedure.controls
+      ||
+      {};
 
 
     html += section(
@@ -1582,7 +1711,9 @@ function renderModule(
       `
         <p>
           ${escapeHTML(
-            controls.content || ""
+            controls.content
+            ||
+            ""
           )}
         </p>
 
@@ -1602,20 +1733,28 @@ function renderModule(
     html += section(
       "treatment",
       "8. Risk Treatment",
-      `<p>${escapeHTML(
-        procedure.treatment || ""
-      )}</p>`
+      `
+        <p>
+          ${escapeHTML(
+            procedure.treatment
+            ||
+            ""
+          )}
+        </p>
+      `
     );
 
 
     html += section(
       "acceptance",
-      "9. Risk Acceptance & Escalation",
+      "9. Risk Acceptance and Escalation",
       `
         <p>
           ${escapeHTML(
-            procedure.acceptanceAndEscalation
-            || ""
+            procedure
+              .acceptanceAndEscalation
+            ||
+            ""
           )}
         </p>
 
@@ -1644,23 +1783,27 @@ function renderModule(
 
     html += section(
       "review",
-      "10. Monitoring & Review",
+      "10. Monitoring and Review",
       `
         <p>
           ${escapeHTML(
-            procedure.monitoringAndReview
-            || ""
+            procedure
+              .monitoringAndReview
+            ||
+            ""
           )}
         </p>
 
         <h3>
-          Communication & Consultation
+          Communication and Consultation
         </h3>
 
         <p>
           ${escapeHTML(
-            procedure.communicationAndConsultation
-            || ""
+            procedure
+              .communicationAndConsultation
+            ||
+            ""
           )}
         </p>
 
@@ -1683,8 +1826,10 @@ function renderModule(
       `
         <p>
           ${escapeHTML(
-            matrix.recommendedApproach
-            || ""
+            matrix
+              .recommendedApproach
+            ||
+            ""
           )}
         </p>
 
@@ -1695,7 +1840,8 @@ function renderModule(
         <p>
           ${escapeHTML(
             matrix.ratingMethod
-            || ""
+            ||
+            ""
           )}
         </p>
 
@@ -1722,7 +1868,10 @@ function renderModule(
         ${
           matrix.note
             ? `
-              <h3>Note</h3>
+              <h3>
+                Note
+              </h3>
+
               <p>
                 ${escapeHTML(
                   matrix.note
@@ -1763,228 +1912,265 @@ function renderModule(
     );
 
 
-    let aiHTML = "";
+    let aiHTML =
+      "";
 
-    aiTools.forEach(tool => {
 
-      aiHTML += `
-        <div class="tool-card">
+    aiTools.forEach(
+      tool => {
 
-          <strong>
-            ✦ ${escapeHTML(
-              tool.name || "Tiwili AI"
-            )}
-          </strong>
+        aiHTML += `
+          <div class="tool-card">
 
-          <p>
-            ${escapeHTML(
-              tool.purpose || ""
-            )}
-          </p>
+            <strong>
+              ✦
+              ${escapeHTML(
+                tool.name
+                ||
+                "Tiwili AI"
+              )}
+            </strong>
 
-          ${
-            tool.interaction
-              ? `
-                <p>
-                  <b>Interaction:</b>
-                  ${escapeHTML(
-                    tool.interaction
-                  )}
-                </p>
-              `
-              : ""
-          }
+            <p>
+              ${escapeHTML(
+                tool.purpose
+                ||
+                ""
+              )}
+            </p>
 
-        </div>
-      `;
+            ${
+              tool.interaction
+                ? `
+                  <p>
+                    <b>
+                      Interaction:
+                    </b>
 
-    });
+                    ${escapeHTML(
+                      tool.interaction
+                    )}
+                  </p>
+                `
+                : ""
+            }
+
+          </div>
+        `;
+
+      }
+    );
 
 
     html += section(
       "ai",
       "13. Tiwili AI Tools",
-      aiHTML ||
+      aiHTML
+      ||
       "<p>AI assistance is available on demand.</p>"
     );
 
 
-    const warnings =
+    /*
+     * REAL INDEPENDENT VALIDATOR RESULTS
+     */
+
+
+    const validationResult =
+      validation?.result
+      ||
+      {};
+
+
+    const validationPasses =
       safeArray(
-        qa.warnings
+        validation?.passes
       );
 
 
- const validationResult =
-  validation?.result || {};
-
-const validationPasses =
-  safeArray(
-    validation?.passes
-  );
-
-const validationWarnings =
-  safeArray(
-    validation?.warnings
-  );
-
-const validationFailures =
-  safeArray(
-    validation?.failures
-  );
+    const validationWarnings =
+      safeArray(
+        validation?.warnings
+      );
 
 
-let validatorHTML = `
-
-  <p class="${
-    validationResult.publishable
-      ? "qa-pass"
-      : "qa-warning"
-  }">
-
-    ${
-      validationResult.publishable
-        ? "✓"
-        : "!"
-    }
-
-    Validation status:
-    ${escapeHTML(
-      validationResult.status ||
-      "Unknown"
-    )}
-
-  </p>
-
-`;
+    const validationFailures =
+      safeArray(
+        validation?.failures
+      );
 
 
-if (
-  validationResult.counts
-) {
+    let validatorHTML = `
 
-  validatorHTML += `
+      <p class="${
+        validationResult.publishable
+          ? "qa-pass"
+          : "qa-warning"
+      }">
 
-    <p>
-      ${Number(
-        validationResult.counts.passed || 0
-      )}
-      checks passed ·
+        ${
+          validationResult.publishable
+            ? "✓"
+            : "!"
+        }
 
-      ${Number(
-        validationResult.counts.warnings || 0
-      )}
-      warnings ·
+        Validation status:
+        ${escapeHTML(
+          validationResult.status
+          ||
+          "Unknown"
+        )}
 
-      ${Number(
-        validationResult.counts.failures || 0
-      )}
-      failures
-    </p>
+      </p>
 
-  `;
-
-}
+    `;
 
 
-if (
-  validationPasses.length
-) {
-
-  validatorHTML += `
-    <h3>
-      Passed Checks
-    </h3>
-  `;
-
-
-  validationPasses.forEach(
-    item => {
+    if (
+      validationResult.counts
+    ) {
 
       validatorHTML += `
 
-        <p class="qa-pass">
-          ✓
-          ${escapeHTML(
-            item.message || ""
+        <p>
+          ${Number(
+            validationResult
+              .counts
+              .passed
+            ||
+            0
           )}
+          checks passed ·
+
+          ${Number(
+            validationResult
+              .counts
+              .warnings
+            ||
+            0
+          )}
+          warnings ·
+
+          ${Number(
+            validationResult
+              .counts
+              .failures
+            ||
+            0
+          )}
+          failures
         </p>
 
       `;
 
     }
-  );
-
-}
 
 
-if (
-  validationWarnings.length
-) {
-
-  validatorHTML += `
-    <h3 class="qa-warning">
-      Review Notes
-    </h3>
-  `;
-
-
-  validationWarnings.forEach(
-    item => {
+    if (
+      validationPasses.length
+    ) {
 
       validatorHTML += `
-
-        <p class="qa-warning">
-          !
-          ${escapeHTML(
-            item.message || ""
-          )}
-        </p>
-
+        <h3>
+          Passed Checks
+        </h3>
       `;
 
+
+      validationPasses.forEach(
+        item => {
+
+          validatorHTML += `
+
+            <p class="qa-pass">
+              ✓
+              ${escapeHTML(
+                item.message
+                ||
+                ""
+              )}
+            </p>
+
+          `;
+
+        }
+      );
+
     }
-  );
-
-}
 
 
-if (
-  validationFailures.length
-) {
-
-  validatorHTML += `
-    <h3 class="qa-warning">
-      Validation Failures
-    </h3>
-  `;
-
-
-  validationFailures.forEach(
-    item => {
+    if (
+      validationWarnings.length
+    ) {
 
       validatorHTML += `
-
-        <p class="qa-warning">
-          !
-          ${escapeHTML(
-            item.message || ""
-          )}
-        </p>
-
+        <h3 class="qa-warning">
+          Review Notes
+        </h3>
       `;
 
+
+      validationWarnings.forEach(
+        item => {
+
+          validatorHTML += `
+
+            <p class="qa-warning">
+              !
+              ${escapeHTML(
+                item.message
+                ||
+                ""
+              )}
+            </p>
+
+          `;
+
+        }
+      );
+
     }
-  );
-
-}
 
 
-html += section(
-  "qa",
-  "14. Tiwili Quality Check",
-  validatorHTML
-);
+    if (
+      validationFailures.length
+    ) {
+
+      validatorHTML += `
+        <h3 class="qa-warning">
+          Validation Failures
+        </h3>
+      `;
+
+
+      validationFailures.forEach(
+        item => {
+
+          validatorHTML += `
+
+            <p class="qa-warning">
+              !
+              ${escapeHTML(
+                item.message
+                ||
+                ""
+              )}
+            </p>
+
+          `;
+
+        }
+      );
+
+    }
+
+
+    html += section(
+      "qa",
+      "14. Tiwili Quality Check",
+      validatorHTML
+    );
+
 
     document
       .getElementById(
