@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certicium | Your Requirements</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --bright-green: #6FC55A;
+      --dark-grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,.11);
+      --card: #141715;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 37px;
+      height: 37px;
+      border: 1px solid rgba(111,197,90,.35);
+      background: rgba(44,130,89,.13);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-green);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .brand-name span {
+      color: var(--bright-green);
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .eyebrow {
+      color: var(--bright-green);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+    }
+
+    .intro h1 {
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+      max-width: 850px;
+    }
+
+    .intro p {
+      margin-top: 17px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .setup-progress {
+      display: flex;
+      gap: 7px;
+      margin-top: 27px;
+    }
+
+    .progress-step {
+      height: 4px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(244,246,245,.08);
+    }
+
+    .progress-step.active {
+      background: var(--bright-green);
+    }
+
+    .form-section {
+      margin-bottom: 18px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .section-number {
+      color: var(--bright-green);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .form-section h2 {
+      font-size: 25px;
+      letter-spacing: -1px;
+    }
+
+    .section-description {
+      margin-top: 7px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #D7DDD9;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hint {
+      display: block;
+      margin-top: -3px;
+      margin-bottom: 8px;
+      color: #747D78;
+      font-size: 9px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      outline: none;
+      background: #0F1210;
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    textarea {
+      min-height: 105px;
+      padding: 12px 13px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(111,197,90,.6);
+    }
+
+    .requirement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .requirement-card {
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 9px;
+      background: rgba(13,13,13,.28);
+      cursor: pointer;
+      transition: .18s;
+    }
+
+    .requirement-card:hover {
+      border-color: rgba(111,197,90,.35);
+    }
+
+    .requirement-card.selected {
+      border-color: rgba(111,197,90,.65);
+      background: rgba(44,130,89,.12);
+    }
+
+    .requirement-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .check {
+      width: 21px;
+      height: 21px;
+      margin-bottom: 14px;
+      border: 1px solid rgba(244,246,245,.18);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: transparent;
+      font-size: 12px;
+    }
+
+    .requirement-card.selected .check {
+      background: var(--bright-green);
+      border-color: var(--bright-green);
+      color: #0B1A11;
+    }
+
+    .requirement-card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .requirement-card p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .source-box {
+      padding: 18px;
+      border: 1px dashed rgba(244,246,245,.16);
+      border-radius: 9px;
+      background: rgba(13,13,13,.25);
+    }
+
+    .source-box strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 11px;
+    }
+
+    .source-box p {
+      color: var(--muted);
+      font-size: 9px;
+      margin-bottom: 14px;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 3px solid var(--bright-green);
+      background: rgba(44,130,89,.08);
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.65;
+    }
+
+    .notice strong {
+      color: var(--white);
+    }
+
+    .review-box {
+      padding: 20px;
+      border: 1px solid rgba(111,197,90,.25);
+      border-radius: 9px;
+      background: rgba(44,130,89,.08);
+    }
+
+    .review-box > strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+    }
+
+    .review-box > p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .review-list {
+      margin-top: 16px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .review-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: rgba(13,13,13,.35);
+      color: #D7DDD9;
+      font-size: 10px;
+    }
+
+    .review-item span {
+      color: var(--bright-green);
+      font-weight: 800;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .primary-button {
+      min-height: 50px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--bright-green);
+      color: #0B1A11;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .required {
+      color: var(--bright-green);
+    }
+
+    @media (max-width: 800px) {
+      .requirement-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="brand">
+    <div class="brand-mark">Ce</div>
+    <div class="brand-name">Certicium<span>.</span></div>
+  </div>
+
+  <a href="setup.html" class="back">
+    ← Setup Dashboard
+  </a>
+
+</header>
+
+
+<main>
+
+  <section class="intro">
+
+    <div class="eyebrow">
+      Setup 03 · Your Requirements
+    </div>
+
+    <h1>
+      What does your management system need to satisfy?
+    </h1>
+
+    <p>
+      Tell Certicium which jurisdictions, standards, contractual
+      commitments and regulatory obligations apply to your organisation.
+      We will use confirmed requirements as controlled context when
+      building your IMS.
+    </p>
+
+    <div class="setup-progress">
+      <div class="progress-step active"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+
+  </section>
+
+
+  <form id="requirementsForm">
+
+
+    <!-- 01 JURISDICTIONS -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        01 · Jurisdictions
+      </div>
+
+      <h2>
+        Where do requirements apply?
+      </h2>
+
+      <p class="section-description">
+        Confirm the jurisdictions Certicium may use when determining
+        applicable legal and regulatory requirements.
+      </p>
+
+      <div class="field">
+
+        <label for="jurisdictions">
+          Applicable jurisdictions <span class="required">*</span>
+        </label>
+
+        <span class="hint">
+          Include countries and, where relevant, states, territories,
+          provinces or other regulatory jurisdictions.
+        </span>
+
+        <textarea
+          id="jurisdictions"
+          placeholder="e.g. Australia — Victoria, New South Wales, Queensland&#10;New Zealand"
+          required
+        ></textarea>
+
+      </div>
+
+      <div class="notice">
+        <strong>Controlled context:</strong>
+        Certicium should not introduce an unconfirmed jurisdiction into
+        generated management system content.
+      </div>
+
+    </section>
+
+
+    <!-- 02 STANDARDS -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        02 · Standards & Certification
+      </div>
+
+      <h2>
+        Which standards matter to you?
+      </h2>
+
+      <p class="section-description">
+        Select standards your organisation is certified against, working
+        towards, contractually required to meet, or wants Certicium to
+        incorporate into the management system.
+      </p>
+
+      <div class="requirement-grid" id="standardsGrid"></div>
+
+      <div class="field" style="margin-top:20px;">
+
+        <label for="otherStandards">
+          Other standards, schemes or frameworks
+        </label>
+
+        <textarea
+          id="otherStandards"
+          placeholder="e.g. industry standards, customer schemes, accreditation frameworks..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 03 CONTRACTUAL -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        03 · Customer & Contract Requirements
+      </div>
+
+      <h2>
+        What have you committed to customers?
+      </h2>
+
+      <p class="section-description">
+        Contracts and customer requirements can create obligations beyond
+        legislation and certification standards.
+      </p>
+
+      <div class="requirement-grid" id="contractGrid"></div>
+
+      <div class="field" style="margin-top:20px;">
+
+        <label for="contractDetails">
+          Contract or customer-specific requirements
+        </label>
+
+        <span class="hint">
+          Describe known obligations or requirements that Certicium
+          should consider.
+        </span>
+
+        <textarea
+          id="contractDetails"
+          placeholder="e.g. Monthly safety reporting, customer audit rights, incident notification within 24 hours..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 04 REGULATORY -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        04 · Regulatory & Other Obligations
+      </div>
+
+      <h2>
+        Are there other formal obligations?
+      </h2>
+
+      <p class="section-description">
+        Capture licences, permits, accreditations, regulator approvals
+        and other obligations that may need to be controlled through the IMS.
+      </p>
+
+      <div class="requirement-grid" id="regulatoryGrid"></div>
+
+      <div class="field" style="margin-top:20px;">
+
+        <label for="regulatoryDetails">
+          Details of known obligations
+        </label>
+
+        <textarea
+          id="regulatoryDetails"
+          placeholder="e.g. operating licences, environmental permits, electrical licences, regulator approvals..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 05 SOURCES -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        05 · Source Material
+      </div>
+
+      <h2>
+        What should Certicium rely on?
+      </h2>
+
+      <p class="section-description">
+        Identify the source material that supports your requirements.
+        Proper document upload and evidence storage will be added when
+        customer accounts and file storage are connected.
+      </p>
+
+      <div class="source-box">
+
+        <strong>
+          Requirement source documents
+        </strong>
+
+        <p>
+          For the prototype, list the documents you expect to provide.
+          Later these will be uploaded and linked directly to your
+          requirements register.
+        </p>
+
+        <textarea
+          id="sourceDocuments"
+          placeholder="e.g. Customer contract — Project Alpha&#10;ISO 45001 certificate&#10;Operating licence&#10;Environmental permit..."
+        ></textarea>
+
+      </div>
+
+      <div class="notice">
+        <strong>Future Certicium behaviour:</strong>
+        uploaded evidence can be analysed to suggest requirements, but
+        suggested obligations should remain unconfirmed until reviewed
+        by the customer.
+      </div>
+
+    </section>
+
+
+    <!-- 06 REVIEW -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        06 · Review
+      </div>
+
+      <h2>
+        Your requirements profile
+      </h2>
+
+      <p class="section-description">
+        This profile will become the controlled requirements context used
+        when Certicium develops your IMS blueprint and generates content.
+      </p>
+
+      <div class="review-box">
+
+        <strong>
+          Only confirmed context should drive the IMS.
+        </strong>
+
+        <p>
+          Certicium can later identify and suggest additional obligations,
+          but customer confirmation should remain the boundary between
+          AI research and controlled management system requirements.
+        </p>
+
+        <div class="review-list" id="reviewList">
+
+          <div class="review-item">
+            Complete the sections above to preview your requirements profile.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          onclick="window.location.href='setup.html'"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Save & Return to Setup →
+        </button>
+
+      </div>
+
+    </section>
+
+  </form>
+
+</main>
+
+
+<script>
+
+  const standards = [
+    {
+      id: "iso9001",
+      name: "ISO 9001",
+      description: "Quality Management Systems."
+    },
+    {
+      id: "iso14001",
+      name: "ISO 14001",
+      description: "Environmental Management Systems."
+    },
+    {
+      id: "iso45001",
+      name: "ISO 45001",
+      description: "Occupational Health & Safety Management Systems."
+    }
+  ];
+
+
+  const contractRequirements = [
+    {
+      id: "customerHSEQ",
+      name: "Customer HSEQ requirements",
+      description: "Customer-specific health, safety, environment or quality obligations."
+    },
+    {
+      id: "reportingRequirements",
+      name: "Reporting requirements",
+      description: "Defined reporting frequencies, metrics or performance information."
+    },
+    {
+      id: "incidentNotification",
+      name: "Incident notification",
+      description: "Contractual timeframes or processes for notifying customers of events."
+    },
+    {
+      id: "customerAudits",
+      name: "Customer audit rights",
+      description: "Customers may audit operations, systems, sites or records."
+    },
+    {
+      id: "trainingCompetency",
+      name: "Training & competency",
+      description: "Contract-specific qualifications, inductions or competency requirements."
+    },
+    {
+      id: "insuranceRequirements",
+      name: "Insurance requirements",
+      description: "Specified insurance types, limits or evidence requirements."
+    }
+  ];
+
+
+  const regulatoryRequirements = [
+    {
+      id: "licences",
+      name: "Licences",
+      description: "Business, occupational or activity-specific licences."
+    },
+    {
+      id: "permits",
+      name: "Permits",
+      description: "Permits required to conduct particular activities."
+    },
+    {
+      id: "accreditations",
+      name: "Accreditations",
+      description: "Formal industry, regulator or customer accreditation."
+    },
+    {
+      id: "regulatorApprovals",
+      name: "Regulator approvals",
+      description: "Approvals, authorisations or conditions imposed by a regulator."
+    },
+    {
+      id: "mandatoryReporting",
+      name: "Mandatory reporting",
+      description: "Legal or regulatory reporting and notification obligations."
+    },
+    {
+      id: "otherLegalObligations",
+      name: "Other legal obligations",
+      description: "Other formal requirements that must be reflected in the IMS."
+    }
+  ];
+
+
+  function createCards(containerId, items) {
+
+    const container =
+      document.getElementById(containerId);
+
+    container.innerHTML =
+      items.map(item => `
+
+        <label class="requirement-card" id="card-${item.id}">
+
+          <input
+            type="checkbox"
+            id="${item.id}"
+            data-requirement="true"
+          >
+
+          <div class="check">✓</div>
+
+          <strong>
+            ${item.name}
+          </strong>
+
+          <p>
+            ${item.description}
+          </p>
+
+        </label>
+
+      `).join("");
+
+  }
+
+
+  createCards(
+    "standardsGrid",
+    standards
+  );
+
+  createCards(
+    "contractGrid",
+    contractRequirements
+  );
+
+  createCards(
+    "regulatoryGrid",
+    regulatoryRequirements
+  );
+
+
+  document
+    .querySelectorAll("[data-requirement='true']")
+    .forEach(field => {
+
+      field.addEventListener("change", function() {
+
+        const card =
+          document.getElementById(
+            "card-" + field.id
+          );
+
+        card.classList.toggle(
+          "selected",
+          field.checked
+        );
+
+        updateReview();
+
+      });
+
+    });
+
+
+  function selectedFrom(items) {
+
+    return items
+      .filter(item => {
+
+        const field =
+          document.getElementById(item.id);
+
+        return field && field.checked;
+
+      })
+      .map(item => item.name);
+
+  }
+
+
+  function textLines(value) {
+
+    return value
+      .split("\n")
+      .map(item => item.trim())
+      .filter(Boolean);
+
+  }
+
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  function updateReview() {
+
+    const review = [];
+
+    const jurisdictions =
+      textLines(
+        document
+          .getElementById("jurisdictions")
+          .value
+      );
+
+    const selectedStandards =
+      selectedFrom(standards);
+
+    const selectedContracts =
+      selectedFrom(contractRequirements);
+
+    const selectedRegulatory =
+      selectedFrom(regulatoryRequirements);
+
+
+    if (jurisdictions.length) {
+
+      review.push(
+        `<span>Jurisdictions:</span> ${escapeHTML(jurisdictions.join(", "))}`
+      );
+
+    }
+
+
+    if (selectedStandards.length) {
+
+      review.push(
+        `<span>Standards:</span> ${escapeHTML(selectedStandards.join(", "))}`
+      );
+
+    }
+
+
+    if (
+      document
+        .getElementById("otherStandards")
+        .value
+        .trim()
+    ) {
+
+      review.push(
+        `<span>Other standards:</span> ${escapeHTML(
+          document
+            .getElementById("otherStandards")
+            .value
+            .trim()
+        )}`
+      );
+
+    }
+
+
+    if (selectedContracts.length) {
+
+      review.push(
+        `<span>Customer / contract:</span> ${escapeHTML(selectedContracts.join(", "))}`
+      );
+
+    }
+
+
+    if (selectedRegulatory.length) {
+
+      review.push(
+        `<span>Regulatory:</span> ${escapeHTML(selectedRegulatory.join(", "))}`
+      );
+
+    }
+
+
+    const reviewList =
+      document.getElementById("reviewList");
+
+
+    if (review.length) {
+
+      reviewList.innerHTML =
+        review
+          .map(item => `
+            <div class="review-item">
+              ${item}
+            </div>
+          `)
+          .join("");
+
+    } else {
+
+      reviewList.innerHTML = `
+        <div class="review-item">
+          Complete the sections above to preview your requirements profile.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "textarea"
+    )
+    .forEach(field => {
+
+      field.addEventListener(
+        "input",
+        updateReview
+      );
+
+    });
+
+
+  function loadExistingProfile() {
+
+    let profile = {};
+
+    try {
+
+      profile =
+        JSON.parse(
+          localStorage.getItem(
+            "certiciumRequirementsProfile"
+          )
+          ||
+          "{}"
+        );
+
+    } catch (error) {
+
+      profile = {};
+
+    }
+
+
+    if (!Object.keys(profile).length) {
+      updateReview();
+      return;
+    }
+
+
+    document
+      .getElementById("jurisdictions")
+      .value =
+      (profile.jurisdictions || []).join("\n");
+
+
+    document
+      .getElementById("otherStandards")
+      .value =
+      profile.otherStandards || "";
+
+
+    document
+      .getElementById("contractDetails")
+      .value =
+      profile.contractDetails || "";
+
+
+    document
+      .getElementById("regulatoryDetails")
+      .value =
+      profile.regulatoryDetails || "";
+
+
+    document
+      .getElementById("sourceDocuments")
+      .value =
+      (profile.sourceDocuments || []).join("\n");
+
+
+    const selectedIds = [
+      ...(profile.standardIds || []),
+      ...(profile.contractRequirementIds || []),
+      ...(profile.regulatoryRequirementIds || [])
+    ];
+
+
+    selectedIds.forEach(id => {
+
+      const field =
+        document.getElementById(id);
+
+      const card =
+        document.getElementById(
+          "card-" + id
+        );
+
+      if (field) {
+        field.checked = true;
+      }
+
+      if (card) {
+        card.classList.add("selected");
+      }
+
+    });
+
+
+    updateReview();
+
+  }
+
+
+  document
+    .getElementById("requirementsForm")
+    .addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const jurisdictions =
+          textLines(
+            document
+              .getElementById("jurisdictions")
+              .value
+          );
+
+
+        if (!jurisdictions.length) {
+
+          alert(
+            "Please confirm at least one applicable jurisdiction."
+          );
+
+          return;
+
+        }
+
+
+        const profile = {
+
+          setupComplete: true,
+
+          jurisdictions:
+            jurisdictions,
+
+          standardIds:
+            standards
+              .filter(item =>
+                document
+                  .getElementById(item.id)
+                  .checked
+              )
+              .map(item => item.id),
+
+          standards:
+            selectedFrom(standards),
+
+          otherStandards:
+            document
+              .getElementById("otherStandards")
+              .value
+              .trim(),
+
+          contractRequirementIds:
+            contractRequirements
+              .filter(item =>
+                document
+                  .getElementById(item.id)
+                  .checked
+              )
+              .map(item => item.id),
+
+          contractRequirements:
+            selectedFrom(contractRequirements),
+
+          contractDetails:
+            document
+              .getElementById("contractDetails")
+              .value
+              .trim(),
+
+          regulatoryRequirementIds:
+            regulatoryRequirements
+              .filter(item =>
+                document
+                  .getElementById(item.id)
+                  .checked
+              )
+              .map(item => item.id),
+
+          regulatoryRequirements:
+            selectedFrom(regulatoryRequirements),
+
+          regulatoryDetails:
+            document
+              .getElementById("regulatoryDetails")
+              .value
+              .trim(),
+
+          sourceDocuments:
+            textLines(
+              document
+                .getElementById("sourceDocuments")
+                .value
+            ),
+
+          confirmationStatus:
+            "customer-confirmed",
+
+          savedAt:
+            new Date().toISOString()
+
+        };
+
+
+        localStorage.setItem(
+          "certiciumRequirementsProfile",
+          JSON.stringify(profile)
+        );
+
+
+        window.location.href =
+          "setup.html";
+
+      }
+    );
+
+
+  loadExistingProfile();
+
+</script>
+
+</body>
+</html>
