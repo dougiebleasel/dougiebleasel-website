@@ -1251,6 +1251,113 @@ const setupSections = [
 
   }
 
+    card.querySelector(
+      ".card-action"
+    )
+    .innerText =
+      "Review organisation setup →";
+
+  }
+
+
+  const operationsCard =
+    document.getElementById(
+      "operationsCard"
+    );
+
+
+  const operationsStatus =
+    operationsCard
+      .querySelector(
+        ".card-status"
+      );
+
+
+  const operationsAction =
+    operationsCard
+      .querySelector(
+        ".card-action"
+      );
+
+
+  if (
+    organisationComplete
+  ) {
+
+    operationsCard
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    operationsStatus
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    if (
+      operationsComplete
+    ) {
+
+      operationsCard
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      operationsStatus
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      operationsStatus.innerText =
+        "Complete";
+
+
+      operationsAction.innerText =
+        "Review operations setup →";
+
+    } else {
+
+      operationsStatus.innerText =
+        "Start";
+
+
+      operationsAction.innerText =
+        "Start operations setup →";
+
+    }
+
+  } else {
+
+    operationsCard
+      .removeAttribute(
+        "href"
+      );
+
+
+    operationsCard
+      .classList
+      .add(
+        "locked"
+      );
+
+
+    operationsStatus.innerText =
+      "Locked";
+
+
+    operationsAction.innerText =
+      "Complete organisation setup first";
+
+  }
+
 </script>
 
 
