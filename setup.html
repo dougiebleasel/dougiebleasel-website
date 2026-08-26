@@ -1110,15 +1110,25 @@ const operationsComplete =
     .setupComplete ===
   true;
 
+const requirementsProfile =
+  readStorage(
+    "certiciumRequirementsProfile"
+  );
+
+
+const requirementsComplete =
+  requirementsProfile
+    .setupComplete ===
+  true;
+
 
 const setupSections = [
   organisationComplete,
   operationsComplete,
-  false,
+  requirementsComplete,
   false,
   false
 ];
-
 
   const completed =
     setupSections.filter(
