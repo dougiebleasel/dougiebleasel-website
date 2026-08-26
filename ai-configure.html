@@ -10,7 +10,7 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Tiwili | AI IMS Discovery</title>
+  <title>Certicium | IMS Build Demo</title>
 
 
   <style>
@@ -137,87 +137,48 @@
 
 
     .logo-lockup {
-
       display: flex;
-
       align-items: center;
-
       gap: 13px;
-
     }
 
 
-    .logo-mark {
-
-      width: 48px;
-      height: 42px;
-
-      position: relative;
-
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      flex: 0 0 58px;
     }
 
 
-    .logo-dot {
-
-      width: 17px;
-      height: 17px;
-
-      border-radius: 50%;
-
-      background:
-        var(--white);
-
-      position: absolute;
-
-    }
-
-
-    .logo-dot.one {
-
-      top: 0;
-      left: 15px;
-
-    }
-
-
-    .logo-dot.two {
-
-      bottom: 1px;
-      left: 3px;
-
-    }
-
-
-    .logo-dot.three {
-
-      bottom: 1px;
-      right: 3px;
-
+    .logo-copy {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
     }
 
 
     .logo-name {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
 
-      font-size: 30px;
 
-      font-weight: 700;
-
-      letter-spacing: 3px;
-
-      text-transform: lowercase;
-
+    .logo-name span {
+      color: var(--accent-light);
     }
 
 
     .logo-tagline {
-
-      margin-top: 6px;
-
-      font-size: 11px;
-
-      color:
-        var(--accent-light);
-
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
     }
 
 
@@ -1110,6 +1071,23 @@
       max-width: 650px
     ) {
 
+      .brand-logo {
+        width: 48px;
+        height: 48px;
+        flex-basis: 48px;
+      }
+
+
+      .logo-name {
+        font-size: 22px;
+      }
+
+
+      .logo-tagline {
+        display: none;
+      }
+
+
       .back {
 
         display: none;
@@ -1174,23 +1152,21 @@
 
   <div class="logo-lockup">
 
-    <div class="logo-mark">
-
-      <div class="logo-dot one"></div>
-      <div class="logo-dot two"></div>
-      <div class="logo-dot three"></div>
-
-    </div>
+    <img
+      src="certicium-logo.png"
+      alt="Certicium logo"
+      class="brand-logo"
+    >
 
 
-    <div>
+    <div class="logo-copy">
 
       <div class="logo-name">
-        tiwili
+        Certicium<span>.</span>
       </div>
 
       <div class="logo-tagline">
-        talk it. walk it. live it.
+        Build. Maintain. Embed.
       </div>
 
     </div>
@@ -1202,7 +1178,7 @@
     href="index.html"
     class="back"
   >
-    ← Back to Tiwili
+    ← Back to Certicium
   </a>
 
 </header>
@@ -1211,18 +1187,18 @@
 <section class="hero">
 
   <div class="eyebrow">
-    AI Business Discovery
+    IMS Build Demo
   </div>
 
   <h1>
-    Let's start with
-    your company.
+    Let's design
+    your IMS.
   </h1>
 
   <p>
-    Tell Tiwili who you are. We'll look for publicly available
-    information about the business, show you what we think we've
-    found, then ask only the questions we still need answered.
+    Tell Certicium about your organisation. We'll use public information
+    as a starting point, confirm what matters, and build a first-pass
+    IMS recommendation so you can see what Certicium could create for you.
   </p>
 
 </section>
@@ -1279,7 +1255,7 @@
         class="lookup-loading"
         id="lookupLoading"
       >
-        ✦ Tiwili is looking for your company...
+        ✦ Certicium is looking for your company...
       </div>
 
 
@@ -1348,7 +1324,7 @@
         class="skip-link"
         onclick="startWithoutLookup()"
       >
-        Skip lookup and tell Tiwili about the business myself
+        Skip lookup and tell Certicium about the business myself
       </div>
 
 
@@ -1411,7 +1387,7 @@
 
             <textarea
               id="userInput"
-              placeholder="Tell Tiwili more..."
+              placeholder="Tell Certicium more..."
             ></textarea>
 
             <button
@@ -1435,12 +1411,12 @@
           <div>
 
             <strong>
-              Enough to build your IMS.
+              Your demo profile is ready.
             </strong>
 
             <p>
-              Tiwili now has enough information for a first-pass
-              management system recommendation.
+              Certicium has enough information to show you a first-pass
+              IMS recommendation for your organisation.
             </p>
 
           </div>
@@ -1449,7 +1425,7 @@
           <button
             onclick="continueToConfigurator()"
           >
-            Build My IMS →
+            Show My IMS →
           </button>
 
         </div>
@@ -1465,7 +1441,7 @@
         </div>
 
         <h2>
-          What Tiwili knows
+          What Certicium knows
         </h2>
 
         <p>
@@ -1619,7 +1595,7 @@
 
         throw new Error(
           data.error ||
-          "Tiwili could not complete the company lookup."
+          "Certicium could not complete the company lookup."
         );
 
       }
@@ -1628,7 +1604,7 @@
       if (!data.found) {
 
         throw new Error(
-          "Tiwili couldn't confidently identify that company. Try the company website or continue without lookup."
+          "Certicium couldn't confidently identify that company. Try the company website or continue without lookup."
         );
 
       }
@@ -1670,7 +1646,7 @@
         )
         .innerText =
         data.summary ||
-        "Tiwili found a possible match.";
+        "Certicium found a possible match.";
 
 
       document
@@ -2171,7 +2147,7 @@
 
     addMessage(
       "assistant",
-      "Tiwili is thinking...",
+      "Certicium is thinking...",
       true
     );
 
@@ -2457,13 +2433,23 @@
 
 
     localStorage.setItem(
+      "certiciumDemoProfile",
+      JSON.stringify(profile)
+    );
+
+
+    /*
+     * Temporary compatibility with the existing demo configurator.
+     * Remove this legacy key once configure.html has been migrated.
+     */
+    localStorage.setItem(
       "tiwiliAIProfile",
       JSON.stringify(profile)
     );
 
 
     window.location.href =
-      "configure.html?source=ai";
+      "configure.html?source=demo";
 
   }
 
