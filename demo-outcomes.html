@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Certicium | Your IMS Demo Outcome</title>
+  <title>Certicium | IMS Build Demo Outcome</title>
 
   <style>
     :root {
@@ -18,8 +18,6 @@
       --muted: #A8B2AD;
       --border: rgba(244,246,245,.12);
       --card: #141715;
-      --warning: #E6C96B;
-      --blue: #8FC7FF;
     }
 
     * {
@@ -41,25 +39,18 @@
       text-decoration: none;
     }
 
-    button {
-      font: inherit;
-    }
-
     header {
       min-height: 88px;
       padding: 12px 5%;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
-
+      gap: 20px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
       position: sticky;
       top: 0;
       z-index: 100;
-
-      background: rgba(13,13,13,.96);
-      border-bottom: 1px solid var(--border);
     }
 
     .brand {
@@ -73,6 +64,7 @@
       height: 58px;
       object-fit: contain;
       border-radius: 8px;
+      flex: 0 0 58px;
     }
 
     .brand-copy {
@@ -106,33 +98,16 @@
     }
 
     .hero {
-      padding: 70px 5% 60px;
-      position: relative;
-      overflow: hidden;
-
-      background:
-        radial-gradient(circle at 82% 24%, rgba(44,130,89,.23), transparent 30%),
-        linear-gradient(135deg, #090D0B, #07100D 62%, #092118);
-
+      padding: 64px 5% 46px;
       border-bottom: 1px solid var(--border);
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
-      background-size: 50px 50px;
-      pointer-events: none;
+      background:
+        radial-gradient(circle at 83% 28%, rgba(44,130,89,.18), transparent 28%),
+        linear-gradient(135deg, #090D0B, #07100D 62%, #092118);
     }
 
     .hero-inner {
       max-width: 1180px;
       margin: auto;
-      position: relative;
-      z-index: 2;
     }
 
     .eyebrow {
@@ -141,7 +116,7 @@
       font-weight: 900;
       letter-spacing: 1.8px;
       text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
 
     h1 {
@@ -156,254 +131,269 @@
     }
 
     .hero-copy {
-      max-width: 780px;
-      margin-top: 22px;
+      max-width: 760px;
+      margin-top: 20px;
       color: #D2D8D5;
       font-size: 16px;
       line-height: 1.7;
     }
 
-    .result-strip {
+    .summary-strip {
       max-width: 1180px;
-      margin: 30px auto 0;
+      margin: 28px auto 0;
       display: grid;
-      grid-template-columns: repeat(4,1fr);
+      grid-template-columns: 1fr 1fr 1.4fr;
       gap: 12px;
     }
 
-    .result-card {
-      padding: 17px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: rgba(13,13,13,.45);
+    .summary-card {
+      padding: 18px;
+      border: 1px solid rgba(111,197,90,.24);
+      border-radius: 10px;
+      background: rgba(13,13,13,.44);
     }
 
-    .result-card span {
+    .summary-card strong {
       display: block;
-      color: var(--muted);
-      font-size: 8px;
+      color: var(--approval);
+      font-size: 34px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .summary-card span {
+      color: var(--white);
+      font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: .7px;
-      margin-bottom: 4px;
+      letter-spacing: .8px;
     }
 
-    .result-card strong {
-      color: var(--approval);
-      font-size: 26px;
+    .summary-card p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
     }
 
     main {
       max-width: 1180px;
       margin: auto;
-      padding: 55px 5% 100px;
+      padding: 48px 5% 100px;
     }
 
     .section {
-      margin-bottom: 50px;
+      margin-bottom: 42px;
     }
 
-    .section-heading {
-      display: grid;
-      grid-template-columns: .85fr 1.15fr;
-      gap: 50px;
-      align-items: end;
-      margin-bottom: 22px;
+    .section-title {
+      margin-bottom: 16px;
     }
 
-    .section-heading h2 {
-      font-size: clamp(30px,4vw,46px);
+    .section-title h2 {
+      font-size: clamp(28px,3.5vw,42px);
       line-height: 1.05;
-      letter-spacing: -2px;
+      letter-spacing: -1.8px;
     }
 
-    .section-heading p {
+    .section-title p {
+      margin-top: 8px;
       color: var(--muted);
       font-size: 12px;
+      max-width: 760px;
       line-height: 1.65;
     }
 
-    .signal-grid {
+    .periodic-grid {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 12px;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 11px;
     }
 
-    .signal {
-      padding: 19px;
+    .element-card {
+      min-height: 205px;
+      padding: 16px;
+      position: relative;
+      border: 1px solid rgba(111,197,90,.38);
+      border-radius: 8px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(18,53,36,.72),
+          rgba(13,13,13,.9)
+        );
+      box-shadow: inset 0 0 0 1px rgba(111,197,90,.03);
+    }
+
+    .element-number {
+      position: absolute;
+      top: 9px;
+      left: 10px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+    }
+
+    .element-symbol {
+      margin-top: 26px;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      color: var(--white);
+    }
+
+    .element-symbol .accent {
+      color: var(--approval);
+    }
+
+    .element-name {
+      margin-top: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .element-note {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .risk-card {
+      padding: 15px;
       border: 1px solid var(--border);
-      border-radius: 9px;
+      border-radius: 8px;
       background: var(--card);
     }
 
-    .signal strong {
-      display: block;
-      font-size: 13px;
-      margin-bottom: 7px;
-    }
-
-    .signal p {
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.6;
-    }
-
-    .recommendation-grid {
-      display: grid;
-      grid-template-columns: repeat(2,minmax(0,1fr));
+    .risk-head {
+      display: flex;
+      align-items: flex-start;
       gap: 12px;
     }
 
-    .recommendation {
-      padding: 19px;
+    .risk-symbol {
+      flex: 0 0 52px;
+      min-height: 52px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(111,197,90,.35);
+      border-radius: 7px;
+      color: var(--approval);
+      font-weight: 900;
+      font-size: 18px;
+      background: rgba(18,53,36,.45);
+    }
+
+    .risk-card h3 {
+      font-size: 13px;
+      margin-bottom: 5px;
+    }
+
+    .risk-card p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 11px;
+    }
+
+    .delivery-card {
+      padding: 18px;
       border: 1px solid var(--border);
       border-radius: 9px;
       background:
         linear-gradient(
           180deg,
           rgba(20,23,21,.88),
-          rgba(13,13,13,.88)
+          rgba(13,13,13,.92)
         );
     }
 
-    .recommendation-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      align-items: flex-start;
+    .delivery-card h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
     }
 
-    .recommendation h3 {
-      font-size: 15px;
-      margin-bottom: 5px;
-    }
-
-    .recommendation p {
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.55;
-    }
-
-    .badge {
-      flex: 0 0 auto;
-      padding: 5px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(111,197,90,.35);
-      color: var(--approval);
-      font-size: 8px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: .6px;
-    }
-
-    .why {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(244,246,245,.07);
-      color: #BBC4BF;
-      font-size: 9px;
-    }
-
-    .why strong {
-      color: var(--white);
-    }
-
-    .next-grid {
+    .delivery-card ul {
+      list-style: none;
       display: grid;
-      grid-template-columns: repeat(4,1fr);
-      gap: 10px;
+      gap: 7px;
     }
 
-    .next-step {
-      padding: 18px;
-      border-left: 1px solid rgba(244,246,245,.14);
-    }
-
-    .next-step:first-child {
-      border-left: 0;
-    }
-
-    .step-num {
-      color: var(--approval);
-      font-size: 9px;
-      font-weight: 900;
-      margin-bottom: 12px;
-    }
-
-    .next-step h3 {
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
-    .next-step p {
-      color: var(--muted);
+    .delivery-card li {
+      color: #D3D9D6;
       font-size: 10px;
-      line-height: 1.6;
+      line-height: 1.45;
+    }
+
+    .delivery-card li::before {
+      content: "✓";
+      color: var(--approval);
+      font-weight: 900;
+      margin-right: 7px;
+    }
+
+    .demo-link {
+      margin-top: 10px;
+      display: inline-block;
+      color: var(--approval);
+      font-size: 10px;
+      font-weight: 800;
     }
 
     .sales {
-      padding: 34px;
-      border: 1px solid rgba(111,197,90,.32);
-      border-radius: 12px;
-
+      padding: 30px;
+      border: 1px solid rgba(111,197,90,.34);
+      border-radius: 11px;
       background:
-        radial-gradient(circle at 85% 30%, rgba(111,197,90,.10), transparent 26%),
-        linear-gradient(135deg, rgba(44,130,89,.16), rgba(18,53,36,.18));
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.16),
+          rgba(18,53,36,.18)
+        );
     }
 
     .sales h2 {
-      max-width: 720px;
-      font-size: clamp(34px,4vw,54px);
+      font-size: clamp(32px,4vw,50px);
       line-height: 1.02;
       letter-spacing: -2px;
+      max-width: 760px;
     }
 
-    .sales > p {
-      max-width: 740px;
-      margin-top: 14px;
+    .sales p {
+      margin-top: 12px;
       color: #CFD6D2;
-      font-size: 13px;
-      line-height: 1.7;
-    }
-
-    .sales-points {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-      gap: 10px;
-    }
-
-    .sales-point {
-      padding: 14px;
-      border: 1px solid rgba(244,246,245,.08);
-      border-radius: 8px;
-      background: rgba(13,13,13,.3);
-      color: #D9DFDC;
-      font-size: 10px;
-      line-height: 1.55;
-    }
-
-    .sales-point span {
-      color: var(--approval);
-      font-weight: 900;
-      margin-right: 5px;
+      font-size: 12px;
+      line-height: 1.65;
+      max-width: 760px;
     }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 24px;
+      margin-top: 20px;
     }
 
     .button {
-      min-height: 50px;
-      padding: 0 20px;
+      min-height: 48px;
+      padding: 0 18px;
       border-radius: 7px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 900;
     }
 
@@ -418,23 +408,28 @@
     }
 
     .fine-print {
-      margin-top: 16px;
+      margin-top: 14px;
       color: #747D78;
       font-size: 9px;
       line-height: 1.55;
     }
 
-    @media(max-width:900px) {
-      .result-strip,
-      .signal-grid,
-      .next-grid,
-      .sales-points {
+    @media(max-width:950px) {
+      .periodic-grid,
+      .delivery-grid {
         grid-template-columns: repeat(2,1fr);
       }
 
-      .section-heading {
-        grid-template-columns: 1fr;
-        gap: 12px;
+      .risk-grid {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .summary-strip {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .summary-card:last-child {
+        grid-column: 1 / -1;
       }
     }
 
@@ -449,25 +444,17 @@
         display: none;
       }
 
-      .result-strip,
-      .signal-grid,
-      .recommendation-grid,
-      .next-grid,
-      .sales-points {
+      .periodic-grid,
+      .risk-grid,
+      .delivery-grid,
+      .summary-strip {
         grid-template-columns: 1fr;
       }
 
-      .next-step {
-        border-left: 0;
-        border-top: 1px solid rgba(244,246,245,.14);
-        padding-left: 0;
-      }
-
-      .next-step:first-child {
-        border-top: 0;
+      .summary-card:last-child {
+        grid-column: auto;
       }
     }
-
   </style>
 </head>
 
@@ -513,30 +500,31 @@
     </div>
 
     <h1 id="headline">
-      Here's what Certicium would build.
+      Here's what we'd build.
     </h1>
 
     <p class="hero-copy" id="heroCopy">
-      Based on what we learned, this is the kind of management system architecture we would recommend as a starting point.
+      Your IMS should not contain everything. It should contain the governance processes every organisation needs, plus the controls required for the way you operate.
     </p>
 
-    <div class="result-strip">
-      <div class="result-card">
-        <span>Policies</span>
-        <strong id="policyCount">0</strong>
+    <div class="summary-strip">
+
+      <div class="summary-card">
+        <strong>8</strong>
+        <span>Core governance processes</span>
       </div>
-      <div class="result-card">
-        <span>Procedures</span>
-        <strong id="procedureCount">0</strong>
+
+      <div class="summary-card">
+        <strong id="riskCount">0</strong>
+        <span>Operational risk areas identified</span>
       </div>
-      <div class="result-card">
-        <span>Operational Controls</span>
-        <strong id="controlCount">0</strong>
+
+      <div class="summary-card">
+        <p>
+          Certicium does not stop at procedures. We build the connected system around them — AI tools, registers, forms, templates and operational controls.
+        </p>
       </div>
-      <div class="result-card">
-        <span>Registers & Tools</span>
-        <strong id="toolCount">0</strong>
-      </div>
+
     </div>
 
   </div>
@@ -548,46 +536,98 @@
 
   <section class="section">
 
-    <div class="section-heading">
-      <div>
-        <div class="eyebrow">
-          What we picked up
-        </div>
-        <h2>
-          Your business drives the system.
-        </h2>
+    <div class="section-title">
+      <div class="eyebrow">
+        01 · Governance
       </div>
-
+      <h2>
+        We will build your core governance processes.
+      </h2>
       <p>
-        Certicium does not start with a fixed procedure library. We use your operating model, exposures, customers and objectives to decide what belongs in the IMS.
+        These are the management processes Certicium treats as the backbone of the IMS.
       </p>
     </div>
 
-    <div class="signal-grid" id="signalGrid"></div>
+    <div class="periodic-grid">
+
+      <div class="element-card">
+        <div class="element-number">01</div>
+        <div class="element-symbol">Po</div>
+        <div class="element-name">Policies</div>
+        <div class="element-note">The top-level commitments and direction for the IMS.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">02</div>
+        <div class="element-symbol">Dm</div>
+        <div class="element-name">Document & Records Management</div>
+        <div class="element-note">Control, approval, revision, retention and access to current information.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">03</div>
+        <div class="element-symbol">Rm</div>
+        <div class="element-name">Risk Management</div>
+        <div class="element-note">Identify, assess, treat and review the risks that matter.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">04</div>
+        <div class="element-symbol">Cm</div>
+        <div class="element-name">Competency Management</div>
+        <div class="element-note">Define capability requirements and verify that people are competent.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">05</div>
+        <div class="element-symbol">Cc</div>
+        <div class="element-name">Consultation & Communication Management</div>
+        <div class="element-note">Keep people informed, consulted and involved in the system.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">06</div>
+        <div class="element-symbol">IM</div>
+        <div class="element-name">Incident, Near Miss & Hazard Management</div>
+        <div class="element-note">Report, investigate, correct and learn from events.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">07</div>
+        <div class="element-symbol">Au</div>
+        <div class="element-name">Audit, Inspection, Monitoring & Testing Management</div>
+        <div class="element-note">Verify that controls and requirements are operating as intended.</div>
+      </div>
+
+      <div class="element-card">
+        <div class="element-number">08</div>
+        <div class="element-symbol">Pm</div>
+        <div class="element-name">Performance Management</div>
+        <div class="element-note">Measure performance, review outcomes and drive continuous improvement.</div>
+      </div>
+
+    </div>
 
   </section>
 
 
   <section class="section">
 
-    <div class="section-heading">
-      <div>
-        <div class="eyebrow">
-          First-pass blueprint
-        </div>
-        <h2>
-          A management system shaped around you.
-        </h2>
+    <div class="section-title">
+      <div class="eyebrow">
+        02 · Operational risk
       </div>
-
+      <h2 id="riskHeading">
+        We've identified these operational risk areas for you.
+      </h2>
       <p>
-        This demo is illustrative. In a real implementation we would validate requirements, review existing content and agree the final architecture with you before controlled content is built.
+        These risk areas will drive the operational procedures, controls, tools and evidence that sit underneath the governance framework.
       </p>
     </div>
 
     <div
-      class="recommendation-grid"
-      id="recommendationGrid"
+      class="risk-grid"
+      id="riskGrid"
     ></div>
 
   </section>
@@ -595,53 +635,69 @@
 
   <section class="section">
 
-    <div class="section-heading">
-      <div>
-        <div class="eyebrow">
-          What happens next
-        </div>
-        <h2>
-          From recommendation to a live IMS.
-        </h2>
+    <div class="section-title">
+      <div class="eyebrow">
+        03 · Everything connected
       </div>
-
+      <h2>
+        Not just procedures. A working management system.
+      </h2>
       <p>
-        The real Certicium journey goes beyond a demo. We confirm the design, build the controlled system and embed it into day-to-day management.
+        Certicium builds the governance framework, then connects the practical tools people need to operate it.
       </p>
     </div>
 
-    <div class="next-grid">
+    <div class="delivery-grid">
 
-      <div class="next-step">
-        <div class="step-num">01</div>
-        <h3>Validate</h3>
-        <p>
-          Confirm legal, contractual, ISO and organisational requirements.
-        </p>
+      <div class="delivery-card">
+        <h3>Procedures & Work Instructions</h3>
+        <ul>
+          <li>Governance procedures</li>
+          <li>Operational procedures</li>
+          <li>Safe work instructions</li>
+          <li>Role-based instructions</li>
+          <li>Practical controlled content</li>
+        </ul>
       </div>
 
-      <div class="next-step">
-        <div class="step-num">02</div>
-        <h3>Blueprint</h3>
-        <p>
-          Agree the policies, procedures, controls, registers and tools that belong in your IMS.
-        </p>
+      <div class="delivery-card">
+        <h3>AI Tools</h3>
+        <ul>
+          <li>Risk Assessment AI</li>
+          <li>Incident Investigation AI</li>
+          <li>Document Assistant</li>
+          <li>Compliance support</li>
+          <li>Continuous improvement support</li>
+        </ul>
       </div>
 
-      <div class="next-step">
-        <div class="step-num">03</div>
-        <h3>Build</h3>
-        <p>
-          Retain what works, improve what does not, and create the missing controlled content.
-        </p>
+      <div class="delivery-card">
+        <h3>Registers</h3>
+        <ul>
+          <li>Risk Register</li>
+          <li>Compliance Register</li>
+          <li>Legal Register</li>
+          <li>Hazard Register</li>
+          <li>Training / competency registers</li>
+        </ul>
       </div>
 
-      <div class="next-step">
-        <div class="step-num">04</div>
-        <h3>Embed</h3>
-        <p>
-          Put the system into workflows, automation, assurance and everyday decision making.
-        </p>
+      <div class="delivery-card">
+        <h3>Forms & Templates</h3>
+        <ul>
+          <li>Incident / near miss / hazard forms</li>
+          <li>Risk assessment forms</li>
+          <li>Inspection checklists</li>
+          <li>Audit templates</li>
+          <li>Permits and operational forms</li>
+        </ul>
+
+        <a
+          href="ims.html"
+          class="demo-link"
+        >
+          Explore the Certicium Demo IMS →
+        </a>
       </div>
 
     </div>
@@ -652,7 +708,7 @@
   <section class="sales">
 
     <div class="eyebrow">
-      The big question
+      Your IMS. Your way.
     </div>
 
     <h2 id="salesHeading">
@@ -660,27 +716,8 @@
     </h2>
 
     <p>
-      This demo gives you a taste of the architecture. A real Certicium implementation turns that into a controlled, operational management system built around your organisation.
+      This demo is a first-pass view. A real implementation validates the requirements, reviews what you already have, agrees the architecture with you and turns it into a controlled live IMS.
     </p>
-
-    <div class="sales-points">
-
-      <div class="sales-point">
-        <span>✓</span>
-        Tailored IMS architecture rather than generic templates.
-      </div>
-
-      <div class="sales-point">
-        <span>✓</span>
-        Existing documents and systems reviewed before anything is replaced.
-      </div>
-
-      <div class="sales-point">
-        <span>✓</span>
-        Digital workflows, AI assistance and human approval built into the operating model.
-      </div>
-
-    </div>
 
     <div class="actions">
 
@@ -690,6 +727,13 @@
         id="salesButton"
       >
         Talk to Certicium →
+      </a>
+
+      <a
+        href="ims.html"
+        class="button secondary"
+      >
+        Explore Demo IMS
       </a>
 
       <a
@@ -761,18 +805,6 @@
 
   document
     .getElementById(
-      "heroCopy"
-    )
-    .innerText =
-    "Based on what Certicium learned about "
-    +
-    company
-    +
-    ", this is the first-pass IMS architecture we would explore with you.";
-
-
-  document
-    .getElementById(
       "salesHeading"
     )
     .innerText =
@@ -799,7 +831,7 @@
       +
       company
       +
-      " and would like to discuss what a real implementation could look like.\n"
+      " and would like to discuss a real implementation.\n"
     );
 
 
@@ -821,480 +853,225 @@
     salesBody;
 
 
-  function has(
-    field,
-    value
-  ) {
+  const riskDefinitions = {
 
-    return (
-      profile[field]
-      ||
-      []
-    ).includes(value);
+    driving: {
+      symbol: "Dr",
+      name: "Driving",
+      reason:
+        "Driving or travel for work appears relevant to the operating model."
+    },
 
-  }
+    contractors: {
+      symbol: "Ct",
+      name: "Contractor Management",
+      reason:
+        "Contractors appear to form part of the operating model."
+    },
 
+    electrical: {
+      symbol: "Ew",
+      name: "Electrical Works",
+      reason:
+        "Electrical work or electrical equipment exposure appears relevant."
+    },
 
-  const activities =
-    profile.activities
-    ||
-    [];
+    dangerousGoods: {
+      symbol: "Dg",
+      name: "Hazardous Substances / Dangerous Goods",
+      reason:
+        "The company profile indicates potential hazardous substance or dangerous goods exposure."
+    },
 
+    plant: {
+      symbol: "Pe",
+      name: "Plant & Equipment",
+      reason:
+        "Use of plant, equipment or machinery appears relevant."
+    },
 
-  const policies = [
-    "Integrated Management System Policy"
-  ];
+    manualHandling: {
+      symbol: "Mh",
+      name: "Manual Handling",
+      reason:
+        "Operational work may involve lifting, carrying or movement of equipment or materials."
+    },
 
+    public: {
+      symbol: "Pi",
+      name: "Public Interaction",
+      reason:
+        "Work appears to involve interaction with customers, the public or external stakeholders."
+    },
 
-  if (
-    profile.standards?.includes("iso9001")
-    ||
-    has("businessNeeds","majorClients")
-    ||
-    has("businessNeeds","government")
-  ) {
-    policies.push(
-      "Quality Policy"
-    );
-  }
+    heights: {
+      symbol: "Wh",
+      name: "Working at Heights",
+      reason:
+        "Work at height appears relevant to the operational profile."
+    },
 
+    traffic: {
+      symbol: "Wt",
+      name: "Working Near Traffic",
+      reason:
+        "Roadside, traffic or public-road exposure appears relevant."
+    },
 
-  if (
-    activities.some(item =>
-      [
-        "driving",
-        "contractors",
-        "electrical",
-        "plant",
-        "manualHandling",
-        "heights",
-        "traffic"
-      ].includes(item)
-    )
-  ) {
-    policies.push(
-      "Health & Safety Policy"
-    );
-  }
+    remote: {
+      symbol: "Rw",
+      name: "Remote / Lone Working",
+      reason:
+        "Remote or dispersed work appears relevant to the organisation."
+    }
 
-
-  if (
-    profile.environment?.length
-    ||
-    profile.standards?.includes("iso14001")
-  ) {
-    policies.push(
-      "Environmental Policy"
-    );
-  }
-
-
-  const procedures = [
-    "Document & Records Control",
-    "Risk Management",
-    "Incident & Event Management",
-    "Corrective Action Management",
-    "Audit & Assurance",
-    "Management Review",
-    "Change Management"
-  ];
+  };
 
 
-  if (
-    profile.jurisdictions?.length
-    ||
-    has("businessProfile","regulated")
-    ||
-    has("businessNeeds","regulated")
-  ) {
-    procedures.push(
-      "Legal & Compliance Management"
-    );
-  }
+  const extraRisks = [];
 
 
   if (
-    activities.includes("contractors")
+    profile.environment?.includes("waste")
   ) {
-    procedures.push(
-      "Contractor Management"
-    );
+    extraRisks.push({
+      symbol: "Ws",
+      name: "Waste Management",
+      reason:
+        "Waste generation or disposal is relevant to the operating profile."
+    });
   }
 
 
   if (
-    activities.some(item =>
-      [
-        "electrical",
-        "plant",
-        "heights",
-        "traffic"
-      ].includes(item)
-    )
+    profile.environment?.includes("emissions")
+    ||
+    profile.environment?.includes("environmentalImpact")
   ) {
-    procedures.push(
-      "Training & Competency"
-    );
+    extraRisks.push({
+      symbol: "En",
+      name: "Environmental Management",
+      reason:
+        "Environmental impacts or emissions have been identified."
+    });
+  }
+
+
+  if (
+    profile.businessProfile?.includes("regulated")
+    ||
+    profile.businessNeeds?.includes("regulated")
+  ) {
+    extraRisks.push({
+      symbol: "Rc",
+      name: "Regulatory Compliance",
+      reason:
+        "The organisation appears to operate in a regulated environment."
+    });
   }
 
 
   if (
     profile.standards?.includes("bcdr")
   ) {
-    procedures.push(
-      "Business Continuity & Emergency Management"
-    );
+    extraRisks.push({
+      symbol: "Em",
+      name: "Emergency & Business Continuity",
+      reason:
+        "Continuity, resilience or emergency preparedness appears relevant."
+    });
   }
 
 
-  const controlNames = {
-    driving:
-      "Driving & Fleet Safety",
-    contractors:
-      "Contractor Controls",
-    electrical:
-      "Electrical Safety",
-    dangerousGoods:
-      "Dangerous Goods",
-    plant:
-      "Plant & Equipment",
-    manualHandling:
-      "Manual Handling",
-    public:
-      "Public Interaction & Aggression",
-    heights:
-      "Working at Heights",
-    traffic:
-      "Working Near Traffic",
-    remote:
-      "Remote & Lone Work"
-  };
-
-
-  const controls =
-    activities
+  const risks =
+    (profile.activities || [])
       .filter(item =>
-        controlNames[item]
+        riskDefinitions[item]
       )
       .map(item =>
-        controlNames[item]
-      );
+        riskDefinitions[item]
+      )
+      .concat(extraRisks);
 
 
-  const tools = [
-    "Document Register",
-    "Risk Register",
-    "Risk Assessment Tool",
-    "Incident Register",
-    "Corrective Action Register",
-    "Audit & Assurance Register"
-  ];
+  document
+    .getElementById(
+      "riskCount"
+    )
+    .innerText =
+    risks.length;
 
 
-  if (
-    profile.jurisdictions?.length
-    ||
-    has("businessProfile","regulated")
-  ) {
-    tools.push(
-      "Legal & Compliance Register"
+  document
+    .getElementById(
+      "riskHeading"
+    )
+    .innerText =
+    risks.length
+    ?
+      "We've identified "
+      +
+      risks.length
+      +
+      " operational risk areas for "
+      +
+      company
+      +
+      "."
+    :
+      "We would validate the operational risk areas with "
+      +
+      company
+      +
+      ".";
+
+
+  const riskGrid =
+    document.getElementById(
+      "riskGrid"
     );
-  }
 
 
-  if (
-    activities.includes("contractors")
-  ) {
-    tools.push(
-      "Contractor Register"
-    );
-  }
+  if (risks.length) {
 
+    riskGrid.innerHTML =
+      risks
+        .map(item => `
+          <div class="risk-card">
 
-  if (
-    procedures.includes(
-      "Training & Competency"
-    )
-  ) {
-    tools.push(
-      "Training & Competency Matrix"
-    );
-  }
+            <div class="risk-head">
 
+              <div class="risk-symbol">
+                ${escapeHTML(item.symbol)}
+              </div>
 
-  document
-    .getElementById(
-      "policyCount"
-    )
-    .innerText =
-    policies.length;
+              <div>
+                <h3>
+                  ${escapeHTML(item.name)}
+                </h3>
+                <p>
+                  ${escapeHTML(item.reason)}
+                </p>
+              </div>
 
-
-  document
-    .getElementById(
-      "procedureCount"
-    )
-    .innerText =
-    procedures.length;
-
-
-  document
-    .getElementById(
-      "controlCount"
-    )
-    .innerText =
-    controls.length;
-
-
-  document
-    .getElementById(
-      "toolCount"
-    )
-    .innerText =
-    tools.length;
-
-
-  const signals = [];
-
-
-  if (profile.industry) {
-
-    signals.push({
-      title:
-        "Operating context",
-      text:
-        "Certicium identified "
-        +
-        profile.industry
-        +
-        " as the closest business profile."
-    });
-
-  }
-
-
-  if (profile.jurisdictions?.length) {
-
-    signals.push({
-      title:
-        "Jurisdictions",
-      text:
-        "The profile indicates operations or exposure across "
-        +
-        profile.jurisdictions.join(", ")
-        +
-        "."
-    });
-
-  }
-
-
-  if (activities.length) {
-
-    signals.push({
-      title:
-        "Operational exposure",
-      text:
-        "Activities include "
-        +
-        activities.join(", ")
-        +
-        "."
-    });
-
-  }
-
-
-  if (profile.businessNeeds?.length) {
-
-    signals.push({
-      title:
-        "Business drivers",
-      text:
-        "Likely drivers include "
-        +
-        profile.businessNeeds.join(", ")
-        +
-        "."
-    });
-
-  }
-
-
-  if (profile.standards?.length) {
-
-    signals.push({
-      title:
-        "Standards & systems",
-      text:
-        "The profile references "
-        +
-        profile.standards.join(", ")
-        +
-        "."
-    });
-
-  }
-
-
-  if (!signals.length) {
-
-    signals.push({
-      title:
-        "Business context",
-      text:
-        "Certicium would validate your operating model and requirements before finalising the IMS architecture."
-    });
-
-  }
-
-
-  document
-    .getElementById(
-      "signalGrid"
-    )
-    .innerHTML =
-    signals
-      .slice(0,6)
-      .map(item => `
-        <div class="signal">
-          <strong>
-            ${escapeHTML(item.title)}
-          </strong>
-          <p>
-            ${escapeHTML(item.text)}
-          </p>
-        </div>
-      `)
-      .join("");
-
-
-  const recommendations = [];
-
-
-  policies.forEach(name => {
-
-    recommendations.push({
-      name,
-      type:
-        "Policy",
-      reason:
-        "Sets the top-level commitment and direction for the management system."
-    });
-
-  });
-
-
-  procedures.forEach(name => {
-
-    recommendations.push({
-      name,
-      type:
-        "Procedure",
-      reason:
-        procedureReason(name)
-    });
-
-  });
-
-
-  controls.forEach(name => {
-
-    recommendations.push({
-      name,
-      type:
-        "Operational control",
-      reason:
-        "Recommended because the business profile indicates relevant operational exposure."
-    });
-
-  });
-
-
-  tools.forEach(name => {
-
-    recommendations.push({
-      name,
-      type:
-        "Register / Tool",
-      reason:
-        "Provides the working evidence and control layer needed to operate the IMS."
-    });
-
-  });
-
-
-  document
-    .getElementById(
-      "recommendationGrid"
-    )
-    .innerHTML =
-    recommendations
-      .slice(0,14)
-      .map(item => `
-        <div class="recommendation">
-
-          <div class="recommendation-top">
-
-            <div>
-              <h3>
-                ${escapeHTML(item.name)}
-              </h3>
-              <p>
-                Proposed Certicium IMS component.
-              </p>
-            </div>
-
-            <div class="badge">
-              ${escapeHTML(item.type)}
             </div>
 
           </div>
+        `)
+        .join("");
 
-          <div class="why">
-            <strong>Why:</strong>
-            ${escapeHTML(item.reason)}
-          </div>
+  } else {
 
-        </div>
-      `)
-      .join("");
-
-
-  function procedureReason(name) {
-
-    const reasons = {
-
-      "Legal & Compliance Management":
-        "Relevant because the organisation has identified jurisdictions, regulation or external compliance drivers.",
-
-      "Contractor Management":
-        "Relevant because contractor use appears in the operating profile.",
-
-      "Training & Competency":
-        "Relevant because operational work needs controlled capability and competency requirements.",
-
-      "Business Continuity & Emergency Management":
-        "Relevant because continuity or resilience requirements were identified.",
-
-      "Risk Management":
-        "Provides a consistent method to identify, assess, treat and review risk.",
-
-      "Incident & Event Management":
-        "Provides reporting, investigation, escalation and organisational learning.",
-
-      "Document & Records Control":
-        "Controls the information that forms the management system.",
-
-      "Audit & Assurance":
-        "Provides evidence that controls and requirements are operating as intended."
-
-    };
-
-
-    return reasons[name]
-      ||
-      "A core governance process for operating and improving the management system.";
+    riskGrid.innerHTML = `
+      <div class="risk-card">
+        <h3>
+          Operational risk validation
+        </h3>
+        <p>
+          The demo profile did not identify enough operational detail to recommend specific risk areas confidently. A real Certicium implementation would validate this with you.
+        </p>
+      </div>
+    `;
 
   }
 
