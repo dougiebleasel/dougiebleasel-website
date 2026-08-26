@@ -1,1 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certicium | Your Existing System</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --bright-green: #6FC55A;
+      --dark-grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,.11);
+      --card: #141715;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 37px;
+      height: 37px;
+      border: 1px solid rgba(111,197,90,.35);
+      background: rgba(44,130,89,.13);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-green);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .brand-name span {
+      color: var(--bright-green);
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .eyebrow {
+      color: var(--bright-green);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+    }
+
+    .intro h1 {
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+      max-width: 850px;
+    }
+
+    .intro p {
+      margin-top: 17px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .setup-progress {
+      display: flex;
+      gap: 7px;
+      margin-top: 27px;
+    }
+
+    .progress-step {
+      height: 4px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(244,246,245,.08);
+    }
+
+    .progress-step.active {
+      background: var(--bright-green);
+    }
+
+    .form-section {
+      margin-bottom: 18px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .section-number {
+      color: var(--bright-green);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .form-section h2 {
+      font-size: 25px;
+      letter-spacing: -1px;
+    }
+
+    .section-description {
+      margin-top: 7px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .choice-card {
+      padding: 18px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 9px;
+      background: rgba(13,13,13,.28);
+      cursor: pointer;
+      transition: .18s;
+    }
+
+    .choice-card:hover {
+      border-color: rgba(111,197,90,.35);
+    }
+
+    .choice-card.selected {
+      border-color: rgba(111,197,90,.65);
+      background: rgba(44,130,89,.12);
+    }
+
+    .choice-card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .choice-card p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .system-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .system-card {
+      display: grid;
+      grid-template-columns: minmax(0,1fr) 170px;
+      gap: 20px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 9px;
+      background: rgba(13,13,13,.28);
+    }
+
+    .system-info strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .system-info p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      outline: none;
+      background: #0F1210;
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    select {
+      min-height: 42px;
+      padding: 0 11px;
+    }
+
+    textarea {
+      min-height: 105px;
+      padding: 12px 13px;
+      resize: vertical;
+    }
+
+    select:focus,
+    textarea:focus {
+      border-color: rgba(111,197,90,.6);
+    }
+
+    select option {
+      background: #0F1210;
+      color: var(--white);
+    }
+
+    .field {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #D7DDD9;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hint {
+      display: block;
+      margin-top: -3px;
+      margin-bottom: 8px;
+      color: #747D78;
+      font-size: 9px;
+    }
+
+    .technology-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .technology-card {
+      position: relative;
+      padding: 15px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 8px;
+      background: rgba(13,13,13,.28);
+      cursor: pointer;
+    }
+
+    .technology-card.selected {
+      border-color: rgba(111,197,90,.65);
+      background: rgba(44,130,89,.12);
+    }
+
+    .technology-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .technology-card strong {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 3px;
+    }
+
+    .technology-card span {
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 3px solid var(--bright-green);
+      background: rgba(44,130,89,.08);
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.65;
+    }
+
+    .notice strong {
+      color: var(--white);
+    }
+
+    .review-box {
+      padding: 20px;
+      border: 1px solid rgba(111,197,90,.25);
+      border-radius: 9px;
+      background: rgba(44,130,89,.08);
+    }
+
+    .review-box > strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+    }
+
+    .review-box > p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .review-list {
+      margin-top: 16px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .review-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: rgba(13,13,13,.35);
+      color: #D7DDD9;
+      font-size: 10px;
+    }
+
+    .review-item span {
+      color: var(--bright-green);
+      font-weight: 800;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .primary-button {
+      min-height: 50px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--bright-green);
+      color: #0B1A11;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+
+      .choice-grid,
+      .technology-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .system-card {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="brand">
+    <div class="brand-mark">Ce</div>
+    <div class="brand-name">Certicium<span>.</span></div>
+  </div>
+
+  <a href="setup.html" class="back">
+    ← Setup Dashboard
+  </a>
+
+</header>
+
+
+<main>
+
+  <section class="intro">
+
+    <div class="eyebrow">
+      Setup 04 · Your Existing System
+    </div>
+
+    <h1>
+      Don't throw away what already works.
+    </h1>
+
+    <p>
+      Tell Certicium what you already have. We'll use this to understand
+      what should be retained, reviewed, replaced or incorporated into
+      your new management system.
+    </p>
+
+    <div class="setup-progress">
+      <div class="progress-step active"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+    </div>
+
+  </section>
+
+
+  <form id="existingSystemForm">
+
+
+    <!-- 01 STARTING POINT -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        01 · Starting Point
+      </div>
+
+      <h2>
+        What are we starting with?
+      </h2>
+
+      <p class="section-description">
+        Every organisation is different. Some already have a mature
+        management system. Others are building one for the first time.
+      </p>
+
+      <div class="choice-grid">
+
+        <div
+          class="choice-card"
+          data-maturity="none"
+        >
+          <strong>
+            Starting from scratch
+          </strong>
+
+          <p>
+            We don't currently have a structured management system.
+          </p>
+        </div>
+
+
+        <div
+          class="choice-card"
+          data-maturity="basic"
+        >
+          <strong>
+            We have some things
+          </strong>
+
+          <p>
+            We have policies, procedures or registers, but not a complete system.
+          </p>
+        </div>
+
+
+        <div
+          class="choice-card"
+          data-maturity="established"
+        >
+          <strong>
+            Established system
+          </strong>
+
+          <p>
+            We already operate a structured management system that needs improvement or migration.
+          </p>
+        </div>
+
+
+        <div
+          class="choice-card"
+          data-maturity="certified"
+        >
+          <strong>
+            Certified management system
+          </strong>
+
+          <p>
+            We already operate a formally certified or externally audited management system.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 02 EXISTING CONTENT -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        02 · Existing Content
+      </div>
+
+      <h2>
+        What do you already have?
+      </h2>
+
+      <p class="section-description">
+        For each area, tell Certicium what you would currently like to do.
+        These choices can be changed later after the content has been reviewed.
+      </p>
+
+      <div
+        class="system-grid"
+        id="systemGrid"
+      ></div>
+
+    </section>
+
+
+    <!-- 03 TECHNOLOGY -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        03 · Existing Technology
+      </div>
+
+      <h2>
+        Where does your system live today?
+      </h2>
+
+      <p class="section-description">
+        This helps Certicium understand how your existing management
+        system is stored, accessed and operated.
+      </p>
+
+      <div
+        class="technology-grid"
+        id="technologyGrid"
+      ></div>
+
+
+      <div class="field">
+
+        <label for="otherTechnology">
+          Other systems or software
+        </label>
+
+        <textarea
+          id="otherTechnology"
+          placeholder="e.g. SafetyCulture, HammerTech, Donesafe, custom software, customer portals..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 04 MATERIAL -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        04 · Existing Material
+      </div>
+
+      <h2>
+        What can we bring across?
+      </h2>
+
+      <p class="section-description">
+        For now, list the material you expect to provide. Once customer
+        file storage is connected, this section will support direct upload
+        and AI-assisted document review.
+      </p>
+
+      <div class="field">
+
+        <label for="existingDocuments">
+          Existing documents
+        </label>
+
+        <span class="hint">
+          One item per line is easiest to review.
+        </span>
+
+        <textarea
+          id="existingDocuments"
+          placeholder="e.g. Integrated Management System Manual&#10;Risk Management Procedure&#10;Incident Management Procedure&#10;Contractor Management Procedure..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="existingRegisters">
+          Existing registers, forms or tools
+        </label>
+
+        <textarea
+          id="existingRegisters"
+          placeholder="e.g. Risk Register&#10;Legal Register&#10;Incident Register&#10;Audit Schedule&#10;Training Matrix..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="notice">
+        <strong>Later in the build:</strong>
+        Certicium will be able to compare existing material against the
+        proposed IMS blueprint and identify what can be retained, what
+        needs modification and what is missing.
+      </div>
+
+    </section>
+
+
+    <!-- 05 PRIORITIES -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        05 · Priorities
+      </div>
+
+      <h2>
+        What should we preserve?
+      </h2>
+
+      <p class="section-description">
+        Tell us about anything that works particularly well or must remain
+        unchanged during implementation.
+      </p>
+
+      <div class="field">
+
+        <label for="keepContext">
+          Things we should keep
+        </label>
+
+        <textarea
+          id="keepContext"
+          placeholder="e.g. Existing incident reporting workflow works well and should be retained..."
+        ></textarea>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="replaceContext">
+          Things you want to change
+        </label>
+
+        <textarea
+          id="replaceContext"
+          placeholder="e.g. Current document control is manual and difficult to maintain..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 06 REVIEW -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        06 · Review
+      </div>
+
+      <h2>
+        Your migration profile
+      </h2>
+
+      <p class="section-description">
+        Certicium will use this information when developing the proposed
+        management system so existing good practice isn't unnecessarily replaced.
+      </p>
+
+
+      <div class="review-box">
+
+        <strong>
+          Build around what already works.
+        </strong>
+
+        <p>
+          Your current system will be considered alongside your organisation,
+          operations and requirements when Certicium develops the IMS blueprint.
+        </p>
+
+        <div
+          class="review-list"
+          id="reviewList"
+        >
+
+          <div class="review-item">
+            Complete the sections above to preview your migration profile.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          onclick="window.location.href='setup.html'"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Save & Return to Setup →
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </form>
+
+</main>
+
+
+<script>
+
+  const systemAreas = [
+
+    {
+      id: "policies",
+      name: "Policies",
+      description: "Corporate, HSEQ, quality, environmental or other management policies."
+    },
+
+    {
+      id: "procedures",
+      name: "Procedures",
+      description: "Governance, operational and management system procedures."
+    },
+
+    {
+      id: "riskManagement",
+      name: "Risk management",
+      description: "Risk frameworks, assessments, matrices and registers."
+    },
+
+    {
+      id: "incidentManagement",
+      name: "Incident management",
+      description: "Reporting, investigation, escalation and corrective action processes."
+    },
+
+    {
+      id: "documentControl",
+      name: "Document control",
+      description: "Document numbering, approval, revision and records management."
+    },
+
+    {
+      id: "legalCompliance",
+      name: "Legal & compliance",
+      description: "Legal registers, compliance obligations and assurance processes."
+    },
+
+    {
+      id: "auditAssurance",
+      name: "Audit & assurance",
+      description: "Internal audits, inspections, assurance and monitoring."
+    },
+
+    {
+      id: "trainingCompetency",
+      name: "Training & competency",
+      description: "Training matrices, competency requirements, inductions and records."
+    },
+
+    {
+      id: "emergencyBC",
+      name: "Emergency & continuity",
+      description: "Emergency response, crisis management, business continuity and recovery."
+    },
+
+    {
+      id: "formsRegisters",
+      name: "Forms & registers",
+      description: "Operational forms, checklists, registers and supporting records."
+    }
+
+  ];
+
+
+  const technologies = [
+
+    {
+      id: "sharepoint",
+      name: "SharePoint",
+      description: "Microsoft SharePoint"
+    },
+
+    {
+      id: "microsoft365",
+      name: "Microsoft 365",
+      description: "Teams, Forms, Lists, Power Platform"
+    },
+
+    {
+      id: "excel",
+      name: "Excel",
+      description: "Spreadsheet-based registers"
+    },
+
+    {
+      id: "googleWorkspace",
+      name: "Google Workspace",
+      description: "Drive, Docs, Sheets, Forms"
+    },
+
+    {
+      id: "dedicatedHSEQ",
+      name: "HSEQ software",
+      description: "Dedicated EHS / QHSE platform"
+    },
+
+    {
+      id: "paper",
+      name: "Paper / local files",
+      description: "Paper or local network storage"
+    }
+
+  ];
+
+
+  function createSystemCards() {
+
+    const container =
+      document.getElementById(
+        "systemGrid"
+      );
+
+
+    container.innerHTML =
+      systemAreas
+        .map(
+          item => `
+
+            <div class="system-card">
+
+              <div class="system-info">
+
+                <strong>
+                  ${item.name}
+                </strong>
+
+                <p>
+                  ${item.description}
+                </p>
+
+              </div>
+
+
+              <select
+                id="${item.id}"
+                data-system-area="true"
+              >
+
+                <option value="not-existing">
+                  Don't have this
+                </option>
+
+                <option value="keep">
+                  Keep
+                </option>
+
+                <option value="review">
+                  Review
+                </option>
+
+                <option value="replace">
+                  Replace
+                </option>
+
+                <option value="unsure">
+                  Unsure
+                </option>
+
+              </select>
+
+            </div>
+
+          `
+        )
+        .join("");
+
+  }
+
+
+  function createTechnologyCards() {
+
+    const container =
+      document.getElementById(
+        "technologyGrid"
+      );
+
+
+    container.innerHTML =
+      technologies
+        .map(
+          item => `
+
+            <label
+              class="technology-card"
+              id="technology-${item.id}"
+            >
+
+              <input
+                type="checkbox"
+                id="${item.id}"
+                data-technology="true"
+              >
+
+              <strong>
+                ${item.name}
+              </strong>
+
+              <span>
+                ${item.description}
+              </span>
+
+            </label>
+
+          `
+        )
+        .join("");
+
+  }
+
+
+  createSystemCards();
+  createTechnologyCards();
+
+
+  let maturity =
+    "";
+
+
+  document
+    .querySelectorAll(
+      "[data-maturity]"
+    )
+    .forEach(
+      card => {
+
+        card.addEventListener(
+          "click",
+          function() {
+
+            document
+              .querySelectorAll(
+                "[data-maturity]"
+              )
+              .forEach(
+                item =>
+                  item
+                    .classList
+                    .remove(
+                      "selected"
+                    )
+              );
+
+
+            card
+              .classList
+              .add(
+                "selected"
+              );
+
+
+            maturity =
+              card.dataset.maturity;
+
+
+            updateReview();
+
+          }
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-technology='true']"
+    )
+    .forEach(
+      field => {
+
+        field.addEventListener(
+          "change",
+          function() {
+
+            const card =
+              document.getElementById(
+                "technology-" +
+                field.id
+              );
+
+
+            card.classList.toggle(
+              "selected",
+              field.checked
+            );
+
+
+            updateReview();
+
+          }
+        );
+
+      }
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-system-area='true']"
+    )
+    .forEach(
+      field => {
+
+        field.addEventListener(
+          "change",
+          updateReview
+        );
+
+      }
+    );
+
+
+  function getSystemAreas() {
+
+    const result = {};
+
+
+    systemAreas.forEach(
+      item => {
+
+        result[item.id] =
+          document
+            .getElementById(
+              item.id
+            )
+            .value;
+
+      }
+    );
+
+
+    return result;
+
+  }
+
+
+  function getTechnologies() {
+
+    return technologies
+      .filter(
+        item =>
+          document
+            .getElementById(
+              item.id
+            )
+            .checked
+      )
+      .map(
+        item =>
+          item.id
+      );
+
+  }
+
+
+  function textLines(
+    value
+  ) {
+
+    return value
+      .split("\n")
+      .map(
+        item =>
+          item.trim()
+      )
+      .filter(
+        Boolean
+      );
+
+  }
+
+
+  function escapeHTML(
+    value
+  ) {
+
+    return String(
+      value ?? ""
+    )
+      .replaceAll(
+        "&",
+        "&amp;"
+      )
+      .replaceAll(
+        "<",
+        "&lt;"
+      )
+      .replaceAll(
+        ">",
+        "&gt;"
+      )
+      .replaceAll(
+        '"',
+        "&quot;"
+      )
+      .replaceAll(
+        "'",
+        "&#039;"
+      );
+
+  }
+
+
+  function updateReview() {
+
+    const review = [];
+
+
+    const maturityLabels = {
+
+      none:
+        "Starting from scratch",
+
+      basic:
+        "Some existing content",
+
+      established:
+        "Established management system",
+
+      certified:
+        "Certified management system"
+
+    };
+
+
+    if (
+      maturity
+    ) {
+
+      review.push(
+        `<span>Starting point:</span> ${
+          escapeHTML(
+            maturityLabels[
+              maturity
+            ]
+          )
+        }`
+      );
+
+    }
+
+
+    const areas =
+      getSystemAreas();
+
+
+    const keep =
+      systemAreas.filter(
+        item =>
+          areas[item.id]
+          ===
+          "keep"
+      );
+
+
+    const reviewAreas =
+      systemAreas.filter(
+        item =>
+          areas[item.id]
+          ===
+          "review"
+      );
+
+
+    const replace =
+      systemAreas.filter(
+        item =>
+          areas[item.id]
+          ===
+          "replace"
+      );
+
+
+    if (
+      keep.length
+    ) {
+
+      review.push(
+        `<span>Keep:</span> ${
+          escapeHTML(
+            keep
+              .map(
+                item =>
+                  item.name
+              )
+              .join(", ")
+          )
+        }`
+      );
+
+    }
+
+
+    if (
+      reviewAreas.length
+    ) {
+
+      review.push(
+        `<span>Review:</span> ${
+          escapeHTML(
+            reviewAreas
+              .map(
+                item =>
+                  item.name
+              )
+              .join(", ")
+          )
+        }`
+      );
+
+    }
+
+
+    if (
+      replace.length
+    ) {
+
+      review.push(
+        `<span>Replace:</span> ${
+          escapeHTML(
+            replace
+              .map(
+                item =>
+                  item.name
+              )
+              .join(", ")
+          )
+        }`
+      );
+
+    }
+
+
+    const selectedTechnology =
+      getTechnologies();
+
+
+    if (
+      selectedTechnology.length
+    ) {
+
+      const technologyNames =
+        technologies
+          .filter(
+            item =>
+              selectedTechnology
+                .includes(
+                  item.id
+                )
+          )
+          .map(
+            item =>
+              item.name
+          );
+
+
+      review.push(
+        `<span>Technology:</span> ${
+          escapeHTML(
+            technologyNames.join(
+              ", "
+            )
+          )
+        }`
+      );
+
+    }
+
+
+    const reviewList =
+      document.getElementById(
+        "reviewList"
+      );
+
+
+    if (
+      review.length
+    ) {
+
+      reviewList.innerHTML =
+        review
+          .map(
+            item => `
+              <div class="review-item">
+                ${item}
+              </div>
+            `
+          )
+          .join("");
+
+    } else {
+
+      reviewList.innerHTML = `
+        <div class="review-item">
+          Complete the sections above to preview your migration profile.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  function loadExistingProfile() {
+
+    let profile = {};
+
+
+    try {
+
+      profile =
+        JSON.parse(
+          localStorage.getItem(
+            "certiciumExistingSystemProfile"
+          )
+          ||
+          "{}"
+        );
+
+    } catch (
+      error
+    ) {
+
+      profile = {};
+
+    }
+
+
+    if (
+      !Object.keys(
+        profile
+      ).length
+    ) {
+
+      updateReview();
+      return;
+
+    }
+
+
+    maturity =
+      profile.maturity
+      ||
+      "";
+
+
+    if (
+      maturity
+    ) {
+
+      const maturityCard =
+        document.querySelector(
+          `[data-maturity="${maturity}"]`
+        );
+
+
+      if (
+        maturityCard
+      ) {
+
+        maturityCard
+          .classList
+          .add(
+            "selected"
+          );
+
+      }
+
+    }
+
+
+    const areas =
+      profile.systemAreas
+      ||
+      {};
+
+
+    Object.entries(
+      areas
+    )
+    .forEach(
+      ([id, value]) => {
+
+        const field =
+          document.getElementById(
+            id
+          );
+
+
+        if (
+          field
+        ) {
+
+          field.value =
+            value;
+
+        }
+
+      }
+    );
+
+
+    (
+      profile.technologies
+      ||
+      []
+    )
+    .forEach(
+      id => {
+
+        const field =
+          document.getElementById(
+            id
+          );
+
+
+        const card =
+          document.getElementById(
+            "technology-" +
+            id
+          );
+
+
+        if (
+          field
+        ) {
+
+          field.checked =
+            true;
+
+        }
+
+
+        if (
+          card
+        ) {
+
+          card
+            .classList
+            .add(
+              "selected"
+            );
+
+        }
+
+      }
+    );
+
+
+    document
+      .getElementById(
+        "otherTechnology"
+      )
+      .value =
+      profile.otherTechnology
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "existingDocuments"
+      )
+      .value =
+      (
+        profile.existingDocuments
+        ||
+        []
+      ).join(
+        "\n"
+      );
+
+
+    document
+      .getElementById(
+        "existingRegisters"
+      )
+      .value =
+      (
+        profile.existingRegisters
+        ||
+        []
+      ).join(
+        "\n"
+      );
+
+
+    document
+      .getElementById(
+        "keepContext"
+      )
+      .value =
+      profile.keepContext
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "replaceContext"
+      )
+      .value =
+      profile.replaceContext
+      ||
+      "";
+
+
+    updateReview();
+
+  }
+
+
+  document
+    .getElementById(
+      "existingSystemForm"
+    )
+    .addEventListener(
+      "submit",
+      function(
+        event
+      ) {
+
+        event.preventDefault();
+
+
+        if (
+          !maturity
+        ) {
+
+          alert(
+            "Please select your current management system starting point."
+          );
+
+          return;
+
+        }
+
+
+        const profile = {
+
+          setupComplete:
+            true,
+
+          maturity:
+            maturity,
+
+          systemAreas:
+            getSystemAreas(),
+
+          technologies:
+            getTechnologies(),
+
+          otherTechnology:
+            document
+              .getElementById(
+                "otherTechnology"
+              )
+              .value
+              .trim(),
+
+          existingDocuments:
+            textLines(
+              document
+                .getElementById(
+                  "existingDocuments"
+                )
+                .value
+            ),
+
+          existingRegisters:
+            textLines(
+              document
+                .getElementById(
+                  "existingRegisters"
+                )
+                .value
+            ),
+
+          keepContext:
+            document
+              .getElementById(
+                "keepContext"
+              )
+              .value
+              .trim(),
+
+          replaceContext:
+            document
+              .getElementById(
+                "replaceContext"
+              )
+              .value
+              .trim(),
+
+          savedAt:
+            new Date()
+              .toISOString()
+
+        };
+
+
+        localStorage.setItem(
+          "certiciumExistingSystemProfile",
+          JSON.stringify(
+            profile
+          )
+        );
+
+
+        window.location.href =
+          "setup.html";
+
+      }
+    );
+
+
+  loadExistingProfile();
+
+</script>
+
+</body>
+
+</html>
