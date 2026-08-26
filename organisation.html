@@ -178,15 +178,34 @@
       max-width: 680px;
     }
 
-    .field-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 18px;
-    }
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
+  row-gap: 22px;
+}
 
-    .field {
-      margin-bottom: 18px;
-    }
+.field {
+  margin-bottom: 0;
+  display: grid;
+  grid-template-rows: auto 28px 46px;
+  align-items: end;
+}
+
+.field label {
+  align-self: end;
+}
+
+.field .hint {
+  align-self: start;
+  margin: 3px 0 0;
+}
+
+.field input,
+.field select {
+  height: 46px;
+  min-height: 46px;
+}
 
     .field:last-child {
       margin-bottom: 0;
