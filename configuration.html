@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certicium | Configure Certicium</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --bright-green: #6FC55A;
+      --dark-grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,.11);
+      --card: #141715;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 37px;
+      height: 37px;
+      border: 1px solid rgba(111,197,90,.35);
+      background: rgba(44,130,89,.13);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-green);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .brand-name span {
+      color: var(--bright-green);
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .eyebrow {
+      color: var(--bright-green);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+    }
+
+    .intro h1 {
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+      max-width: 850px;
+    }
+
+    .intro p {
+      margin-top: 17px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .setup-progress {
+      display: flex;
+      gap: 7px;
+      margin-top: 27px;
+    }
+
+    .progress-step {
+      height: 4px;
+      flex: 1;
+      border-radius: 999px;
+      background: var(--bright-green);
+    }
+
+    .form-section {
+      margin-bottom: 18px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .section-number {
+      color: var(--bright-green);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .form-section h2 {
+      font-size: 25px;
+      letter-spacing: -1px;
+    }
+
+    .section-description {
+      margin-top: 7px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      max-width: 760px;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .choice-card {
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 9px;
+      background: rgba(13,13,13,.28);
+      cursor: pointer;
+      transition: .18s;
+    }
+
+    .choice-card:hover {
+      border-color: rgba(111,197,90,.35);
+    }
+
+    .choice-card.selected {
+      border-color: rgba(111,197,90,.65);
+      background: rgba(44,130,89,.12);
+    }
+
+    .choice-card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .choice-card p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .toggle-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .toggle-card {
+      position: relative;
+      padding: 18px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 9px;
+      background: rgba(13,13,13,.28);
+      cursor: pointer;
+    }
+
+    .toggle-card.selected {
+      border-color: rgba(111,197,90,.65);
+      background: rgba(44,130,89,.12);
+    }
+
+    .toggle-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .toggle-card strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+
+    .toggle-card p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    .governance-box {
+      padding: 20px;
+      border: 1px solid rgba(111,197,90,.2);
+      border-radius: 9px;
+      background: rgba(44,130,89,.07);
+      margin-bottom: 18px;
+    }
+
+    .governance-box strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 12px;
+    }
+
+    .governance-box p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.65;
+    }
+
+    .field {
+      margin-top: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #D7DDD9;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      outline: none;
+      background: #0F1210;
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    select {
+      min-height: 46px;
+      padding: 0 13px;
+    }
+
+    textarea {
+      min-height: 105px;
+      padding: 12px 13px;
+      resize: vertical;
+    }
+
+    select:focus,
+    textarea:focus {
+      border-color: rgba(111,197,90,.6);
+    }
+
+    select option {
+      background: #0F1210;
+      color: var(--white);
+    }
+
+    .notice {
+      margin-top: 18px;
+      padding: 15px;
+      border-left: 3px solid var(--bright-green);
+      background: rgba(44,130,89,.08);
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.65;
+    }
+
+    .notice strong {
+      color: var(--white);
+    }
+
+    .review-box {
+      padding: 24px;
+      border: 1px solid rgba(111,197,90,.3);
+      border-radius: 10px;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(44,130,89,.13),
+          rgba(18,53,36,.16)
+        );
+    }
+
+    .review-box h3 {
+      font-size: 21px;
+      margin-bottom: 8px;
+    }
+
+    .review-box > p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .review-list {
+      margin-top: 18px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .review-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: rgba(13,13,13,.35);
+      color: #D7DDD9;
+      font-size: 10px;
+    }
+
+    .review-item span {
+      color: var(--bright-green);
+      font-weight: 800;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .primary-button {
+      min-height: 50px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--bright-green);
+      color: #0B1A11;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+
+      .choice-grid,
+      .toggle-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="brand">
+    <div class="brand-mark">Ce</div>
+    <div class="brand-name">Certicium<span>.</span></div>
+  </div>
+
+  <a href="setup.html" class="back">
+    ← Setup Dashboard
+  </a>
+
+</header>
+
+
+<main>
+
+  <section class="intro">
+
+    <div class="eyebrow">
+      Setup 05 · Configure Certicium
+    </div>
+
+    <h1>
+      How should your management system work?
+    </h1>
+
+    <p>
+      Set the operating preferences Certicium should use when designing,
+      generating and maintaining your management system.
+    </p>
+
+    <div class="setup-progress">
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+
+  </section>
+
+
+  <form id="configurationForm">
+
+
+    <!-- 01 SYSTEM STYLE -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        01 · System Style
+      </div>
+
+      <h2>
+        How should your IMS feel?
+      </h2>
+
+      <p class="section-description">
+        Choose the general style Certicium should use when developing
+        policies, procedures and supporting content.
+      </p>
+
+      <div class="choice-grid">
+
+        <div class="choice-card" data-style="practical">
+          <strong>Practical</strong>
+          <p>
+            Concise, plain-language content focused on what people
+            actually need to do.
+          </p>
+        </div>
+
+        <div class="choice-card" data-style="balanced">
+          <strong>Balanced</strong>
+          <p>
+            Practical operational content with sufficient governance,
+            context and explanation.
+          </p>
+        </div>
+
+        <div class="choice-card" data-style="detailed">
+          <strong>Detailed</strong>
+          <p>
+            More comprehensive documentation with additional governance,
+            explanation and formal structure.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 02 GOVERNANCE -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        02 · Governance & Approval
+      </div>
+
+      <h2>
+        Who controls the system?
+      </h2>
+
+      <p class="section-description">
+        Certicium will use the organisational terminology already captured
+        during setup wherever possible.
+      </p>
+
+      <div class="governance-box">
+
+        <strong>
+          Organisation terminology
+        </strong>
+
+        <p id="terminologySummary">
+          Loading your organisation profile...
+        </p>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="documentApproval">
+          Who should normally approve controlled IMS documents?
+        </label>
+
+        <select id="documentApproval">
+          <option value="">Select...</option>
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="systemOwner">
+          Who should normally own the management system?
+        </label>
+
+        <select id="systemOwner">
+          <option value="">Select...</option>
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label for="reviewFrequency">
+          Default document review cycle
+        </label>
+
+        <select id="reviewFrequency">
+
+          <option value="12">
+            Every 12 months
+          </option>
+
+          <option value="24">
+            Every 24 months
+          </option>
+
+          <option value="36">
+            Every 36 months
+          </option>
+
+          <option value="risk-based">
+            Risk-based / when change occurs
+          </option>
+
+        </select>
+
+      </div>
+
+    </section>
+
+
+    <!-- 03 AI -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        03 · AI Assistance
+      </div>
+
+      <h2>
+        How much should Certicium help?
+      </h2>
+
+      <p class="section-description">
+        These settings determine how proactive Certicium should be when
+        identifying gaps, recommending improvements and helping maintain
+        the management system.
+      </p>
+
+      <div class="toggle-grid" id="aiGrid">
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="suggestRequirements"
+            data-toggle="true"
+          >
+          <strong>Suggest requirements</strong>
+          <p>
+            Identify potentially applicable requirements for customer review.
+          </p>
+        </label>
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="identifyGaps"
+            data-toggle="true"
+          >
+          <strong>Identify gaps</strong>
+          <p>
+            Highlight missing or weak elements in the management system.
+          </p>
+        </label>
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="suggestControls"
+            data-toggle="true"
+          >
+          <strong>Suggest controls</strong>
+          <p>
+            Recommend potential controls and improvements where appropriate.
+          </p>
+        </label>
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="continuousImprovement"
+            data-toggle="true"
+          >
+          <strong>Continuous improvement</strong>
+          <p>
+            Recommend system improvements as Certicium learns from changes,
+            events and reviews.
+          </p>
+        </label>
+
+      </div>
+
+
+      <div class="notice">
+        <strong>AI does not equal approval.</strong>
+        Certicium may draft, analyse and recommend, but controlled content
+        and material governance decisions remain subject to the approval
+        rules established by your organisation.
+      </div>
+
+    </section>
+
+
+    <!-- 04 AUTOMATION -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        04 · Automation
+      </div>
+
+      <h2>
+        What should Certicium keep moving?
+      </h2>
+
+      <p class="section-description">
+        Choose the management activities Certicium should eventually
+        help track, prompt or automate.
+      </p>
+
+      <div class="toggle-grid">
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="reviewReminders"
+            data-toggle="true"
+          >
+          <strong>Review reminders</strong>
+          <p>
+            Prompt owners when documents, risks or other controlled items
+            require review.
+          </p>
+        </label>
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="actionTracking"
+            data-toggle="true"
+          >
+          <strong>Action tracking</strong>
+          <p>
+            Track assigned actions, due dates and completion.
+          </p>
+        </label>
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="escalations"
+            data-toggle="true"
+          >
+          <strong>Escalations</strong>
+          <p>
+            Escalate overdue or higher-risk matters through defined
+            governance pathways.
+          </p>
+        </label>
+
+        <label class="toggle-card">
+          <input
+            type="checkbox"
+            id="changeTriggers"
+            data-toggle="true"
+          >
+          <strong>Change triggers</strong>
+          <p>
+            Prompt review when significant organisational, operational
+            or requirement changes occur.
+          </p>
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- 05 HUMAN CONTROL -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        05 · Human Control
+      </div>
+
+      <h2>
+        What must people control?
+      </h2>
+
+      <p class="section-description">
+        Certicium is designed to assist management rather than silently
+        make material governance decisions on behalf of the organisation.
+      </p>
+
+      <div class="toggle-grid">
+
+        <label class="toggle-card selected">
+          <input
+            type="checkbox"
+            id="approveControlledDocuments"
+            data-toggle="true"
+            checked
+          >
+          <strong>Controlled document approval</strong>
+          <p>
+            A designated person must approve controlled policies and procedures.
+          </p>
+        </label>
+
+        <label class="toggle-card selected">
+          <input
+            type="checkbox"
+            id="confirmLegalRequirements"
+            data-toggle="true"
+            checked
+          >
+          <strong>Requirement confirmation</strong>
+          <p>
+            Suggested legal or regulatory obligations require customer confirmation.
+          </p>
+        </label>
+
+        <label class="toggle-card selected">
+          <input
+            type="checkbox"
+            id="approveHighRisk"
+            data-toggle="true"
+            checked
+          >
+          <strong>High-risk decisions</strong>
+          <p>
+            Higher-risk acceptance and material risk decisions require
+            authorised human approval.
+          </p>
+        </label>
+
+        <label class="toggle-card selected">
+          <input
+            type="checkbox"
+            id="approveGoLive"
+            data-toggle="true"
+            checked
+          >
+          <strong>IMS go-live</strong>
+          <p>
+            The customer must approve the management system before it
+            becomes the live controlled system.
+          </p>
+        </label>
+
+      </div>
+
+    </section>
+
+
+    <!-- 06 ADDITIONAL -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        06 · Additional Preferences
+      </div>
+
+      <h2>
+        Anything else we should know?
+      </h2>
+
+      <p class="section-description">
+        Capture any additional principles Certicium should consider when
+        designing your management system.
+      </p>
+
+      <div class="field">
+
+        <label for="additionalPreferences">
+          Additional preferences
+        </label>
+
+        <textarea
+          id="additionalPreferences"
+          placeholder="e.g. Keep procedures short, minimise duplication, use visual workflows where possible..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 07 REVIEW -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        07 · Ready to Build
+      </div>
+
+      <div class="review-box">
+
+        <h3 id="readyHeading">
+          Certicium understands your organisation.
+        </h3>
+
+        <p>
+          Once these preferences are saved, Certicium will have the
+          organisation, operational, requirements, migration and
+          configuration context needed to develop your IMS Blueprint.
+        </p>
+
+        <div class="review-list" id="reviewList">
+
+          <div class="review-item">
+            Complete the configuration above to finish setup.
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          onclick="window.location.href='setup.html'"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Complete Setup →
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </form>
+
+</main>
+
+
+<script>
+
+  function readStorage(key) {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(key)
+        ||
+        "{}"
+      );
+
+    } catch (error) {
+
+      return {};
+
+    }
+
+  }
+
+
+  const organisationProfile =
+    readStorage(
+      "certiciumOrganisationProfile"
+    );
+
+
+  /*
+   * CUSTOMER TERMINOLOGY
+   */
+
+
+  function firstValue(...values) {
+
+    return values.find(
+      value =>
+        typeof value === "string"
+        &&
+        value.trim()
+    ) || "";
+
+  }
+
+
+  const organisationName =
+    firstValue(
+      organisationProfile.tradingName,
+      organisationProfile.legalEntity
+    )
+    ||
+    "your organisation";
+
+
+  const leadershipTerm =
+    firstValue(
+      organisationProfile.leadershipTeamTerm,
+      organisationProfile.leadershipTerm,
+      organisationProfile.seniorLeadershipTerm
+    )
+    ||
+    "Leadership Team";
+
+
+  const managerTerm =
+    firstValue(
+      organisationProfile.managerTerm,
+      organisationProfile.managementTerm,
+      organisationProfile.lineManagerTerm
+    )
+    ||
+    "Managers";
+
+
+  const hseqTerm =
+    firstValue(
+      organisationProfile.hseqTeamTerm,
+      organisationProfile.hseqTerm,
+      organisationProfile.systemTeamTerm
+    )
+    ||
+    "HSEQ / Management System Team";
+
+
+  document
+    .getElementById(
+      "terminologySummary"
+    )
+    .innerText =
+      "Certicium will use your confirmed organisational terminology. "
+      +
+      "Current governance terms include "
+      +
+      leadershipTerm
+      +
+      ", "
+      +
+      managerTerm
+      +
+      " and "
+      +
+      hseqTerm
+      +
+      ".";
+
+
+  document
+    .getElementById(
+      "readyHeading"
+    )
+    .innerText =
+      "Certicium understands "
+      +
+      organisationName
+      +
+      ".";
+
+
+  /*
+   * GOVERNANCE OPTIONS
+   */
+
+
+  const governanceOptions = [
+    leadershipTerm,
+    managerTerm,
+    hseqTerm,
+    "Document Owner",
+    "Process Owner",
+    "Other / define later"
+  ];
+
+
+  function populateGovernanceSelect(id) {
+
+    const select =
+      document.getElementById(id);
+
+
+    const unique =
+      [...new Set(
+        governanceOptions
+          .filter(Boolean)
+      )];
+
+
+    unique.forEach(
+      value => {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          value;
+
+
+        option.innerText =
+          value;
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+    );
+
+  }
+
+
+  populateGovernanceSelect(
+    "documentApproval"
+  );
+
+
+  populateGovernanceSelect(
+    "systemOwner"
+  );
+
+
+  /*
+   * SYSTEM STYLE
+   */
+
+
+  let systemStyle = "";
+
+
+  document
+    .querySelectorAll(
+      "[data-style]"
+    )
+    .forEach(
+      card => {
+
+        card.addEventListener(
+          "click",
+          function() {
+
+            document
+              .querySelectorAll(
+                "[data-style]"
+              )
+              .forEach(
+                item =>
+                  item.classList.remove(
+                    "selected"
+                  )
+              );
+
+
+            card.classList.add(
+              "selected"
+            );
+
+
+            systemStyle =
+              card.dataset.style;
+
+
+            updateReview();
+
+          }
+        );
+
+      }
+    );
+
+
+  /*
+   * TOGGLES
+   */
+
+
+  document
+    .querySelectorAll(
+      "[data-toggle='true']"
+    )
+    .forEach(
+      field => {
+
+        field.addEventListener(
+          "change",
+          function() {
+
+            field
+              .closest(
+                ".toggle-card"
+              )
+              .classList.toggle(
+                "selected",
+                field.checked
+              );
+
+
+            updateReview();
+
+          }
+        );
+
+      }
+    );
+
+
+  /*
+   * REVIEW
+   */
+
+
+  function escapeHTML(value) {
+
+    return String(
+      value ?? ""
+    )
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  function updateReview() {
+
+    const review = [];
+
+
+    if (systemStyle) {
+
+      const labels = {
+        practical: "Practical",
+        balanced: "Balanced",
+        detailed: "Detailed"
+      };
+
+
+      review.push(
+        `<span>System style:</span> ${
+          escapeHTML(
+            labels[systemStyle]
+          )
+        }`
+      );
+
+    }
+
+
+    const approval =
+      document
+        .getElementById(
+          "documentApproval"
+        )
+        .value;
+
+
+    if (approval) {
+
+      review.push(
+        `<span>Document approval:</span> ${
+          escapeHTML(approval)
+        }`
+      );
+
+    }
+
+
+    const owner =
+      document
+        .getElementById(
+          "systemOwner"
+        )
+        .value;
+
+
+    if (owner) {
+
+      review.push(
+        `<span>System owner:</span> ${
+          escapeHTML(owner)
+        }`
+      );
+
+    }
+
+
+    const aiCount =
+      [
+        "suggestRequirements",
+        "identifyGaps",
+        "suggestControls",
+        "continuousImprovement"
+      ]
+      .filter(
+        id =>
+          document
+            .getElementById(id)
+            .checked
+      )
+      .length;
+
+
+    review.push(
+      `<span>AI assistance:</span> ${
+        aiCount
+      } of 4 capabilities enabled`
+    );
+
+
+    const automationCount =
+      [
+        "reviewReminders",
+        "actionTracking",
+        "escalations",
+        "changeTriggers"
+      ]
+      .filter(
+        id =>
+          document
+            .getElementById(id)
+            .checked
+      )
+      .length;
+
+
+    review.push(
+      `<span>Automation:</span> ${
+        automationCount
+      } of 4 capabilities enabled`
+    );
+
+
+    document
+      .getElementById(
+        "reviewList"
+      )
+      .innerHTML =
+      review
+        .map(
+          item => `
+            <div class="review-item">
+              ${item}
+            </div>
+          `
+        )
+        .join("");
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "select, textarea"
+    )
+    .forEach(
+      field => {
+
+        field.addEventListener(
+          "change",
+          updateReview
+        );
+
+
+        field.addEventListener(
+          "input",
+          updateReview
+        );
+
+      }
+    );
+
+
+  /*
+   * LOAD EXISTING CONFIGURATION
+   */
+
+
+  function loadExistingProfile() {
+
+    const profile =
+      readStorage(
+        "certiciumConfigurationProfile"
+      );
+
+
+    if (
+      !Object.keys(profile).length
+    ) {
+
+      updateReview();
+      return;
+
+    }
+
+
+    systemStyle =
+      profile.systemStyle
+      ||
+      "";
+
+
+    if (systemStyle) {
+
+      const card =
+        document.querySelector(
+          `[data-style="${systemStyle}"]`
+        );
+
+
+      if (card) {
+
+        card.classList.add(
+          "selected"
+        );
+
+      }
+
+    }
+
+
+    document
+      .getElementById(
+        "documentApproval"
+      )
+      .value =
+      profile.documentApproval
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "systemOwner"
+      )
+      .value =
+      profile.systemOwner
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "reviewFrequency"
+      )
+      .value =
+      profile.reviewFrequency
+      ||
+      "12";
+
+
+    const toggleIds = [
+      "suggestRequirements",
+      "identifyGaps",
+      "suggestControls",
+      "continuousImprovement",
+      "reviewReminders",
+      "actionTracking",
+      "escalations",
+      "changeTriggers",
+      "approveControlledDocuments",
+      "confirmLegalRequirements",
+      "approveHighRisk",
+      "approveGoLive"
+    ];
+
+
+    toggleIds.forEach(
+      id => {
+
+        if (
+          Object.prototype.hasOwnProperty.call(
+            profile,
+            id
+          )
+        ) {
+
+          const field =
+            document.getElementById(id);
+
+
+          field.checked =
+            profile[id];
+
+
+          field
+            .closest(
+              ".toggle-card"
+            )
+            .classList.toggle(
+              "selected",
+              field.checked
+            );
+
+        }
+
+      }
+    );
+
+
+    document
+      .getElementById(
+        "additionalPreferences"
+      )
+      .value =
+      profile.additionalPreferences
+      ||
+      "";
+
+
+    updateReview();
+
+  }
+
+
+  /*
+   * SAVE
+   */
+
+
+  document
+    .getElementById(
+      "configurationForm"
+    )
+    .addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        if (!systemStyle) {
+
+          alert(
+            "Please select a management system style."
+          );
+
+          return;
+
+        }
+
+
+        const documentApproval =
+          document
+            .getElementById(
+              "documentApproval"
+            )
+            .value;
+
+
+        const systemOwner =
+          document
+            .getElementById(
+              "systemOwner"
+            )
+            .value;
+
+
+        if (
+          !documentApproval
+          ||
+          !systemOwner
+        ) {
+
+          alert(
+            "Please confirm the document approval and management system ownership settings."
+          );
+
+          return;
+
+        }
+
+
+        const profile = {
+
+          setupComplete: true,
+
+          systemStyle:
+            systemStyle,
+
+          documentApproval:
+            documentApproval,
+
+          systemOwner:
+            systemOwner,
+
+          reviewFrequency:
+            document
+              .getElementById(
+                "reviewFrequency"
+              )
+              .value,
+
+          suggestRequirements:
+            document
+              .getElementById(
+                "suggestRequirements"
+              )
+              .checked,
+
+          identifyGaps:
+            document
+              .getElementById(
+                "identifyGaps"
+              )
+              .checked,
+
+          suggestControls:
+            document
+              .getElementById(
+                "suggestControls"
+              )
+              .checked,
+
+          continuousImprovement:
+            document
+              .getElementById(
+                "continuousImprovement"
+              )
+              .checked,
+
+          reviewReminders:
+            document
+              .getElementById(
+                "reviewReminders"
+              )
+              .checked,
+
+          actionTracking:
+            document
+              .getElementById(
+                "actionTracking"
+              )
+              .checked,
+
+          escalations:
+            document
+              .getElementById(
+                "escalations"
+              )
+              .checked,
+
+          changeTriggers:
+            document
+              .getElementById(
+                "changeTriggers"
+              )
+              .checked,
+
+          approveControlledDocuments:
+            document
+              .getElementById(
+                "approveControlledDocuments"
+              )
+              .checked,
+
+          confirmLegalRequirements:
+            document
+              .getElementById(
+                "confirmLegalRequirements"
+              )
+              .checked,
+
+          approveHighRisk:
+            document
+              .getElementById(
+                "approveHighRisk"
+              )
+              .checked,
+
+          approveGoLive:
+            document
+              .getElementById(
+                "approveGoLive"
+              )
+              .checked,
+
+          additionalPreferences:
+            document
+              .getElementById(
+                "additionalPreferences"
+              )
+              .value
+              .trim(),
+
+          terminologySnapshot: {
+            leadership:
+              leadershipTerm,
+            managers:
+              managerTerm,
+            systemTeam:
+              hseqTerm
+          },
+
+          savedAt:
+            new Date()
+              .toISOString()
+
+        };
+
+
+        localStorage.setItem(
+          "certiciumConfigurationProfile",
+          JSON.stringify(profile)
+        );
+
+
+        window.location.href =
+          "setup.html";
+
+      }
+    );
+
+
+  loadExistingProfile();
+
+</script>
+
+</body>
+
+</html>
