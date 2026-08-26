@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certicium | Your Operations</title>
+
+  <style>
+
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --bright-green: #6FC55A;
+      --dark-grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,.11);
+      --card: #141715;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    header {
+      height: 76px;
+      padding: 0 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(13,13,13,.96);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      width: 37px;
+      height: 37px;
+      border: 1px solid rgba(111,197,90,.35);
+      background: rgba(44,130,89,.13);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--bright-green);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .brand-name span {
+      color: var(--bright-green);
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .back:hover {
+      color: var(--white);
+    }
+
+    main {
+      max-width: 1050px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .eyebrow {
+      color: var(--bright-green);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      margin-bottom: 38px;
+    }
+
+    .intro h1 {
+      font-size: clamp(40px, 5vw, 62px);
+      line-height: 1;
+      letter-spacing: -3px;
+      max-width: 850px;
+    }
+
+    .intro p {
+      margin-top: 17px;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .setup-progress {
+      display: flex;
+      gap: 7px;
+      margin-top: 27px;
+    }
+
+    .progress-step {
+      height: 4px;
+      flex: 1;
+      border-radius: 999px;
+      background: rgba(244,246,245,.08);
+    }
+
+    .progress-step.active {
+      background: var(--bright-green);
+    }
+
+    .form-section {
+      margin-bottom: 18px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    .section-number {
+      color: var(--bright-green);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .form-section h2 {
+      font-size: 25px;
+      letter-spacing: -1px;
+    }
+
+    .section-description {
+      margin-top: 7px;
+      margin-bottom: 24px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      max-width: 720px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #D7DDD9;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .hint {
+      display: block;
+      margin-top: -3px;
+      margin-bottom: 8px;
+      color: #747D78;
+      font-size: 9px;
+      font-weight: 400;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 0 13px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      outline: none;
+      background: #0F1210;
+      color: var(--white);
+      font-size: 12px;
+    }
+
+    textarea {
+      min-height: 105px;
+      padding: 12px 13px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: rgba(111,197,90,.6);
+    }
+
+    select option {
+      background: #0F1210;
+      color: var(--white);
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .activity-card {
+      padding: 16px;
+      border: 1px solid rgba(244,246,245,.07);
+      border-radius: 9px;
+      background: rgba(13,13,13,.28);
+    }
+
+    .activity-card strong {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .activity-card p {
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .activity-card select {
+      min-height: 40px;
+    }
+
+    .applicability-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .summary-card {
+      padding: 14px;
+      border: 1px solid rgba(244,246,245,.06);
+      border-radius: 8px;
+      background: rgba(13,13,13,.3);
+    }
+
+    .summary-card span {
+      display: block;
+      color: var(--bright-green);
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 4px;
+    }
+
+    .summary-card strong {
+      font-size: 20px;
+    }
+
+    .review-box {
+      padding: 20px;
+      border: 1px solid rgba(111,197,90,.25);
+      border-radius: 9px;
+      background: rgba(44,130,89,.08);
+    }
+
+    .review-box strong {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 13px;
+    }
+
+    .review-box p {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .review-list {
+      margin-top: 16px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .review-item {
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: rgba(13,13,13,.35);
+      color: #D7DDD9;
+      font-size: 10px;
+    }
+
+    .review-item span {
+      color: var(--bright-green);
+      font-weight: 800;
+    }
+
+    .actions {
+      margin-top: 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .primary-button {
+      min-height: 50px;
+      padding: 0 24px;
+      border: 0;
+      border-radius: 7px;
+      background: var(--bright-green);
+      color: #0B1A11;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .required {
+      color: var(--bright-green);
+    }
+
+    @media (max-width: 800px) {
+
+      .field-grid,
+      .activity-grid,
+      .applicability-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<header>
+
+  <div class="brand">
+
+    <div class="brand-mark">
+      Ce
+    </div>
+
+    <div class="brand-name">
+      Certicium<span>.</span>
+    </div>
+
+  </div>
+
+  <a href="setup.html" class="back">
+    ← Setup Dashboard
+  </a>
+
+</header>
+
+
+<main>
+
+  <section class="intro">
+
+    <div class="eyebrow">
+      Setup 02 · Your Operations
+    </div>
+
+    <h1>
+      Show Certicium how work actually happens.
+    </h1>
+
+    <p>
+      Your operational profile helps Certicium determine which risks,
+      controls, procedures, registers and tools are genuinely relevant
+      to your organisation.
+    </p>
+
+    <div class="setup-progress">
+      <div class="progress-step active"></div>
+      <div class="progress-step active"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+      <div class="progress-step"></div>
+    </div>
+
+  </section>
+
+
+  <form id="operationsForm">
+
+
+    <!-- 01 SCALE -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        01 · Scale & Locations
+      </div>
+
+      <h2>
+        Where and how big is your operation?
+      </h2>
+
+      <p class="section-description">
+        This helps Certicium understand the scale and geographic context
+        of the management system.
+      </p>
+
+      <div class="field-grid">
+
+        <div class="field">
+
+          <label for="workforceSize">
+            Approximate workforce size
+            <span class="required">*</span>
+          </label>
+
+          <input
+            type="number"
+            id="workforceSize"
+            min="1"
+            placeholder="e.g. 85"
+            required
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="contractorCount">
+            Approximate regular contractors
+          </label>
+
+          <input
+            type="number"
+            id="contractorCount"
+            min="0"
+            placeholder="e.g. 15"
+          >
+
+        </div>
+
+
+        <div class="field full">
+
+          <label for="countries">
+            Countries or jurisdictions where work is performed
+            <span class="required">*</span>
+          </label>
+
+          <span class="hint">
+            Separate multiple countries or jurisdictions with commas.
+          </span>
+
+          <input
+            type="text"
+            id="countries"
+            placeholder="e.g. Australia, New Zealand"
+            required
+          >
+
+        </div>
+
+
+        <div class="field full">
+
+          <label for="locations">
+            Main offices, facilities, sites or operating locations
+            <span class="required">*</span>
+          </label>
+
+          <span class="hint">
+            Separate multiple locations with commas.
+          </span>
+
+          <input
+            type="text"
+            id="locations"
+            placeholder="e.g. Melbourne, Sydney, Brisbane"
+            required
+          >
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- 02 WORK MODEL -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        02 · Work Environment
+      </div>
+
+      <h2>
+        Where does work happen?
+      </h2>
+
+      <p class="section-description">
+        Select whether each environment is a core part of your operations,
+        occurs occasionally, or does not apply.
+      </p>
+
+      <div class="activity-grid" id="workEnvironmentGrid"></div>
+
+    </section>
+
+
+    <!-- 03 ACTIVITIES -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        03 · Operational Activities
+      </div>
+
+      <h2>
+        What activities are part of your business?
+      </h2>
+
+      <p class="section-description">
+        These answers drive applicability. Certicium will use them later
+        to determine which operational controls and procedures are needed.
+      </p>
+
+      <div class="activity-grid" id="activityGrid"></div>
+
+    </section>
+
+
+    <!-- 04 RISK EXPOSURES -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        04 · Risk Exposures
+      </div>
+
+      <h2>
+        What kinds of risk exposure are present?
+      </h2>
+
+      <p class="section-description">
+        These are not risk assessments yet. They simply help Certicium
+        understand which risk categories and management controls are relevant.
+      </p>
+
+      <div class="activity-grid" id="riskGrid"></div>
+
+    </section>
+
+
+    <!-- 05 ADDITIONAL CONTEXT -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        05 · Additional Context
+      </div>
+
+      <h2>
+        Anything else we should understand?
+      </h2>
+
+      <p class="section-description">
+        This helps with unusual activities, industry-specific risks or
+        operating models that don't fit neatly into the options above.
+      </p>
+
+      <div class="field">
+
+        <label for="additionalContext">
+          Additional operational context
+        </label>
+
+        <textarea
+          id="additionalContext"
+          placeholder="e.g. Seasonal work, 24/7 operations, government customer sites, specialist technical work, remote regional travel..."
+        ></textarea>
+
+      </div>
+
+    </section>
+
+
+    <!-- 06 REVIEW -->
+
+    <section class="form-section">
+
+      <div class="section-number">
+        06 · Review
+      </div>
+
+      <h2>
+        Your operational profile
+      </h2>
+
+      <p class="section-description">
+        Certicium will use this information to determine which elements
+        of your IMS should be included in the blueprint.
+      </p>
+
+      <div class="applicability-summary">
+
+        <div class="summary-card">
+          <span>Core activities</span>
+          <strong id="coreCount">0</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Occasional</span>
+          <strong id="occasionalCount">0</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Not applicable</span>
+          <strong id="naCount">0</strong>
+        </div>
+
+      </div>
+
+
+      <div class="review-box">
+
+        <strong>
+          Certicium will use this as applicability data.
+        </strong>
+
+        <p>
+          Items marked Core will strongly influence the recommended IMS.
+          Occasional activities may still require controls, but Certicium
+          can keep the system proportionate to the actual level of exposure.
+        </p>
+
+        <div
+          class="review-list"
+          id="reviewList"
+        >
+          <div class="review-item">
+            Complete the selections above to preview your operational profile.
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="secondary-button"
+          onclick="window.location.href='setup.html'"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="primary-button"
+        >
+          Save & Return to Setup →
+        </button>
+
+      </div>
+
+    </section>
+
+
+  </form>
+
+</main>
+
+
+<script>
+
+  const workEnvironments = [
+
+    {
+      id: "officeWork",
+      name: "Office-based work",
+      description: "Administrative, professional or desk-based work."
+    },
+
+    {
+      id: "remoteWork",
+      name: "Remote / home working",
+      description: "People regularly work away from company premises."
+    },
+
+    {
+      id: "customerSites",
+      name: "Customer sites",
+      description: "Employees or contractors perform work at customer-controlled locations."
+    },
+
+    {
+      id: "fieldWork",
+      name: "Field work",
+      description: "Work is performed in changing outdoor or operational environments."
+    },
+
+    {
+      id: "warehouse",
+      name: "Warehouse / logistics",
+      description: "Warehousing, storage, loading, unloading or logistics activities."
+    },
+
+    {
+      id: "manufacturing",
+      name: "Manufacturing / production",
+      description: "Production, assembly, fabrication or manufacturing activities."
+    }
+
+  ];
+
+
+  const operationalActivities = [
+
+    {
+      id: "driving",
+      name: "Driving & fleet",
+      description: "Employees or contractors drive for work."
+    },
+
+    {
+      id: "contractors",
+      name: "Contractor management",
+      description: "Contractors or subcontractors are used to perform work."
+    },
+
+    {
+      id: "projects",
+      name: "Projects",
+      description: "The organisation delivers defined projects, implementations or programs."
+    },
+
+    {
+      id: "plant",
+      name: "Plant & equipment",
+      description: "Powered plant, machinery, tools or operational equipment are used."
+    },
+
+    {
+      id: "electrical",
+      name: "Electrical work",
+      description: "Electrical installation, testing, maintenance or exposure is relevant."
+    },
+
+    {
+      id: "heights",
+      name: "Working at heights",
+      description: "Work at height or fall risk is part of operations."
+    },
+
+    {
+      id: "excavation",
+      name: "Excavation / ground disturbance",
+      description: "Excavation, trenching, digging or underground services are relevant."
+    },
+
+    {
+      id: "hotWork",
+      name: "Hot work",
+      description: "Welding, grinding, cutting or other ignition-producing activities occur."
+    },
+
+    {
+      id: "hazardousSubstances",
+      name: "Hazardous substances",
+      description: "Chemicals or hazardous substances are stored, handled or used."
+    },
+
+    {
+      id: "dangerousGoods",
+      name: "Dangerous goods",
+      description: "Dangerous goods are stored, transported or handled."
+    },
+
+    {
+      id: "manualHandling",
+      name: "Manual handling",
+      description: "Lifting, carrying, repetitive or physically demanding work occurs."
+    },
+
+    {
+      id: "publicInteraction",
+      name: "Public interaction",
+      description: "Employees regularly interact with customers, members of the public or road users."
+    },
+
+    {
+      id: "loneWork",
+      name: "Lone working",
+      description: "People may work alone without direct supervision or immediate support."
+    },
+
+    {
+      id: "travel",
+      name: "Business travel",
+      description: "Employees travel between cities, regions or countries for work."
+    },
+
+    {
+      id: "nightWork",
+      name: "Night / shift work",
+      description: "Operations occur overnight, on rotating shifts or outside normal hours."
+    }
+
+  ];
+
+
+  const riskExposures = [
+
+    {
+      id: "psychosocial",
+      name: "Psychosocial risks",
+      description: "Workload, role clarity, aggression, change, fatigue or similar psychosocial hazards may be relevant."
+    },
+
+    {
+      id: "environmentalImpact",
+      name: "Environmental impacts",
+      description: "Operations may create waste, emissions, spills, resource use or other environmental impacts."
+    },
+
+    {
+      id: "qualityCritical",
+      name: "Quality-critical services",
+      description: "Failures in product or service quality could materially affect customers or contracts."
+    },
+
+    {
+      id: "regulatoryExposure",
+      name: "Regulated operations",
+      description: "The organisation operates in a regulated or licence-dependent environment."
+    },
+
+    {
+      id: "informationTechnology",
+      name: "Technology / information risk",
+      description: "Business operations depend heavily on systems, data, software or technology."
+    },
+
+    {
+      id: "businessContinuity",
+      name: "Business continuity exposure",
+      description: "Service interruption or operational downtime could materially affect customers or the business."
+    },
+
+    {
+      id: "reputation",
+      name: "Reputation-sensitive operations",
+      description: "Incidents or failures could create significant customer, public or media attention."
+    },
+
+    {
+      id: "change",
+      name: "Frequent organisational change",
+      description: "The organisation frequently implements new products, systems, structures or operating models."
+    }
+
+  ];
+
+
+  function createActivityCards(
+    containerId,
+    items
+  ) {
+
+    const container =
+      document.getElementById(
+        containerId
+      );
+
+
+    container.innerHTML =
+      items.map(
+        item => `
+
+          <div class="activity-card">
+
+            <strong>
+              ${item.name}
+            </strong>
+
+            <p>
+              ${item.description}
+            </p>
+
+            <select
+              id="${item.id}"
+              data-activity="true"
+            >
+              <option value="not-applicable">
+                Not applicable
+              </option>
+
+              <option value="occasional">
+                Occasional
+              </option>
+
+              <option value="core">
+                Core activity
+              </option>
+            </select>
+
+          </div>
+
+        `
+      )
+      .join("");
+
+  }
+
+
+  createActivityCards(
+    "workEnvironmentGrid",
+    workEnvironments
+  );
+
+
+  createActivityCards(
+    "activityGrid",
+    operationalActivities
+  );
+
+
+  createActivityCards(
+    "riskGrid",
+    riskExposures
+  );
+
+
+  function commaList(
+    value
+  ) {
+
+    return value
+      .split(",")
+      .map(
+        item =>
+          item.trim()
+      )
+      .filter(Boolean);
+
+  }
+
+
+  function getActivityValues() {
+
+    const result = {};
+
+
+    document
+      .querySelectorAll(
+        "[data-activity='true']"
+      )
+      .forEach(
+        field => {
+
+          result[field.id] =
+            field.value;
+
+        }
+      );
+
+
+    return result;
+
+  }
+
+
+  function updateReview() {
+
+    const activities =
+      getActivityValues();
+
+
+    const entries =
+      Object.entries(
+        activities
+      );
+
+
+    const core =
+      entries.filter(
+        ([, value]) =>
+          value === "core"
+      );
+
+
+    const occasional =
+      entries.filter(
+        ([, value]) =>
+          value === "occasional"
+      );
+
+
+    const na =
+      entries.filter(
+        ([, value]) =>
+          value === "not-applicable"
+      );
+
+
+    document
+      .getElementById(
+        "coreCount"
+      )
+      .innerText =
+      core.length;
+
+
+    document
+      .getElementById(
+        "occasionalCount"
+      )
+      .innerText =
+      occasional.length;
+
+
+    document
+      .getElementById(
+        "naCount"
+      )
+      .innerText =
+      na.length;
+
+
+    const allItems = [
+      ...workEnvironments,
+      ...operationalActivities,
+      ...riskExposures
+    ];
+
+
+    const labels =
+      Object.fromEntries(
+        allItems.map(
+          item =>
+            [
+              item.id,
+              item.name
+            ]
+        )
+      );
+
+
+    const reviewItems = [];
+
+
+    if (
+      core.length
+    ) {
+
+      reviewItems.push(
+        `<span>Core:</span> ` +
+        core
+          .map(
+            ([id]) =>
+              labels[id]
+          )
+          .join(", ")
+      );
+
+    }
+
+
+    if (
+      occasional.length
+    ) {
+
+      reviewItems.push(
+        `<span>Occasional:</span> ` +
+        occasional
+          .map(
+            ([id]) =>
+              labels[id]
+          )
+          .join(", ")
+      );
+
+    }
+
+
+    const reviewList =
+      document.getElementById(
+        "reviewList"
+      );
+
+
+    if (
+      reviewItems.length
+    ) {
+
+      reviewList.innerHTML =
+        reviewItems
+          .map(
+            item => `
+              <div class="review-item">
+                ${item}
+              </div>
+            `
+          )
+          .join("");
+
+    } else {
+
+      reviewList.innerHTML = `
+        <div class="review-item">
+          Complete the selections above to preview your operational profile.
+        </div>
+      `;
+
+    }
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "[data-activity='true']"
+    )
+    .forEach(
+      field => {
+
+        field.addEventListener(
+          "change",
+          updateReview
+        );
+
+      }
+    );
+
+
+  function loadExistingProfile() {
+
+    let profile = {};
+
+
+    try {
+
+      profile =
+        JSON.parse(
+          localStorage.getItem(
+            "certiciumOperationsProfile"
+          )
+          ||
+          "{}"
+        );
+
+    } catch (error) {
+
+      profile = {};
+
+    }
+
+
+    if (
+      !Object.keys(
+        profile
+      ).length
+    ) {
+
+      return;
+
+    }
+
+
+    document
+      .getElementById(
+        "workforceSize"
+      )
+      .value =
+      profile.workforceSize
+      ||
+      "";
+
+
+    document
+      .getElementById(
+        "contractorCount"
+      )
+      .value =
+      profile.contractorCount
+      ??
+      "";
+
+
+    document
+      .getElementById(
+        "countries"
+      )
+      .value =
+      (
+        profile.countries
+        ||
+        []
+      ).join(", ");
+
+
+    document
+      .getElementById(
+        "locations"
+      )
+      .value =
+      (
+        profile.locations
+        ||
+        []
+      ).join(", ");
+
+
+    document
+      .getElementById(
+        "additionalContext"
+      )
+      .value =
+      profile.additionalContext
+      ||
+      "";
+
+
+    const activities =
+      profile.activities
+      ||
+      {};
+
+
+    Object.entries(
+      activities
+    )
+    .forEach(
+      ([id, value]) => {
+
+        const field =
+          document.getElementById(
+            id
+          );
+
+
+        if (field) {
+
+          field.value =
+            value;
+
+        }
+
+      }
+    );
+
+
+    updateReview();
+
+  }
+
+
+  document
+    .getElementById(
+      "operationsForm"
+    )
+    .addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const profile = {
+
+          setupComplete:
+            true,
+
+          workforceSize:
+            Number(
+              document
+                .getElementById(
+                  "workforceSize"
+                )
+                .value
+            ),
+
+          contractorCount:
+            Number(
+              document
+                .getElementById(
+                  "contractorCount"
+                )
+                .value
+              ||
+              0
+            ),
+
+          countries:
+            commaList(
+              document
+                .getElementById(
+                  "countries"
+                )
+                .value
+            ),
+
+          locations:
+            commaList(
+              document
+                .getElementById(
+                  "locations"
+                )
+                .value
+            ),
+
+          activities:
+            getActivityValues(),
+
+          additionalContext:
+            document
+              .getElementById(
+                "additionalContext"
+              )
+              .value
+              .trim(),
+
+          savedAt:
+            new Date()
+              .toISOString()
+
+        };
+
+
+        localStorage.setItem(
+          "certiciumOperationsProfile",
+          JSON.stringify(
+            profile
+          )
+        );
+
+
+        window.location.href =
+          "setup.html";
+
+      }
+    );
+
+
+  loadExistingProfile();
+
+  updateReview();
+
+</script>
+
+
+</body>
+
+</html>
