@@ -870,60 +870,66 @@
 
 </a>
     
-    <!-- 5. CONFIGURATION -->
+   <!-- 5. CONFIGURATION -->
 
-    <div class="setup-card locked">
+<a
+  href="configuration.html"
+  class="setup-card locked"
+  id="configurationCard"
+>
 
-      <div class="card-top">
+  <div class="card-top">
 
-        <div class="card-number">
-          05
-        </div>
-
-        <div class="card-status locked">
-          Locked
-        </div>
-
-      </div>
-
-
-      <h3>
-        Configure Certicium
-      </h3>
-
-      <p>
-        Decide how your system should sound, how much AI assistance
-        you want and how governance and approvals should operate.
-      </p>
-
-
-      <div class="card-items">
-
-        <span class="card-item">
-          System voice
-        </span>
-
-        <span class="card-item">
-          AI interaction
-        </span>
-
-        <span class="card-item">
-          Governance
-        </span>
-
-        <span class="card-item">
-          Automation
-        </span>
-
-      </div>
-
-
-      <div class="card-action">
-        Locked
-      </div>
-
+    <div class="card-number">
+      05
     </div>
 
+    <div
+      class="card-status locked"
+      id="configurationStatus"
+    >
+      Locked
+    </div>
+
+  </div>
+
+
+  <h3>
+    Configure Certicium
+  </h3>
+
+  <p>
+    Decide how your system should sound, how much AI assistance
+    you want and how governance and approvals should operate.
+  </p>
+
+
+  <div class="card-items">
+
+    <span class="card-item">
+      System style
+    </span>
+
+    <span class="card-item">
+      AI interaction
+    </span>
+
+    <span class="card-item">
+      Governance
+    </span>
+
+    <span class="card-item">
+      Automation
+    </span>
+
+  </div>
+
+
+  <div class="card-action">
+    Locked
+  </div>
+
+</a>
 
   </div>
 
@@ -945,7 +951,10 @@
   <div class="build-grid">
 
 
-    <div class="build-stage">
+<div
+  class="build-stage"
+  id="blueprintStage"
+>
 
       <div class="stage-icon">
         ◇
@@ -960,9 +969,12 @@
         tools and registers Certicium recommends for your organisation.
       </p>
 
-      <div class="locked-label">
-        🔒 Complete setup to unlock
-      </div>
+<div
+  class="locked-label"
+  id="blueprintStatus"
+>
+  🔒 Complete setup to unlock
+</div>
 
     </div>
 
@@ -1194,12 +1206,24 @@ const existingSystemComplete =
   true;
 
 
+const configurationProfile =
+  readStorage(
+    "certiciumConfigurationProfile"
+  );
+
+
+const configurationComplete =
+  configurationProfile
+    .setupComplete ===
+  true;
+
+
 const setupSections = [
   organisationComplete,
   operationsComplete,
   requirementsComplete,
   existingSystemComplete,
-  false
+  configurationComplete
 ];
 
   const completed =
@@ -1587,6 +1611,161 @@ const setupSections = [
 
   }  
 
+  /*
+   * CONFIGURATION CARD STATUS
+   */
+
+
+  const configurationCard =
+    document.getElementById(
+      "configurationCard"
+    );
+
+
+  const configurationStatus =
+    document.getElementById(
+      "configurationStatus"
+    );
+
+
+  const configurationAction =
+    configurationCard
+      .querySelector(
+        ".card-action"
+      );
+
+
+  if (
+    existingSystemComplete
+  ) {
+
+    configurationCard
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    configurationCard
+      .classList
+      .add(
+        "available"
+      );
+
+
+    configurationStatus
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    if (
+      configurationComplete
+    ) {
+
+      configurationCard
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      configurationStatus
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      configurationStatus.innerText =
+        "Complete";
+
+
+      configurationAction.innerText =
+        "Review Certicium configuration →";
+
+    } else {
+
+      configurationStatus.innerText =
+        "Start";
+
+
+      configurationAction.innerText =
+        "Configure Certicium →";
+
+    }
+
+  } else {
+
+    configurationCard
+      .removeAttribute(
+        "href"
+      );
+
+
+    configurationCard
+      .classList
+      .add(
+        "locked"
+      );
+
+
+    configurationStatus.innerText =
+      "Locked";
+
+
+    configurationAction.innerText =
+      "Complete existing system setup first";
+
+  }  
+
+    /*
+   * IMS BLUEPRINT STATUS
+   */
+
+
+  const blueprintStage =
+    document.getElementById(
+      "blueprintStage"
+    );
+
+
+  const blueprintStatus =
+    document.getElementById(
+      "blueprintStatus"
+    );
+
+
+  if (
+    configurationComplete
+  ) {
+
+    blueprintStage.style.opacity =
+      "1";
+
+
+    blueprintStage.style.borderColor =
+      "rgba(111,197,90,.35)";
+
+
+    blueprintStatus.innerText =
+      "✓ Ready to generate";
+
+
+    blueprintStatus.style.color =
+      "var(--bright-green)";
+
+
+    document
+      .getElementById(
+        "progressNote"
+      )
+      .innerText =
+      "Setup complete. Certicium is ready to design your IMS Blueprint.";
+
+  }
+  
 </script>
 
 
