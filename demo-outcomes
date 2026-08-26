@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Certicium | Your IMS Demo Outcome</title>
+
+  <style>
+    :root {
+      --phthalo: #0B3D2E;
+      --dark-green: #123524;
+      --accent: #2C8259;
+      --approval: #6FC55A;
+      --grey: #242526;
+      --black: #0D0D0D;
+      --white: #F4F6F5;
+      --muted: #A8B2AD;
+      --border: rgba(244,246,245,.12);
+      --card: #141715;
+      --warning: #E6C96B;
+      --blue: #8FC7FF;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    header {
+      min-height: 88px;
+      padding: 12px 5%;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      background: rgba(13,13,13,.96);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .brand-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .brand-copy {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .brand-name {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -1.2px;
+    }
+
+    .brand-name span {
+      color: var(--approval);
+    }
+
+    .brand-tagline {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .back {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .hero {
+      padding: 70px 5% 60px;
+      position: relative;
+      overflow: hidden;
+
+      background:
+        radial-gradient(circle at 82% 24%, rgba(44,130,89,.23), transparent 30%),
+        linear-gradient(135deg, #090D0B, #07100D 62%, #092118);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 50px 50px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .eyebrow {
+      color: var(--approval);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      max-width: 900px;
+      font-size: clamp(48px,6vw,82px);
+      line-height: .96;
+      letter-spacing: -4px;
+    }
+
+    h1 span {
+      color: var(--approval);
+    }
+
+    .hero-copy {
+      max-width: 780px;
+      margin-top: 22px;
+      color: #D2D8D5;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .result-strip {
+      max-width: 1180px;
+      margin: 30px auto 0;
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 12px;
+    }
+
+    .result-card {
+      padding: 17px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: rgba(13,13,13,.45);
+    }
+
+    .result-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      margin-bottom: 4px;
+    }
+
+    .result-card strong {
+      color: var(--approval);
+      font-size: 26px;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: auto;
+      padding: 55px 5% 100px;
+    }
+
+    .section {
+      margin-bottom: 50px;
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 50px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px,4vw,46px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 12px;
+    }
+
+    .signal {
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--card);
+    }
+
+    .signal strong {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .signal p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .recommendation-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .recommendation {
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background:
+        linear-gradient(
+          180deg,
+          rgba(20,23,21,.88),
+          rgba(13,13,13,.88)
+        );
+    }
+
+    .recommendation-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      align-items: flex-start;
+    }
+
+    .recommendation h3 {
+      font-size: 15px;
+      margin-bottom: 5px;
+    }
+
+    .recommendation p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 5px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(111,197,90,.35);
+      color: var(--approval);
+      font-size: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+    }
+
+    .why {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(244,246,245,.07);
+      color: #BBC4BF;
+      font-size: 9px;
+    }
+
+    .why strong {
+      color: var(--white);
+    }
+
+    .next-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+    }
+
+    .next-step {
+      padding: 18px;
+      border-left: 1px solid rgba(244,246,245,.14);
+    }
+
+    .next-step:first-child {
+      border-left: 0;
+    }
+
+    .step-num {
+      color: var(--approval);
+      font-size: 9px;
+      font-weight: 900;
+      margin-bottom: 12px;
+    }
+
+    .next-step h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .next-step p {
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.6;
+    }
+
+    .sales {
+      padding: 34px;
+      border: 1px solid rgba(111,197,90,.32);
+      border-radius: 12px;
+
+      background:
+        radial-gradient(circle at 85% 30%, rgba(111,197,90,.10), transparent 26%),
+        linear-gradient(135deg, rgba(44,130,89,.16), rgba(18,53,36,.18));
+    }
+
+    .sales h2 {
+      max-width: 720px;
+      font-size: clamp(34px,4vw,54px);
+      line-height: 1.02;
+      letter-spacing: -2px;
+    }
+
+    .sales > p {
+      max-width: 740px;
+      margin-top: 14px;
+      color: #CFD6D2;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .sales-points {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 10px;
+    }
+
+    .sales-point {
+      padding: 14px;
+      border: 1px solid rgba(244,246,245,.08);
+      border-radius: 8px;
+      background: rgba(13,13,13,.3);
+      color: #D9DFDC;
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .sales-point span {
+      color: var(--approval);
+      font-weight: 900;
+      margin-right: 5px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 7px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .primary {
+      background: var(--approval);
+      color: #0B1A11;
+    }
+
+    .secondary {
+      border: 1px solid rgba(111,197,90,.4);
+      color: var(--white);
+    }
+
+    .fine-print {
+      margin-top: 16px;
+      color: #747D78;
+      font-size: 9px;
+      line-height: 1.55;
+    }
+
+    @media(max-width:900px) {
+      .result-strip,
+      .signal-grid,
+      .next-grid,
+      .sales-points {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    @media(max-width:650px) {
+      .brand-logo {
+        width: 48px;
+        height: 48px;
+      }
+
+      .brand-tagline,
+      .back {
+        display: none;
+      }
+
+      .result-strip,
+      .signal-grid,
+      .recommendation-grid,
+      .next-grid,
+      .sales-points {
+        grid-template-columns: 1fr;
+      }
+
+      .next-step {
+        border-left: 0;
+        border-top: 1px solid rgba(244,246,245,.14);
+        padding-left: 0;
+      }
+
+      .next-step:first-child {
+        border-top: 0;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+
+  <a href="index.html" class="brand">
+
+    <img
+      src="certicium-logo.png"
+      alt="Certicium logo"
+      class="brand-logo"
+    >
+
+    <div class="brand-copy">
+      <div class="brand-name">
+        Certicium<span>.</span>
+      </div>
+      <div class="brand-tagline">
+        Build. Maintain. Embed.
+      </div>
+    </div>
+
+  </a>
+
+  <a
+    href="ai-configure.html"
+    class="back"
+  >
+    ← Restart demo
+  </a>
+
+</header>
+
+
+<section class="hero">
+
+  <div class="hero-inner">
+
+    <div class="eyebrow">
+      IMS Build Demo · Outcome
+    </div>
+
+    <h1 id="headline">
+      Here's what Certicium would build.
+    </h1>
+
+    <p class="hero-copy" id="heroCopy">
+      Based on what we learned, this is the kind of management system architecture we would recommend as a starting point.
+    </p>
+
+    <div class="result-strip">
+      <div class="result-card">
+        <span>Policies</span>
+        <strong id="policyCount">0</strong>
+      </div>
+      <div class="result-card">
+        <span>Procedures</span>
+        <strong id="procedureCount">0</strong>
+      </div>
+      <div class="result-card">
+        <span>Operational Controls</span>
+        <strong id="controlCount">0</strong>
+      </div>
+      <div class="result-card">
+        <span>Registers & Tools</span>
+        <strong id="toolCount">0</strong>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<main>
+
+  <section class="section">
+
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">
+          What we picked up
+        </div>
+        <h2>
+          Your business drives the system.
+        </h2>
+      </div>
+
+      <p>
+        Certicium does not start with a fixed procedure library. We use your operating model, exposures, customers and objectives to decide what belongs in the IMS.
+      </p>
+    </div>
+
+    <div class="signal-grid" id="signalGrid"></div>
+
+  </section>
+
+
+  <section class="section">
+
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">
+          First-pass blueprint
+        </div>
+        <h2>
+          A management system shaped around you.
+        </h2>
+      </div>
+
+      <p>
+        This demo is illustrative. In a real implementation we would validate requirements, review existing content and agree the final architecture with you before controlled content is built.
+      </p>
+    </div>
+
+    <div
+      class="recommendation-grid"
+      id="recommendationGrid"
+    ></div>
+
+  </section>
+
+
+  <section class="section">
+
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">
+          What happens next
+        </div>
+        <h2>
+          From recommendation to a live IMS.
+        </h2>
+      </div>
+
+      <p>
+        The real Certicium journey goes beyond a demo. We confirm the design, build the controlled system and embed it into day-to-day management.
+      </p>
+    </div>
+
+    <div class="next-grid">
+
+      <div class="next-step">
+        <div class="step-num">01</div>
+        <h3>Validate</h3>
+        <p>
+          Confirm legal, contractual, ISO and organisational requirements.
+        </p>
+      </div>
+
+      <div class="next-step">
+        <div class="step-num">02</div>
+        <h3>Blueprint</h3>
+        <p>
+          Agree the policies, procedures, controls, registers and tools that belong in your IMS.
+        </p>
+      </div>
+
+      <div class="next-step">
+        <div class="step-num">03</div>
+        <h3>Build</h3>
+        <p>
+          Retain what works, improve what does not, and create the missing controlled content.
+        </p>
+      </div>
+
+      <div class="next-step">
+        <div class="step-num">04</div>
+        <h3>Embed</h3>
+        <p>
+          Put the system into workflows, automation, assurance and everyday decision making.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="sales">
+
+    <div class="eyebrow">
+      The big question
+    </div>
+
+    <h2 id="salesHeading">
+      Want Certicium to build the real thing?
+    </h2>
+
+    <p>
+      This demo gives you a taste of the architecture. A real Certicium implementation turns that into a controlled, operational management system built around your organisation.
+    </p>
+
+    <div class="sales-points">
+
+      <div class="sales-point">
+        <span>✓</span>
+        Tailored IMS architecture rather than generic templates.
+      </div>
+
+      <div class="sales-point">
+        <span>✓</span>
+        Existing documents and systems reviewed before anything is replaced.
+      </div>
+
+      <div class="sales-point">
+        <span>✓</span>
+        Digital workflows, AI assistance and human approval built into the operating model.
+      </div>
+
+    </div>
+
+    <div class="actions">
+
+      <a
+        href="#"
+        class="button primary"
+        id="salesButton"
+      >
+        Talk to Certicium →
+      </a>
+
+      <a
+        href="ai-configure.html"
+        class="button secondary"
+      >
+        Try another company
+      </a>
+
+    </div>
+
+    <div class="fine-print">
+      Demo recommendations are illustrative and are not legal advice, certification advice or a determination of regulatory compliance.
+    </div>
+
+  </section>
+
+</main>
+
+
+<script>
+
+  const SALES_EMAIL =
+    "hello@certicium.com";
+
+
+  function readProfile() {
+
+    try {
+
+      return JSON.parse(
+        localStorage.getItem(
+          "certiciumDemoProfile"
+        )
+        ||
+        "{}"
+      );
+
+    } catch (error) {
+
+      return {};
+
+    }
+
+  }
+
+
+  const profile =
+    readProfile();
+
+
+  const company =
+    profile.companyName
+    ||
+    "your organisation";
+
+
+  document
+    .getElementById(
+      "headline"
+    )
+    .innerHTML =
+    "Here's what we'd build for <span>"
+    +
+    escapeHTML(company)
+    +
+    ".</span>";
+
+
+  document
+    .getElementById(
+      "heroCopy"
+    )
+    .innerText =
+    "Based on what Certicium learned about "
+    +
+    company
+    +
+    ", this is the first-pass IMS architecture we would explore with you.";
+
+
+  document
+    .getElementById(
+      "salesHeading"
+    )
+    .innerText =
+    "Want Certicium to build this for "
+    +
+    company
+    +
+    "?";
+
+
+  const salesSubject =
+    encodeURIComponent(
+      "Certicium IMS Build Demo - "
+      +
+      company
+    );
+
+
+  const salesBody =
+    encodeURIComponent(
+      "Hi Certicium,\n\n"
+      +
+      "I completed the IMS Build Demo for "
+      +
+      company
+      +
+      " and would like to discuss what a real implementation could look like.\n"
+    );
+
+
+  document
+    .getElementById(
+      "salesButton"
+    )
+    .href =
+    "mailto:"
+    +
+    SALES_EMAIL
+    +
+    "?subject="
+    +
+    salesSubject
+    +
+    "&body="
+    +
+    salesBody;
+
+
+  function has(
+    field,
+    value
+  ) {
+
+    return (
+      profile[field]
+      ||
+      []
+    ).includes(value);
+
+  }
+
+
+  const activities =
+    profile.activities
+    ||
+    [];
+
+
+  const policies = [
+    "Integrated Management System Policy"
+  ];
+
+
+  if (
+    profile.standards?.includes("iso9001")
+    ||
+    has("businessNeeds","majorClients")
+    ||
+    has("businessNeeds","government")
+  ) {
+    policies.push(
+      "Quality Policy"
+    );
+  }
+
+
+  if (
+    activities.some(item =>
+      [
+        "driving",
+        "contractors",
+        "electrical",
+        "plant",
+        "manualHandling",
+        "heights",
+        "traffic"
+      ].includes(item)
+    )
+  ) {
+    policies.push(
+      "Health & Safety Policy"
+    );
+  }
+
+
+  if (
+    profile.environment?.length
+    ||
+    profile.standards?.includes("iso14001")
+  ) {
+    policies.push(
+      "Environmental Policy"
+    );
+  }
+
+
+  const procedures = [
+    "Document & Records Control",
+    "Risk Management",
+    "Incident & Event Management",
+    "Corrective Action Management",
+    "Audit & Assurance",
+    "Management Review",
+    "Change Management"
+  ];
+
+
+  if (
+    profile.jurisdictions?.length
+    ||
+    has("businessProfile","regulated")
+    ||
+    has("businessNeeds","regulated")
+  ) {
+    procedures.push(
+      "Legal & Compliance Management"
+    );
+  }
+
+
+  if (
+    activities.includes("contractors")
+  ) {
+    procedures.push(
+      "Contractor Management"
+    );
+  }
+
+
+  if (
+    activities.some(item =>
+      [
+        "electrical",
+        "plant",
+        "heights",
+        "traffic"
+      ].includes(item)
+    )
+  ) {
+    procedures.push(
+      "Training & Competency"
+    );
+  }
+
+
+  if (
+    profile.standards?.includes("bcdr")
+  ) {
+    procedures.push(
+      "Business Continuity & Emergency Management"
+    );
+  }
+
+
+  const controlNames = {
+    driving:
+      "Driving & Fleet Safety",
+    contractors:
+      "Contractor Controls",
+    electrical:
+      "Electrical Safety",
+    dangerousGoods:
+      "Dangerous Goods",
+    plant:
+      "Plant & Equipment",
+    manualHandling:
+      "Manual Handling",
+    public:
+      "Public Interaction & Aggression",
+    heights:
+      "Working at Heights",
+    traffic:
+      "Working Near Traffic",
+    remote:
+      "Remote & Lone Work"
+  };
+
+
+  const controls =
+    activities
+      .filter(item =>
+        controlNames[item]
+      )
+      .map(item =>
+        controlNames[item]
+      );
+
+
+  const tools = [
+    "Document Register",
+    "Risk Register",
+    "Risk Assessment Tool",
+    "Incident Register",
+    "Corrective Action Register",
+    "Audit & Assurance Register"
+  ];
+
+
+  if (
+    profile.jurisdictions?.length
+    ||
+    has("businessProfile","regulated")
+  ) {
+    tools.push(
+      "Legal & Compliance Register"
+    );
+  }
+
+
+  if (
+    activities.includes("contractors")
+  ) {
+    tools.push(
+      "Contractor Register"
+    );
+  }
+
+
+  if (
+    procedures.includes(
+      "Training & Competency"
+    )
+  ) {
+    tools.push(
+      "Training & Competency Matrix"
+    );
+  }
+
+
+  document
+    .getElementById(
+      "policyCount"
+    )
+    .innerText =
+    policies.length;
+
+
+  document
+    .getElementById(
+      "procedureCount"
+    )
+    .innerText =
+    procedures.length;
+
+
+  document
+    .getElementById(
+      "controlCount"
+    )
+    .innerText =
+    controls.length;
+
+
+  document
+    .getElementById(
+      "toolCount"
+    )
+    .innerText =
+    tools.length;
+
+
+  const signals = [];
+
+
+  if (profile.industry) {
+
+    signals.push({
+      title:
+        "Operating context",
+      text:
+        "Certicium identified "
+        +
+        profile.industry
+        +
+        " as the closest business profile."
+    });
+
+  }
+
+
+  if (profile.jurisdictions?.length) {
+
+    signals.push({
+      title:
+        "Jurisdictions",
+      text:
+        "The profile indicates operations or exposure across "
+        +
+        profile.jurisdictions.join(", ")
+        +
+        "."
+    });
+
+  }
+
+
+  if (activities.length) {
+
+    signals.push({
+      title:
+        "Operational exposure",
+      text:
+        "Activities include "
+        +
+        activities.join(", ")
+        +
+        "."
+    });
+
+  }
+
+
+  if (profile.businessNeeds?.length) {
+
+    signals.push({
+      title:
+        "Business drivers",
+      text:
+        "Likely drivers include "
+        +
+        profile.businessNeeds.join(", ")
+        +
+        "."
+    });
+
+  }
+
+
+  if (profile.standards?.length) {
+
+    signals.push({
+      title:
+        "Standards & systems",
+      text:
+        "The profile references "
+        +
+        profile.standards.join(", ")
+        +
+        "."
+    });
+
+  }
+
+
+  if (!signals.length) {
+
+    signals.push({
+      title:
+        "Business context",
+      text:
+        "Certicium would validate your operating model and requirements before finalising the IMS architecture."
+    });
+
+  }
+
+
+  document
+    .getElementById(
+      "signalGrid"
+    )
+    .innerHTML =
+    signals
+      .slice(0,6)
+      .map(item => `
+        <div class="signal">
+          <strong>
+            ${escapeHTML(item.title)}
+          </strong>
+          <p>
+            ${escapeHTML(item.text)}
+          </p>
+        </div>
+      `)
+      .join("");
+
+
+  const recommendations = [];
+
+
+  policies.forEach(name => {
+
+    recommendations.push({
+      name,
+      type:
+        "Policy",
+      reason:
+        "Sets the top-level commitment and direction for the management system."
+    });
+
+  });
+
+
+  procedures.forEach(name => {
+
+    recommendations.push({
+      name,
+      type:
+        "Procedure",
+      reason:
+        procedureReason(name)
+    });
+
+  });
+
+
+  controls.forEach(name => {
+
+    recommendations.push({
+      name,
+      type:
+        "Operational control",
+      reason:
+        "Recommended because the business profile indicates relevant operational exposure."
+    });
+
+  });
+
+
+  tools.forEach(name => {
+
+    recommendations.push({
+      name,
+      type:
+        "Register / Tool",
+      reason:
+        "Provides the working evidence and control layer needed to operate the IMS."
+    });
+
+  });
+
+
+  document
+    .getElementById(
+      "recommendationGrid"
+    )
+    .innerHTML =
+    recommendations
+      .slice(0,14)
+      .map(item => `
+        <div class="recommendation">
+
+          <div class="recommendation-top">
+
+            <div>
+              <h3>
+                ${escapeHTML(item.name)}
+              </h3>
+              <p>
+                Proposed Certicium IMS component.
+              </p>
+            </div>
+
+            <div class="badge">
+              ${escapeHTML(item.type)}
+            </div>
+
+          </div>
+
+          <div class="why">
+            <strong>Why:</strong>
+            ${escapeHTML(item.reason)}
+          </div>
+
+        </div>
+      `)
+      .join("");
+
+
+  function procedureReason(name) {
+
+    const reasons = {
+
+      "Legal & Compliance Management":
+        "Relevant because the organisation has identified jurisdictions, regulation or external compliance drivers.",
+
+      "Contractor Management":
+        "Relevant because contractor use appears in the operating profile.",
+
+      "Training & Competency":
+        "Relevant because operational work needs controlled capability and competency requirements.",
+
+      "Business Continuity & Emergency Management":
+        "Relevant because continuity or resilience requirements were identified.",
+
+      "Risk Management":
+        "Provides a consistent method to identify, assess, treat and review risk.",
+
+      "Incident & Event Management":
+        "Provides reporting, investigation, escalation and organisational learning.",
+
+      "Document & Records Control":
+        "Controls the information that forms the management system.",
+
+      "Audit & Assurance":
+        "Provides evidence that controls and requirements are operating as intended."
+
+    };
+
+
+    return reasons[name]
+      ||
+      "A core governance process for operating and improving the management system.";
+
+  }
+
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+
+  }
+
+</script>
+
+</body>
+</html>
