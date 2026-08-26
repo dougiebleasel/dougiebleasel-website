@@ -285,6 +285,69 @@
       color: var(--white);
     }
 
+    .item-controls {
+  display: flex;
+  gap: 7px;
+  margin-top: 13px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(244,246,245,.06);
+}
+
+.item-control {
+  padding: 6px 9px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .18s;
+}
+
+.item-control:hover {
+  border-color: rgba(111,197,90,.4);
+  color: var(--white);
+}
+
+.item-control.active {
+  border-color: rgba(111,197,90,.55);
+  background: rgba(44,130,89,.15);
+  color: var(--bright-green);
+}
+
+.item-control.exclude.active {
+  border-color: rgba(230,201,107,.45);
+  background: rgba(230,201,107,.08);
+  color: var(--warning);
+}
+
+.blueprint-item.excluded {
+  opacity: .45;
+}
+
+.blueprint-item.excluded h3 {
+  text-decoration: line-through;
+}
+
+.add-item {
+  margin-top: 11px;
+  width: 100%;
+  min-height: 46px;
+  border: 1px dashed rgba(244,246,245,.15);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-item:hover {
+  border-color: rgba(111,197,90,.4);
+  color: var(--bright-green);
+}
+
     .decision-bar {
       margin-top: 40px;
       padding: 25px;
