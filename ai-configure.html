@@ -565,6 +565,155 @@
     }
 
 
+
+    /* ASSUMPTION REVIEW */
+
+    .assumption-stage {
+      display: none;
+      max-width: 980px;
+      margin: auto;
+    }
+
+    .assumption-stage.active {
+      display: block;
+    }
+
+    .assumption-header {
+      margin-bottom: 22px;
+    }
+
+    .assumption-header h2 {
+      font-size: clamp(30px,4vw,46px);
+      letter-spacing: -2px;
+      margin-bottom: 10px;
+    }
+
+    .assumption-header p {
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .assumption-grid {
+      display: grid;
+      grid-template-columns: repeat(2,minmax(0,1fr));
+      gap: 12px;
+    }
+
+    .assumption-card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: linear-gradient(180deg,#151817,#111312);
+    }
+
+    .assumption-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .assumption-label {
+      color: var(--accent-light);
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+
+    .assumption-value {
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .assumption-badge {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+    }
+
+    .assumption-badge.public {
+      color: var(--accent-light);
+      border-color: rgba(111,197,90,.35);
+    }
+
+    .assumption-badge.inferred {
+      color: #E6C96B;
+      border-color: rgba(230,201,107,.35);
+    }
+
+    .assumption-badge.unknown {
+      color: #8B9590;
+    }
+
+    .assumption-reason {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .assumption-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .assumption-actions button {
+      min-height: 36px;
+      padding: 0 11px;
+      font-size: 10px;
+    }
+
+    .assumption-actions .small-secondary {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+    }
+
+    .assumption-card.confirmed {
+      border-color: rgba(111,197,90,.38);
+      background: rgba(44,130,89,.08);
+    }
+
+    .assumption-card.changed {
+      border-color: rgba(143,199,255,.38);
+    }
+
+    .assumption-review-actions {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid rgba(111,197,90,.25);
+      border-radius: 10px;
+      background: rgba(44,130,89,.07);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .assumption-review-actions p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .assumption-review-buttons {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+
     /* INTERVIEW */
 
 
@@ -1050,6 +1199,17 @@
       max-width: 850px
     ) {
 
+      .assumption-grid {
+        grid-template-columns: 1fr;
+      }
+
+
+      .assumption-review-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+
       .layout {
 
         grid-template-columns:
@@ -1338,6 +1498,68 @@
   </section>
 
 
+
+
+  <!-- ASSUMPTION REVIEW -->
+
+  <section
+    class="assumption-stage"
+    id="assumptionStage"
+  >
+
+    <div class="assumption-header">
+
+      <div class="eyebrow">
+        Step 2 · Review
+      </div>
+
+      <h2>
+        Here's what Certicium thinks.
+      </h2>
+
+      <p>
+        We've used public information and reasonable operational inference
+        to answer as much as we can. Confirm what looks right, change anything
+        that's wrong, or ask Certicium to clarify an assumption.
+      </p>
+
+    </div>
+
+
+    <div
+      class="assumption-grid"
+      id="assumptionGrid"
+    ></div>
+
+
+    <div class="assumption-review-actions">
+
+      <p id="assumptionProgress">
+        Review the proposed answers before continuing.
+      </p>
+
+      <div class="assumption-review-buttons">
+
+        <button
+          class="button-secondary"
+          onclick="confirmAllProposed()"
+        >
+          Confirm all proposed
+        </button>
+
+        <button
+          onclick="continueFromAssumptions()"
+        >
+          Continue →
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
   <!-- INTERVIEW -->
 
 
@@ -1472,6 +1694,10 @@
 
 
   let companyLookup = null;
+
+  let assessments = [];
+
+  let reviewState = {};
 
 
   let profile = {
@@ -1704,26 +1930,18 @@
 
   function confirmCompany() {
 
-
     if (
       companyLookup &&
       companyLookup.profile
     ) {
 
       profile = {
-
         ...profile,
-
         ...companyLookup.profile
-
       };
 
     }
 
-
-    /*
-     * Prefer the display company name from the lookup.
-     */
 
     if (
       companyLookup &&
@@ -1736,32 +1954,28 @@
     }
 
 
-    startInterview();
+    assessments =
+      companyLookup?.assessments
+      ||
+      [];
 
 
-    messages.push({
+    reviewState = {};
 
-      role: "user",
 
-      content:
-        "Yes, that's our company. Use the public information as a starting point, but please confirm or clarify anything important before relying on it."
+    assessments.forEach(item => {
+
+      reviewState[item.field] =
+        item.status === "unknown"
+          ? "unknown"
+          : "proposed";
 
     });
 
 
-    addMessage(
-      "user",
-      "Yes, that's us."
-    );
-
-
-    updateProfileDisplay();
-
-
-    callAI();
+    showAssumptionReview();
 
   }
-
 
   function resetLookup() {
 
@@ -1789,6 +2003,7 @@
 
   function startWithoutLookup() {
 
+    reviewState = {};
 
     startInterview();
 
@@ -1808,6 +2023,380 @@
   }
 
 
+  const fieldLabels = {
+    companyName: "Company",
+    companySize: "Size",
+    industry: "Industry",
+    jurisdictions: "Locations",
+    businessProfile: "Business profile",
+    activities: "Activities",
+    drivingDetails: "Driving",
+    dangerousGoodsDetails: "Dangerous goods",
+    environment: "Environment",
+    businessNeeds: "Business goals",
+    standards: "Standards and tools"
+  };
+
+
+  function showAssumptionReview() {
+
+    document
+      .getElementById(
+        "lookupStage"
+      )
+      .style.display =
+      "none";
+
+
+    document
+      .getElementById(
+        "interviewStage"
+      )
+      .classList
+      .remove("active");
+
+
+    document
+      .getElementById(
+        "assumptionStage"
+      )
+      .classList
+      .add("active");
+
+
+    renderAssumptions();
+
+
+    window.scrollTo({
+      top: 180,
+      behavior: "smooth"
+    });
+
+  }
+
+
+  function renderAssumptions() {
+
+    const grid =
+      document.getElementById(
+        "assumptionGrid"
+      );
+
+
+    grid.innerHTML =
+      assessments
+        .map(item => {
+
+          const value =
+            displayValue(
+              profile[item.field]
+            );
+
+
+          const state =
+            reviewState[item.field]
+            ||
+            "proposed";
+
+
+          return `
+            <div
+              class="assumption-card ${state}"
+              id="assumption-${item.field}"
+            >
+
+              <div class="assumption-top">
+
+                <div>
+
+                  <div class="assumption-label">
+                    ${fieldLabels[item.field] || item.field}
+                  </div>
+
+                  <div class="assumption-value">
+                    ${escapeHTML(value)}
+                  </div>
+
+                </div>
+
+                <div
+                  class="assumption-badge ${item.source}"
+                >
+                  ${item.source}
+                  ·
+                  ${item.confidence}
+                </div>
+
+              </div>
+
+              <div class="assumption-reason">
+                ${escapeHTML(item.reason)}
+              </div>
+
+              <div class="assumption-actions">
+
+                <button
+                  onclick="confirmAssumption('${item.field}')"
+                >
+                  ✓ Confirm
+                </button>
+
+                <button
+                  class="small-secondary"
+                  onclick="changeAssumption('${item.field}')"
+                >
+                  Change
+                </button>
+
+                <button
+                  class="small-secondary"
+                  onclick="clarifyAssumption('${item.field}')"
+                >
+                  Clarify
+                </button>
+
+              </div>
+
+            </div>
+          `;
+
+        })
+        .join("");
+
+
+    updateAssumptionProgress();
+
+  }
+
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  function confirmAssumption(field) {
+
+    reviewState[field] =
+      "confirmed";
+
+
+    renderAssumptions();
+
+  }
+
+
+  function confirmAllProposed() {
+
+    assessments.forEach(item => {
+
+      if (
+        item.status !== "unknown"
+        &&
+        reviewState[item.field] !== "changed"
+      ) {
+
+        reviewState[item.field] =
+          "confirmed";
+
+      }
+
+    });
+
+
+    renderAssumptions();
+
+  }
+
+
+  function changeAssumption(field) {
+
+    const current =
+      displayValue(
+        profile[field]
+      );
+
+
+    const updated =
+      prompt(
+        "Change "
+        +
+        (fieldLabels[field] || field)
+        +
+        ":",
+        current === "Not yet known"
+          ? ""
+          : current
+      );
+
+
+    if (updated === null) {
+      return;
+    }
+
+
+    const arrayFields = [
+      "jurisdictions",
+      "businessProfile",
+      "activities",
+      "drivingDetails",
+      "dangerousGoodsDetails",
+      "environment",
+      "businessNeeds",
+      "standards"
+    ];
+
+
+    if (
+      arrayFields.includes(field)
+    ) {
+
+      profile[field] =
+        updated
+          .split(",")
+          .map(item => item.trim())
+          .filter(Boolean);
+
+    } else {
+
+      profile[field] =
+        updated.trim();
+
+    }
+
+
+    reviewState[field] =
+      "changed";
+
+
+    renderAssumptions();
+    updateProfileDisplay();
+
+  }
+
+
+  function clarifyAssumption(field) {
+
+    reviewState[field] =
+      "clarify";
+
+
+    const assessment =
+      assessments.find(
+        item =>
+          item.field === field
+      );
+
+
+    startInterview();
+
+
+    const text =
+      "Please clarify your assumption about "
+      +
+      (fieldLabels[field] || field)
+      +
+      ". You currently have: "
+      +
+      displayValue(profile[field])
+      +
+      "."
+      +
+      (
+        assessment?.reason
+          ? " Your reason was: " + assessment.reason
+          : ""
+      );
+
+
+    messages.push({
+      role: "user",
+      content: text
+    });
+
+
+    addMessage(
+      "user",
+      "Can you clarify your assumption about "
+      +
+      (fieldLabels[field] || field)
+      +
+      "?"
+    );
+
+
+    callAI();
+
+  }
+
+
+  function updateAssumptionProgress() {
+
+    const reviewed =
+      Object.values(reviewState)
+        .filter(value =>
+          value === "confirmed"
+          ||
+          value === "changed"
+        )
+        .length;
+
+
+    const total =
+      assessments.length;
+
+
+    document
+      .getElementById(
+        "assumptionProgress"
+      )
+      .innerText =
+      reviewed
+      +
+      " of "
+      +
+      total
+      +
+      " profile areas confirmed or changed.";
+
+  }
+
+
+  function continueFromAssumptions() {
+
+    startInterview();
+
+
+    messages.push({
+
+      role: "user",
+
+      content:
+        "I have reviewed Certicium's proposed company profile. Preserve anything marked confirmed or changed. Ask me only about unresolved or materially important gaps."
+
+    });
+
+
+    addMessage(
+      "user",
+      "I've reviewed the proposed profile. Let's fill the important gaps."
+    );
+
+
+    updateProfileDisplay();
+
+
+    callAI();
+
+  }
+
+
   function startInterview() {
 
 
@@ -1817,6 +2406,14 @@
       )
       .style.display =
       "none";
+
+
+    document
+      .getElementById(
+        "assumptionStage"
+      )
+      .classList
+      .remove("active");
 
 
     document
@@ -2172,7 +2769,8 @@
             body:
               JSON.stringify({
                 messages,
-                profile
+                profile,
+                reviewState
               })
 
           }
@@ -2434,7 +3032,11 @@
 
     localStorage.setItem(
       "certiciumDemoProfile",
-      JSON.stringify(profile)
+      JSON.stringify({
+        ...profile,
+        reviewState,
+        assessments
+      })
     );
 
 
