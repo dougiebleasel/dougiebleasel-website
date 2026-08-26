@@ -1182,11 +1182,23 @@ const requirementsComplete =
   true;
 
 
+const existingSystemProfile =
+  readStorage(
+    "certiciumExistingSystemProfile"
+  );
+
+
+const existingSystemComplete =
+  existingSystemProfile
+    .setupComplete ===
+  true;
+
+
 const setupSections = [
   organisationComplete,
   operationsComplete,
   requirementsComplete,
-  false,
+  existingSystemComplete,
   false
 ];
 
