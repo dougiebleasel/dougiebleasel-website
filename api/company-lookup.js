@@ -6,13 +6,11 @@ module.exports = async function handler(req, res) {
     });
   }
 
-
   try {
 
     const {
       query = ""
     } = req.body || {};
-
 
     if (!query.trim()) {
       return res.status(400).json({
@@ -20,33 +18,49 @@ module.exports = async function handler(req, res) {
       });
     }
 
-
     const instructions = `
-You are the Tiwili Company Discovery Assistant.
+You are the Certicium Company Discovery Assistant.
 
 The user has supplied a company name or website.
 
-Use public web information to identify the most likely company and build
-a preliminary business profile that can later be confirmed by the customer.
+Your job is to identify the most likely organisation using public web information
+and create a strong first-pass business profile for an IMS Build Demo.
 
-This is discovery only.
+IMPORTANT:
+This is discovery and inference, not a compliance determination.
+
+Use:
+1. the organisation's own website;
+2. official public information;
+3. credible company profiles;
+4. reputable news or industry sources.
+
+You MAY make reasonable operational assumptions where the public information
+supports the nature of the business, but you MUST label them as inferred rather
+than publicly confirmed.
+
+Example:
+If the company publicly installs roadside technology and has field technicians,
+it is reasonable to infer likely exposure to driving, manual handling, electrical
+work and traffic environments. Do not present those as confirmed facts unless
+public evidence directly supports them.
 
 Do NOT:
-- claim that public information is definitely correct;
-- make regulatory or legal conclusions;
-- invent information;
-- guess specific operational activities unless public evidence reasonably supports them;
-- claim ISO certification unless you find credible public evidence.
+- invent specific facts;
+- make legal or regulatory conclusions;
+- claim ISO certification without credible public evidence;
+- infer dangerous goods, heavy vehicles, manufacturing or other specialised
+  activities without a reasonable basis;
+- turn an inference into a confirmed fact.
 
-Prefer:
-1. the company's own website;
-2. credible company profiles and official public information;
-3. reputable news or industry sources.
+For every profile field, return a matching assessment describing:
+- source: public, inferred or unknown
+- confidence: high, medium or low
+- status: proposed or unknown
+- reason: concise explanation
 
-If there are multiple companies with the same or similar name, reduce
-confidence and explain the ambiguity.
-
-Map the company into the Tiwili profile structure where reasonably possible.
+Populate as much of the profile as reasonably possible.
+Unknown values should remain empty.
 
 Allowed values:
 
@@ -85,6 +99,20 @@ heights
 traffic
 remote
 
+drivingDetails:
+occasional
+regular
+fleet
+heavyVehicles
+
+dangerousGoodsDetails:
+store
+transport
+use
+import
+manufacture
+unsure
+
 environment:
 waste
 emissions
@@ -105,17 +133,26 @@ riskRegister
 incident
 bcdr
 
-Only populate fields supported by the public information you found.
-Leave unknown values empty.
+Field assessment keys must be exactly:
+companyName
+companySize
+industry
+jurisdictions
+businessProfile
+activities
+drivingDetails
+dangerousGoodsDetails
+environment
+businessNeeds
+standards
 
-The customer will confirm or correct this information before Tiwili relies on it.
+The customer will review and confirm or change these proposed answers before
+Certicium relies on them.
 `;
-
 
     const response = await fetch(
       "https://api.openai.com/v1/responses",
       {
-
         method: "POST",
 
         headers: {
@@ -128,10 +165,10 @@ The customer will confirm or correct this information before Tiwili relies on it
 
           model: "gpt-5.6-luna",
 
-          instructions: instructions,
+          instructions,
 
           input:
-            `Find the company or organisation that best matches: ${query}`,
+            `Research and build a first-pass profile for the organisation that best matches: ${query}`,
 
           tools: [
             {
@@ -145,7 +182,7 @@ The customer will confirm or correct this information before Tiwili relies on it
 
               type: "json_schema",
 
-              name: "tiwili_company_lookup",
+              name: "certicium_company_lookup",
 
               strict: true,
 
@@ -348,6 +385,79 @@ The customer will confirm or correct this information before Tiwili relies on it
                       "standards"
                     ]
 
+                  },
+
+                  assessments: {
+
+                    type: "array",
+
+                    items: {
+
+                      type: "object",
+
+                      additionalProperties: false,
+
+                      properties: {
+
+                        field: {
+                          type: "string",
+                          enum: [
+                            "companyName",
+                            "companySize",
+                            "industry",
+                            "jurisdictions",
+                            "businessProfile",
+                            "activities",
+                            "drivingDetails",
+                            "dangerousGoodsDetails",
+                            "environment",
+                            "businessNeeds",
+                            "standards"
+                          ]
+                        },
+
+                        source: {
+                          type: "string",
+                          enum: [
+                            "public",
+                            "inferred",
+                            "unknown"
+                          ]
+                        },
+
+                        confidence: {
+                          type: "string",
+                          enum: [
+                            "high",
+                            "medium",
+                            "low"
+                          ]
+                        },
+
+                        status: {
+                          type: "string",
+                          enum: [
+                            "proposed",
+                            "unknown"
+                          ]
+                        },
+
+                        reason: {
+                          type: "string"
+                        }
+
+                      },
+
+                      required: [
+                        "field",
+                        "source",
+                        "confidence",
+                        "status",
+                        "reason"
+                      ]
+
+                    }
+
                   }
 
                 },
@@ -359,7 +469,8 @@ The customer will confirm or correct this information before Tiwili relies on it
                   "summary",
                   "confidence",
                   "confidenceReason",
-                  "profile"
+                  "profile",
+                  "assessments"
                 ]
 
               }
@@ -373,7 +484,6 @@ The customer will confirm or correct this information before Tiwili relies on it
       }
     );
 
-
     if (!response.ok) {
 
       const errorText =
@@ -386,45 +496,29 @@ The customer will confirm or correct this information before Tiwili relies on it
 
       return res.status(500).json({
         error:
-          "Tiwili could not complete the company lookup."
+          "Certicium could not complete the company lookup."
       });
 
     }
 
-
     const data =
       await response.json();
 
-
     let outputText = "";
 
+    if (Array.isArray(data.output)) {
 
-    if (
-      Array.isArray(
-        data.output
-      )
-    ) {
-
-      for (
-        const item of data.output
-      ) {
+      for (const item of data.output) {
 
         if (
           item.type === "message" &&
           Array.isArray(item.content)
         ) {
 
-          for (
-            const content of item.content
-          ) {
+          for (const content of item.content) {
 
-            if (
-              content.type === "output_text"
-            ) {
-
-              outputText +=
-                content.text;
-
+            if (content.type === "output_text") {
+              outputText += content.text;
             }
 
           }
@@ -435,7 +529,6 @@ The customer will confirm or correct this information before Tiwili relies on it
 
     }
 
-
     if (!outputText) {
 
       console.error(
@@ -445,20 +538,17 @@ The customer will confirm or correct this information before Tiwili relies on it
 
       return res.status(500).json({
         error:
-          "Tiwili could not interpret the company search."
+          "Certicium could not interpret the company search."
       });
 
     }
 
-
     const result =
       JSON.parse(outputText);
-
 
     return res
       .status(200)
       .json(result);
-
 
   } catch (error) {
 
