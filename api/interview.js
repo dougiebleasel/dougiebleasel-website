@@ -10,83 +10,83 @@ module.exports = async function handler(req, res) {
 
     const {
       messages = [],
-      profile = {}
+      profile = {},
+      reviewState = {}
     } = req.body || {};
 
-
     const systemPrompt = `
-You are the Tiwili IMS Business Discovery Assistant.
+You are the Certicium IMS Business Discovery Assistant.
 
-Your job is to interview a company founder or representative and understand
-enough about their organisation for the Tiwili rules engine to configure
-an appropriate Integrated Management System.
+The organisation has already been researched and, where possible, Certicium has
+created a proposed profile using public information and reasonable operational
+inference.
 
-Tiwili is designed for startups and scale-ups, particularly organisations
-operating in regulated or operationally complex environments.
+Your job is NOT to repeat a full questionnaire.
 
-You are NOT responsible for deciding which Tiwili products or modules
-the customer receives. A deterministic rules engine will do that later.
+Your job is to:
+1. preserve anything the customer has confirmed;
+2. preserve customer changes as authoritative;
+3. treat unconfirmed proposed values as assumptions, not facts;
+4. ask only about information that is unknown, low-confidence, challenged,
+   or genuinely necessary for a useful first-pass IMS recommendation;
+5. ask ONE main question at a time;
+6. keep the conversation concise and practical.
 
-Your job is ONLY to:
+Review state:
+${JSON.stringify(reviewState)}
 
-1. understand the organisation;
-2. ask useful follow-up questions;
-3. extract structured facts;
-4. identify information that is still unclear.
+Current profile:
+${JSON.stringify(profile)}
 
-Ask ONE main question at a time.
+Interpret reviewState values as:
+confirmed = customer confirmed Certicium's proposal
+changed = customer supplied a correction; treat it as authoritative
+clarify = customer wants explanation or clarification
+proposed = not yet confirmed
+unknown = no useful answer yet
 
-Keep the conversation friendly, practical and concise.
+Do not ask again about confirmed or changed fields unless the customer later
+contradicts them.
 
-Do not overwhelm the customer with risk terminology.
-
-Prefer plain questions such as:
-- What does your company do?
-- Where do you operate?
-- Do your own employees perform that work?
-- Do you use contractors?
-- Do your staff drive for work?
-- Do you handle chemicals or batteries?
-- Do you manufacture or import physical products?
-- Are you trying to win government or major corporate customers?
-- Are you seeking ISO certification?
-
-If the customer says they do not know something, that is acceptable.
-Record uncertainty and ask a simpler follow-up where useful.
-
-Never claim that Tiwili guarantees regulatory compliance or ISO certification.
-
-Preserve previously known profile information unless the customer corrects it.
-
-Set complete=true only when you have enough information to produce a
-reasonable first-pass IMS configuration.
-
-A useful minimum usually includes:
+Focus first on major gaps that materially affect the IMS recommendation:
 - what the organisation does;
 - where it operates;
 - whether it has employees;
-- whether it performs physical or operational work;
-- major operational activities;
-- major customer or regulatory objectives.
+- whether physical/operational work occurs;
+- contractors;
+- driving;
+- electrical work;
+- dangerous goods;
+- plant/manual handling;
+- work at heights or near traffic;
+- major customer, government or regulatory objectives;
+- ISO ambitions.
 
-Current known profile:
-${JSON.stringify(profile)}
+If several facts can reasonably be grouped into one short confirmation question,
+do so. Avoid interrogating the customer field by field.
+
+Never claim that Certicium guarantees regulatory compliance or ISO certification.
+
+Set complete=true when the remaining uncertainty would not materially change a
+reasonable first-pass IMS Build Demo.
 `;
 
-
-    const conversation = messages.map(message => ({
-      role: message.role === "assistant" ? "assistant" : "user",
-      content: [
-        {
-          type:
-            message.role === "assistant"
-              ? "output_text"
-              : "input_text",
-          text: message.content
-        }
-      ]
-    }));
-
+    const conversation =
+      messages.map(message => ({
+        role:
+          message.role === "assistant"
+            ? "assistant"
+            : "user",
+        content: [
+          {
+            type:
+              message.role === "assistant"
+                ? "output_text"
+                : "input_text",
+            text: message.content
+          }
+        ]
+      }));
 
     const response = await fetch(
       "https://api.openai.com/v1/responses",
@@ -103,11 +103,13 @@ ${JSON.stringify(profile)}
 
           model: "gpt-5.6-luna",
 
-          instructions: systemPrompt,
+          instructions:
+            systemPrompt,
 
-          input: conversation.length
-            ? conversation
-            : "Begin the interview.",
+          input:
+            conversation.length
+              ? conversation
+              : "Review the current profile and ask only the most important unresolved question.",
 
           text: {
 
@@ -115,7 +117,7 @@ ${JSON.stringify(profile)}
 
               type: "json_schema",
 
-              name: "tiwili_business_profile",
+              name: "certicium_business_profile",
 
               strict: true,
 
@@ -318,7 +320,6 @@ ${JSON.stringify(profile)}
       }
     );
 
-
     if (!response.ok) {
 
       const errorText =
@@ -336,13 +337,10 @@ ${JSON.stringify(profile)}
 
     }
 
-
     const data =
       await response.json();
 
-
     let outputText = "";
-
 
     if (
       data.output &&
@@ -361,9 +359,7 @@ ${JSON.stringify(profile)}
             if (
               content.type === "output_text"
             ) {
-
               outputText += content.text;
-
             }
 
           }
@@ -373,7 +369,6 @@ ${JSON.stringify(profile)}
       }
 
     }
-
 
     if (!outputText) {
 
@@ -389,15 +384,10 @@ ${JSON.stringify(profile)}
 
     }
 
-
     let result;
 
-
     try {
-
-      result =
-        JSON.parse(outputText);
-
+      result = JSON.parse(outputText);
     } catch (error) {
 
       console.error(
@@ -412,9 +402,9 @@ ${JSON.stringify(profile)}
 
     }
 
-
-    return res.status(200).json(result);
-
+    return res
+      .status(200)
+      .json(result);
 
   } catch (error) {
 
@@ -422,7 +412,7 @@ ${JSON.stringify(profile)}
 
     return res.status(500).json({
       error:
-        "Something went wrong with the Tiwili interview."
+        "Something went wrong with the Certicium interview."
     });
 
   }
