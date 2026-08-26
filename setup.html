@@ -1148,13 +1148,25 @@
     true;
 
 
-  const setupSections = [
-    organisationComplete,
-    false,
-    false,
-    false,
-    false
-  ];
+const operationsProfile =
+  readStorage(
+    "certiciumOperationsProfile"
+  );
+
+
+const operationsComplete =
+  operationsProfile
+    .setupComplete ===
+  true;
+
+
+const setupSections = [
+  organisationComplete,
+  operationsComplete,
+  false,
+  false,
+  false
+];
 
 
   const completed =
