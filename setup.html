@@ -1310,6 +1310,109 @@ const setupSections = [
 
   }
 
+
+  /*
+   * REQUIREMENTS CARD STATUS
+   */
+
+
+  const requirementsCard =
+    document.getElementById(
+      "requirementsCard"
+    );
+
+
+  const requirementsStatus =
+    document.getElementById(
+      "requirementsStatus"
+    );
+
+
+  const requirementsAction =
+    requirementsCard
+      .querySelector(
+        ".card-action"
+      );
+
+
+  if (
+    operationsComplete
+  ) {
+
+    requirementsCard
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    requirementsStatus
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    if (
+      requirementsComplete
+    ) {
+
+      requirementsCard
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      requirementsStatus
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      requirementsStatus.innerText =
+        "Complete";
+
+
+      requirementsAction.innerText =
+        "Review requirements setup →";
+
+    } else {
+
+      requirementsStatus.innerText =
+        "Start";
+
+
+      requirementsAction.innerText =
+        "Start requirements setup →";
+
+    }
+
+  } else {
+
+    requirementsCard
+      .removeAttribute(
+        "href"
+      );
+
+
+    requirementsCard
+      .classList
+      .add(
+        "locked"
+      );
+
+
+    requirementsStatus.innerText =
+      "Locked";
+
+
+    requirementsAction.innerText =
+      "Complete operations setup first";
+
+  }
+
 </script>
 
 
