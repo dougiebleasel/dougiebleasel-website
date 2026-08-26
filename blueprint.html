@@ -1832,45 +1832,88 @@
 
   function approveBlueprint() {
 
+    const approvedPolicies =
+      policies.filter(item => item.included !== false);
+
+    const approvedProcedures =
+      procedures.filter(item => item.included !== false);
+
+    const approvedControls =
+      controls.filter(item => item.included !== false);
+
+    const approvedTools =
+      tools.filter(item => item.included !== false);
+
+
     const blueprint = {
 
-      approved:
-        true,
+      approved: true,
 
       approvedAt:
-        new Date()
-          .toISOString(),
-
-      policies,
-
-      procedures,
-
-      operationalControls:
-        controls,
-
-      tools,
+        new Date().toISOString(),
 
       organisation:
-        organisationName
+        organisationName,
+
+      architecture: {
+
+        policies:
+          approvedPolicies,
+
+        procedures:
+          approvedProcedures,
+
+        operationalControls:
+          approvedControls,
+
+        tools:
+          approvedTools
+
+      },
+
+      reviewHistory: {
+
+        policies:
+          policies,
+
+        procedures:
+          procedures,
+
+        operationalControls:
+          controls,
+
+        tools:
+          tools
+
+      },
+
+      counts: {
+
+        policies:
+          approvedPolicies.length,
+
+        procedures:
+          approvedProcedures.length,
+
+        operationalControls:
+          approvedControls.length,
+
+        tools:
+          approvedTools.length
+
+      }
 
     };
 
 
     localStorage.setItem(
       "certiciumIMSBlueprint",
-      JSON.stringify(
-        blueprint
-      )
-    );
-
-
-    alert(
-      "IMS Blueprint approved. Certicium is ready to begin building your management system."
+      JSON.stringify(blueprint)
     );
 
 
     window.location.href =
-      "setup.html";
+      "ims.html";
 
   }
 
