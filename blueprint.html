@@ -1299,7 +1299,8 @@
 
   function renderItems(
     containerId,
-    items
+    items,
+    category
   ) {
 
     const container =
@@ -1324,9 +1325,17 @@
     container.innerHTML =
       items
         .map(
-          item => `
+          (item, index) => `
 
-            <div class="blueprint-item">
+            <div
+              class="blueprint-item ${
+                item.included === false
+                  ? "excluded"
+                  : ""
+              }"
+              data-category="${category}"
+              data-index="${index}"
+            >
 
               <div class="item-top">
 
@@ -1353,6 +1362,7 @@
 
               </div>
 
+
               <div class="reason">
 
                 <strong>
@@ -1360,6 +1370,56 @@
                 </strong>
 
                 ${item.reason}
+
+              </div>
+
+
+              <div class="item-controls">
+
+                <button
+                  type="button"
+                  class="
+                    item-control
+                    include
+                    ${
+                      item.included !== false
+                        ? "active"
+                        : ""
+                    }
+                  "
+                  onclick="
+                    setItemDecision(
+                      '${category}',
+                      ${index},
+                      true
+                    )
+                  "
+                >
+                  ✓ Include
+                </button>
+
+
+                <button
+                  type="button"
+                  class="
+                    item-control
+                    exclude
+                    ${
+                      item.included === false
+                        ? "active"
+                        : ""
+                    }
+                  "
+                  onclick="
+                    setItemDecision(
+                      '${category}',
+                      ${index},
+                      false
+                    )
+                  "
+                >
+                  × Exclude
+                </button>
 
               </div>
 
@@ -1374,23 +1434,147 @@
 
   renderItems(
     "policiesGrid",
-    policies
+    policies,
+    "policies"
   );
+
 
   renderItems(
     "proceduresGrid",
-    procedures
+    procedures,
+    "procedures"
   );
+
 
   renderItems(
     "controlsGrid",
-    controls
+    controls,
+    "controls"
   );
+
 
   renderItems(
     "toolsGrid",
-    tools
+    tools,
+    "tools"
   );
+
+    /*
+   * BLUEPRINT REVIEW DECISIONS
+   */
+
+
+  const blueprintCategories = {
+    policies,
+    procedures,
+    controls,
+    tools
+  };
+
+
+  function setItemDecision(
+    category,
+    index,
+    included
+  ) {
+
+    const items =
+      blueprintCategories[
+        category
+      ];
+
+
+    if (
+      !items
+      ||
+      !items[index]
+    ) {
+      return;
+    }
+
+
+    items[index].included =
+      included;
+
+
+    const containerMap = {
+      policies: "policiesGrid",
+      procedures: "proceduresGrid",
+      controls: "controlsGrid",
+      tools: "toolsGrid"
+    };
+
+
+    renderItems(
+      containerMap[category],
+      items,
+      category
+    );
+
+
+    updateApprovedCounts();
+
+  }
+
+
+  function updateApprovedCounts() {
+
+    const includedPolicies =
+      policies.filter(
+        item =>
+          item.included !== false
+      ).length;
+
+
+    const includedProcedures =
+      procedures.filter(
+        item =>
+          item.included !== false
+      ).length;
+
+
+    const includedControls =
+      controls.filter(
+        item =>
+          item.included !== false
+      ).length;
+
+
+    const includedTools =
+      tools.filter(
+        item =>
+          item.included !== false
+      ).length;
+
+
+    setCount(
+      "policyCount",
+      "policyCountLabel",
+      includedPolicies
+    );
+
+
+    setCount(
+      "procedureCount",
+      "procedureCountLabel",
+      includedProcedures
+    );
+
+
+    setCount(
+      "controlCount",
+      "controlCountLabel",
+      includedControls
+    );
+
+
+    setCount(
+      "toolCount",
+      "toolCountLabel",
+      includedTools
+    );
+
+  }
 
 
   /*
