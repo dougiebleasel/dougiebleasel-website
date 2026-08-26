@@ -536,7 +536,13 @@
       class="item-grid"
       id="policiesGrid"
     ></div>
-
+<button
+  type="button"
+  class="add-item"
+  onclick="addBlueprintItem('policies')"
+>
+  + Add Policy
+</button>
   </section>
 
 
@@ -559,7 +565,13 @@
       class="item-grid"
       id="proceduresGrid"
     ></div>
-
+<button
+  type="button"
+  class="add-item"
+  onclick="addBlueprintItem('procedures')"
+>
+  + Add Procedure
+</button>
   </section>
 
 
@@ -584,6 +596,14 @@
       id="controlsGrid"
     ></div>
 
+    <button
+      type="button"
+      class="add-item"
+      onclick="addBlueprintItem('controls')"
+    >
+      + Add Operational Control
+    </button>
+
   </section>
 
 
@@ -607,6 +627,14 @@
       class="item-grid"
       id="toolsGrid"
     ></div>
+
+    <button
+      type="button"
+      class="add-item"
+      onclick="addBlueprintItem('tools')"
+    >
+      + Add Register, Form or Tool
+    </button>
 
   </section>
 
@@ -1573,6 +1601,88 @@
       "toolCountLabel",
       includedTools
     );
+
+  }
+
+
+  /*
+   * ADD CUSTOMER COMPONENT
+   */
+
+
+  function addBlueprintItem(
+    category
+  ) {
+
+    const labels = {
+      policies: "policy",
+      procedures: "procedure",
+      controls: "operational control",
+      tools: "register, form or tool"
+    };
+
+
+    const name =
+      prompt(
+        "What "
+        +
+        labels[category]
+        +
+        " would you like to add?"
+      );
+
+
+    if (
+      !name
+      ||
+      !name.trim()
+    ) {
+      return;
+    }
+
+
+    const items =
+      blueprintCategories[
+        category
+      ];
+
+
+    items.push({
+
+      name:
+        name.trim(),
+
+      status:
+        "optional",
+
+      reason:
+        "Added by the customer during IMS Blueprint review.",
+
+      included:
+        true,
+
+      source:
+        "customer"
+
+    });
+
+
+    const containerMap = {
+      policies: "policiesGrid",
+      procedures: "proceduresGrid",
+      controls: "controlsGrid",
+      tools: "toolsGrid"
+    };
+
+
+    renderItems(
+      containerMap[category],
+      items,
+      category
+    );
+
+
+    updateApprovedCounts();
 
   }
 
