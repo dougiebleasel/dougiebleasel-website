@@ -1485,6 +1485,108 @@ const setupSections = [
 
   }
 
+  /*
+   * EXISTING SYSTEM CARD STATUS
+   */
+
+
+  const existingSystemCard =
+    document.getElementById(
+      "existingSystemCard"
+    );
+
+
+  const existingSystemStatus =
+    document.getElementById(
+      "existingSystemStatus"
+    );
+
+
+  const existingSystemAction =
+    existingSystemCard
+      .querySelector(
+        ".card-action"
+      );
+
+
+  if (
+    requirementsComplete
+  ) {
+
+    existingSystemCard
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    existingSystemStatus
+      .classList
+      .remove(
+        "locked"
+      );
+
+
+    if (
+      existingSystemComplete
+    ) {
+
+      existingSystemCard
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      existingSystemStatus
+        .classList
+        .add(
+          "complete"
+        );
+
+
+      existingSystemStatus.innerText =
+        "Complete";
+
+
+      existingSystemAction.innerText =
+        "Review existing system setup →";
+
+    } else {
+
+      existingSystemStatus.innerText =
+        "Start";
+
+
+      existingSystemAction.innerText =
+        "Start existing system setup →";
+
+    }
+
+  } else {
+
+    existingSystemCard
+      .removeAttribute(
+        "href"
+      );
+
+
+    existingSystemCard
+      .classList
+      .add(
+        "locked"
+      );
+
+
+    existingSystemStatus.innerText =
+      "Locked";
+
+
+    existingSystemAction.innerText =
+      "Complete requirements setup first";
+
+  }  
+
 </script>
 
 
