@@ -251,92 +251,216 @@
     }
 
     /* =========================
-       HERO SYSTEM VISUAL
+       HERO ORBITAL SYSTEM
        ========================= */
 
     .visual {
-      min-height: 470px;
+      min-height: 540px;
       position: relative;
       display: grid;
       place-items: center;
+      isolation: isolate;
     }
 
-    .core {
-      width: 250px;
-      height: 250px;
+    .orbit-stage {
+      position: relative;
+      width: min(100%, 560px);
+      aspect-ratio: 1;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
       border-radius: 50%;
-
-      display: grid;
-      place-items: center;
-
-      text-align: center;
-
-      border: 1px solid rgba(111,197,90,.28);
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(44,130,89,.24),
-          rgba(11,61,46,.12) 60%,
-          rgba(13,13,13,.4)
-        );
-
-      box-shadow:
-        0 0 80px rgba(44,130,89,.15);
-
-      position: relative;
+      border: 1px solid rgba(111,197,90,.12);
+      transform: translate(-50%,-50%);
+      pointer-events: none;
     }
 
-    .core::before,
-    .core::after {
+    .ring-1 { width: 48%; height: 48%; }
+    .ring-2 { width: 68%; height: 68%; border-color: rgba(244,246,245,.07); }
+    .ring-3 { width: 88%; height: 88%; border-color: rgba(111,197,90,.10); }
+
+    .orbit-stage::before {
       content: "";
       position: absolute;
+      inset: 10%;
       border-radius: 50%;
-      border: 1px solid rgba(244,246,245,.07);
+      background:
+        radial-gradient(circle, rgba(44,130,89,.15), transparent 58%);
+      filter: blur(14px);
+      pointer-events: none;
     }
 
-    .core::before {
-      inset: -52px;
-    }
-
-    .core::after {
-      inset: -104px;
-    }
-
-    .core strong {
-      display: block;
-      font-size: 25px;
-    }
-
-    .core span {
-      display: block;
-      margin-top: 5px;
-      color: var(--approval);
-      font-size: 9px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .orbit {
+    .orbit-core {
       position: absolute;
-      padding: 8px 11px;
-
-      border: 1px solid rgba(244,246,245,.1);
-      border-radius: 6px;
-
-      background: rgba(20,23,21,.9);
-      color: #CFD6D2;
-
-      font-size: 9px;
-      font-weight: 800;
+      left: 50%;
+      top: 50%;
+      width: 150px;
+      height: 150px;
+      transform: translate(-50%,-50%);
+      display: grid;
+      place-items: center;
+      z-index: 10;
+      border-radius: 24px;
+      border: 1px solid rgba(111,197,90,.34);
+      background:
+        radial-gradient(circle, rgba(44,130,89,.25), rgba(11,61,46,.14) 58%, rgba(13,13,13,.94));
+      box-shadow:
+        0 0 55px rgba(44,130,89,.18),
+        inset 0 0 25px rgba(111,197,90,.05);
     }
 
-    .o1 { top: 7%; left: 17%; }
-    .o2 { top: 18%; right: 4%; }
-    .o3 { bottom: 19%; right: 3%; }
-    .o4 { bottom: 7%; left: 18%; }
-    .o5 { top: 46%; left: 0; }
+    .orbit-core img {
+      width: 112px;
+      height: 112px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .orbit-track {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      border-radius: 50%;
+      transform: translate(-50%,-50%);
+      animation: orbit-spin var(--speed) linear infinite;
+      z-index: 4;
+    }
+
+    .track-a {
+      width: 69%;
+      height: 69%;
+      --speed: 48s;
+    }
+
+    .track-b {
+      width: 88%;
+      height: 88%;
+      --speed: 68s;
+      animation-direction: reverse;
+    }
+
+    .orbit-element {
+      --angle: 0deg;
+      --radius: 50%;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 66px;
+      height: 76px;
+      transform:
+        translate(-50%,-50%)
+        rotate(var(--angle))
+        translateY(calc(var(--radius) * -1))
+        rotate(calc(var(--angle) * -1));
+      transform-origin: center;
+    }
+
+    .orbit-element-inner {
+      width: 100%;
+      height: 100%;
+      padding: 7px 6px 6px;
+      position: relative;
+      border: 1px solid rgba(111,197,90,.38);
+      border-radius: 7px;
+      background:
+        linear-gradient(180deg, rgba(18,53,36,.94), rgba(13,13,13,.96));
+      box-shadow: 0 0 18px rgba(44,130,89,.10);
+      animation: orbit-counter var(--speed) linear infinite;
+      text-align: left;
+    }
+
+    .track-b .orbit-element-inner {
+      animation-direction: reverse;
+    }
+
+    .element-num {
+      color: var(--muted);
+      font-size: 7px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .element-symbol {
+      margin-top: 7px;
+      color: var(--white);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    .element-name {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      bottom: 6px;
+      color: #CFD6D2;
+      font-size: 6.5px;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .risk-element .element-symbol {
+      color: var(--approval);
+    }
+
+    .orbit-element:nth-child(1) { --angle: 0deg; }
+    .orbit-element:nth-child(2) { --angle: 45deg; }
+    .orbit-element:nth-child(3) { --angle: 90deg; }
+    .orbit-element:nth-child(4) { --angle: 135deg; }
+    .orbit-element:nth-child(5) { --angle: 180deg; }
+    .orbit-element:nth-child(6) { --angle: 225deg; }
+    .orbit-element:nth-child(7) { --angle: 270deg; }
+    .orbit-element:nth-child(8) { --angle: 315deg; }
+
+    .track-b .orbit-element:nth-child(1) { --angle: 8deg; }
+    .track-b .orbit-element:nth-child(2) { --angle: 59deg; }
+    .track-b .orbit-element:nth-child(3) { --angle: 110deg; }
+    .track-b .orbit-element:nth-child(4) { --angle: 161deg; }
+    .track-b .orbit-element:nth-child(5) { --angle: 212deg; }
+    .track-b .orbit-element:nth-child(6) { --angle: 263deg; }
+    .track-b .orbit-element:nth-child(7) { --angle: 314deg; }
+
+    @keyframes orbit-spin {
+      from {
+        transform: translate(-50%,-50%) rotate(0deg);
+      }
+      to {
+        transform: translate(-50%,-50%) rotate(360deg);
+      }
+    }
+
+    @keyframes orbit-counter {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(-360deg);
+      }
+    }
+
+    .track-b .orbit-element-inner {
+      animation-name: orbit-counter-reverse;
+    }
+
+    @keyframes orbit-counter-reverse {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .orbit-track,
+      .orbit-element-inner {
+        animation-play-state: paused;
+      }
+    }
 
     /* =========================
        SHARED
@@ -677,6 +801,37 @@
         padding-top: 62px;
       }
 
+      .visual {
+        min-height: 420px;
+      }
+
+      .orbit-stage {
+        width: min(100%, 410px);
+      }
+
+      .orbit-core {
+        width: 118px;
+        height: 118px;
+      }
+
+      .orbit-core img {
+        width: 88px;
+        height: 88px;
+      }
+
+      .orbit-element {
+        width: 54px;
+        height: 64px;
+      }
+
+      .element-symbol {
+        font-size: 18px;
+      }
+
+      .element-name {
+        font-size: 5.5px;
+      }
+
       h1 {
         letter-spacing: -3px;
       }
@@ -827,43 +982,133 @@
 
       <div
         class="visual"
-        aria-hidden="true"
+        aria-label="Certicium management system elements"
       >
 
-        <div class="core">
+        <div class="orbit-stage">
 
-          <div>
+          <div class="orbit-ring ring-1"></div>
+          <div class="orbit-ring ring-2"></div>
+          <div class="orbit-ring ring-3"></div>
 
-            <strong>
-              Certicium
-            </strong>
-
-            <span>
-              Your IMS
-            </span>
-
+          <div class="orbit-core">
+            <img
+              src="certicium-logo.png"
+              alt="Certicium"
+            >
           </div>
 
-        </div>
+          <div class="orbit-track track-a">
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">01</div>
+              <div class="element-symbol">Po</div>
+              <div class="element-name">Policies</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">02</div>
+              <div class="element-symbol">Dm</div>
+              <div class="element-name">Document Mgmt</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">03</div>
+              <div class="element-symbol">Rm</div>
+              <div class="element-name">Risk Mgmt</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">04</div>
+              <div class="element-symbol">Cm</div>
+              <div class="element-name">Competency</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">05</div>
+              <div class="element-symbol">Cc</div>
+              <div class="element-name">Consultation</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">06</div>
+              <div class="element-symbol">IM</div>
+              <div class="element-name">Incident Mgmt</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">07</div>
+              <div class="element-symbol">Au</div>
+              <div class="element-name">Audit & Testing</div>
+            </div>
+          </div>
+          <div class="orbit-element ">
+            <div class="orbit-element-inner">
+              <div class="element-num">08</div>
+              <div class="element-symbol">Pm</div>
+              <div class="element-name">Performance</div>
+            </div>
+          </div>
+          </div>
 
-        <div class="orbit o1">
-          Governance
-        </div>
+          <div class="orbit-track track-b">
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">09</div>
+              <div class="element-symbol">Dr</div>
+              <div class="element-name">Driving</div>
+            </div>
+          </div>
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">10</div>
+              <div class="element-symbol">Ct</div>
+              <div class="element-name">Contractors</div>
+            </div>
+          </div>
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">11</div>
+              <div class="element-symbol">Ew</div>
+              <div class="element-name">Electrical</div>
+            </div>
+          </div>
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">12</div>
+              <div class="element-symbol">Mh</div>
+              <div class="element-name">Manual Handling</div>
+            </div>
+          </div>
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">13</div>
+              <div class="element-symbol">Wt</div>
+              <div class="element-name">Near Traffic</div>
+            </div>
+          </div>
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">14</div>
+              <div class="element-symbol">Pe</div>
+              <div class="element-name">Plant & Equipment</div>
+            </div>
+          </div>
+          <div class="orbit-element risk-element">
+            <div class="orbit-element-inner">
+              <div class="element-num">15</div>
+              <div class="element-symbol">Ps</div>
+              <div class="element-name">Psychosocial</div>
+            </div>
+          </div>
+          </div>
 
-        <div class="orbit o2">
-          Risk & Compliance
-        </div>
-
-        <div class="orbit o3">
-          Assurance
-        </div>
-
-        <div class="orbit o4">
-          Operational Controls
-        </div>
-
-        <div class="orbit o5">
-          AI & Automation
         </div>
 
       </div>
