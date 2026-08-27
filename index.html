@@ -321,41 +321,19 @@
 
     .orbit-track {
       position: absolute;
-      left: 50%;
-      top: 50%;
-      border-radius: 50%;
-      transform: translate(-50%,-50%);
-      animation: orbit-spin var(--speed) linear infinite;
+      inset: 0;
       z-index: 4;
-    }
-
-    .track-a {
-      width: 69%;
-      height: 69%;
-      --speed: 48s;
-    }
-
-    .track-b {
-      width: 88%;
-      height: 88%;
-      --speed: 68s;
-      animation-direction: reverse;
+      pointer-events: none;
     }
 
     .orbit-element {
-      --angle: 0deg;
-      --radius: 50%;
       position: absolute;
       left: 50%;
       top: 50%;
       width: 66px;
       height: 76px;
-      transform:
-        translate(-50%,-50%)
-        rotate(var(--angle))
-        translateY(calc(var(--radius) * -1))
-        rotate(calc(var(--angle) * -1));
-      transform-origin: center;
+      transform: translate(-50%, -50%);
+      will-change: left, top;
     }
 
     .orbit-element-inner {
@@ -367,13 +345,10 @@
       border-radius: 7px;
       background:
         linear-gradient(180deg, rgba(18,53,36,.94), rgba(13,13,13,.96));
-      box-shadow: 0 0 18px rgba(44,130,89,.10);
-      animation: orbit-counter var(--speed) linear infinite;
+      box-shadow:
+        0 0 18px rgba(44,130,89,.12),
+        inset 0 0 0 1px rgba(111,197,90,.025);
       text-align: left;
-    }
-
-    .track-b .orbit-element-inner {
-      animation-direction: reverse;
     }
 
     .element-num {
@@ -407,59 +382,11 @@
       color: var(--approval);
     }
 
-    .orbit-element:nth-child(1) { --angle: 0deg; }
-    .orbit-element:nth-child(2) { --angle: 45deg; }
-    .orbit-element:nth-child(3) { --angle: 90deg; }
-    .orbit-element:nth-child(4) { --angle: 135deg; }
-    .orbit-element:nth-child(5) { --angle: 180deg; }
-    .orbit-element:nth-child(6) { --angle: 225deg; }
-    .orbit-element:nth-child(7) { --angle: 270deg; }
-    .orbit-element:nth-child(8) { --angle: 315deg; }
-
-    .track-b .orbit-element:nth-child(1) { --angle: 8deg; }
-    .track-b .orbit-element:nth-child(2) { --angle: 59deg; }
-    .track-b .orbit-element:nth-child(3) { --angle: 110deg; }
-    .track-b .orbit-element:nth-child(4) { --angle: 161deg; }
-    .track-b .orbit-element:nth-child(5) { --angle: 212deg; }
-    .track-b .orbit-element:nth-child(6) { --angle: 263deg; }
-    .track-b .orbit-element:nth-child(7) { --angle: 314deg; }
-
-    @keyframes orbit-spin {
-      from {
-        transform: translate(-50%,-50%) rotate(0deg);
-      }
-      to {
-        transform: translate(-50%,-50%) rotate(360deg);
-      }
-    }
-
-    @keyframes orbit-counter {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(-360deg);
-      }
-    }
-
-    .track-b .orbit-element-inner {
-      animation-name: orbit-counter-reverse;
-    }
-
-    @keyframes orbit-counter-reverse {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      .orbit-track,
-      .orbit-element-inner {
-        animation-play-state: paused;
+      .orbit-element {
+        will-change: auto;
       }
+    }
     }
 
     /* =========================
@@ -1431,6 +1358,167 @@
     </div>
 
   </footer>
+
+
+<script>
+  /*
+   * CERTICIUM HERO ORBIT
+   * Positions the 15 tiles around two independent elliptical paths.
+   */
+
+  (function () {
+
+    const stage =
+      document.querySelector(".orbit-stage");
+
+    if (!stage) {
+      return;
+    }
+
+    const innerTiles =
+      Array.from(
+        document.querySelectorAll(
+          ".track-a .orbit-element"
+        )
+      );
+
+    const outerTiles =
+      Array.from(
+        document.querySelectorAll(
+          ".track-b .orbit-element"
+        )
+      );
+
+    const reduceMotion =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+    let startTime =
+      performance.now();
+
+
+    function placeTiles(
+      tiles,
+      radiusX,
+      radiusY,
+      rotation,
+      offset
+    ) {
+
+      const count =
+        tiles.length;
+
+      tiles.forEach(
+        (tile, index) => {
+
+          const angle =
+            (
+              (Math.PI * 2 * index)
+              /
+              count
+            )
+            +
+            rotation
+            +
+            offset;
+
+          const x =
+            Math.cos(angle)
+            *
+            radiusX;
+
+          const y =
+            Math.sin(angle)
+            *
+            radiusY;
+
+          tile.style.left =
+            `calc(50% + ${x}px)`;
+
+          tile.style.top =
+            `calc(50% + ${y}px)`;
+
+        }
+      );
+
+    }
+
+
+    function render(now) {
+
+      const width =
+        stage.clientWidth;
+
+      const height =
+        stage.clientHeight;
+
+      /*
+       * Keep the paths comfortably inside the existing hero visual.
+       */
+      const innerRadiusX =
+        width * 0.30;
+
+      const innerRadiusY =
+        height * 0.30;
+
+      const outerRadiusX =
+        width * 0.43;
+
+      const outerRadiusY =
+        height * 0.42;
+
+      const elapsed =
+        reduceMotion
+          ? 0
+          : (now - startTime) / 1000;
+
+      const innerRotation =
+        elapsed
+        *
+        0.055;
+
+      const outerRotation =
+        elapsed
+        *
+        -0.038;
+
+      placeTiles(
+        innerTiles,
+        innerRadiusX,
+        innerRadiusY,
+        innerRotation,
+        -Math.PI / 2
+      );
+
+      placeTiles(
+        outerTiles,
+        outerRadiusX,
+        outerRadiusY,
+        outerRotation,
+        -Math.PI / 2 + 0.22
+      );
+
+      if (!reduceMotion) {
+        requestAnimationFrame(render);
+      }
+
+    }
+
+
+    requestAnimationFrame(render);
+
+    window.addEventListener(
+      "resize",
+      () => {
+        if (reduceMotion) {
+          render(performance.now());
+        }
+      }
+    );
+
+  })();
+</script>
 
 </body>
 </html>
