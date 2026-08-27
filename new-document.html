@@ -587,7 +587,30 @@ function inferDocumentFromBrief(brief){
   let purpose="Define a consistent controlled process for this activity.";
   let owner="Governance";
   let suggestedId="IMS.XX.NEW";
-  let content="";
+  let scope="This procedure applies to all relevant workers, contractors and operational activities covered by the subject matter.";
+  let responsibilities=[
+    "The document owner is responsible for maintaining this procedure.",
+    "Managers are responsible for implementing the requirements within their areas.",
+    "Workers and contractors must follow the applicable controls and report issues."
+  ];
+  let processSteps=[
+    "Plan the activity and identify applicable requirements.",
+    "Confirm responsibilities, competency and required controls.",
+    "Complete the activity in accordance with the approved process.",
+    "Retain required evidence and records.",
+    "Review outcomes and address any identified gaps."
+  ];
+  let records=[
+    "Approvals",
+    "Completed forms and checklists",
+    "Supporting evidence",
+    "Corrective actions"
+  ];
+  let assurance=[
+    "Periodic review of implementation",
+    "Audit or inspection of compliance with the procedure",
+    "Review following incidents, findings or material change"
+  ];
 
   if(text.includes("policy")){
     type="Policy";
@@ -607,9 +630,41 @@ function inferDocumentFromBrief(brief){
 
   if(text.includes("contractor")){
     title="Contractor Management Procedure";
-    purpose="Define how contractors are selected, engaged, inducted, monitored and closed out to ensure applicable requirements and controls are met.";
+    purpose="Define how contractors are selected, engaged, inducted, monitored and closed out so that applicable legal, contractual, competency and operational requirements are met.";
     owner="Governance";
     suggestedId="IMS.03.CT";
+    scope="This procedure applies to contractors and subcontractors engaged to perform work for or on behalf of the organisation, including work at company, customer and operational sites.";
+    responsibilities=[
+      "The engaging manager must confirm the contractor is suitable for the work before engagement.",
+      "The contractor must provide required licences, competencies, insurances and supporting evidence.",
+      "Site or project managers must ensure induction and site-specific requirements are completed before work starts.",
+      "Contractor performance and compliance must be monitored throughout the engagement."
+    ];
+    processSteps=[
+      "Define the work scope and identify the risks, competencies and legal or customer requirements that apply.",
+      "Prequalify the contractor and verify licences, competency, insurance and other required evidence.",
+      "Complete contractor onboarding, induction and communication of site or project requirements.",
+      "Confirm required risk assessments, permits, safe work documentation and controls before work starts.",
+      "Monitor contractor performance through supervision, inspections, assurance activities and incident reporting.",
+      "Record corrective actions and escalate material non-conformance where required.",
+      "Complete contractor close-out and retain required records and performance information."
+    ];
+    records=[
+      "Contractor prequalification record",
+      "Licence and competency evidence",
+      "Insurance evidence",
+      "Induction records",
+      "Risk assessments and permits",
+      "Inspection and monitoring records",
+      "Corrective actions",
+      "Contractor performance review"
+    ];
+    assurance=[
+      "Periodic contractor compliance checks",
+      "Site inspections",
+      "Review of expired or missing competency and insurance evidence",
+      "Trend review of incidents, findings and contractor performance"
+    ];
   }
 
   if(text.includes("driving")||text.includes("vehicle")){
@@ -617,6 +672,30 @@ function inferDocumentFromBrief(brief){
     purpose="Define the controls for work-related driving, driver competency, vehicle requirements, journey planning and incident response.";
     owner="Operations";
     suggestedId="IMS.03.DR";
+    processSteps=[
+      "Confirm the driver is authorised, competent and fit for work.",
+      "Confirm the vehicle is suitable, registered, maintained and safe to operate.",
+      "Plan the journey considering distance, fatigue, weather, road and operational conditions.",
+      "Comply with road rules, customer requirements and organisational driving controls.",
+      "Report vehicle defects, incidents, near misses and unsafe conditions.",
+      "Review driving performance and corrective actions where required."
+    ];
+  }
+
+  if(text.includes("incident")||text.includes("near miss")||text.includes("hazard")){
+    title="Incident, Near Miss and Hazard Management Procedure";
+    purpose="Define how incidents, near misses and hazards are reported, classified, investigated, actioned and closed.";
+    owner="Governance";
+    suggestedId="IMS.06.01";
+    processSteps=[
+      "Make the situation safe and provide immediate assistance where required.",
+      "Report the event using the approved reporting process.",
+      "Classify severity and determine notification or escalation requirements.",
+      "Investigate the event to identify contributing factors and control failures.",
+      "Assign corrective actions with accountable owners and due dates.",
+      "Verify actions are effective before closure.",
+      "Use event data to identify trends and improvement opportunities."
+    ];
   }
 
   if(text.includes("document")){
@@ -626,12 +705,7 @@ function inferDocumentFromBrief(brief){
     suggestedId="IMS.02.01";
   }
 
-  if(text.includes("incident")||text.includes("near miss")||text.includes("hazard")){
-    title="Incident, Near Miss and Hazard Management Procedure";
-    purpose="Define how incidents, near misses and hazards are reported, classified, investigated, actioned and closed.";
-    owner="Governance";
-    suggestedId="IMS.06.01";
-  }
+  let content="";
 
   if(template==="procedure"){
     content=`1. Purpose
@@ -640,23 +714,23 @@ ${purpose}
 
 2. Scope
 
-Define where, when and to whom this procedure applies.
+${scope}
 
 3. Responsibilities
 
-Define accountable roles and responsibilities for implementing this process.
+${responsibilities.map(item=>"• "+item).join("\n")}
 
 4. Process
 
-Describe the controlled process, including planning, approval, implementation, monitoring and close-out requirements.
+${processSteps.map((item,index)=>(index+1)+". "+item).join("\n")}
 
 5. Records
 
-Identify the records created by this process and where they are retained.
+${records.map(item=>"• "+item).join("\n")}
 
 6. Assurance
 
-Define how implementation of this procedure is verified and reviewed.`;
+${assurance.map(item=>"• "+item).join("\n")}`;
   }
 
   if(template==="policy"){
@@ -666,19 +740,24 @@ ${purpose}
 
 2. Commitments
 
-Set out the organisation's core commitments.
+The organisation is committed to:
+• meeting applicable legal, contractual and management system requirements;
+• providing appropriate resources and competent people;
+• consulting with workers and relevant interested parties;
+• managing risks and opportunities;
+• monitoring performance and continually improving.
 
 3. Principles
 
-Define the principles used to guide decisions and behaviour.
+Decisions will be proportionate to risk, evidence based and aligned with the organisation's governance requirements.
 
 4. Accountability
 
-Define leadership and worker responsibilities.
+Leaders are accountable for implementation within their areas. Workers are responsible for following applicable requirements and raising concerns or improvement opportunities.
 
 5. Review
 
-Define how this policy is reviewed and maintained.`;
+This policy will be reviewed periodically and when material organisational, legal or operational changes occur.`;
   }
 
   if(template==="work"){
@@ -688,21 +767,26 @@ ${purpose}
 
 2. Before you start
 
-Define prerequisites, competencies and required controls.
+• Confirm you are competent and authorised to perform the task.
+• Review applicable risks, controls and site requirements.
+• Confirm required tools, equipment and permits are available.
 
 3. Steps
 
-1. Step one
-2. Step two
-3. Step three
+1. Prepare the work area.
+2. Complete the task using the approved method.
+3. Stop and escalate if conditions change or required controls are unavailable.
+4. Complete required checks and records before leaving the work area.
 
 4. Records
 
-Define evidence that must be retained.
+• Completed checklist or task record
+• Supporting evidence
+• Identified defects or actions
 
 5. Stop work conditions
 
-Define circumstances requiring work to stop and be escalated.`;
+Stop work where required controls are not in place, conditions are unsafe, or the work is outside the approved scope.`;
   }
 
   return{
@@ -715,7 +799,6 @@ Define circumstances requiring work to stop and be escalated.`;
     content
   };
 }
-
 function buildWithAI(){
   const brief=aiBrief.value.trim();
 
