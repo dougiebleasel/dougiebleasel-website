@@ -1,3 +1,96 @@
+Pasted text(20260827-053509).txt
+Document
+
+Yep — once you upload it to your Vercel project and rename certicium-dashboard.html → ims.html, it should be:
+
+Open the Certicium dashboard
+
+At the moment the file I gave you is only the local updated version — it won't change the live site until you upload/replace ims.html.
+
+can i make further changes?
+I like the AI and then what needs my attention, and tasks over on the right, from that:
+I think we need the risks under that where the governance tiles currently are
+I want the governance docs somewhere else as I really dont know how much they will be accessed
+
+
+
+Yes — and I think that improves the hierarchy again.
+
+I’d make the dashboard flow:
+
+1. Ask Certicium
+Big, simple, right near the top.
+
+2. What needs my attention
+Overdue actions, documents due, high risks, upcoming assurance, competency expiries.
+
+3. Common tasks
+Keep these prominent over on the right or directly alongside attention:
+
+Report an Event
+Assess a Risk
+Start an Inspection
+Create a Document
+Raise an Action
+
+4. Your Risks
+This should replace the governance tiles in the main body of the dashboard.
+
+That section should show the organisation’s actual enabled risk modules in the periodic-table style, for example:
+
+Dr Driving
+Ct Contractor Management
+Ew Electrical Works
+Mh Manual Handling
+Wt Working Near Traffic
+Pe Plant and Equipment
+Ps Psychosocial
+
+Those are far more likely to be useful and meaningful day to day than showing the eight governance modules front and centre.
+
+Then I’d move the governance pieces into My IMS as a quieter area, maybe accessible through:
+
+My IMS
+
+Governance
+Policies
+Operational Controls
+Management System Map
+
+And inside Governance, that’s where we show the eight core tiles:
+
+Po · Dm · Rm · Cm · Cc · IM · Au · Pm
+
+So the dashboard becomes much more:
+
+What do you need? → What needs attention? → What can you do? → What are your risks?
+
+while the formal governance architecture is still there when someone actually wants to inspect it.
+
+I’d also probably remove the big Dm promotional panel from the bottom of the dashboard now. It was useful while we were proving the module, but it feels like development/demo scaffolding rather than something a real customer needs to see every time they log in.
+
+If you want, I can take the dashboard HTML we just built and make exactly those changes next.
+
+yes pelase
+
+Done. This version follows the hierarchy we just agreed on:
+
+Ask Certicium → What needs my attention + Common tasks → Your risks → Governance tucked away lower down.
+
+Download certicium-dashboard-v2.html
+
+The major changes are:
+
+What needs my attention is now the main operational panel.
+Common tasks sits beside it on the right.
+The old governance tiles have been replaced with risk tiles: Dr, Ct, Ew, Mh, Wt, Pe, Ps, Lw.
+Governance is now a quieter My IMS / system architecture section lower down.
+The big Dm promotional panel has been removed from the dashboard.
+The left navigation stays task-first.
+Visible wording now uses “and” rather than &.
+
+Rename it to ims.html when you upload it. 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +195,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .metric .warning{color:var(--warning)}
 .metric small{display:block;margin-top:4px;color:#737D78;font-size:8px}
 
-.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(310px,.55fr);gap:14px}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(330px,.8fr);gap:14px}
 .panel{border:1px solid var(--border);border-radius:10px;background:var(--card);overflow:hidden}
 .panel-head{padding:17px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:14px}
 .panel-head h2{font-size:15px}
@@ -161,13 +254,52 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .dm-feature strong{display:block;font-size:8px}
 .dm-feature span{display:block;margin-top:4px;color:var(--muted);font-size:7px;line-height:1.4}
 
+
+.task-list{display:grid}
+.task-row{
+  min-height:68px;padding:12px 15px;border-bottom:1px solid rgba(244,246,245,.06);
+  display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;transition:.18s ease
+}
+.task-row:last-child{border-bottom:0}
+.task-row:hover{background:rgba(44,130,89,.06)}
+.task-icon{
+  width:32px;height:32px;border-radius:6px;display:grid;place-items:center;
+  background:var(--dark-green);color:var(--bright-green);font-size:9px;font-weight:900
+}
+.task-row strong{display:block;font-size:10px}
+.task-row p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
+.task-row > span{color:var(--bright-green);font-size:13px}
+
+.risk-module-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px
+}
+.risk-module{
+  min-height:150px;padding:13px;position:relative;border:1px solid rgba(111,197,90,.24);
+  border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.9));
+  transition:.18s ease
+}
+.risk-module:hover{transform:translateY(-3px);border-color:rgba(111,197,90,.48)}
+.risk-num{color:#66716B;font-size:7px}
+.risk-symbol{margin-top:18px;color:var(--bright-green);font-size:31px;font-weight:900;letter-spacing:-1px}
+.risk-name{position:absolute;left:13px;right:13px;bottom:13px;color:#D6DCD9;font-size:8px;font-weight:800;line-height:1.25}
+
+.governance-summary{
+  margin-top:28px;padding:20px;border:1px solid var(--border);border-radius:10px;
+  background:linear-gradient(135deg,rgba(20,23,21,.88),rgba(13,13,13,.92));
+  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end
+}
+.governance-summary h2{font-size:22px;letter-spacing:-.8px}
+.governance-summary p{margin-top:7px;color:var(--muted);font-size:8px;line-height:1.55;max-width:720px}
+.governance-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+
+
 .mobile-nav{display:none}
 
 @media(max-width:1100px){
   .app{grid-template-columns:205px minmax(0,1fr)}
-  .metrics,.quick-grid{grid-template-columns:repeat(2,1fr)}
+  .metrics,.quick-grid,.risk-module-grid{grid-template-columns:repeat(2,1fr)}
   .dashboard-grid{grid-template-columns:1fr}
-  .dm-features{grid-template-columns:repeat(3,1fr)}
+  .governance-summary{grid-template-columns:1fr}.governance-actions{justify-content:flex-start}
 }
 @media(max-width:760px){
   .app{display:block}
@@ -178,7 +310,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   .ask-box{grid-template-columns:1fr}.ask-box button{height:44px}
   .welcome{display:block}
   .blueprint-link{display:inline-block;margin-top:12px}
-  .metrics,.quick-grid{grid-template-columns:1fr 1fr}
+  .metrics,.quick-grid,.risk-module-grid{grid-template-columns:1fr 1fr}
   .element-grid{grid-template-columns:repeat(2,1fr)}
   .dm-top{grid-template-columns:1fr}
   .dm-actions{justify-content:flex-start}
@@ -342,74 +474,9 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 
   <section class="dashboard-grid">
 
-    <div class="panel" id="governance">
-      <div class="panel-head">
-        <h2>Explore your management system</h2>
-        <span>8 core governance processes</span>
-      </div>
-
-      <div class="system-body">
-        <p class="system-copy">The governance architecture underneath Certicium. Explore how procedures, tools, records and evidence connect across your IMS.</p>
-
-        <div class="element-grid">
-
-          <a class="element" href="#">
-            <span class="element-num">01</span>
-            <div class="element-symbol">Po</div>
-            <div class="element-name">Policies</div>
-          </a>
-
-          <a class="element live" href="documents.html">
-            <span class="element-num">02</span>
-            <span class="element-status">Live</span>
-            <div class="element-symbol">Dm</div>
-            <div class="element-name">Document and Records Management</div>
-          </a>
-
-          <a class="element" href="#">
-            <span class="element-num">03</span>
-            <div class="element-symbol">Rm</div>
-            <div class="element-name">Risk Management</div>
-          </a>
-
-          <a class="element" href="#">
-            <span class="element-num">04</span>
-            <div class="element-symbol">Cm</div>
-            <div class="element-name">Competency Management</div>
-          </a>
-
-          <a class="element" href="#">
-            <span class="element-num">05</span>
-            <div class="element-symbol">Cc</div>
-            <div class="element-name">Consultation and Communication</div>
-          </a>
-
-          <a class="element" href="#">
-            <span class="element-num">06</span>
-            <div class="element-symbol">IM</div>
-            <div class="element-name">Incident, Near Miss and Hazard Management</div>
-          </a>
-
-          <a class="element" href="#">
-            <span class="element-num">07</span>
-            <div class="element-symbol">Au</div>
-            <div class="element-name">Audit, Inspection, Monitoring and Testing</div>
-          </a>
-
-          <a class="element" href="#">
-            <span class="element-num">08</span>
-            <div class="element-symbol">Pm</div>
-            <div class="element-name">Performance Management</div>
-          </a>
-
-        </div>
-      </div>
-    </div>
-
-
     <div class="panel">
       <div class="panel-head">
-        <h2>My attention</h2>
+        <h2>What needs my attention</h2>
         <a href="#">View all →</a>
       </div>
 
@@ -434,6 +501,15 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
         </a>
 
         <a class="attention" href="#">
+          <div class="attention-icon">Rm</div>
+          <div>
+            <strong>High risks requiring review</strong>
+            <p>Risk exposures requiring management attention.</p>
+          </div>
+          <div class="attention-count">1</div>
+        </a>
+
+        <a class="attention" href="#">
           <div class="attention-icon">Au</div>
           <div>
             <strong>Upcoming assurance</strong>
@@ -454,66 +530,143 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
       </div>
     </div>
 
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Common tasks</h2>
+        <span>Do something</span>
+      </div>
+
+      <div class="task-list">
+
+        <a class="task-row" href="#">
+          <div class="task-icon">!</div>
+          <div>
+            <strong>Report an Event</strong>
+            <p>Incident, near miss or hazard.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">Rm</div>
+          <div>
+            <strong>Assess a Risk</strong>
+            <p>Start or update a risk assessment.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">In</div>
+          <div>
+            <strong>Start an Inspection</strong>
+            <p>Assigned or ad hoc assurance activity.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="new-document.html">
+          <div class="task-icon">Nd</div>
+          <div>
+            <strong>Create a Document</strong>
+            <p>Build controlled content with Certicium AI.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">Ac</div>
+          <div>
+            <strong>Raise an Action</strong>
+            <p>Create a corrective or improvement action.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+      </div>
+    </div>
+
   </section>
 
 
   <div class="section-title" id="controls">
     <div>
-      <div class="eyebrow">Common tasks</div>
-      <h2>Quick actions</h2>
+      <div class="eyebrow">Your operating environment</div>
+      <h2>Your risks</h2>
     </div>
-    <p>Common tasks from across your IMS</p>
+    <p>Risk modules enabled for your organisation</p>
   </div>
 
-  <section class="quick-grid">
-    <a class="quick" href="documents.html">
-      <div class="quick-icon">Dm</div>
-      <h3>Find a document</h3>
-      <p>Search current controlled documents and records.</p>
+  <section class="risk-module-grid">
+
+    <a class="risk-module" href="#">
+      <span class="risk-num">01</span>
+      <div class="risk-symbol">Dr</div>
+      <div class="risk-name">Driving</div>
     </a>
 
-    <a class="quick" href="#">
-      <div class="quick-icon">!</div>
-      <h3>Report an event</h3>
-      <p>Report an incident, near miss or hazard.</p>
+    <a class="risk-module" href="#">
+      <span class="risk-num">02</span>
+      <div class="risk-symbol">Ct</div>
+      <div class="risk-name">Contractor Management</div>
     </a>
 
-    <a class="quick" href="#">
-      <div class="quick-icon">Rm</div>
-      <h3>Assess a risk</h3>
-      <p>Start a structured risk assessment with Certicium.</p>
+    <a class="risk-module" href="#">
+      <span class="risk-num">03</span>
+      <div class="risk-symbol">Ew</div>
+      <div class="risk-name">Electrical Works</div>
     </a>
 
-    <a class="quick" href="#">
-      <div class="quick-icon">Au</div>
-      <h3>Start an inspection</h3>
-      <p>Open an assigned or ad hoc assurance activity.</p>
+    <a class="risk-module" href="#">
+      <span class="risk-num">04</span>
+      <div class="risk-symbol">Mh</div>
+      <div class="risk-name">Manual Handling</div>
     </a>
+
+    <a class="risk-module" href="#">
+      <span class="risk-num">05</span>
+      <div class="risk-symbol">Wt</div>
+      <div class="risk-name">Working Near Traffic</div>
+    </a>
+
+    <a class="risk-module" href="#">
+      <span class="risk-num">06</span>
+      <div class="risk-symbol">Pe</div>
+      <div class="risk-name">Plant and Equipment</div>
+    </a>
+
+    <a class="risk-module" href="#">
+      <span class="risk-num">07</span>
+      <div class="risk-symbol">Ps</div>
+      <div class="risk-name">Psychosocial</div>
+    </a>
+
+    <a class="risk-module" href="#">
+      <span class="risk-num">08</span>
+      <div class="risk-symbol">Lw</div>
+      <div class="risk-name">Lone Working</div>
+    </a>
+
   </section>
 
 
-  <section class="dm-preview">
-    <div class="dm-top">
-      <div>
-        <div class="eyebrow">First live Certicium module · Dm</div>
-        <h2>Document and Records Management</h2>
-        <p>Controlled documents should not live as disconnected files. Certicium will manage their lifecycle, approvals, reviews, relationships, records and impact across the wider IMS.</p>
-      </div>
-
-      <div class="dm-actions">
-        <button class="button" onclick="documentAI()">✦ Document AI</button>
-        <button class="button primary" onclick="window.location.href='documents.html'">Open Document Management →</button>
-      </div>
+  <section class="governance-summary" id="governance">
+    <div>
+      <div class="eyebrow">My IMS</div>
+      <h2>Governance and system architecture</h2>
+      <p>Your core governance processes remain the foundation of Certicium, but they sit behind the daily tools and risk controls your people use most often.</p>
     </div>
 
-    <div class="dm-features">
-      <div class="dm-feature"><strong>Document Register</strong><span>Owner, version, status, approval and review.</span></div>
-      <div class="dm-feature"><strong>Lifecycle</strong><span>Draft → Review → Approval → Published → Superseded.</span></div>
-      <div class="dm-feature"><strong>Records</strong><span>Retention, evidence, storage and disposal.</span></div>
-      <div class="dm-feature"><strong>Relationships</strong><span>Connect documents to risks, controls and competencies.</span></div>
-      <div class="dm-feature"><strong>Impact Analysis</strong><span>Identify what else may be affected when content changes.</span></div>
+    <div class="governance-actions">
+      <a href="documents.html" class="button">Documents and Records</a>
+      <a href="#" class="button">Governance</a>
+      <a href="#" class="button">Policies</a>
+      <a href="#" class="button">Management System Map</a>
     </div>
   </section>
+
+
 
 </main>
 
@@ -611,3 +764,5 @@ function documentAI(){
 
 </body>
 </html>
+certicium-dashboard-v2.html
+HTML
