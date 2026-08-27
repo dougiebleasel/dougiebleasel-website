@@ -203,6 +203,35 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 .ai-result strong{font-size:9px;color:var(--green)}
 .ai-result p{margin-top:5px;color:#D6DCD9;font-size:8px;line-height:1.5}
 
+
+.existing-check{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:rgba(13,13,13,.38)
+}
+.existing-check h3{font-size:10px}
+.existing-check p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+.match-list{display:grid;gap:8px;margin-top:10px}
+.match{
+  padding:11px;
+  border:1px solid rgba(244,246,245,.07);
+  border-radius:7px;
+  background:rgba(18,53,36,.16)
+}
+.match-top{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.match strong{font-size:8px}
+.match span{display:block;margin-top:3px;color:var(--muted);font-size:7px}
+.match-score{color:var(--green);font-size:7px;font-weight:900;white-space:nowrap}
+.match-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.match-actions button{
+  min-height:32px;padding:0 10px;border-radius:6px;border:1px solid var(--border);
+  background:var(--card);color:white;font-size:7px;font-weight:900
+}
+.match-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+.no-match{margin-top:10px;color:#7B867F;font-size:8px}
+
 @media(max-width:1000px){.app{grid-template-columns:205px 1fr}.layout{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:760px){.ai-create-grid{grid-template-columns:1fr}.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.templates{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.footer-actions{display:block}.right-actions{margin-top:8px}}
 </style>
@@ -263,6 +292,16 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
       <div class="ai-result" id="aiResult">
         <strong>Certicium has prepared a first-pass draft.</strong>
         <p id="aiResultText"></p>
+      </div>
+
+      <div class="existing-check" id="existingCheck">
+        <h3>Existing document check</h3>
+        <p>
+          Before creating something new, Certicium checks the current controlled-document library
+          to see whether the requirement may be better handled by revising an existing document.
+        </p>
+        <div class="match-list" id="matchList"></div>
+        <div class="no-match" id="noMatch">Describe what you need and Certicium will check the current document library.</div>
       </div>
     </div>
 
@@ -396,6 +435,147 @@ let selectedTemplate="procedure";
 
 function exampleBrief(){
   aiBrief.value="I need a procedure for managing contractors working on customer sites, including onboarding, competency checks, site requirements, monitoring and close-out.";
+}
+
+
+const currentDocumentLibrary=[
+  {id:"IMS.01.01",title:"Integrated Management System Policy",type:"Policy",keywords:["policy","ims","management system","commitment","governance"]},
+  {id:"IMS.02.01",title:"Document and Records Management",type:"Procedure",keywords:["document","record","version","approval","retention","controlled document"]},
+  {id:"IMS.03.00",title:"Risk Management",type:"Procedure",keywords:["risk","assessment","control","treatment","risk register"]},
+  {id:"IMS.05.01",title:"Competency Management",type:"Procedure",keywords:["competency","training","qualification","licence","capability"]},
+  {id:"IMS.06.01",title:"Incident, Near Miss and Hazard Management",type:"Procedure",keywords:["incident","near miss","hazard","investigation","event"]},
+  {id:"IMS.07.01",title:"Audit, Inspection, Monitoring and Testing",type:"Procedure",keywords:["audit","inspection","monitoring","testing","assurance"]},
+  {id:"IMS.03.21",title:"Working at Heights",type:"Procedure",keywords:["height","ladder","elevated work","fall"]},
+  {id:"IMS.03.23",title:"Working Near Traffic",type:"Procedure",keywords:["traffic","roadside","road","vehicle movement","traffic management"]},
+  {id:"IMS.WI.04",title:"Document Approval Workflow",type:"Work Instruction",keywords:["document approval","review","approval workflow"]},
+  {id:"IMS.STD.02",title:"Controlled Document Standard",type:"Standard",keywords:["document standard","controlled document","template","format"]},
+  {id:"IMS.TMP.01",title:"Procedure Template",type:"Template",keywords:["procedure template"]},
+  {id:"IMS.TMP.02",title:"Work Instruction Template",type:"Template",keywords:["work instruction template"]}
+];
+
+function getCreatedDocumentsForLookup(){
+  const items=[];
+
+  for(let i=0;i<localStorage.length;i++){
+    const key=localStorage.key(i);
+
+    if(key && key.startsWith("certiciumNewDocument_")){
+      try{
+        const item=JSON.parse(localStorage.getItem(key)||"{}");
+
+        if(item && item.id){
+          items.push({
+            id:item.id,
+            title:item.title||item.id,
+            type:item.type||"Controlled Document",
+            keywords:[
+              item.title||"",
+              item.purpose||"",
+              item.content||""
+            ].join(" ").toLowerCase().split(/\s+/).filter(Boolean).slice(0,80)
+          });
+        }
+      }catch(e){}
+    }
+  }
+
+  return items;
+}
+
+function scoreExistingDocument(brief,doc){
+  const text=brief.toLowerCase();
+  let score=0;
+
+  (doc.keywords||[]).forEach(keyword=>{
+    const k=String(keyword).toLowerCase().trim();
+
+    if(k && text.includes(k)){
+      score+=k.includes(" ")?3:2;
+    }
+  });
+
+  const titleWords=(doc.title||"")
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter(word=>word.length>3);
+
+  titleWords.forEach(word=>{
+    if(text.includes(word)){
+      score+=1;
+    }
+  });
+
+  return score;
+}
+
+function findExistingDocumentMatches(brief){
+  const library=[
+    ...currentDocumentLibrary,
+    ...getCreatedDocumentsForLookup()
+  ];
+
+  return library
+    .map(doc=>({
+      ...doc,
+      score:scoreExistingDocument(brief,doc)
+    }))
+    .filter(doc=>doc.score>1)
+    .sort((a,b)=>b.score-a.score)
+    .slice(0,3);
+}
+
+function renderExistingMatches(matches){
+  const list=document.getElementById("matchList");
+  const empty=document.getElementById("noMatch");
+
+  if(!matches.length){
+    list.innerHTML="";
+    empty.style.display="block";
+    empty.innerText="No strong existing-document match found. Creating a new document appears reasonable.";
+    return;
+  }
+
+  empty.style.display="none";
+
+  list.innerHTML=matches.map((doc,index)=>{
+    const recommendation=
+      index===0 && doc.score>=4
+        ? "Likely better to review or revise this document first."
+        : "Potentially related existing document.";
+
+    return `
+      <div class="match">
+        <div class="match-top">
+          <div>
+            <strong>${doc.title}</strong>
+            <span>${doc.id} · ${doc.type}</span>
+            <span>${recommendation}</span>
+          </div>
+          <div class="match-score">
+            ${doc.score>=4?"Strong match":"Possible match"}
+          </div>
+        </div>
+        <div class="match-actions">
+          <button class="primary" onclick="reviewExisting('${doc.id}')">
+            Review existing document
+          </button>
+          <button onclick="continueCreating('${doc.id}')">
+            Create new anyway
+          </button>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function reviewExisting(id){
+  window.location.href="document.html?id="+encodeURIComponent(id);
+}
+
+function continueCreating(id){
+  document.getElementById("noMatch").style.display="block";
+  document.getElementById("noMatch").innerText=
+    "You have chosen to create a new document despite the existing match to "+id+". Certicium would record the relationship and rationale in the connected product.";
 }
 
 function inferDocumentFromBrief(brief){
@@ -544,6 +724,24 @@ function buildWithAI(){
     return;
   }
 
+  const matches=findExistingDocumentMatches(brief);
+  renderExistingMatches(matches);
+
+  const strongMatch=
+    matches.length
+    &&
+    matches[0].score>=4;
+
+  if(strongMatch){
+    aiResult.classList.add("show");
+    aiResultText.innerText=
+      "I found an existing controlled document that may already cover this need: "+
+      matches[0].title+
+      " ("+matches[0].id+"). I recommend reviewing that document before creating a duplicate. "+
+      "You can still continue with a new document if the requirement is genuinely different.";
+    return;
+  }
+
   const result=inferDocumentFromBrief(brief);
 
   docType.value=result.type;
@@ -562,8 +760,9 @@ function buildWithAI(){
   editorStatus.innerText="Draft v0.1";
   aiResult.classList.add("show");
   aiResultText.innerText=
-    "Suggested "+result.type+": "+result.title+
-    ". I have pre-filled the metadata, purpose and first-pass structure. Review and change anything you need before saving the draft.";
+    matches.length
+      ? "I found some related controlled documents, but none appears to fully cover this need. I have prepared a first-pass new "+result.type+" while keeping those relationships visible for review."
+      : "I did not find a strong existing-document match. I have prepared a first-pass "+result.type+": "+result.title+". Review and change anything you need before saving the draft.";
 
   step1.classList.add("done");
   step1.classList.remove("active");
