@@ -727,21 +727,11 @@ function buildWithAI(){
   const matches=findExistingDocumentMatches(brief);
   renderExistingMatches(matches);
 
-  const strongMatch=
-    matches.length
-    &&
-    matches[0].score>=4;
-
-  if(strongMatch){
-    aiResult.classList.add("show");
-    aiResultText.innerText=
-      "I found an existing controlled document that may already cover this need: "+
-      matches[0].title+
-      " ("+matches[0].id+"). I recommend reviewing that document before creating a duplicate. "+
-      "You can still continue with a new document if the requirement is genuinely different.";
-    return;
-  }
-
+  /*
+   * Always prepare a draft.
+   * If an existing document is a strong match, Certicium recommends revising
+   * it but still generates a first-pass alternative so the user can compare.
+   */
   const result=inferDocumentFromBrief(brief);
 
   docType.value=result.type;
@@ -759,14 +749,37 @@ function buildWithAI(){
 
   editorStatus.innerText="Draft v0.1";
   aiResult.classList.add("show");
-  aiResultText.innerText=
+
+  const strongMatch=
     matches.length
-      ? "I found some related controlled documents, but none appears to fully cover this need. I have prepared a first-pass new "+result.type+" while keeping those relationships visible for review."
-      : "I did not find a strong existing-document match. I have prepared a first-pass "+result.type+": "+result.title+". Review and change anything you need before saving the draft.";
+    &&
+    matches[0].score>=4;
+
+  if(strongMatch){
+    aiResultText.innerText=
+      "I found an existing controlled document that may already cover this need: "+
+      matches[0].title+
+      " ("+matches[0].id+"). My recommendation is to review or revise that document first. "+
+      "I have still prepared a first-pass "+result.type+" below so you can compare the proposed new document with the existing one before deciding.";
+  }else if(matches.length){
+    aiResultText.innerText=
+      "I found some related controlled documents, but none appears to fully cover this need. "+
+      "I have prepared a first-pass "+result.type+" below and kept the related documents visible for review.";
+  }else{
+    aiResultText.innerText=
+      "I did not find a strong existing-document match. "+
+      "I have prepared a first-pass "+result.type+": "+result.title+
+      ". Review and change anything you need before saving the draft.";
+  }
 
   step1.classList.add("done");
   step1.classList.remove("active");
   step2.classList.add("active");
+
+  document.querySelector(".panel").scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
 }
 
 function selectTemplate(el){
