@@ -129,6 +129,61 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 .ack{padding:16px}.ack p{color:var(--muted);font-size:8px;line-height:1.5}.ack button{margin-top:12px;height:36px;padding:0 12px;border:0;border-radius:6px;background:var(--green);color:#0B1A11;font-size:8px;font-weight:900}
 
 .revision-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}.revision-modal.open{display:flex}.revision-card{width:min(980px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(111,197,90,.28);border-radius:12px;background:#101311;box-shadow:0 30px 90px rgba(0,0,0,.55)}.revision-head{position:sticky;top:0;z-index:2;padding:18px 20px;border-bottom:1px solid var(--border);background:rgba(16,19,17,.97);display:flex;justify-content:space-between;gap:20px}.revision-head h2{font-size:22px}.revision-head p{margin-top:5px;color:var(--muted);font-size:8px}.close-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white}.revision-body{padding:20px}.revision-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{color:var(--muted);font-size:7px;font-weight:900;text-transform:uppercase}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:7px;background:var(--black);color:white;padding:11px 12px;font-size:9px}.field textarea{min-height:88px;resize:vertical}.editor{margin-top:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden}.editor-bar{padding:10px 12px;border-bottom:1px solid var(--border);background:#0D100E;display:flex;justify-content:space-between}.editor-bar strong{font-size:9px}.editor-bar span{color:var(--green);font-size:8px;font-weight:900}.editor textarea{width:100%;min-height:260px;padding:18px;border:0;background:#121513;color:#E4E9E6;resize:vertical;font:10px/1.7 Arial}.revision-note{margin-top:14px;padding:12px;border:1px solid rgba(111,197,90,.18);border-radius:7px;background:rgba(18,53,36,.2);font-size:8px;line-height:1.55}.revision-actions{position:sticky;bottom:0;padding:14px 20px;border-top:1px solid var(--border);background:#101311;display:flex;justify-content:space-between;gap:10px}.action-left,.action-right{display:flex;gap:8px;flex-wrap:wrap}.rev-btn{min-height:38px;padding:0 13px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}.rev-btn.ai{color:var(--green);border-color:rgba(111,197,90,.3)}.rev-btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}.draft-banner{display:none;margin-bottom:16px;padding:12px;border:1px solid rgba(230,201,107,.25);border-radius:7px;background:rgba(230,201,107,.07);color:var(--warn);font-size:8px;font-weight:800}
+
+.review-modal{
+  position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;
+  padding:22px;background:rgba(0,0,0,.76);backdrop-filter:blur(8px)
+}
+.review-modal.open{display:flex}
+.review-card{
+  width:min(1040px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(111,197,90,.28);
+  border-radius:12px;background:#101311;box-shadow:0 30px 90px rgba(0,0,0,.55)
+}
+.review-head{
+  position:sticky;top:0;z-index:3;padding:18px 20px;border-bottom:1px solid var(--border);
+  background:rgba(16,19,17,.98);display:flex;justify-content:space-between;gap:20px;align-items:flex-start
+}
+.review-head h2{font-size:22px}
+.review-head p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+.review-body{padding:20px}
+.review-status{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px
+}
+.review-step{
+  padding:12px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.42)
+}
+.review-step.active{border-color:rgba(111,197,90,.38);background:rgba(18,53,36,.22)}
+.review-step.done{border-color:rgba(111,197,90,.25)}
+.review-step span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
+.review-step strong{display:block;margin-top:5px;font-size:9px}
+.review-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+.review-panel{border:1px solid var(--border);border-radius:8px;background:var(--card);overflow:hidden}
+.review-panel-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:10px}
+.review-panel-head strong{font-size:9px}.review-panel-head span{color:var(--muted);font-size:7px}
+.review-content{padding:16px;white-space:pre-wrap;color:#D9DFDC;font-size:9px;line-height:1.65;max-height:360px;overflow:auto}
+.review-side{display:grid;gap:10px}
+.review-box{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}
+.review-box h3{font-size:10px}.review-box p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+.review-box textarea{
+  width:100%;min-height:90px;margin-top:9px;padding:10px;border:1px solid var(--border);
+  border-radius:6px;background:var(--black);color:white;font-size:8px;resize:vertical
+}
+.review-box .mini-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.review-footer{
+  position:sticky;bottom:0;padding:14px 20px;border-top:1px solid var(--border);
+  background:rgba(16,19,17,.98);display:flex;justify-content:space-between;gap:10px
+}
+.review-footer .left,.review-footer .right{display:flex;gap:8px;flex-wrap:wrap}
+.review-btn{min-height:38px;padding:0 13px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
+.review-btn.warn{color:var(--warn);border-color:rgba(230,201,107,.28)}
+.review-btn.ai{color:var(--green);border-color:rgba(111,197,90,.28)}
+.review-btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+.workflow-banner{
+  display:none;margin-bottom:16px;padding:12px 14px;border:1px solid rgba(111,197,90,.22);
+  border-radius:7px;background:rgba(18,53,36,.20);font-size:8px;line-height:1.55
+}
+.workflow-banner.show{display:block}
+
 @media(max-width:1100px){.app{grid-template-columns:205px 1fr}.meta-grid{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.bottom-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.status-badge{display:inline-block;margin-top:15px}.meta-grid{grid-template-columns:1fr 1fr}.impact-grid{grid-template-columns:1fr 1fr}}
 </style>
@@ -157,7 +212,7 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 <div class="workspace">
 <header class="topbar">
 <div class="company"><strong id="companyName">Your organisation</strong><small>Controlled Document</small></div>
-<div class="top-actions"><button onclick="runAI('Compare versions')">Compare versions</button><button class="primary" onclick="startRevision()">Create revision</button></div>
+<div class="top-actions"><button onclick="openReview()">Review workflow</button><button onclick="runAI('Compare versions')">Compare versions</button><button class="primary" onclick="startRevision()">Create revision</button></div>
 </header>
 
 <main>
@@ -259,6 +314,73 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 </div>
 <div class="revision-actions"><div class="action-left"><button class="rev-btn ai" onclick="revisionAI('Review this draft against our controlled document standard.')">✦ AI Review</button><button class="rev-btn ai" onclick="revisionAI('Analyse the impact of this proposed change.')">✦ Impact Analysis</button></div><div class="action-right"><button class="rev-btn" onclick="saveDraft()">Save Draft</button><button class="rev-btn primary" onclick="submitReview()">Submit for Review →</button></div></div>
 </div></div>
+
+<div class="review-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewWorkflowTitle">
+  <div class="review-card">
+    <div class="review-head">
+      <div>
+        <div class="eyebrow">Controlled Document Lifecycle</div>
+        <h2 id="reviewWorkflowTitle">Review and Approval</h2>
+        <p>Review the proposed revision, record comments, approve it and publish the new controlled version.</p>
+      </div>
+      <button class="close-btn" onclick="closeReview()" aria-label="Close">×</button>
+    </div>
+
+    <div class="review-body">
+      <div class="workflow-banner" id="workflowBanner"></div>
+
+      <div class="review-status">
+        <div class="review-step done"><span>1</span><strong>Draft</strong></div>
+        <div class="review-step active" id="stepReview"><span>2</span><strong>Review</strong></div>
+        <div class="review-step" id="stepApproval"><span>3</span><strong>Approval</strong></div>
+        <div class="review-step" id="stepPublished"><span>4</span><strong>Published</strong></div>
+      </div>
+
+      <div class="review-grid">
+        <div class="review-panel">
+          <div class="review-panel-head">
+            <strong id="reviewDocLabel">Proposed revision</strong>
+            <span id="reviewVersionLabel">Draft</span>
+          </div>
+          <div class="review-content" id="reviewContent"></div>
+        </div>
+
+        <div class="review-side">
+          <div class="review-box">
+            <h3>Reason for change</h3>
+            <p id="reviewReason">No draft has been submitted yet.</p>
+          </div>
+
+          <div class="review-box">
+            <h3>Reviewer comments</h3>
+            <p>Record comments before recommending approval or returning the draft.</p>
+            <textarea id="reviewComments" placeholder="Reviewer comments"></textarea>
+            <div class="mini-actions">
+              <button class="review-btn ai" onclick="reviewAI('Review this proposed revision and identify gaps or contradictions.')">✦ AI Review</button>
+              <button class="review-btn ai" onclick="reviewAI('Summarise the material changes in this revision.')">✦ Change Summary</button>
+            </div>
+          </div>
+
+          <div class="review-box">
+            <h3>Approval decision</h3>
+            <p id="approvalDecisionText">The draft must be reviewed before approval.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-footer">
+      <div class="left">
+        <button class="review-btn warn" onclick="returnDraft()">Return to Draft</button>
+      </div>
+      <div class="right">
+        <button class="review-btn" onclick="recommendApproval()">Recommend Approval</button>
+        <button class="review-btn primary" onclick="approveAndPublish()">Approve and Publish →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 function readStorage(key){try{return JSON.parse(localStorage.getItem(key)||"{}")}catch(e){return {}}}
 const bp=readStorage("certiciumIMSBlueprint");
@@ -343,6 +465,130 @@ function saveDraft(){const d=draftPayload();localStorage.setItem("certiciumDraft
 function submitReview(){const d=draftPayload();if(!d.reason){alert("Add a reason for change before submitting the revision for review.");return}d.status="Review";d.submittedAt=new Date().toISOString();localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(d));closeRevision();alert("Submitted for Review\\n\\n"+requested+" draft v"+d.version+" has moved from Draft to Review.\\n\\nPublished v"+doc.version+" remains the authorised version until approval and publication.")}
 function revisionAI(prompt){alert("Document AI\\n\\n"+prompt+"\\n\\nDocument: "+requested+"\\nProposed version: "+newVersion.value+"\\nReason for change: "+(changeReason.value.trim()||"Not entered yet.")+"\\n\\nCerticium will use the draft and its linked IMS objects for this analysis.")}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeRevision()});
+
+
+function getDraft(){
+  return readStorage("certiciumDraft_"+requested);
+}
+
+function openReview(){
+  const draft=getDraft();
+  if(!draft.version){
+    alert("No revision is ready for review yet.\n\nCreate a revision, save it and submit it for review first.");
+    return;
+  }
+
+  reviewDocLabel.innerText=requested+" · Proposed Revision";
+  reviewVersionLabel.innerText="v"+draft.version+" · "+(draft.status||"Draft");
+  reviewContent.innerText=draft.content||revisionText();
+  reviewReason.innerText=draft.reason||"No reason for change recorded.";
+  reviewComments.value=draft.reviewComments||"";
+
+  updateWorkflowUI(draft);
+  reviewModal.classList.add("open");
+}
+
+function closeReview(){
+  reviewModal.classList.remove("open");
+}
+
+function updateWorkflowUI(draft){
+  [stepReview,stepApproval,stepPublished].forEach(x=>x.classList.remove("active","done"));
+
+  const status=draft.status||"Draft";
+
+  if(status==="Review"){
+    stepReview.classList.add("active");
+    approvalDecisionText.innerText="Reviewer recommendation is pending.";
+  }
+
+  if(status==="Approval"){
+    stepReview.classList.add("done");
+    stepApproval.classList.add("active");
+    approvalDecisionText.innerText="Review complete. Approval decision is pending.";
+  }
+
+  if(status==="Published"){
+    stepReview.classList.add("done");
+    stepApproval.classList.add("done");
+    stepPublished.classList.add("active");
+    approvalDecisionText.innerText="Approved and published. The previous version is superseded.";
+  }
+
+  workflowBanner.classList.toggle("show",status==="Published");
+  if(status==="Published"){
+    workflowBanner.innerText="Published v"+draft.version+". Previous version v"+doc.version+" is now superseded in this demo workflow.";
+  }
+}
+
+function saveReviewState(draft){
+  draft.reviewComments=reviewComments.value.trim();
+  draft.updatedAt=new Date().toISOString();
+  localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(draft));
+}
+
+function returnDraft(){
+  const draft=getDraft();
+  if(!draft.version)return;
+  draft.status="Draft";
+  draft.reviewComments=reviewComments.value.trim();
+  draft.returnedAt=new Date().toISOString();
+  saveReviewState(draft);
+  closeReview();
+  alert("Returned to Draft\n\nDraft v"+draft.version+" has been returned to the document owner for revision.");
+}
+
+function recommendApproval(){
+  const draft=getDraft();
+  if(!draft.version)return;
+  draft.status="Approval";
+  draft.reviewComments=reviewComments.value.trim();
+  draft.reviewedAt=new Date().toISOString();
+  saveReviewState(draft);
+  updateWorkflowUI(draft);
+}
+
+function approveAndPublish(){
+  const draft=getDraft();
+  if(!draft.version)return;
+
+  if((draft.status||"Draft")==="Draft"){
+    alert("The revision must be submitted for review before it can be approved.");
+    return;
+  }
+
+  if((draft.status||"Draft")==="Review"){
+    draft.status="Approval";
+    draft.reviewComments=reviewComments.value.trim();
+    draft.reviewedAt=new Date().toISOString();
+  }
+
+  draft.status="Published";
+  draft.approvedAt=new Date().toISOString();
+  draft.publishedAt=new Date().toISOString();
+  draft.previousVersion=doc.version;
+  localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(draft));
+
+  updateWorkflowUI(draft);
+
+  alert(
+    "Published\n\n"+
+    requested+" v"+draft.version+" is now the current controlled version in this demo workflow.\n\n"+
+    "Previous version v"+doc.version+" has been marked superseded."
+  );
+}
+
+function reviewAI(prompt){
+  const draft=getDraft();
+  alert(
+    "Document AI\n\n"+
+    prompt+"\n\n"+
+    "Document: "+requested+"\n"+
+    "Proposed version: "+(draft.version||"Not available")+"\n"+
+    "Workflow status: "+(draft.status||"Draft")+"\n\n"+
+    "In the connected product, Certicium will assess the proposed revision against the document standard and linked IMS objects."
+  );
+}
 
 function runAI(prompt){
  alert("Document AI\\n\\n"+prompt+"\\n\\nThis is the next functional layer: Certicium will use the controlled document, document standard, approved customer context and linked IMS objects to respond.");
