@@ -14,7 +14,7 @@ aside{position:sticky;top:0;height:100vh;padding:20px 16px;background:linear-gra
 .ai-side{margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))}.ai-side strong{font-size:11px}.ai-side p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}.ai-side button{width:100%;margin-top:10px;height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900;cursor:pointer}
 .workspace{min-width:0}.topbar{height:72px;padding:0 30px;position:sticky;top:0;z-index:30;background:rgba(13,13,13,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.company strong{font-size:12px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}.top-actions{display:flex;gap:8px}.top-actions button{height:38px;padding:0 13px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:white;font-size:9px;font-weight:800}.top-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
 main{max-width:1500px;margin:auto;padding:34px 34px 80px}.crumb{color:var(--muted);font-size:8px;margin-bottom:15px}.crumb a{color:var(--green)}.hero{display:flex;justify-content:space-between;align-items:end;gap:25px}.eyebrow{color:var(--green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}h1{font-size:clamp(35px,4vw,54px);letter-spacing:-2.4px;line-height:1}.hero p{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.6;max-width:690px}
-.metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:25px 0}.metric{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.metric span{font-size:7px;color:var(--muted);text-transform:uppercase}.metric strong{display:block;margin-top:7px;font-size:22px}.metric .green{color:var(--green)}.metric .warn{color:var(--warn)}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:25px 0}.metric{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.metric span{font-size:7px;color:var(--muted);text-transform:uppercase}.metric strong{display:block;margin-top:7px;font-size:22px}.metric .green{color:var(--green)}.metric .warn{color:var(--warn)}
 .tabs{display:flex;gap:5px;border-bottom:1px solid var(--border);margin-bottom:16px;overflow:auto}.tab{padding:12px 15px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:9px;font-weight:900;white-space:nowrap;cursor:pointer}.tab.active{color:white;border-bottom-color:var(--green)}
 .toolbar{display:flex;gap:8px;justify-content:space-between;margin-bottom:12px}.search{flex:1;max-width:430px;height:40px;padding:0 13px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:white;outline:none}.filters{display:flex;gap:7px}.filters select{height:40px;padding:0 11px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:white;font-size:9px}
 .panel{border:1px solid var(--border);border-radius:9px;background:var(--card);overflow:hidden}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:950px}th{text-align:left;padding:11px 12px;background:#101311;color:#707A75;font-size:7px;text-transform:uppercase;letter-spacing:.7px}td{padding:13px 12px;border-top:1px solid rgba(244,246,245,.06);font-size:9px;color:#D6DCD9}tr:hover td{background:rgba(44,130,89,.055)}.doc-title{font-weight:800;color:white}.doc-id{display:block;color:#68736D;font-size:7px;margin-top:3px}.badge{display:inline-block;padding:5px 7px;border-radius:999px;font-size:7px;font-weight:900}.published{background:rgba(111,197,90,.12);color:var(--green)}.review{background:rgba(230,201,107,.12);color:var(--warn)}.draft{background:rgba(169,178,174,.12);color:#C6CECA}.action{color:var(--green);font-weight:900;cursor:pointer}
@@ -52,7 +52,7 @@ main{max-width:1500px;margin:auto;padding:34px 34px 80px}.crumb{color:var(--mute
 <div class="metric"><span>Published</span><strong class="green" id="mPublished">8</strong></div>
 <div class="metric"><span>Awaiting approval</span><strong id="mReview">2</strong></div>
 <div class="metric"><span>Due for review</span><strong class="warn">2</strong></div>
-<div class="metric"><span>Overdue</span><strong>0</strong></div>
+<div class="metric"><span>Overdue</span><strong>0</strong></div><div class="metric"><span>Superseded versions</span><strong id="mSuperseded">0</strong></div>
 </section>
 
 <div class="tabs">
@@ -64,7 +64,10 @@ main{max-width:1500px;margin:auto;padding:34px 34px 80px}.crumb{color:var(--mute
 </div>
 
 <section id="register" class="tabview">
-<div class="toolbar"><input id="search" class="search" placeholder="Search controlled documents..." oninput="renderDocs()"><div class="filters"><select id="status" onchange="renderDocs()"><option value="">All statuses</option><option>Published</option><option>Review</option><option>Draft</option></select><select id="type" onchange="renderDocs()"><option value="">All types</option><option>Policy</option><option>Procedure</option><option>Work Instruction</option><option>Standard</option><option>Template</option></select></div></div>
+<div class="toolbar"><input id="search" class="search" placeholder="Search controlled documents..." oninput="renderDocs()"><div class="filters"><select id="status" onchange="renderDocs()"><option value="">All statuses</option><option>Published</option><option>Review</option><option>Approval</option><option>Draft</option><option>Superseded</option></select><select id="type" onchange="renderDocs()"><option value="">All types</option><option>Policy</option><option>Procedure</option><option>Work Instruction</option><option>Standard</option><option>Template</option></select></div></div>
+<div style="margin-bottom:10px;color:#737D78;font-size:8px;line-height:1.5;">
+Workflow states shown here are read from the live Certicium demo lifecycle. Published revisions become the current version; drafts, reviews and approvals remain visible until publication.
+</div>
 <div class="panel table-wrap"><table><thead><tr><th>Document</th><th>Type</th><th>Owner</th><th>Version</th><th>Status</th><th>Effective</th><th>Next Review</th><th></th></tr></thead><tbody id="docRows"></tbody></table></div>
 </section>
 
@@ -113,11 +116,223 @@ const docs=[
 {id:"IMS.TMP.02",title:"Work Instruction Template",type:"Template",owner:"Governance",version:"0.9",status:"Draft",effective:"—",review:"—"}
 ];
 
-function renderDocs(){
- const q=document.getElementById("search").value.toLowerCase(),s=document.getElementById("status").value,t=document.getElementById("type").value;
- const filtered=docs.filter(d=>(!q||(d.title+" "+d.id+" "+d.owner).toLowerCase().includes(q))&&(!s||d.status===s)&&(!t||d.type===t));
- document.getElementById("docRows").innerHTML=filtered.map(d=>`<tr><td><span class="doc-title">${d.title}</span><span class="doc-id">${d.id}</span></td><td>${d.type}</td><td>${d.owner}</td><td>${d.version}</td><td><span class="badge ${d.status.toLowerCase()}">${d.status}</span></td><td>${d.effective}</td><td>${d.review}</td><td><span class="action" onclick="openDoc('${d.id}')">Open →</span></td></tr>`).join("");
+function getWorkflowState(id){
+  try{
+    return JSON.parse(localStorage.getItem("certiciumDraft_"+id)||"{}");
+  }catch(e){
+    return {};
+  }
 }
+
+function getVersionHistory(id){
+  try{
+    return JSON.parse(localStorage.getItem("certiciumVersionHistory_"+id)||"[]");
+  }catch(e){
+    return [];
+  }
+}
+
+function effectiveDoc(d){
+  const workflow=getWorkflowState(d.id);
+
+  if(!workflow.version){
+    return {...d,workflowStatus:"",currentVersion:d.version};
+  }
+
+  if(workflow.status==="Published"){
+    return {
+      ...d,
+      version:workflow.version,
+      status:"Published",
+      effective:new Date(workflow.publishedAt||workflow.approvedAt||Date.now()).toLocaleDateString(),
+      workflowStatus:"Published",
+      currentVersion:workflow.version,
+      previousVersion:workflow.previousVersion||d.version
+    };
+  }
+
+  return {
+    ...d,
+    workflowStatus:workflow.status||"Draft",
+    draftVersion:workflow.version,
+    currentVersion:d.version
+  };
+}
+
+function supersededRows(d){
+  return getVersionHistory(d.id).map(item=>({
+    ...d,
+    version:item.version,
+    status:"Superseded",
+    effective:item.effective||"—",
+    review:"—",
+    workflowStatus:"Superseded",
+    historical:true,
+    supersededAt:item.supersededAt||""
+  }));
+}
+
+function statusClass(status){
+  const value=String(status||"").toLowerCase();
+
+  if(value==="published"){
+    return "published";
+  }
+
+  if(value==="review"||value==="approval"){
+    return "review";
+  }
+
+  if(value==="superseded"){
+    return "draft";
+  }
+
+  return "draft";
+}
+
+function renderDocs(){
+  const q=document.getElementById("search").value.toLowerCase();
+  const s=document.getElementById("status").value;
+  const t=document.getElementById("type").value;
+
+  const currentDocs=docs.map(effectiveDoc);
+
+  const allRows=[
+    ...currentDocs,
+    ...docs.flatMap(supersededRows)
+  ];
+
+  const filtered=allRows.filter(d=>{
+    const searchable=(
+      d.title+" "+
+      d.id+" "+
+      d.owner+" "+
+      (d.workflowStatus||"")+" "+
+      (d.draftVersion||"")+" "+
+      (d.version||"")
+    ).toLowerCase();
+
+    const effectiveStatus=
+      d.historical
+        ? "Superseded"
+        : (
+            d.workflowStatus && d.workflowStatus!=="Published"
+              ? d.workflowStatus
+              : d.status
+          );
+
+    /*
+     * Historical versions stay hidden in the normal register unless
+     * specifically requested by search or the Superseded filter.
+     */
+    const wantsHistory=
+      s==="Superseded"
+      ||
+      (q && searchable.includes(q));
+
+    if(d.historical && !wantsHistory){
+      return false;
+    }
+
+    return (
+      (!q||searchable.includes(q))
+      &&
+      (!s||effectiveStatus===s)
+      &&
+      (!t||d.type===t)
+    );
+  });
+
+  document.getElementById("docRows").innerHTML=
+    filtered.map(d=>{
+
+      const workflow=
+        !d.historical &&
+        d.workflowStatus &&
+        d.workflowStatus!=="Published"
+          ? `<div style="margin-top:5px;color:#E6C96B;font-size:7px;font-weight:800;">
+               Draft v${d.draftVersion} · ${d.workflowStatus}
+             </div>`
+          : "";
+
+      const historical=
+        d.historical
+          ? `<div style="margin-top:5px;color:#8E9993;font-size:7px;font-weight:800;">
+               Historical controlled version
+             </div>`
+          : "";
+
+      const displayStatus=
+        d.historical
+          ? "Superseded"
+          : (
+              d.workflowStatus&&d.workflowStatus!=="Published"
+                ? d.workflowStatus
+                : d.status
+            );
+
+      const openLabel=
+        d.historical
+          ? "View history →"
+          : "Open →";
+
+      return `
+        <tr>
+          <td>
+            <span class="doc-title">${d.title}</span>
+            <span class="doc-id">${d.id}</span>
+            ${workflow}
+            ${historical}
+          </td>
+          <td>${d.type}</td>
+          <td>${d.owner}</td>
+          <td>${d.version}</td>
+          <td>
+            <span class="badge ${statusClass(displayStatus)}">
+              ${displayStatus}
+            </span>
+          </td>
+          <td>${d.effective}</td>
+          <td>${d.review}</td>
+          <td>
+            <span class="action" onclick="openDoc('${d.id}')">
+              ${openLabel}
+            </span>
+          </td>
+        </tr>
+      `;
+    }).join("");
+
+  updateRegisterMetrics(currentDocs);
+}
+
+function updateRegisterMetrics(currentDocs){
+  const published=currentDocs.filter(d=>{
+    const status=d.workflowStatus&&d.workflowStatus!=="Published"
+      ? d.workflowStatus
+      : d.status;
+    return status==="Published";
+  }).length;
+
+  const review=currentDocs.filter(d=>{
+    const status=d.workflowStatus&&d.workflowStatus!=="Published"
+      ? d.workflowStatus
+      : d.status;
+    return status==="Review"||status==="Approval";
+  }).length;
+
+  const superseded=
+    docs.reduce(
+      (total,d)=>total+getVersionHistory(d.id).length,
+      0
+    );
+
+  document.getElementById("mTotal").innerText=currentDocs.length;
+  document.getElementById("mPublished").innerText=published;
+  document.getElementById("mReview").innerText=review;
+  document.getElementById("mSuperseded").innerText=superseded;
+}
+
 function showTab(id,el){
  document.querySelectorAll(".tabview").forEach(x=>x.style.display="none");
  document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
