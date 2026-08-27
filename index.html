@@ -317,19 +317,19 @@
       place-items: center;
       z-index: 10;
       border-radius: 24px;
+      overflow: hidden;
       border: 1px solid rgba(111,197,90,.34);
-      background:
-        radial-gradient(circle, rgba(44,130,89,.25), rgba(11,61,46,.14) 58%, rgba(13,13,13,.94));
+      background: var(--black);
       box-shadow:
-        0 0 55px rgba(44,130,89,.18),
-        inset 0 0 25px rgba(111,197,90,.05);
+        0 0 55px rgba(44,130,89,.18);
     }
 
     .orbit-core img {
-      width: 138px;
-      height: 138px;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
       display: block;
+      border-radius: 22px;
     }
 
     /*
@@ -1000,8 +1000,8 @@
       }
 
       .orbit-core img {
-        width: 108px;
-        height: 108px;
+        width: 100%;
+        height: 100%;
       }
 
       .float-badge {
