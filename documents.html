@@ -399,7 +399,7 @@ function showTab(id,el){
  if(el&&el.classList.contains("tab"))el.classList.add("active");
 }
 function openDoc(id){window.location.href="document.html?id="+encodeURIComponent(id)}
-function newDocument(){alert("New Controlled Document\\n\\nNext: choose document type → template → owner → draft → review → approval → publication.")}
+function newDocument(){window.location.href="new-document.html"}
 function demo(name){alert(name+"\\n\\nThis interaction is staged for the Demo IMS and will become functional as we build the Dm module.")}
 renderDocs();
 </script>
