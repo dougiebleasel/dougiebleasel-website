@@ -142,8 +142,69 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 }
 .saved.show{display:block}
 
+
+.ai-create{
+  margin-bottom:18px;
+  padding:20px;
+  border:1px solid rgba(111,197,90,.28);
+  border-radius:10px;
+  background:
+    radial-gradient(circle at 85% 20%,rgba(44,130,89,.12),transparent 28%),
+    linear-gradient(135deg,rgba(18,53,36,.26),rgba(13,13,13,.92))
+}
+.ai-create-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);
+  gap:16px;
+  align-items:start
+}
+.ai-create h2{font-size:22px;letter-spacing:-.7px}
+.ai-create p{margin-top:6px;color:var(--muted);font-size:8px;line-height:1.55;max-width:680px}
+.ai-input{
+  width:100%;
+  min-height:110px;
+  margin-top:13px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--black);
+  color:white;
+  resize:vertical;
+  outline:none;
+  font-size:9px;
+  line-height:1.55
+}
+.ai-input:focus{border-color:rgba(111,197,90,.42)}
+.ai-create-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.ai-create-actions button{
+  min-height:40px;padding:0 14px;border-radius:6px;border:1px solid var(--border);
+  background:var(--card);color:white;font-size:8px;font-weight:900
+}
+.ai-create-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+.ai-suggestions{
+  padding:14px;
+  border:1px solid rgba(244,246,245,.07);
+  border-radius:8px;
+  background:rgba(13,13,13,.34)
+}
+.ai-suggestions strong{font-size:9px}
+.ai-suggestions ul{list-style:none;display:grid;gap:8px;margin-top:10px}
+.ai-suggestions li{color:var(--muted);font-size:8px;line-height:1.45}
+.ai-suggestions li::before{content:"✦";color:var(--green);font-weight:900;margin-right:7px}
+.ai-result{
+  display:none;
+  margin-top:14px;
+  padding:13px;
+  border:1px solid rgba(111,197,90,.22);
+  border-radius:8px;
+  background:rgba(18,53,36,.18)
+}
+.ai-result.show{display:block}
+.ai-result strong{font-size:9px;color:var(--green)}
+.ai-result p{margin-top:5px;color:#D6DCD9;font-size:8px;line-height:1.5}
+
 @media(max-width:1000px){.app{grid-template-columns:205px 1fr}.layout{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.templates{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.footer-actions{display:block}.right-actions{margin-top:8px}}
+@media(max-width:760px){.ai-create-grid{grid-template-columns:1fr}.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.templates{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.footer-actions{display:block}.right-actions{margin-top:8px}}
 </style>
 </head>
 <body>
@@ -174,6 +235,49 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 
 <section class="hero">
 <div><div class="eyebrow">Dm · Create Controlled Content</div><h1>Create a new controlled document</h1><p>Start from an approved Certicium template, apply customer context and move the document through Draft, Review, Approval and Publication using the same controlled lifecycle as every other IMS document.</p></div>
+</section>
+
+<section class="ai-create">
+  <div class="ai-create-grid">
+
+    <div>
+      <div class="eyebrow">Create with Certicium AI</div>
+      <h2>What are you wanting to create?</h2>
+      <p>
+        Describe what you need in plain language. Certicium will suggest the document type,
+        title, purpose, owner, structure and likely IMS relationships, then pre-fill the draft
+        for you to review.
+      </p>
+
+      <textarea
+        id="aiBrief"
+        class="ai-input"
+        placeholder="Example: I need a procedure for managing contractors working on customer sites."
+      ></textarea>
+
+      <div class="ai-create-actions">
+        <button class="primary" onclick="buildWithAI()">Help me build it →</button>
+        <button onclick="exampleBrief()">Use example</button>
+      </div>
+
+      <div class="ai-result" id="aiResult">
+        <strong>Certicium has prepared a first-pass draft.</strong>
+        <p id="aiResultText"></p>
+      </div>
+    </div>
+
+    <div class="ai-suggestions">
+      <strong>Certicium can help determine</strong>
+      <ul>
+        <li>The right controlled document type.</li>
+        <li>A practical title and purpose.</li>
+        <li>The likely owner and approval path.</li>
+        <li>Relevant risks, controls, forms and registers.</li>
+        <li>An initial structure and draft content.</li>
+      </ul>
+    </div>
+
+  </div>
 </section>
 
 <div class="steps">
@@ -288,6 +392,183 @@ const bp=readStorage("certiciumIMSBlueprint");
 document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
 
 let selectedTemplate="procedure";
+
+
+function exampleBrief(){
+  aiBrief.value="I need a procedure for managing contractors working on customer sites, including onboarding, competency checks, site requirements, monitoring and close-out.";
+}
+
+function inferDocumentFromBrief(brief){
+  const text=brief.toLowerCase();
+
+  let type="Procedure";
+  let template="procedure";
+  let title="New Controlled Procedure";
+  let purpose="Define a consistent controlled process for this activity.";
+  let owner="Governance";
+  let suggestedId="IMS.XX.NEW";
+  let content="";
+
+  if(text.includes("policy")){
+    type="Policy";
+    template="policy";
+    title="New Management Policy";
+    purpose="Define the organisation's commitments, principles and accountability for this subject.";
+    suggestedId="IMS.POL.NEW";
+  }
+
+  if(text.includes("work instruction")||text.includes("instruction")||text.includes("step by step")){
+    type="Work Instruction";
+    template="work";
+    title="New Work Instruction";
+    purpose="Provide clear step-based instructions for completing this activity safely and consistently.";
+    suggestedId="IMS.WI.NEW";
+  }
+
+  if(text.includes("contractor")){
+    title="Contractor Management Procedure";
+    purpose="Define how contractors are selected, engaged, inducted, monitored and closed out to ensure applicable requirements and controls are met.";
+    owner="Governance";
+    suggestedId="IMS.03.CT";
+  }
+
+  if(text.includes("driving")||text.includes("vehicle")){
+    title="Driving Management Procedure";
+    purpose="Define the controls for work-related driving, driver competency, vehicle requirements, journey planning and incident response.";
+    owner="Operations";
+    suggestedId="IMS.03.DR";
+  }
+
+  if(text.includes("document")){
+    title="Document and Records Management Procedure";
+    purpose="Define how controlled documents and records are created, reviewed, approved, published, retained and disposed of.";
+    owner="Governance";
+    suggestedId="IMS.02.01";
+  }
+
+  if(text.includes("incident")||text.includes("near miss")||text.includes("hazard")){
+    title="Incident, Near Miss and Hazard Management Procedure";
+    purpose="Define how incidents, near misses and hazards are reported, classified, investigated, actioned and closed.";
+    owner="Governance";
+    suggestedId="IMS.06.01";
+  }
+
+  if(template==="procedure"){
+    content=`1. Purpose
+
+${purpose}
+
+2. Scope
+
+Define where, when and to whom this procedure applies.
+
+3. Responsibilities
+
+Define accountable roles and responsibilities for implementing this process.
+
+4. Process
+
+Describe the controlled process, including planning, approval, implementation, monitoring and close-out requirements.
+
+5. Records
+
+Identify the records created by this process and where they are retained.
+
+6. Assurance
+
+Define how implementation of this procedure is verified and reviewed.`;
+  }
+
+  if(template==="policy"){
+    content=`1. Purpose
+
+${purpose}
+
+2. Commitments
+
+Set out the organisation's core commitments.
+
+3. Principles
+
+Define the principles used to guide decisions and behaviour.
+
+4. Accountability
+
+Define leadership and worker responsibilities.
+
+5. Review
+
+Define how this policy is reviewed and maintained.`;
+  }
+
+  if(template==="work"){
+    content=`1. Purpose
+
+${purpose}
+
+2. Before you start
+
+Define prerequisites, competencies and required controls.
+
+3. Steps
+
+1. Step one
+2. Step two
+3. Step three
+
+4. Records
+
+Define evidence that must be retained.
+
+5. Stop work conditions
+
+Define circumstances requiring work to stop and be escalated.`;
+  }
+
+  return{
+    type,
+    template,
+    title,
+    purpose,
+    owner,
+    suggestedId,
+    content
+  };
+}
+
+function buildWithAI(){
+  const brief=aiBrief.value.trim();
+
+  if(!brief){
+    alert("Tell Certicium what you are wanting to create first.");
+    return;
+  }
+
+  const result=inferDocumentFromBrief(brief);
+
+  docType.value=result.type;
+  docTitle.value=result.title;
+  docPurpose.value=result.purpose;
+  docOwner.value=result.owner;
+  docId.value=result.suggestedId;
+  docVersion.value="0.1";
+  docContent.value=result.content;
+  selectedTemplate=result.template;
+
+  document.querySelectorAll(".template").forEach(x=>{
+    x.classList.toggle("selected",x.dataset.template===result.template);
+  });
+
+  editorStatus.innerText="Draft v0.1";
+  aiResult.classList.add("show");
+  aiResultText.innerText=
+    "Suggested "+result.type+": "+result.title+
+    ". I have pre-filled the metadata, purpose and first-pass structure. Review and change anything you need before saving the draft.";
+
+  step1.classList.add("done");
+  step1.classList.remove("active");
+  step2.classList.add("active");
+}
 
 function selectTemplate(el){
  document.querySelectorAll(".template").forEach(x=>x.classList.remove("selected"));
