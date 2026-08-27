@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | New Controlled Document</title>
+<style>
+:root{
+  --phthalo:#0B3D2E;
+  --dark:#123524;
+  --accent:#2C8259;
+  --green:#6FC55A;
+  --grey:#242526;
+  --black:#0D0D0D;
+  --white:#F4F6F5;
+  --muted:#A9B2AE;
+  --border:rgba(244,246,245,.10);
+  --card:#141715;
+  --warn:#E6C96B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+aside{
+  position:sticky;top:0;height:100vh;padding:20px 16px;
+  background:linear-gradient(180deg,#08100D,#06100D);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 7px 21px;border-bottom:1px solid var(--border)}
+.brand img{width:45px;height:45px;object-fit:contain}
+.brand strong{font-size:21px}.brand strong span{color:var(--green)}
+.brand small{display:block;color:var(--muted);font-size:7px;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.nav{padding-top:18px}
+.label{padding:0 10px;margin:16px 0 7px;color:#65716B;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.nav a{
+  min-height:38px;padding:0 10px;border-radius:7px;display:flex;align-items:center;gap:10px;
+  color:#C8D0CC;font-size:11px;font-weight:700
+}
+.nav a:hover,.nav a.active{background:rgba(44,130,89,.16);color:white}
+.nav a.active{box-shadow:inset 2px 0 0 var(--green)}
+.sym{
+  width:27px;height:27px;border:1px solid rgba(111,197,90,.20);border-radius:5px;
+  display:grid;place-items:center;color:var(--green);font-size:9px;font-weight:900
+}
+.ai-side{
+  margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;
+  background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))
+}
+.ai-side strong{font-size:11px}.ai-side p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}
+.ai-side button{width:100%;margin-top:10px;height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900}
+.workspace{min-width:0}
+.topbar{
+  height:72px;padding:0 30px;position:sticky;top:0;z-index:30;
+  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center
+}
+.company strong{font-size:12px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}
+.top-actions{display:flex;gap:8px}
+.top-actions button{
+  height:38px;padding:0 13px;border-radius:6px;border:1px solid var(--border);
+  background:var(--card);color:white;font-size:9px;font-weight:800
+}
+.top-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+main{max-width:1350px;margin:auto;padding:34px 34px 80px}
+.crumb{color:var(--muted);font-size:8px;margin-bottom:14px}.crumb a{color:var(--green)}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:24px}
+.eyebrow{color:var(--green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
+.hero p{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.6;max-width:720px}
+
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px}
+.step{
+  padding:12px;border:1px solid var(--border);border-radius:7px;background:var(--card)
+}
+.step span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
+.step strong{display:block;margin-top:5px;font-size:9px}
+.step.active{border-color:rgba(111,197,90,.42);background:rgba(18,53,36,.22)}
+.step.done{border-color:rgba(111,197,90,.20)}
+
+.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:14px}
+.panel{border:1px solid var(--border);border-radius:9px;background:var(--card);overflow:hidden}
+.panel-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.panel-head h2{font-size:14px}.panel-head span{color:var(--muted);font-size:8px}
+.body{padding:18px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:6px}.field.full{grid-column:1/-1}
+.field label{color:var(--muted);font-size:7px;font-weight:900;text-transform:uppercase;letter-spacing:.7px}
+.field input,.field select,.field textarea{
+  width:100%;border:1px solid var(--border);border-radius:7px;background:var(--black);
+  color:white;padding:11px 12px;outline:none;font-size:9px
+}
+.field textarea{min-height:90px;resize:vertical;line-height:1.55}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(111,197,90,.42)}
+
+.templates{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.template{
+  padding:14px;border:1px solid var(--border);border-radius:8px;background:rgba(13,13,13,.4);
+  cursor:pointer;transition:.15s
+}
+.template:hover,.template.selected{border-color:rgba(111,197,90,.42);background:rgba(18,53,36,.20)}
+.template strong{display:block;font-size:9px}
+.template p{margin-top:5px;color:var(--muted);font-size:7px;line-height:1.4}
+
+.editor{margin-top:14px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.editor-bar{padding:10px 12px;border-bottom:1px solid var(--border);background:#0D100E;display:flex;justify-content:space-between}
+.editor-bar strong{font-size:9px}.editor-bar span{font-size:8px;color:var(--green);font-weight:900}
+.editor textarea{width:100%;min-height:330px;padding:18px;border:0;background:#121513;color:#E4E9E6;outline:none;resize:vertical;font:10px/1.7 Arial}
+
+.side-stack{display:grid;gap:12px}
+.callout{
+  padding:15px;border:1px solid rgba(111,197,90,.22);border-radius:8px;background:rgba(18,53,36,.18)
+}
+.callout strong{font-size:10px}.callout p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+.relation-list{display:grid;gap:8px}
+.relation{
+  padding:10px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.36)
+}
+.relation strong{font-size:8px}.relation span{display:block;margin-top:4px;color:var(--muted);font-size:7px}
+.ai-prompts{display:grid;gap:7px;margin-top:10px}
+.ai-prompts button{
+  text-align:left;padding:10px;border:1px solid var(--border);border-radius:7px;
+  background:rgba(13,13,13,.42);color:white;font-size:8px
+}
+.ai-prompts button:hover{border-color:rgba(111,197,90,.35)}
+
+.footer-actions{
+  margin-top:16px;padding:14px 16px;border:1px solid var(--border);border-radius:9px;background:var(--card);
+  display:flex;justify-content:space-between;gap:10px
+}
+.left-actions,.right-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{min-height:40px;padding:0 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
+.btn.ai{color:var(--green);border-color:rgba(111,197,90,.3)}
+.btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+
+.saved{
+  display:none;margin-bottom:14px;padding:12px;border:1px solid rgba(111,197,90,.22);border-radius:7px;
+  background:rgba(18,53,36,.18);color:var(--green);font-size:8px;font-weight:900
+}
+.saved.show{display:block}
+
+@media(max-width:1000px){.app{grid-template-columns:205px 1fr}.layout{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.templates{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.footer-actions{display:block}.right-actions{margin-top:8px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside>
+<a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium<span>.</span></strong><small>Build. Maintain. Embed.</small></div></a>
+<div class="nav">
+<div class="label">Workspace</div><a href="ims.html"><span class="sym">⌂</span>Home</a>
+<div class="label">Document Management</div>
+<a href="documents.html"><span class="sym">Dm</span>Document Register</a>
+<a class="active" href="new-document.html"><span class="sym">Nd</span>New Document</a>
+<a href="documents.html"><span class="sym">Rc</span>Records</a>
+<a href="documents.html"><span class="sym">Ia</span>Impact Analysis</a>
+<div class="label">My IMS</div><a href="ims.html#governance"><span class="sym">Po</span>Governance</a><a href="#"><span class="sym">Rm</span>Risk Management</a><a href="#"><span class="sym">Au</span>Assurance</a>
+</div>
+<div class="ai-side"><strong>✦ Document AI</strong><p>Draft controlled content from an approved Certicium template and customer context.</p><button onclick="aiAction('Draft this document for me using the selected template.')">Draft with AI</button></div>
+</aside>
+
+<div class="workspace">
+<header class="topbar">
+<div class="company"><strong id="companyName">Your organisation</strong><small>Create Controlled Document</small></div>
+<div class="top-actions"><button onclick="window.location.href='documents.html'">Cancel</button><button class="primary" onclick="saveDraft()">Save Draft</button></div>
+</header>
+
+<main>
+<div class="crumb"><a href="ims.html">Home</a> / <a href="documents.html">Document and Records Management</a> / New Document</div>
+
+<section class="hero">
+<div><div class="eyebrow">Dm · Create Controlled Content</div><h1>Create a new controlled document</h1><p>Start from an approved Certicium template, apply customer context and move the document through Draft, Review, Approval and Publication using the same controlled lifecycle as every other IMS document.</p></div>
+</section>
+
+<div class="steps">
+<div class="step active" id="step1"><span>1</span><strong>Define</strong></div>
+<div class="step" id="step2"><span>2</span><strong>Draft</strong></div>
+<div class="step" id="step3"><span>3</span><strong>Review</strong></div>
+<div class="step" id="step4"><span>4</span><strong>Approval</strong></div>
+<div class="step" id="step5"><span>5</span><strong>Published</strong></div>
+</div>
+
+<div class="saved" id="savedBanner">Draft saved.</div>
+
+<section class="layout">
+
+<div class="panel">
+<div class="panel-head"><h2>Document setup</h2><span>Controlled metadata</span></div>
+<div class="body">
+
+<div class="form-grid">
+<div class="field"><label>Document type</label><select id="docType" onchange="updateSuggestedId()"><option>Procedure</option><option>Policy</option><option>Work Instruction</option><option>Standard</option><option>Template</option></select></div>
+<div class="field"><label>Document ID</label><input id="docId" value="IMS.02.NEW"></div>
+<div class="field full"><label>Document title</label><input id="docTitle" placeholder="Enter controlled document title"></div>
+<div class="field"><label>Document owner</label><input id="docOwner" value="Governance"></div>
+<div class="field"><label>Approver</label><select id="docApprover"><option>Managing Director</option><option>Governance Director</option><option>Executive Manager</option></select></div>
+<div class="field"><label>Review frequency</label><select id="reviewFrequency"><option>12 months</option><option>24 months</option><option>36 months</option><option>Event driven</option></select></div>
+<div class="field"><label>Initial version</label><input id="docVersion" value="0.1"></div>
+<div class="field full"><label>Purpose of document</label><textarea id="docPurpose" placeholder="What does this document need to achieve?"></textarea></div>
+</div>
+
+<div class="eyebrow" style="margin-top:20px">Approved Certicium templates</div>
+<div class="templates">
+<div class="template selected" data-template="procedure" onclick="selectTemplate(this)"><strong>Procedure</strong><p>Purpose, scope, responsibilities, process, records and assurance.</p></div>
+<div class="template" data-template="policy" onclick="selectTemplate(this)"><strong>Policy</strong><p>Commitments, principles, accountability and governance direction.</p></div>
+<div class="template" data-template="work" onclick="selectTemplate(this)"><strong>Work Instruction</strong><p>Step-based operational instructions with defined evidence requirements.</p></div>
+</div>
+
+<div class="editor">
+<div class="editor-bar"><strong>Draft controlled content</strong><span id="editorStatus">Draft v0.1</span></div>
+<textarea id="docContent">1. Purpose
+
+Describe why this document exists and what outcome it is intended to achieve.
+
+2. Scope
+
+Define where, when and to whom this document applies.
+
+3. Responsibilities
+
+Define accountable roles and responsibilities.
+
+4. Process
+
+Describe the controlled process and required actions.
+
+5. Records
+
+Identify the records created by this process and where they are retained.
+
+6. Assurance
+
+Define how implementation of this document is verified.</textarea>
+</div>
+
+</div>
+</div>
+
+<div class="side-stack">
+
+<div class="callout">
+<strong>No orphan content</strong>
+<p>Before publication, Certicium will expect this document to be connected to the relevant requirement, risk, control, competency, form, record or assurance activity.</p>
+</div>
+
+<div class="panel">
+<div class="panel-head"><h2>Proposed relationships</h2><span>Customer context</span></div>
+<div class="body relation-list">
+<div class="relation"><strong>Governance</strong><span>Dm · Document and Records Management</span></div>
+<div class="relation"><strong>Approval workflow</strong><span>Owner → Reviewer → Approver</span></div>
+<div class="relation"><strong>Records</strong><span>Document approval and revision records</span></div>
+<div class="relation"><strong>Assurance</strong><span>Document control audit criteria</span></div>
+</div>
+</div>
+
+<div class="panel">
+<div class="panel-head"><h2>Document AI</h2><span>Da</span></div>
+<div class="body">
+<p style="color:var(--muted);font-size:8px;line-height:1.5">Use Certicium AI to develop the draft without bypassing document ownership and approval.</p>
+<div class="ai-prompts">
+<button onclick="aiAction('Draft the document from the selected template and purpose.')">Draft from template</button>
+<button onclick="aiAction('Improve the structure and clarity of this draft.')">Improve draft</button>
+<button onclick="aiAction('Identify missing sections or controls.')">Find gaps</button>
+<button onclick="aiAction('Suggest relationships to risks, controls, competencies, forms and assurance activities.')">Suggest relationships</button>
+</div>
+</div>
+</div>
+
+</div>
+</section>
+
+<div class="footer-actions">
+<div class="left-actions"><button class="btn ai" onclick="aiAction('Review the current draft against the Certicium controlled document standard.')">✦ AI Review</button></div>
+<div class="right-actions"><button class="btn" onclick="saveDraft()">Save Draft</button><button class="btn primary" onclick="submitReview()">Submit for Review →</button></div>
+</div>
+
+</main>
+</div>
+</div>
+
+<script>
+function readStorage(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}}
+const bp=readStorage("certiciumIMSBlueprint");
+document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
+
+let selectedTemplate="procedure";
+
+function selectTemplate(el){
+ document.querySelectorAll(".template").forEach(x=>x.classList.remove("selected"));
+ el.classList.add("selected");
+ selectedTemplate=el.dataset.template;
+ const typeMap={procedure:"Procedure",policy:"Policy",work:"Work Instruction"};
+ document.getElementById("docType").value=typeMap[selectedTemplate];
+ applyTemplate(selectedTemplate);
+ updateSuggestedId();
+}
+
+function applyTemplate(type){
+ const templates={
+  procedure:`1. Purpose
+
+Define why this procedure exists and the outcome it is intended to achieve.
+
+2. Scope
+
+Define where, when and to whom this procedure applies.
+
+3. Responsibilities
+
+Define accountable roles and responsibilities.
+
+4. Process
+
+Describe the controlled process and required actions.
+
+5. Records
+
+Identify the records created by this process and where they are retained.
+
+6. Assurance
+
+Define how implementation is verified.`,
+
+  policy:`1. Purpose
+
+Define the intent of this policy.
+
+2. Commitments
+
+Set out the organisation's core commitments.
+
+3. Principles
+
+Define the principles used to guide decisions and behaviour.
+
+4. Accountability
+
+Define leadership and worker responsibilities.
+
+5. Review
+
+Define how this policy is reviewed and maintained.`,
+
+  work:`1. Purpose
+
+Define the task or activity covered by this instruction.
+
+2. Before you start
+
+Define prerequisites, competencies and required controls.
+
+3. Steps
+
+1. Step one
+2. Step two
+3. Step three
+
+4. Records
+
+Define evidence that must be retained.
+
+5. Stop work conditions
+
+Define circumstances requiring work to stop and be escalated.`
+ };
+ docContent.value=templates[type];
+}
+
+function updateSuggestedId(){
+ const map={"Procedure":"IMS.XX.NEW","Policy":"IMS.POL.NEW","Work Instruction":"IMS.WI.NEW","Standard":"IMS.STD.NEW","Template":"IMS.TMP.NEW"};
+ if(docId.value.startsWith("IMS."))docId.value=map[docType.value]||"IMS.NEW";
+}
+
+function payload(){
+ return{
+  id:docId.value.trim(),
+  title:docTitle.value.trim(),
+  type:docType.value,
+  owner:docOwner.value.trim(),
+  approver:docApprover.value,
+  reviewFrequency:reviewFrequency.value,
+  version:docVersion.value.trim(),
+  purpose:docPurpose.value.trim(),
+  content:docContent.value,
+  template:selectedTemplate,
+  status:"Draft",
+  createdAt:new Date().toISOString(),
+  savedAt:new Date().toISOString()
+ };
+}
+
+function saveDraft(){
+ const d=payload();
+ if(!d.id||!d.title){
+  alert("Add a document ID and title before saving the draft.");
+  return;
+ }
+ localStorage.setItem("certiciumNewDocument_"+d.id,JSON.stringify(d));
+ localStorage.setItem("certiciumLastNewDocument",d.id);
+ savedBanner.classList.add("show");
+ savedBanner.innerText=d.id+" · Draft v"+d.version+" saved.";
+ editorStatus.innerText="Draft v"+d.version;
+ step1.classList.add("done");step1.classList.remove("active");step2.classList.add("active");
+}
+
+function submitReview(){
+ const d=payload();
+ if(!d.id||!d.title||!d.purpose){
+  alert("Add the document ID, title and purpose before submitting for review.");
+  return;
+ }
+ d.status="Review";
+ d.submittedAt=new Date().toISOString();
+ localStorage.setItem("certiciumNewDocument_"+d.id,JSON.stringify(d));
+ localStorage.setItem("certiciumLastNewDocument",d.id);
+ alert("Submitted for Review\\n\\n"+d.id+" v"+d.version+" has entered the controlled review workflow.");
+ window.location.href="new-document-review.html?id="+encodeURIComponent(d.id);
+}
+
+function aiAction(prompt){
+ alert(
+  "Document AI\\n\\n"+
+  prompt+"\\n\\n"+
+  "In the connected Certicium product, Document AI will use the approved template, organisation context, controlled document standard and linked IMS requirements to assist with the draft."
+ );
+}
+</script>
+</body>
+</html>
