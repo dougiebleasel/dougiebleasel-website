@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certicium | Controlled Document</title>
+<title>Certicium | New Controlled Document</title>
 <style>
 :root{
   --phthalo:#0B3D2E;
@@ -21,7 +21,8 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
 a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
 .app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
 aside{
   position:sticky;top:0;height:100vh;padding:20px 16px;
@@ -54,8 +55,8 @@ aside{
 .workspace{min-width:0}
 .topbar{
   height:72px;padding:0 30px;position:sticky;top:0;z-index:30;
-  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
-  display:flex;justify-content:space-between;align-items:center;gap:20px
+  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center
 }
 .company strong{font-size:12px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}
 .top-actions{display:flex;gap:8px}
@@ -64,128 +65,85 @@ aside{
   background:var(--card);color:white;font-size:9px;font-weight:800
 }
 .top-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
-main{max-width:1500px;margin:auto;padding:34px 34px 80px}
+main{max-width:1350px;margin:auto;padding:34px 34px 80px}
 .crumb{color:var(--muted);font-size:8px;margin-bottom:14px}.crumb a{color:var(--green)}
-.hero{display:flex;justify-content:space-between;gap:30px;align-items:start}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:24px}
 .eyebrow{color:var(--green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
 h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 .hero p{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.6;max-width:720px}
-.status-badge{padding:7px 10px;border-radius:999px;background:rgba(111,197,90,.12);color:var(--green);font-size:8px;font-weight:900;text-transform:uppercase}
-.meta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin:24px 0}
-.meta{padding:13px;border:1px solid var(--border);border-radius:8px;background:var(--card)}
-.meta span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
-.meta strong{display:block;margin-top:6px;font-size:10px}
-.layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.5fr);gap:14px}
+
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:18px}
+.step{
+  padding:12px;border:1px solid var(--border);border-radius:7px;background:var(--card)
+}
+.step span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
+.step strong{display:block;margin-top:5px;font-size:9px}
+.step.active{border-color:rgba(111,197,90,.42);background:rgba(18,53,36,.22)}
+.step.done{border-color:rgba(111,197,90,.20)}
+
+.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:14px}
 .panel{border:1px solid var(--border);border-radius:9px;background:var(--card);overflow:hidden}
-.panel-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px}
-.panel-head h2{font-size:14px}
-.panel-head span{color:var(--muted);font-size:8px}
-.doc-content{padding:24px 26px}
-.doc-content h2{font-size:18px;margin-top:24px;margin-bottom:8px}
-.doc-content h2:first-child{margin-top:0}
-.doc-content p,.doc-content li{color:#D1D7D4;font-size:10px;line-height:1.75}
-.doc-content ul{padding-left:18px;margin-top:7px}
-.doc-banner{
-  padding:12px 14px;border:1px solid rgba(111,197,90,.22);border-radius:7px;
-  background:rgba(18,53,36,.25);color:#DCE3DF;font-size:9px;line-height:1.55;margin-bottom:18px
+.panel-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.panel-head h2{font-size:14px}.panel-head span{color:var(--muted);font-size:8px}
+.body{padding:18px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:grid;gap:6px}.field.full{grid-column:1/-1}
+.field label{color:var(--muted);font-size:7px;font-weight:900;text-transform:uppercase;letter-spacing:.7px}
+.field input,.field select,.field textarea{
+  width:100%;border:1px solid var(--border);border-radius:7px;background:var(--black);
+  color:white;padding:11px 12px;outline:none;font-size:9px
 }
+.field textarea{min-height:90px;resize:vertical;line-height:1.55}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(111,197,90,.42)}
+
+.templates{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}
+.template{
+  padding:14px;border:1px solid var(--border);border-radius:8px;background:rgba(13,13,13,.4);
+  cursor:pointer;transition:.15s
+}
+.template:hover,.template.selected{border-color:rgba(111,197,90,.42);background:rgba(18,53,36,.20)}
+.template strong{display:block;font-size:9px}
+.template p{margin-top:5px;color:var(--muted);font-size:7px;line-height:1.4}
+
+.editor{margin-top:14px;border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.editor-bar{padding:10px 12px;border-bottom:1px solid var(--border);background:#0D100E;display:flex;justify-content:space-between}
+.editor-bar strong{font-size:9px}.editor-bar span{font-size:8px;color:var(--green);font-weight:900}
+.editor textarea{width:100%;min-height:330px;padding:18px;border:0;background:#121513;color:#E4E9E6;outline:none;resize:vertical;font:10px/1.7 Arial}
+
 .side-stack{display:grid;gap:12px}
-.side-body{padding:16px}
-.relationships{display:grid;gap:8px}
-.relationship{
-  padding:10px;border:1px solid rgba(244,246,245,.07);border-radius:7px;background:rgba(13,13,13,.36)
+.callout{
+  padding:15px;border:1px solid rgba(111,197,90,.22);border-radius:8px;background:rgba(18,53,36,.18)
 }
-.relationship strong{display:block;font-size:9px}
-.relationship span{display:block;margin-top:4px;color:var(--muted);font-size:7px;line-height:1.4}
-.timeline{display:grid}
-.timeline-item{
-  padding:12px 15px;border-bottom:1px solid rgba(244,246,245,.06);
-  display:grid;grid-template-columns:55px 1fr;gap:10px
+.callout strong{font-size:10px}.callout p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+.relation-list{display:grid;gap:8px}
+.relation{
+  padding:10px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.36)
 }
-.timeline-item:last-child{border-bottom:0}
-.version{color:var(--green);font-size:9px;font-weight:900}
-.timeline-item strong{display:block;font-size:9px}
-.timeline-item p{margin-top:3px;color:var(--muted);font-size:7px;line-height:1.45}
-.approval-flow{display:grid;gap:8px}
-.approval-step{display:flex;gap:9px;align-items:center}
-.approval-dot{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--dark);color:var(--green);font-size:8px;font-weight:900}
-.approval-step strong{font-size:8px}.approval-step span{display:block;color:var(--muted);font-size:7px;margin-top:2px}
-.ai-panel{
-  padding:18px;border:1px solid rgba(111,197,90,.26);border-radius:9px;
-  background:linear-gradient(135deg,rgba(44,130,89,.14),rgba(13,13,13,.85))
-}
-.ai-panel h3{font-size:13px}.ai-panel p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
-.ai-prompts{display:grid;gap:7px;margin-top:12px}
+.relation strong{font-size:8px}.relation span{display:block;margin-top:4px;color:var(--muted);font-size:7px}
+.ai-prompts{display:grid;gap:7px;margin-top:10px}
 .ai-prompts button{
-  text-align:left;padding:10px 11px;border:1px solid var(--border);border-radius:7px;
+  text-align:left;padding:10px;border:1px solid var(--border);border-radius:7px;
   background:rgba(13,13,13,.42);color:white;font-size:8px
 }
 .ai-prompts button:hover{border-color:rgba(111,197,90,.35)}
-.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:16px}
-.impact-item{padding:11px;border:1px solid rgba(111,197,90,.16);border-radius:7px;background:rgba(18,53,36,.20)}
-.impact-item strong{display:block;color:var(--green);font-size:16px}
-.impact-item span{display:block;margin-top:4px;color:var(--muted);font-size:7px}
-.ack{padding:16px}.ack p{color:var(--muted);font-size:8px;line-height:1.5}.ack button{margin-top:12px;height:36px;padding:0 12px;border:0;border-radius:6px;background:var(--green);color:#0B1A11;font-size:8px;font-weight:900}
 
-.revision-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}.revision-modal.open{display:flex}.revision-card{width:min(980px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(111,197,90,.28);border-radius:12px;background:#101311;box-shadow:0 30px 90px rgba(0,0,0,.55)}.revision-head{position:sticky;top:0;z-index:2;padding:18px 20px;border-bottom:1px solid var(--border);background:rgba(16,19,17,.97);display:flex;justify-content:space-between;gap:20px}.revision-head h2{font-size:22px}.revision-head p{margin-top:5px;color:var(--muted);font-size:8px}.close-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white}.revision-body{padding:20px}.revision-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{color:var(--muted);font-size:7px;font-weight:900;text-transform:uppercase}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:7px;background:var(--black);color:white;padding:11px 12px;font-size:9px}.field textarea{min-height:88px;resize:vertical}.editor{margin-top:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden}.editor-bar{padding:10px 12px;border-bottom:1px solid var(--border);background:#0D100E;display:flex;justify-content:space-between}.editor-bar strong{font-size:9px}.editor-bar span{color:var(--green);font-size:8px;font-weight:900}.editor textarea{width:100%;min-height:260px;padding:18px;border:0;background:#121513;color:#E4E9E6;resize:vertical;font:10px/1.7 Arial}.revision-note{margin-top:14px;padding:12px;border:1px solid rgba(111,197,90,.18);border-radius:7px;background:rgba(18,53,36,.2);font-size:8px;line-height:1.55}.revision-actions{position:sticky;bottom:0;padding:14px 20px;border-top:1px solid var(--border);background:#101311;display:flex;justify-content:space-between;gap:10px}.action-left,.action-right{display:flex;gap:8px;flex-wrap:wrap}.rev-btn{min-height:38px;padding:0 13px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}.rev-btn.ai{color:var(--green);border-color:rgba(111,197,90,.3)}.rev-btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}.draft-banner{display:none;margin-bottom:16px;padding:12px;border:1px solid rgba(230,201,107,.25);border-radius:7px;background:rgba(230,201,107,.07);color:var(--warn);font-size:8px;font-weight:800}
+.footer-actions{
+  margin-top:16px;padding:14px 16px;border:1px solid var(--border);border-radius:9px;background:var(--card);
+  display:flex;justify-content:space-between;gap:10px
+}
+.left-actions,.right-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{min-height:40px;padding:0 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
+.btn.ai{color:var(--green);border-color:rgba(111,197,90,.3)}
+.btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
 
-.review-modal{
-  position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;
-  padding:22px;background:rgba(0,0,0,.76);backdrop-filter:blur(8px)
+.saved{
+  display:none;margin-bottom:14px;padding:12px;border:1px solid rgba(111,197,90,.22);border-radius:7px;
+  background:rgba(18,53,36,.18);color:var(--green);font-size:8px;font-weight:900
 }
-.review-modal.open{display:flex}
-.review-card{
-  width:min(1040px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(111,197,90,.28);
-  border-radius:12px;background:#101311;box-shadow:0 30px 90px rgba(0,0,0,.55)
-}
-.review-head{
-  position:sticky;top:0;z-index:3;padding:18px 20px;border-bottom:1px solid var(--border);
-  background:rgba(16,19,17,.98);display:flex;justify-content:space-between;gap:20px;align-items:flex-start
-}
-.review-head h2{font-size:22px}
-.review-head p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
-.review-body{padding:20px}
-.review-status{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px
-}
-.review-step{
-  padding:12px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.42)
-}
-.review-step.active{border-color:rgba(111,197,90,.38);background:rgba(18,53,36,.22)}
-.review-step.done{border-color:rgba(111,197,90,.25)}
-.review-step span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
-.review-step strong{display:block;margin-top:5px;font-size:9px}
-.review-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
-.review-panel{border:1px solid var(--border);border-radius:8px;background:var(--card);overflow:hidden}
-.review-panel-head{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:10px}
-.review-panel-head strong{font-size:9px}.review-panel-head span{color:var(--muted);font-size:7px}
-.review-content{padding:16px;white-space:pre-wrap;color:#D9DFDC;font-size:9px;line-height:1.65;max-height:360px;overflow:auto}
-.review-side{display:grid;gap:10px}
-.review-box{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}
-.review-box h3{font-size:10px}.review-box p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
-.review-box textarea{
-  width:100%;min-height:90px;margin-top:9px;padding:10px;border:1px solid var(--border);
-  border-radius:6px;background:var(--black);color:white;font-size:8px;resize:vertical
-}
-.review-box .mini-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.review-footer{
-  position:sticky;bottom:0;padding:14px 20px;border-top:1px solid var(--border);
-  background:rgba(16,19,17,.98);display:flex;justify-content:space-between;gap:10px
-}
-.review-footer .left,.review-footer .right{display:flex;gap:8px;flex-wrap:wrap}
-.review-btn{min-height:38px;padding:0 13px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
-.review-btn.warn{color:var(--warn);border-color:rgba(230,201,107,.28)}
-.review-btn.ai{color:var(--green);border-color:rgba(111,197,90,.28)}
-.review-btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
-.workflow-banner{
-  display:none;margin-bottom:16px;padding:12px 14px;border:1px solid rgba(111,197,90,.22);
-  border-radius:7px;background:rgba(18,53,36,.20);font-size:8px;line-height:1.55
-}
-.workflow-banner.show{display:block}
+.saved.show{display:block}
 
-@media(max-width:1100px){.app{grid-template-columns:205px 1fr}.meta-grid{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.bottom-grid{grid-template-columns:1fr}}
-@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.status-badge{display:inline-block;margin-top:15px}.meta-grid{grid-template-columns:1fr 1fr}.impact-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:1000px){.app{grid-template-columns:205px 1fr}.layout{grid-template-columns:1fr}.steps{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.templates{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.footer-actions{display:block}.right-actions{margin-top:8px}}
 </style>
 </head>
 <body>
@@ -194,501 +152,281 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 <aside>
 <a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium<span>.</span></strong><small>Build. Maintain. Embed.</small></div></a>
 <div class="nav">
-<div class="label">Workspace</div>
-<a href="ims.html"><span class="sym">⌂</span>Home</a>
+<div class="label">Workspace</div><a href="ims.html"><span class="sym">⌂</span>Home</a>
 <div class="label">Document Management</div>
 <a href="documents.html"><span class="sym">Dm</span>Document Register</a>
-<a class="active" href="#"><span class="sym">Cd</span>Controlled Document</a>
-<a href="documents.html" onclick="localStorage.setItem('certiciumDmTab','records')"><span class="sym">Rc</span>Records</a>
-<a href="documents.html" onclick="localStorage.setItem('certiciumDmTab','impact')"><span class="sym">Ia</span>Impact Analysis</a>
-<a href="#" onclick="scrollToHistory()"><span class="sym">Vh</span>Version History</a>
-<div class="label">My IMS</div>
-<a href="ims.html#governance"><span class="sym">Po</span>Governance</a>
-<a href="#"><span class="sym">Rm</span>Risk Management</a>
-<a href="#"><span class="sym">Au</span>Assurance</a>
+<a class="active" href="new-document.html"><span class="sym">Nd</span>New Document</a>
+<a href="documents.html"><span class="sym">Rc</span>Records</a>
+<a href="documents.html"><span class="sym">Ia</span>Impact Analysis</a>
+<div class="label">My IMS</div><a href="ims.html#governance"><span class="sym">Po</span>Governance</a><a href="#"><span class="sym">Rm</span>Risk Management</a><a href="#"><span class="sym">Au</span>Assurance</a>
 </div>
-<div class="ai-side"><strong>✦ Document AI</strong><p>Review, compare, summarise changes and identify relationships across the IMS.</p><button onclick="runAI('Open Document AI')">Open Document AI</button></div>
+<div class="ai-side"><strong>✦ Document AI</strong><p>Draft controlled content from an approved Certicium template and customer context.</p><button onclick="aiAction('Draft this document for me using the selected template.')">Draft with AI</button></div>
 </aside>
 
 <div class="workspace">
 <header class="topbar">
-<div class="company"><strong id="companyName">Your organisation</strong><small>Controlled Document</small></div>
-<div class="top-actions"><button onclick="openReview()">Review workflow</button><button onclick="runAI('Compare versions')">Compare versions</button><button class="primary" onclick="startRevision()">Create revision</button></div>
+<div class="company"><strong id="companyName">Your organisation</strong><small>Create Controlled Document</small></div>
+<div class="top-actions"><button onclick="window.location.href='documents.html'">Cancel</button><button class="primary" onclick="saveDraft()">Save Draft</button></div>
 </header>
 
 <main>
-<div class="crumb"><a href="ims.html">Home</a> / <a href="documents.html">Document and Records Management</a> / <span id="crumbId">Document</span></div>
+<div class="crumb"><a href="ims.html">Home</a> / <a href="documents.html">Document and Records Management</a> / New Document</div>
 
 <section class="hero">
-<div>
-<div class="eyebrow" id="docTypeLine">Controlled Document</div>
-<h1 id="docTitle">Document</h1>
-<p id="docSummary">Controlled IMS content with lifecycle, approvals, revision history, relationships, evidence and Document AI.</p>
-</div>
-<div class="status-badge" id="docStatus">Published</div>
+<div><div class="eyebrow">Dm · Create Controlled Content</div><h1>Create a new controlled document</h1><p>Start from an approved Certicium template, apply customer context and move the document through Draft, Review, Approval and Publication using the same controlled lifecycle as every other IMS document.</p></div>
 </section>
 
-<section class="meta-grid">
-<div class="meta"><span>Document ID</span><strong id="docId">—</strong></div>
-<div class="meta"><span>Version</span><strong id="docVersion">—</strong></div>
-<div class="meta"><span>Owner</span><strong id="docOwner">—</strong></div>
-<div class="meta"><span>Approver</span><strong id="docApprover">Managing Director</strong></div>
-<div class="meta"><span>Effective date</span><strong id="docEffective">—</strong></div>
-<div class="meta"><span>Next review</span><strong id="docReview">—</strong></div>
-</section>
+<div class="steps">
+<div class="step active" id="step1"><span>1</span><strong>Define</strong></div>
+<div class="step" id="step2"><span>2</span><strong>Draft</strong></div>
+<div class="step" id="step3"><span>3</span><strong>Review</strong></div>
+<div class="step" id="step4"><span>4</span><strong>Approval</strong></div>
+<div class="step" id="step5"><span>5</span><strong>Published</strong></div>
+</div>
+
+<div class="saved" id="savedBanner">Draft saved.</div>
 
 <section class="layout">
 
 <div class="panel">
-<div class="panel-head"><h2>Current controlled content</h2><span>Read-only published version</span></div>
-<div class="doc-content" id="docContent"></div>
+<div class="panel-head"><h2>Document setup</h2><span>Controlled metadata</span></div>
+<div class="body">
+
+<div class="form-grid">
+<div class="field"><label>Document type</label><select id="docType" onchange="updateSuggestedId()"><option>Procedure</option><option>Policy</option><option>Work Instruction</option><option>Standard</option><option>Template</option></select></div>
+<div class="field"><label>Document ID</label><input id="docId" value="IMS.02.NEW"></div>
+<div class="field full"><label>Document title</label><input id="docTitle" placeholder="Enter controlled document title"></div>
+<div class="field"><label>Document owner</label><input id="docOwner" value="Governance"></div>
+<div class="field"><label>Approver</label><select id="docApprover"><option>Managing Director</option><option>Governance Director</option><option>Executive Manager</option></select></div>
+<div class="field"><label>Review frequency</label><select id="reviewFrequency"><option>12 months</option><option>24 months</option><option>36 months</option><option>Event driven</option></select></div>
+<div class="field"><label>Initial version</label><input id="docVersion" value="0.1"></div>
+<div class="field full"><label>Purpose of document</label><textarea id="docPurpose" placeholder="What does this document need to achieve?"></textarea></div>
+</div>
+
+<div class="eyebrow" style="margin-top:20px">Approved Certicium templates</div>
+<div class="templates">
+<div class="template selected" data-template="procedure" onclick="selectTemplate(this)"><strong>Procedure</strong><p>Purpose, scope, responsibilities, process, records and assurance.</p></div>
+<div class="template" data-template="policy" onclick="selectTemplate(this)"><strong>Policy</strong><p>Commitments, principles, accountability and governance direction.</p></div>
+<div class="template" data-template="work" onclick="selectTemplate(this)"><strong>Work Instruction</strong><p>Step-based operational instructions with defined evidence requirements.</p></div>
+</div>
+
+<div class="editor">
+<div class="editor-bar"><strong>Draft controlled content</strong><span id="editorStatus">Draft v0.1</span></div>
+<textarea id="docContent">1. Purpose
+
+Describe why this document exists and what outcome it is intended to achieve.
+
+2. Scope
+
+Define where, when and to whom this document applies.
+
+3. Responsibilities
+
+Define accountable roles and responsibilities.
+
+4. Process
+
+Describe the controlled process and required actions.
+
+5. Records
+
+Identify the records created by this process and where they are retained.
+
+6. Assurance
+
+Define how implementation of this document is verified.</textarea>
+</div>
+
+</div>
 </div>
 
 <div class="side-stack">
 
+<div class="callout">
+<strong>No orphan content</strong>
+<p>Before publication, Certicium will expect this document to be connected to the relevant requirement, risk, control, competency, form, record or assurance activity.</p>
+</div>
+
 <div class="panel">
-<div class="panel-head"><h2>Approval workflow</h2><span>Current version</span></div>
-<div class="side-body approval-flow">
-<div class="approval-step"><div class="approval-dot">1</div><div><strong>Document owner</strong><span id="approvalOwner">Governance</span></div></div>
-<div class="approval-step"><div class="approval-dot">2</div><div><strong>Reviewer</strong><span>IMS Subject Matter Reviewer</span></div></div>
-<div class="approval-step"><div class="approval-dot">✓</div><div><strong>Approver</strong><span>Managing Director · Approved</span></div></div>
+<div class="panel-head"><h2>Proposed relationships</h2><span>Customer context</span></div>
+<div class="body relation-list">
+<div class="relation"><strong>Governance</strong><span>Dm · Document and Records Management</span></div>
+<div class="relation"><strong>Approval workflow</strong><span>Owner → Reviewer → Approver</span></div>
+<div class="relation"><strong>Records</strong><span>Document approval and revision records</span></div>
+<div class="relation"><strong>Assurance</strong><span>Document control audit criteria</span></div>
 </div>
 </div>
 
 <div class="panel">
-<div class="panel-head"><h2>Relationships</h2><span>No orphan content</span></div>
-<div class="side-body relationships" id="relationships"></div>
-</div>
-
-<div class="ai-panel">
-<div class="eyebrow">Da · Document AI</div>
-<h3>Ask Certicium about this document</h3>
-<p>AI uses the controlled document plus its relationships and customer context.</p>
+<div class="panel-head"><h2>Document AI</h2><span>Da</span></div>
+<div class="body">
+<p style="color:var(--muted);font-size:8px;line-height:1.5">Use Certicium AI to develop the draft without bypassing document ownership and approval.</p>
 <div class="ai-prompts">
-<button onclick="runAI('Review this document against our controlled document standard.')">Review against our document standard</button>
-<button onclick="runAI('Draft a change summary for the next revision.')">Draft a change summary</button>
-<button onclick="runAI('Which risks and controls does this document support?')">Show linked risks and controls</button>
-<button onclick="runAI('What else could be affected if this document changes?')">Run impact analysis</button>
+<button onclick="aiAction('Draft the document from the selected template and purpose.')">Draft from template</button>
+<button onclick="aiAction('Improve the structure and clarity of this draft.')">Improve draft</button>
+<button onclick="aiAction('Identify missing sections or controls.')">Find gaps</button>
+<button onclick="aiAction('Suggest relationships to risks, controls, competencies, forms and assurance activities.')">Suggest relationships</button>
+</div>
 </div>
 </div>
 
 </div>
 </section>
 
-<section class="bottom-grid">
-
-<div class="panel" id="versionHistoryPanel">
-<div class="panel-head"><h2>Revision history</h2><span>Controlled audit trail</span></div>
-<div class="timeline" id="history"></div>
+<div class="footer-actions">
+<div class="left-actions"><button class="btn ai" onclick="aiAction('Review the current draft against the Certicium controlled document standard.')">✦ AI Review</button></div>
+<div class="right-actions"><button class="btn" onclick="saveDraft()">Save Draft</button><button class="btn primary" onclick="submitReview()">Submit for Review →</button></div>
 </div>
-
-<div class="panel">
-<div class="panel-head"><h2>Change impact</h2><span>Current relationships</span></div>
-<div class="impact-grid">
-<div class="impact-item"><strong id="impactControls">4</strong><span>Linked controls</span></div>
-<div class="impact-item"><strong id="impactCompetencies">2</strong><span>Competencies</span></div>
-<div class="impact-item"><strong id="impactForms">3</strong><span>Forms and templates</span></div>
-<div class="impact-item"><strong id="impactAssurance">2</strong><span>Assurance activities</span></div>
-</div>
-<div class="ack"><p>Material revisions can trigger acknowledgement, competency review, form updates and assurance review based on the linked objects above.</p><button onclick="runAI('Review the impact of a material change to this document.')">✦ Analyse change impact</button></div>
-</div>
-
-</section>
 
 </main>
 </div>
 </div>
 
-
-<div class="revision-modal" id="revisionModal"><div class="revision-card">
-<div class="revision-head"><div><div class="eyebrow">Controlled Document Lifecycle</div><h2>Create revision</h2><p>The published version remains authorised while this draft moves through review and approval.</p></div><button class="close-btn" onclick="closeRevision()">×</button></div>
-<div class="revision-body"><div class="draft-banner" id="draftBanner"></div>
-<div class="revision-grid">
-<div class="field"><label>Current version</label><input id="currentVersion" readonly></div>
-<div class="field"><label>New draft version</label><input id="newVersion"></div>
-<div class="field full"><label>Reason for change</label><textarea id="changeReason" placeholder="Why is this document being revised?"></textarea></div>
-<div class="field"><label>Document owner</label><input id="revisionOwner"></div>
-<div class="field"><label>Reviewer</label><select id="revisionReviewer"><option>IMS Subject Matter Reviewer</option><option>Governance Lead</option><option>Operational Subject Matter Expert</option></select></div>
-</div>
-<div class="revision-note">Certicium preserves the published version and creates a separate draft. Impact analysis should be completed before the revision is submitted for review.</div>
-<div class="editor"><div class="editor-bar"><strong>Draft controlled content</strong><span id="editorVersion">Draft</span></div><textarea id="revisionContent"></textarea></div>
-</div>
-<div class="revision-actions"><div class="action-left"><button class="rev-btn ai" onclick="revisionAI('Review this draft against our controlled document standard.')">✦ AI Review</button><button class="rev-btn ai" onclick="revisionAI('Analyse the impact of this proposed change.')">✦ Impact Analysis</button></div><div class="action-right"><button class="rev-btn" onclick="saveDraft()">Save Draft</button><button class="rev-btn primary" onclick="submitReview()">Submit for Review →</button></div></div>
-</div></div>
-
-<div class="review-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewWorkflowTitle">
-  <div class="review-card">
-    <div class="review-head">
-      <div>
-        <div class="eyebrow">Controlled Document Lifecycle</div>
-        <h2 id="reviewWorkflowTitle">Review and Approval</h2>
-        <p>Review the proposed revision, record comments, approve it and publish the new controlled version.</p>
-      </div>
-      <button class="close-btn" onclick="closeReview()" aria-label="Close">×</button>
-    </div>
-
-    <div class="review-body">
-      <div class="workflow-banner" id="workflowBanner"></div>
-
-      <div class="review-status">
-        <div class="review-step done"><span>1</span><strong>Draft</strong></div>
-        <div class="review-step active" id="stepReview"><span>2</span><strong>Review</strong></div>
-        <div class="review-step" id="stepApproval"><span>3</span><strong>Approval</strong></div>
-        <div class="review-step" id="stepPublished"><span>4</span><strong>Published</strong></div>
-      </div>
-
-      <div class="review-grid">
-        <div class="review-panel">
-          <div class="review-panel-head">
-            <strong id="reviewDocLabel">Proposed revision</strong>
-            <span id="reviewVersionLabel">Draft</span>
-          </div>
-          <div class="review-content" id="reviewContent"></div>
-        </div>
-
-        <div class="review-side">
-          <div class="review-box">
-            <h3>Reason for change</h3>
-            <p id="reviewReason">No draft has been submitted yet.</p>
-          </div>
-
-          <div class="review-box">
-            <h3>Reviewer comments</h3>
-            <p>Record comments before recommending approval or returning the draft.</p>
-            <textarea id="reviewComments" placeholder="Reviewer comments"></textarea>
-            <div class="mini-actions">
-              <button class="review-btn ai" onclick="reviewAI('Review this proposed revision and identify gaps or contradictions.')">✦ AI Review</button>
-              <button class="review-btn ai" onclick="reviewAI('Summarise the material changes in this revision.')">✦ Change Summary</button>
-            </div>
-          </div>
-
-          <div class="review-box">
-            <h3>Approval decision</h3>
-            <p id="approvalDecisionText">The draft must be reviewed before approval.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="review-footer">
-      <div class="left">
-        <button class="review-btn warn" onclick="returnDraft()">Return to Draft</button>
-      </div>
-      <div class="right">
-        <button class="review-btn" onclick="recommendApproval()">Recommend Approval</button>
-        <button class="review-btn primary" onclick="approveAndPublish()">Approve and Publish →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-function readStorage(key){try{return JSON.parse(localStorage.getItem(key)||"{}")}catch(e){return {}}}
+function readStorage(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}}
 const bp=readStorage("certiciumIMSBlueprint");
 document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
 
-const docs={
-"IMS.01.01":{
- title:"Integrated Management System Policy",type:"Policy",owner:"Managing Director",version:"2.0",status:"Published",effective:"12 Aug 2026",review:"12 Aug 2027",
- summary:"Defines the organisation's commitment to an effective integrated management system and establishes the principles used to govern quality, health and safety, environmental and compliance performance.",
- sections:[
-  ["Purpose","This policy establishes the organisation's commitment to operating and continually improving an integrated management system that supports safe, compliant and reliable operations."],
-  ["Commitments","The organisation will identify and manage risk, meet applicable requirements, provide competent people and appropriate resources, consult with workers and interested parties, monitor performance and drive continual improvement."],
-  ["Accountability","Leaders are accountable for embedding the IMS into business planning and operational decision making. All workers are expected to follow applicable controls and report hazards, incidents and improvement opportunities."]
- ],
- rel:[["Governance","Po · Core governance"],["Risk Management","Rm · Enterprise and operational risks"],["Performance","Pm · Objectives and management review"]],
- hist:[["2.0","12 Aug 2026","Updated IMS commitments and aligned approval authority."],["1.1","10 Aug 2025","Annual review and terminology update."],["1.0","15 Jul 2024","Initial approved issue."]]
-},
-"IMS.02.01":{
- title:"Document and Records Management",type:"Procedure",owner:"Governance",version:"1.4",status:"Published",effective:"18 Aug 2026",review:"18 Aug 2027",
- summary:"Defines how controlled documents and records are created, reviewed, approved, published, maintained, retained and disposed of across the Certicium IMS.",
- sections:[
-  ["Purpose","To ensure information required by the management system is current, approved, accessible, traceable and retained as appropriate."],
-  ["Controlled document lifecycle","Controlled documents progress through Draft, Review, Approval, Published and Superseded or Archived states. Only the current published version is considered authorised for use."],
-  ["Ownership and approval","Each controlled document has an assigned owner responsible for technical accuracy and scheduled review. Approval authority is defined according to document type and organisational governance requirements."],
-  ["Records","Records provide evidence that activities have occurred or controls have been implemented. Record types, retention periods, systems of record and disposal requirements are defined within the Records Register."],
-  ["Change management","Material document changes must consider impacts to linked risks, controls, competencies, forms, records and assurance activities before publication."]
- ],
- rel:[["Core governance","Dm · Document and Records Management"],["Risk controls","4 controls reference this procedure"],["Competency","2 roles require document-control competency"],["Forms","3 controlled templates linked"],["Assurance","2 audit activities verify document control"]],
- hist:[["1.4","18 Aug 2026","Added impact analysis and records relationship requirements."],["1.3","12 Feb 2026","Updated approval workflow and review requirements."],["1.0","01 Jul 2025","Initial approved issue."]]
-},
-"IMS.03.00":{
- title:"Risk Management",type:"Procedure",owner:"Governance",version:"2.1",status:"Review",effective:"03 Sep 2025",review:"03 Sep 2026",
- summary:"Defines the framework used to identify, assess, treat, monitor and communicate enterprise and operational risk.",
- sections:[
-  ["Purpose","To provide a consistent and proportionate approach to risk management across the organisation."],
-  ["Risk assessment","Risks are assessed using approved consequence and likelihood criteria. Existing controls and their effectiveness are considered when determining current risk."],
-  ["Treatment and acceptance","Risk treatments must have accountable owners and due dates. Risk acceptance must occur at an authority level appropriate to the residual exposure."],
-  ["Monitoring","Risks are reviewed when conditions change, following significant events and according to scheduled review requirements."]
- ],
- rel:[["Governance","Rm · Risk Management"],["Operational Controls","Multiple risk modules depend on this process"],["Actions","Risk treatments create tracked actions"],["Assurance","Control effectiveness informs risk review"]],
- hist:[["2.1","03 Sep 2025","Updated risk evaluation and treatment requirements."],["2.0","14 Apr 2025","Introduced current and target risk concepts."],["1.0","10 Jan 2024","Initial approved issue."]]
-}
-};
+let selectedTemplate="procedure";
 
-const params=new URLSearchParams(window.location.search);
-const requested=params.get("id")||"IMS.02.01";
-const doc=docs[requested]||docs["IMS.02.01"];
-
-document.getElementById("crumbId").innerText=doc.title;
-document.getElementById("docTypeLine").innerText=doc.type+" · Controlled Document";
-document.getElementById("docTitle").innerText=doc.title;
-document.getElementById("docSummary").innerText=doc.summary;
-document.getElementById("docStatus").innerText=doc.status;
-document.getElementById("docId").innerText=requested;
-document.getElementById("docVersion").innerText=doc.version;
-document.getElementById("docOwner").innerText=doc.owner;
-document.getElementById("approvalOwner").innerText=doc.owner;
-document.getElementById("docEffective").innerText=doc.effective;
-document.getElementById("docReview").innerText=doc.review;
-
-document.getElementById("docContent").innerHTML=
- '<div class="doc-banner">Controlled document · '+requested+' · Version '+doc.version+' · '+doc.status+'</div>'+
- doc.sections.map(s=>'<h2>'+s[0]+'</h2><p>'+s[1]+'</p>').join("");
-
-document.getElementById("relationships").innerHTML=
- doc.rel.map(r=>'<div class="relationship"><strong>'+r[0]+'</strong><span>'+r[1]+'</span></div>').join("");
-
-function renderHistory(){
-  let stored=[];
-
-  try{
-    stored=JSON.parse(localStorage.getItem("certiciumVersionHistory_"+requested)||"[]");
-  }catch(e){
-    stored=[];
-  }
-
-  const workflow=getDraft();
-
-  const items=[];
-
-  if(workflow.version && workflow.status==="Published"){
-    items.push({
-      version:workflow.version,
-      date:new Date(workflow.publishedAt||workflow.approvedAt).toLocaleDateString(),
-      text:"Current published version.",
-      status:"Current"
-    });
-  }
-
-  stored.forEach(item=>{
-    items.push({
-      version:item.version,
-      date:item.supersededAt ? new Date(item.supersededAt).toLocaleDateString() : item.effective,
-      text:item.changeSummary||"Superseded controlled version.",
-      status:"Superseded"
-    });
-  });
-
-  doc.hist.forEach(h=>{
-    if(
-      !items.some(item=>item.version===h[0])
-      &&
-      !(workflow.version===h[0] && workflow.status==="Published")
-    ){
-      items.push({
-        version:h[0],
-        date:h[1],
-        text:h[2],
-        status:h[0]===doc.version && !(workflow.status==="Published") ? "Current" : "Historical"
-      });
-    }
-  });
-
-  document.getElementById("history").innerHTML=
-    items.map(item=>
-      '<div class="timeline-item">'+
-        '<div class="version">v'+item.version+'</div>'+
-        '<div>'+
-          '<strong>'+item.date+' · '+item.status+'</strong>'+
-          '<p>'+item.text+'</p>'+
-        '</div>'+
-      '</div>'
-    ).join("");
+function selectTemplate(el){
+ document.querySelectorAll(".template").forEach(x=>x.classList.remove("selected"));
+ el.classList.add("selected");
+ selectedTemplate=el.dataset.template;
+ const typeMap={procedure:"Procedure",policy:"Policy",work:"Work Instruction"};
+ document.getElementById("docType").value=typeMap[selectedTemplate];
+ applyTemplate(selectedTemplate);
+ updateSuggestedId();
 }
 
-function scrollToHistory(){
-  document.getElementById("versionHistoryPanel").scrollIntoView({behavior:"smooth",block:"start"});
+function applyTemplate(type){
+ const templates={
+  procedure:`1. Purpose
+
+Define why this procedure exists and the outcome it is intended to achieve.
+
+2. Scope
+
+Define where, when and to whom this procedure applies.
+
+3. Responsibilities
+
+Define accountable roles and responsibilities.
+
+4. Process
+
+Describe the controlled process and required actions.
+
+5. Records
+
+Identify the records created by this process and where they are retained.
+
+6. Assurance
+
+Define how implementation is verified.`,
+
+  policy:`1. Purpose
+
+Define the intent of this policy.
+
+2. Commitments
+
+Set out the organisation's core commitments.
+
+3. Principles
+
+Define the principles used to guide decisions and behaviour.
+
+4. Accountability
+
+Define leadership and worker responsibilities.
+
+5. Review
+
+Define how this policy is reviewed and maintained.`,
+
+  work:`1. Purpose
+
+Define the task or activity covered by this instruction.
+
+2. Before you start
+
+Define prerequisites, competencies and required controls.
+
+3. Steps
+
+1. Step one
+2. Step two
+3. Step three
+
+4. Records
+
+Define evidence that must be retained.
+
+5. Stop work conditions
+
+Define circumstances requiring work to stop and be escalated.`
+ };
+ docContent.value=templates[type];
 }
 
-renderHistory();
-
-function nextVersion(v){const p=String(v).split(".");return (parseInt(p[0]||"1",10))+"."+(parseInt(p[1]||"0",10)+1)}
-function revisionText(){return doc.sections.map(s=>s[0]+"\n"+s[1]).join("\n\n")}
-function startRevision(){
- const d=readStorage("certiciumDraft_"+requested);
- currentVersion.value=doc.version;newVersion.value=d.version||nextVersion(doc.version);changeReason.value=d.reason||"";revisionOwner.value=d.owner||doc.owner;revisionReviewer.value=d.reviewer||"IMS Subject Matter Reviewer";revisionContent.value=d.content||revisionText();editorVersion.innerText="Draft v"+newVersion.value;
- if(d.savedAt){draftBanner.style.display="block";draftBanner.innerText="Draft v"+d.version+" saved locally for this Certicium demo."}else{draftBanner.style.display="none"}
- revisionModal.classList.add("open");
-}
-function closeRevision(){revisionModal.classList.remove("open")}
-function draftPayload(){return{id:requested,version:newVersion.value.trim(),reason:changeReason.value.trim(),owner:revisionOwner.value.trim(),reviewer:revisionReviewer.value,content:revisionContent.value,status:"Draft",savedAt:new Date().toISOString()}}
-function saveDraft(){const d=draftPayload();localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(d));draftBanner.style.display="block";draftBanner.innerText="Draft v"+d.version+" saved locally for this Certicium demo.";editorVersion.innerText="Draft v"+d.version}
-function submitReview(){const d=draftPayload();if(!d.reason){alert("Add a reason for change before submitting the revision for review.");return}d.status="Review";d.submittedAt=new Date().toISOString();localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(d));closeRevision();alert("Submitted for Review\\n\\n"+requested+" draft v"+d.version+" has moved from Draft to Review.\\n\\nPublished v"+doc.version+" remains the authorised version until approval and publication.")}
-function revisionAI(prompt){alert("Document AI\\n\\n"+prompt+"\\n\\nDocument: "+requested+"\\nProposed version: "+newVersion.value+"\\nReason for change: "+(changeReason.value.trim()||"Not entered yet.")+"\\n\\nCerticium will use the draft and its linked IMS objects for this analysis.")}
-document.addEventListener("keydown",e=>{if(e.key==="Escape")closeRevision()});
-
-
-function getDraft(){
-  return readStorage("certiciumDraft_"+requested);
+function updateSuggestedId(){
+ const map={"Procedure":"IMS.XX.NEW","Policy":"IMS.POL.NEW","Work Instruction":"IMS.WI.NEW","Standard":"IMS.STD.NEW","Template":"IMS.TMP.NEW"};
+ if(docId.value.startsWith("IMS."))docId.value=map[docType.value]||"IMS.NEW";
 }
 
-function openReview(){
-  const draft=getDraft();
-  if(!draft.version){
-    alert("No revision is ready for review yet.\n\nCreate a revision, save it and submit it for review first.");
-    return;
-  }
-
-  reviewDocLabel.innerText=requested+" · Proposed Revision";
-  reviewVersionLabel.innerText="v"+draft.version+" · "+(draft.status||"Draft");
-  reviewContent.innerText=draft.content||revisionText();
-  reviewReason.innerText=draft.reason||"No reason for change recorded.";
-  reviewComments.value=draft.reviewComments||"";
-
-  updateWorkflowUI(draft);
-  reviewModal.classList.add("open");
+function payload(){
+ return{
+  id:docId.value.trim(),
+  title:docTitle.value.trim(),
+  type:docType.value,
+  owner:docOwner.value.trim(),
+  approver:docApprover.value,
+  reviewFrequency:reviewFrequency.value,
+  version:docVersion.value.trim(),
+  purpose:docPurpose.value.trim(),
+  content:docContent.value,
+  template:selectedTemplate,
+  status:"Draft",
+  createdAt:new Date().toISOString(),
+  savedAt:new Date().toISOString()
+ };
 }
 
-function closeReview(){
-  reviewModal.classList.remove("open");
+function saveDraft(){
+ const d=payload();
+ if(!d.id||!d.title){
+  alert("Add a document ID and title before saving the draft.");
+  return;
+ }
+ localStorage.setItem("certiciumNewDocument_"+d.id,JSON.stringify(d));
+ localStorage.setItem("certiciumLastNewDocument",d.id);
+ savedBanner.classList.add("show");
+ savedBanner.innerText=d.id+" · Draft v"+d.version+" saved.";
+ editorStatus.innerText="Draft v"+d.version;
+ step1.classList.add("done");step1.classList.remove("active");step2.classList.add("active");
 }
 
-function updateWorkflowUI(draft){
-  [stepReview,stepApproval,stepPublished].forEach(x=>x.classList.remove("active","done"));
-
-  const status=draft.status||"Draft";
-
-  if(status==="Review"){
-    stepReview.classList.add("active");
-    approvalDecisionText.innerText="Reviewer recommendation is pending.";
-  }
-
-  if(status==="Approval"){
-    stepReview.classList.add("done");
-    stepApproval.classList.add("active");
-    approvalDecisionText.innerText="Review complete. Approval decision is pending.";
-  }
-
-  if(status==="Published"){
-    stepReview.classList.add("done");
-    stepApproval.classList.add("done");
-    stepPublished.classList.add("active");
-    approvalDecisionText.innerText="Approved and published. The previous version is superseded.";
-  }
-
-  workflowBanner.classList.toggle("show",status==="Published");
-  if(status==="Published"){
-    workflowBanner.innerText="Published v"+draft.version+". Previous version v"+doc.version+" is now superseded in this demo workflow.";
-  }
+function submitReview(){
+ const d=payload();
+ if(!d.id||!d.title||!d.purpose){
+  alert("Add the document ID, title and purpose before submitting for review.");
+  return;
+ }
+ d.status="Review";
+ d.submittedAt=new Date().toISOString();
+ localStorage.setItem("certiciumNewDocument_"+d.id,JSON.stringify(d));
+ localStorage.setItem("certiciumLastNewDocument",d.id);
+ alert("Submitted for Review\\n\\n"+d.id+" v"+d.version+" has entered the controlled review workflow.");
+ window.location.href="new-document-review.html?id="+encodeURIComponent(d.id);
 }
 
-function saveReviewState(draft){
-  draft.reviewComments=reviewComments.value.trim();
-  draft.updatedAt=new Date().toISOString();
-  localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(draft));
-}
-
-function returnDraft(){
-  const draft=getDraft();
-  if(!draft.version)return;
-  draft.status="Draft";
-  draft.reviewComments=reviewComments.value.trim();
-  draft.returnedAt=new Date().toISOString();
-  saveReviewState(draft);
-  closeReview();
-  alert("Returned to Draft\n\nDraft v"+draft.version+" has been returned to the document owner for revision.");
-}
-
-function recommendApproval(){
-  const draft=getDraft();
-  if(!draft.version)return;
-  draft.status="Approval";
-  draft.reviewComments=reviewComments.value.trim();
-  draft.reviewedAt=new Date().toISOString();
-  saveReviewState(draft);
-  updateWorkflowUI(draft);
-}
-
-function approveAndPublish(){
-  const draft=getDraft();
-  if(!draft.version)return;
-
-  if((draft.status||"Draft")==="Draft"){
-    alert("The revision must be submitted for review before it can be approved.");
-    return;
-  }
-
-  if((draft.status||"Draft")==="Review"){
-    draft.status="Approval";
-    draft.reviewComments=reviewComments.value.trim();
-    draft.reviewedAt=new Date().toISOString();
-  }
-
-  const publishedAt=new Date().toISOString();
-
-  /*
-   * Preserve the currently published version in the document's historical
-   * version store before promoting the approved draft to current.
-   */
-  const historyKey="certiciumVersionHistory_"+requested;
-  let storedHistory=[];
-
-  try{
-    storedHistory=JSON.parse(localStorage.getItem(historyKey)||"[]");
-  }catch(e){
-    storedHistory=[];
-  }
-
-  const alreadyStored=storedHistory.some(item=>item.version===doc.version);
-
-  if(!alreadyStored){
-    storedHistory.unshift({
-      version:doc.version,
-      status:"Superseded",
-      effective:doc.effective,
-      supersededAt:publishedAt,
-      owner:doc.owner,
-      content:revisionText(),
-      changeSummary:"Superseded by v"+draft.version+".",
-      source:"baseline"
-    });
-  }
-
-  localStorage.setItem(historyKey,JSON.stringify(storedHistory));
-
-  draft.status="Published";
-  draft.approvedAt=publishedAt;
-  draft.publishedAt=publishedAt;
-  draft.previousVersion=doc.version;
-  draft.current=true;
-
-  localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(draft));
-
-  updateWorkflowUI(draft);
-  renderHistory();
-
-  alert(
-    "Published\n\n"+
-    requested+" v"+draft.version+" is now the current controlled version in this demo workflow.\n\n"+
-    "Previous version v"+doc.version+" has been retained in Version History as Superseded."
-  );
-}
-
-function reviewAI(prompt){
-  const draft=getDraft();
-  alert(
-    "Document AI\n\n"+
-    prompt+"\n\n"+
-    "Document: "+requested+"\n"+
-    "Proposed version: "+(draft.version||"Not available")+"\n"+
-    "Workflow status: "+(draft.status||"Draft")+"\n\n"+
-    "In the connected product, Certicium will assess the proposed revision against the document standard and linked IMS objects."
-  );
-}
-
-function runAI(prompt){
- alert("Document AI\\n\\n"+prompt+"\\n\\nThis is the next functional layer: Certicium will use the controlled document, document standard, approved customer context and linked IMS objects to respond.");
+function aiAction(prompt){
+ alert(
+  "Document AI\\n\\n"+
+  prompt+"\\n\\n"+
+  "In the connected Certicium product, Document AI will use the approved template, organisation context, controlled document standard and linked IMS requirements to assist with the draft."
+ );
 }
 </script>
 </body>
