@@ -127,6 +127,8 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 .impact-item strong{display:block;color:var(--green);font-size:16px}
 .impact-item span{display:block;margin-top:4px;color:var(--muted);font-size:7px}
 .ack{padding:16px}.ack p{color:var(--muted);font-size:8px;line-height:1.5}.ack button{margin-top:12px;height:36px;padding:0 12px;border:0;border-radius:6px;background:var(--green);color:#0B1A11;font-size:8px;font-weight:900}
+
+.revision-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}.revision-modal.open{display:flex}.revision-card{width:min(980px,100%);max-height:92vh;overflow:auto;border:1px solid rgba(111,197,90,.28);border-radius:12px;background:#101311;box-shadow:0 30px 90px rgba(0,0,0,.55)}.revision-head{position:sticky;top:0;z-index:2;padding:18px 20px;border-bottom:1px solid var(--border);background:rgba(16,19,17,.97);display:flex;justify-content:space-between;gap:20px}.revision-head h2{font-size:22px}.revision-head p{margin-top:5px;color:var(--muted);font-size:8px}.close-btn{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white}.revision-body{padding:20px}.revision-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:grid;gap:6px}.field.full{grid-column:1/-1}.field label{color:var(--muted);font-size:7px;font-weight:900;text-transform:uppercase}.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:7px;background:var(--black);color:white;padding:11px 12px;font-size:9px}.field textarea{min-height:88px;resize:vertical}.editor{margin-top:16px;border:1px solid var(--border);border-radius:8px;overflow:hidden}.editor-bar{padding:10px 12px;border-bottom:1px solid var(--border);background:#0D100E;display:flex;justify-content:space-between}.editor-bar strong{font-size:9px}.editor-bar span{color:var(--green);font-size:8px;font-weight:900}.editor textarea{width:100%;min-height:260px;padding:18px;border:0;background:#121513;color:#E4E9E6;resize:vertical;font:10px/1.7 Arial}.revision-note{margin-top:14px;padding:12px;border:1px solid rgba(111,197,90,.18);border-radius:7px;background:rgba(18,53,36,.2);font-size:8px;line-height:1.55}.revision-actions{position:sticky;bottom:0;padding:14px 20px;border-top:1px solid var(--border);background:#101311;display:flex;justify-content:space-between;gap:10px}.action-left,.action-right{display:flex;gap:8px;flex-wrap:wrap}.rev-btn{min-height:38px;padding:0 13px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}.rev-btn.ai{color:var(--green);border-color:rgba(111,197,90,.3)}.rev-btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}.draft-banner{display:none;margin-bottom:16px;padding:12px;border:1px solid rgba(230,201,107,.25);border-radius:7px;background:rgba(230,201,107,.07);color:var(--warn);font-size:8px;font-weight:800}
 @media(max-width:1100px){.app{grid-template-columns:205px 1fr}.meta-grid{grid-template-columns:repeat(3,1fr)}.layout{grid-template-columns:1fr}.bottom-grid{grid-template-columns:1fr}}
 @media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.status-badge{display:inline-block;margin-top:15px}.meta-grid{grid-template-columns:1fr 1fr}.impact-grid{grid-template-columns:1fr 1fr}}
 </style>
@@ -241,6 +243,22 @@ h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
 </div>
 </div>
 
+
+<div class="revision-modal" id="revisionModal"><div class="revision-card">
+<div class="revision-head"><div><div class="eyebrow">Controlled Document Lifecycle</div><h2>Create revision</h2><p>The published version remains authorised while this draft moves through review and approval.</p></div><button class="close-btn" onclick="closeRevision()">×</button></div>
+<div class="revision-body"><div class="draft-banner" id="draftBanner"></div>
+<div class="revision-grid">
+<div class="field"><label>Current version</label><input id="currentVersion" readonly></div>
+<div class="field"><label>New draft version</label><input id="newVersion"></div>
+<div class="field full"><label>Reason for change</label><textarea id="changeReason" placeholder="Why is this document being revised?"></textarea></div>
+<div class="field"><label>Document owner</label><input id="revisionOwner"></div>
+<div class="field"><label>Reviewer</label><select id="revisionReviewer"><option>IMS Subject Matter Reviewer</option><option>Governance Lead</option><option>Operational Subject Matter Expert</option></select></div>
+</div>
+<div class="revision-note">Certicium preserves the published version and creates a separate draft. Impact analysis should be completed before the revision is submitted for review.</div>
+<div class="editor"><div class="editor-bar"><strong>Draft controlled content</strong><span id="editorVersion">Draft</span></div><textarea id="revisionContent"></textarea></div>
+</div>
+<div class="revision-actions"><div class="action-left"><button class="rev-btn ai" onclick="revisionAI('Review this draft against our controlled document standard.')">✦ AI Review</button><button class="rev-btn ai" onclick="revisionAI('Analyse the impact of this proposed change.')">✦ Impact Analysis</button></div><div class="action-right"><button class="rev-btn" onclick="saveDraft()">Save Draft</button><button class="rev-btn primary" onclick="submitReview()">Submit for Review →</button></div></div>
+</div></div>
 <script>
 function readStorage(key){try{return JSON.parse(localStorage.getItem(key)||"{}")}catch(e){return {}}}
 const bp=readStorage("certiciumIMSBlueprint");
@@ -311,9 +329,20 @@ document.getElementById("relationships").innerHTML=
 document.getElementById("history").innerHTML=
  doc.hist.map(h=>'<div class="timeline-item"><div class="version">v'+h[0]+'</div><div><strong>'+h[1]+'</strong><p>'+h[2]+'</p></div></div>').join("");
 
+function nextVersion(v){const p=String(v).split(".");return (parseInt(p[0]||"1",10))+"."+(parseInt(p[1]||"0",10)+1)}
+function revisionText(){return doc.sections.map(s=>s[0]+"\n"+s[1]).join("\n\n")}
 function startRevision(){
- alert("Create revision\\n\\nCerticium would create a new draft from "+requested+" version "+doc.version+", preserve the published version, record the reason for change and start the controlled review and approval workflow.");
+ const d=readStorage("certiciumDraft_"+requested);
+ currentVersion.value=doc.version;newVersion.value=d.version||nextVersion(doc.version);changeReason.value=d.reason||"";revisionOwner.value=d.owner||doc.owner;revisionReviewer.value=d.reviewer||"IMS Subject Matter Reviewer";revisionContent.value=d.content||revisionText();editorVersion.innerText="Draft v"+newVersion.value;
+ if(d.savedAt){draftBanner.style.display="block";draftBanner.innerText="Draft v"+d.version+" saved locally for this Certicium demo."}else{draftBanner.style.display="none"}
+ revisionModal.classList.add("open");
 }
+function closeRevision(){revisionModal.classList.remove("open")}
+function draftPayload(){return{id:requested,version:newVersion.value.trim(),reason:changeReason.value.trim(),owner:revisionOwner.value.trim(),reviewer:revisionReviewer.value,content:revisionContent.value,status:"Draft",savedAt:new Date().toISOString()}}
+function saveDraft(){const d=draftPayload();localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(d));draftBanner.style.display="block";draftBanner.innerText="Draft v"+d.version+" saved locally for this Certicium demo.";editorVersion.innerText="Draft v"+d.version}
+function submitReview(){const d=draftPayload();if(!d.reason){alert("Add a reason for change before submitting the revision for review.");return}d.status="Review";d.submittedAt=new Date().toISOString();localStorage.setItem("certiciumDraft_"+requested,JSON.stringify(d));closeRevision();alert("Submitted for Review\\n\\n"+requested+" draft v"+d.version+" has moved from Draft to Review.\\n\\nPublished v"+doc.version+" remains the authorised version until approval and publication.")}
+function revisionAI(prompt){alert("Document AI\\n\\n"+prompt+"\\n\\nDocument: "+requested+"\\nProposed version: "+newVersion.value+"\\nReason for change: "+(changeReason.value.trim()||"Not entered yet.")+"\\n\\nCerticium will use the draft and its linked IMS objects for this analysis.")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeRevision()});
 
 function runAI(prompt){
  alert("Document AI\\n\\n"+prompt+"\\n\\nThis is the next functional layer: Certicium will use the controlled document, document standard, approved customer context and linked IMS objects to respond.");
