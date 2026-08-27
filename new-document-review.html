@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | Review Controlled Document</title>
+<style>
+:root{
+  --phthalo:#0B3D2E;
+  --dark:#123524;
+  --accent:#2C8259;
+  --green:#6FC55A;
+  --grey:#242526;
+  --black:#0D0D0D;
+  --white:#F4F6F5;
+  --muted:#A9B2AE;
+  --border:rgba(244,246,245,.10);
+  --card:#141715;
+  --warn:#E6C96B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+aside{
+  position:sticky;top:0;height:100vh;padding:20px 16px;
+  background:linear-gradient(180deg,#08100D,#06100D);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 7px 21px;border-bottom:1px solid var(--border)}
+.brand img{width:45px;height:45px;object-fit:contain}
+.brand strong{font-size:21px}.brand strong span{color:var(--green)}
+.brand small{display:block;color:var(--muted);font-size:7px;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+.nav{padding-top:18px}
+.label{padding:0 10px;margin:16px 0 7px;color:#65716B;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.nav a{
+  min-height:38px;padding:0 10px;border-radius:7px;display:flex;align-items:center;gap:10px;
+  color:#C8D0CC;font-size:11px;font-weight:700
+}
+.nav a:hover,.nav a.active{background:rgba(44,130,89,.16);color:white}
+.nav a.active{box-shadow:inset 2px 0 0 var(--green)}
+.sym{
+  width:27px;height:27px;border:1px solid rgba(111,197,90,.20);border-radius:5px;
+  display:grid;place-items:center;color:var(--green);font-size:9px;font-weight:900
+}
+.ai-side{
+  margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;
+  background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))
+}
+.ai-side strong{font-size:11px}.ai-side p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}
+.ai-side button{width:100%;margin-top:10px;height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900}
+.workspace{min-width:0}
+.topbar{
+  height:72px;padding:0 30px;position:sticky;top:0;z-index:30;
+  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center
+}
+.company strong{font-size:12px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}
+.top-actions{display:flex;gap:8px}
+.top-actions button{
+  height:38px;padding:0 13px;border-radius:6px;border:1px solid var(--border);
+  background:var(--card);color:white;font-size:9px;font-weight:800
+}
+.top-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+main{max-width:1400px;margin:auto;padding:34px 34px 80px}
+.crumb{color:var(--muted);font-size:8px;margin-bottom:14px}.crumb a{color:var(--green)}
+.hero{display:flex;justify-content:space-between;gap:28px;align-items:start}
+.eyebrow{color:var(--green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(34px,4vw,52px);letter-spacing:-2px;line-height:1}
+.hero p{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.6;max-width:720px}
+.badge{padding:7px 10px;border-radius:999px;background:rgba(230,201,107,.10);color:var(--warn);font-size:8px;font-weight:900;text-transform:uppercase}
+
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:24px 0 16px}
+.step{padding:12px;border:1px solid var(--border);border-radius:7px;background:var(--card)}
+.step span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
+.step strong{display:block;margin-top:5px;font-size:9px}
+.step.done{border-color:rgba(111,197,90,.22)}
+.step.active{border-color:rgba(111,197,90,.42);background:rgba(18,53,36,.22)}
+
+.meta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-bottom:14px}
+.meta{padding:13px;border:1px solid var(--border);border-radius:8px;background:var(--card)}
+.meta span{display:block;color:var(--muted);font-size:7px;text-transform:uppercase}
+.meta strong{display:block;margin-top:6px;font-size:9px}
+
+.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:14px}
+.panel{border:1px solid var(--border);border-radius:9px;background:var(--card);overflow:hidden}
+.panel-head{padding:15px 17px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:12px}
+.panel-head h2{font-size:13px}.panel-head span{color:var(--muted);font-size:8px}
+.content{padding:22px;white-space:pre-wrap;color:#D8DEDB;font-size:10px;line-height:1.7;max-height:580px;overflow:auto}
+.side{display:grid;gap:11px}
+.box{padding:15px;border:1px solid var(--border);border-radius:8px;background:var(--card)}
+.box h3{font-size:10px}.box p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+.box textarea{
+  width:100%;min-height:110px;margin-top:9px;padding:10px;border:1px solid var(--border);
+  border-radius:6px;background:var(--black);color:white;font-size:8px;resize:vertical
+}
+.ai-actions{display:grid;gap:7px;margin-top:10px}
+.ai-actions button{
+  padding:10px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.42);
+  color:white;font-size:8px;text-align:left
+}
+.ai-actions button:hover{border-color:rgba(111,197,90,.35)}
+.relations{display:grid;gap:7px;margin-top:10px}
+.relation{padding:10px;border:1px solid rgba(244,246,245,.07);border-radius:7px;background:rgba(13,13,13,.35)}
+.relation strong{display:block;font-size:8px}.relation span{display:block;margin-top:3px;color:var(--muted);font-size:7px}
+
+.footer-actions{
+  margin-top:14px;padding:14px 16px;border:1px solid var(--border);border-radius:9px;background:var(--card);
+  display:flex;justify-content:space-between;gap:10px
+}
+.left,.right{display:flex;gap:8px;flex-wrap:wrap}
+.btn{min-height:40px;padding:0 14px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
+.btn.warn{color:var(--warn);border-color:rgba(230,201,107,.28)}
+.btn.ai{color:var(--green);border-color:rgba(111,197,90,.30)}
+.btn.primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
+.banner{
+  display:none;margin-bottom:14px;padding:12px 13px;border:1px solid rgba(111,197,90,.22);
+  border-radius:7px;background:rgba(18,53,36,.18);color:var(--green);font-size:8px;font-weight:900
+}
+.banner.show{display:block}
+
+@media(max-width:1050px){.app{grid-template-columns:205px 1fr}.layout{grid-template-columns:1fr}.meta-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 60px}.hero{display:block}.badge{display:inline-block;margin-top:12px}.steps{grid-template-columns:1fr 1fr}.meta-grid{grid-template-columns:1fr 1fr}.footer-actions{display:block}.right{margin-top:8px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<aside>
+<a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium<span>.</span></strong><small>Build. Maintain. Embed.</small></div></a>
+<div class="nav">
+<div class="label">Workspace</div>
+<a href="ims.html"><span class="sym">⌂</span>Home</a>
+<div class="label">Document Management</div>
+<a href="documents.html"><span class="sym">Dm</span>Document Register</a>
+<a href="new-document.html"><span class="sym">Nd</span>New Document</a>
+<a class="active" href="#"><span class="sym">Rv</span>Review Document</a>
+<a href="documents.html"><span class="sym">Rc</span>Records</a>
+<div class="label">My IMS</div>
+<a href="ims.html#governance"><span class="sym">Po</span>Governance</a>
+<a href="#"><span class="sym">Rm</span>Risk Management</a>
+<a href="#"><span class="sym">Au</span>Assurance</a>
+</div>
+<div class="ai-side"><strong>✦ Document AI</strong><p>Review controlled content without replacing human ownership and approval.</p><button onclick="aiAction('Review this draft against the Certicium controlled document standard.')">AI Review</button></div>
+</aside>
+
+<div class="workspace">
+<header class="topbar">
+<div class="company"><strong id="companyName">Your organisation</strong><small>Controlled Document Review</small></div>
+<div class="top-actions"><button onclick="window.location.href='documents.html'">Document Register</button><button class="primary" onclick="approveDocument()">Approve and Publish</button></div>
+</header>
+
+<main>
+<div class="crumb"><a href="ims.html">Home</a> / <a href="documents.html">Document and Records Management</a> / Review</div>
+
+<section class="hero">
+<div><div class="eyebrow">Dm · Controlled Review Workflow</div><h1 id="title">Review controlled document</h1><p>Review the proposed content, record comments, confirm relationships and either return the document for revision or approve it for publication.</p></div>
+<div class="badge" id="statusBadge">Review</div>
+</section>
+
+<div class="steps">
+<div class="step done"><span>1</span><strong>Define</strong></div>
+<div class="step done"><span>2</span><strong>Draft</strong></div>
+<div class="step active" id="reviewStep"><span>3</span><strong>Review</strong></div>
+<div class="step" id="approvalStep"><span>4</span><strong>Approval</strong></div>
+<div class="step" id="publishedStep"><span>5</span><strong>Published</strong></div>
+</div>
+
+<div class="banner" id="banner"></div>
+
+<div class="meta-grid">
+<div class="meta"><span>Document ID</span><strong id="metaId">—</strong></div>
+<div class="meta"><span>Type</span><strong id="metaType">—</strong></div>
+<div class="meta"><span>Version</span><strong id="metaVersion">—</strong></div>
+<div class="meta"><span>Owner</span><strong id="metaOwner">—</strong></div>
+<div class="meta"><span>Approver</span><strong id="metaApprover">—</strong></div>
+<div class="meta"><span>Review frequency</span><strong id="metaFrequency">—</strong></div>
+</div>
+
+<section class="layout">
+
+<div class="panel">
+<div class="panel-head"><h2>Proposed controlled content</h2><span id="contentLabel">Review copy</span></div>
+<div class="content" id="content"></div>
+</div>
+
+<div class="side">
+
+<div class="box">
+<h3>Purpose</h3>
+<p id="purpose">—</p>
+</div>
+
+<div class="box">
+<h3>Reviewer comments</h3>
+<p>Record the review outcome or changes required.</p>
+<textarea id="comments" placeholder="Reviewer comments"></textarea>
+</div>
+
+<div class="box">
+<h3>Proposed relationships</h3>
+<div class="relations">
+<div class="relation"><strong>Governance</strong><span>Dm · Document and Records Management</span></div>
+<div class="relation"><strong>Records</strong><span>Approval record and published controlled document</span></div>
+<div class="relation"><strong>Assurance</strong><span>Document control audit criteria</span></div>
+</div>
+</div>
+
+<div class="box">
+<h3>Document AI</h3>
+<p>AI can support the reviewer, but the approval decision remains human.</p>
+<div class="ai-actions">
+<button onclick="aiAction('Review this draft against the Certicium controlled document standard.')">Review against document standard</button>
+<button onclick="aiAction('Identify gaps, contradictions or unclear requirements in this draft.')">Identify gaps</button>
+<button onclick="aiAction('Suggest relationships to risks, controls, competencies, forms and assurance activities.')">Suggest relationships</button>
+<button onclick="aiAction('Draft a concise approval summary for this document.')">Draft approval summary</button>
+</div>
+</div>
+
+</div>
+</section>
+
+<div class="footer-actions">
+<div class="left">
+<button class="btn warn" onclick="returnToDraft()">Return to Draft</button>
+<button class="btn ai" onclick="aiAction('Review the impact of publishing this document.')">✦ Impact Review</button>
+</div>
+<div class="right">
+<button class="btn" onclick="recommendApproval()">Recommend Approval</button>
+<button class="btn primary" onclick="approveDocument()">Approve and Publish →</button>
+</div>
+</div>
+
+</main>
+</div>
+</div>
+
+<script>
+function readStorage(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}}
+const bp=readStorage("certiciumIMSBlueprint");
+document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
+
+const params=new URLSearchParams(window.location.search);
+const id=params.get("id")||localStorage.getItem("certiciumLastNewDocument")||"";
+const key="certiciumNewDocument_"+id;
+let doc=readStorage(key);
+
+if(!doc.id){
+  alert("No new controlled document was found for review.");
+  window.location.href="documents.html";
+}
+
+function render(){
+  title.innerText=doc.title||"Review controlled document";
+  statusBadge.innerText=doc.status||"Review";
+  metaId.innerText=doc.id||"—";
+  metaType.innerText=doc.type||"—";
+  metaVersion.innerText=doc.version||"—";
+  metaOwner.innerText=doc.owner||"—";
+  metaApprover.innerText=doc.approver||"—";
+  metaFrequency.innerText=doc.reviewFrequency||"—";
+  purpose.innerText=doc.purpose||"No purpose recorded.";
+  content.innerText=doc.content||"";
+  comments.value=doc.reviewComments||"";
+  contentLabel.innerText="v"+(doc.version||"")+" · "+(doc.status||"Review");
+
+  [reviewStep,approvalStep,publishedStep].forEach(x=>x.classList.remove("active","done"));
+
+  if(doc.status==="Review"){
+    reviewStep.classList.add("active");
+  }
+
+  if(doc.status==="Approval"){
+    reviewStep.classList.add("done");
+    approvalStep.classList.add("active");
+  }
+
+  if(doc.status==="Published"){
+    reviewStep.classList.add("done");
+    approvalStep.classList.add("done");
+    publishedStep.classList.add("active");
+    banner.classList.add("show");
+    banner.innerText=doc.id+" v"+doc.version+" is published and now appears in the Document Register.";
+  }else{
+    banner.classList.remove("show");
+  }
+}
+
+function save(){
+  doc.reviewComments=comments.value.trim();
+  doc.updatedAt=new Date().toISOString();
+  localStorage.setItem(key,JSON.stringify(doc));
+}
+
+function returnToDraft(){
+  doc.status="Draft";
+  doc.reviewComments=comments.value.trim();
+  doc.returnedAt=new Date().toISOString();
+  save();
+  alert("Returned to Draft\\n\\n"+doc.id+" v"+doc.version+" has been returned to the document owner.");
+  window.location.href="new-document.html?edit="+encodeURIComponent(doc.id);
+}
+
+function recommendApproval(){
+  doc.status="Approval";
+  doc.reviewComments=comments.value.trim();
+  doc.reviewedAt=new Date().toISOString();
+  save();
+  render();
+}
+
+function approveDocument(){
+  if(doc.status==="Draft"){
+    alert("The document must be submitted for review before approval.");
+    return;
+  }
+
+  if(doc.status==="Review"){
+    doc.status="Approval";
+    doc.reviewedAt=new Date().toISOString();
+  }
+
+  doc.status="Published";
+  doc.approvedAt=new Date().toISOString();
+  doc.publishedAt=doc.approvedAt;
+  doc.reviewComments=comments.value.trim();
+  save();
+  render();
+
+  alert(
+    "Published\\n\\n"+
+    doc.id+" v"+doc.version+" is now a current controlled document and will appear in the Document Register."
+  );
+}
+
+function aiAction(prompt){
+  alert(
+    "Document AI\\n\\n"+
+    prompt+"\\n\\n"+
+    "Document: "+doc.id+"\\n"+
+    "Version: "+doc.version+"\\n"+
+    "Status: "+doc.status+"\\n\\n"+
+    "In the connected Certicium product, AI will review the actual controlled content and its linked IMS context."
+  );
+}
+
+render();
+</script>
+</body>
+</html>
