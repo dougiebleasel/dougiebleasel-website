@@ -116,6 +116,64 @@ const docs=[
 {id:"IMS.TMP.02",title:"Work Instruction Template",type:"Template",owner:"Governance",version:"0.9",status:"Draft",effective:"—",review:"—"}
 ];
 
+
+function getNewDocuments(){
+  const items=[];
+
+  for(let i=0;i<localStorage.length;i++){
+    const key=localStorage.key(i);
+
+    if(key && key.startsWith("certiciumNewDocument_")){
+      try{
+        const item=JSON.parse(localStorage.getItem(key)||"{}");
+
+        if(item && item.id){
+          items.push(item);
+        }
+      }catch(e){}
+    }
+  }
+
+  return items;
+}
+
+function normaliseNewDocument(item){
+  const effectiveDate=
+    item.publishedAt
+      ? new Date(item.publishedAt).toLocaleDateString()
+      : "—";
+
+  let reviewDate="—";
+
+  if(item.publishedAt && item.reviewFrequency){
+    const monthsMap={
+      "12 months":12,
+      "24 months":24,
+      "36 months":36
+    };
+
+    const months=monthsMap[item.reviewFrequency];
+
+    if(months){
+      const d=new Date(item.publishedAt);
+      d.setMonth(d.getMonth()+months);
+      reviewDate=d.toLocaleDateString();
+    }
+  }
+
+  return{
+    id:item.id,
+    title:item.title,
+    type:item.type||"Procedure",
+    owner:item.owner||"Governance",
+    version:item.version||"0.1",
+    status:item.status||"Draft",
+    effective:effectiveDate,
+    review:reviewDate,
+    isNewDocument:true
+  };
+}
+
 function getWorkflowState(id){
   try{
     return JSON.parse(localStorage.getItem("certiciumDraft_"+id)||"{}");
@@ -195,7 +253,7 @@ function renderDocs(){
   const s=document.getElementById("status").value;
   const t=document.getElementById("type").value;
 
-  const currentDocs=docs.map(effectiveDoc);
+  const currentDocs=[...docs.map(effectiveDoc),...getNewDocuments().map(normaliseNewDocument)];
 
   const allRows=[
     ...currentDocs,
