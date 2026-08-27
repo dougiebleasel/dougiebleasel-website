@@ -326,8 +326,8 @@
     }
 
     .orbit-core img {
-      width: 112px;
-      height: 112px;
+      width: 138px;
+      height: 138px;
       object-fit: contain;
       display: block;
     }
@@ -508,6 +508,141 @@
     @media (prefers-reduced-motion: reduce) {
       .orbit-track,
       .orbit-element-inner {
+        animation-play-state: paused;
+      }
+    }
+
+
+    /* =========================
+       FLOATING IMS TOOLS
+       ========================= */
+
+    .float-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 50%;
+    }
+
+    .float-badge {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid rgba(111,197,90,.42);
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          rgba(111,197,90,.16),
+          rgba(18,53,36,.88) 55%,
+          rgba(13,13,13,.96)
+        );
+      box-shadow:
+        0 0 20px rgba(44,130,89,.14);
+      color: var(--approval);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      backface-visibility: hidden;
+      will-change: transform;
+    }
+
+    .float-badge::before {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 20px;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .float-ai::before {
+      content: "✦";
+    }
+
+    .float-tools::before {
+      content: "⚙";
+    }
+
+    .float-forms::before {
+      content: "▤";
+    }
+
+    .float-ai {
+      left: 20%;
+      top: 27%;
+      animation: float-ai 7.5s ease-in-out infinite alternate;
+    }
+
+    .float-tools {
+      left: 22%;
+      top: 66%;
+      animation: float-tools 8.7s ease-in-out infinite alternate;
+    }
+
+    .float-forms {
+      right: 18%;
+      top: 58%;
+      animation: float-forms 8.1s ease-in-out infinite alternate;
+    }
+
+    /*
+     * These move independently inside the orbit rather than rotating
+     * with the periodic-table tiles. The paths are deliberately irregular
+     * so they feel like active tools moving through the IMS.
+     */
+
+    @keyframes float-ai {
+      0% {
+        transform: translate3d(0,0,0);
+      }
+      35% {
+        transform: translate3d(24px,18px,0);
+      }
+      70% {
+        transform: translate3d(-10px,42px,0);
+      }
+      100% {
+        transform: translate3d(34px,60px,0);
+      }
+    }
+
+    @keyframes float-tools {
+      0% {
+        transform: translate3d(0,0,0);
+      }
+      40% {
+        transform: translate3d(35px,-28px,0);
+      }
+      75% {
+        transform: translate3d(58px,6px,0);
+      }
+      100% {
+        transform: translate3d(18px,36px,0);
+      }
+    }
+
+    @keyframes float-forms {
+      0% {
+        transform: translate3d(0,0,0);
+      }
+      30% {
+        transform: translate3d(-28px,-26px,0);
+      }
+      65% {
+        transform: translate3d(-54px,12px,0);
+      }
+      100% {
+        transform: translate3d(-18px,42px,0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .float-badge {
         animation-play-state: paused;
       }
     }
@@ -865,8 +1000,18 @@
       }
 
       .orbit-core img {
-        width: 88px;
-        height: 88px;
+        width: 108px;
+        height: 108px;
+      }
+
+      .float-badge {
+        width: 58px;
+        height: 58px;
+        font-size: 9px;
+      }
+
+      .float-badge::before {
+        font-size: 16px;
       }
 
       .orbit-element {
@@ -1063,6 +1208,13 @@
               src="certicium-logo.png"
               alt="Certicium"
             >
+          </div>
+
+
+          <div class="float-layer" aria-hidden="true">
+            <div class="float-badge float-ai">AI</div>
+            <div class="float-badge float-tools">Tools</div>
+            <div class="float-badge float-forms">Forms</div>
           </div>
 
           <div class="orbit-track track-a">
