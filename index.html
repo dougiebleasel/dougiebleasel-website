@@ -266,6 +266,7 @@
       position: relative;
       width: min(100%, 560px);
       aspect-ratio: 1;
+      contain: layout paint;
     }
 
     .orbit-ring {
@@ -332,8 +333,10 @@
       top: 50%;
       width: 66px;
       height: 76px;
-      transform: translate(-50%, -50%);
-      will-change: left, top;
+      transform: translate3d(-50%, -50%, 0);
+      will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
     }
 
     .orbit-element-inner {
@@ -1433,11 +1436,8 @@
             *
             radiusY;
 
-          tile.style.left =
-            `calc(50% + ${x}px)`;
-
-          tile.style.top =
-            `calc(50% + ${y}px)`;
+          tile.style.transform =
+            `translate3d(calc(-50% + ${x.toFixed(2)}px), calc(-50% + ${y.toFixed(2)}px), 0)`;
 
         }
       );
@@ -1476,12 +1476,12 @@
       const innerRotation =
         elapsed
         *
-        0.055;
+        0.034;
 
       const outerRotation =
         elapsed
         *
-        -0.038;
+        -0.024;
 
       placeTiles(
         innerTiles,
