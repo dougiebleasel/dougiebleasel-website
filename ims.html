@@ -86,6 +86,14 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .welcome p{margin-top:10px;max-width:690px;color:var(--muted);font-size:11px;line-height:1.6}
 .blueprint-link{color:var(--muted);font-size:9px;white-space:nowrap}
 
+
+.ask-hero{margin:0 0 20px;padding:20px 22px;border:1px solid rgba(111,197,90,.30);border-radius:11px;background:radial-gradient(circle at 88% 18%,rgba(44,130,89,.15),transparent 27%),linear-gradient(135deg,rgba(18,53,36,.34),rgba(13,13,13,.94))}
+.ask-hero h2{font-size:20px;letter-spacing:-.6px}.ask-hero p{margin-top:5px;color:var(--muted);font-size:9px;line-height:1.5}
+.ask-box{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}.ask-box input{min-width:0;height:48px;padding:0 15px;border:1px solid rgba(244,246,245,.13);border-radius:8px;background:#0B0E0C;color:var(--white);outline:none;font-size:10px}.ask-box input:focus{border-color:rgba(111,197,90,.48)}
+.ask-box button{min-width:126px;border:0;border-radius:8px;background:var(--bright-green);color:#0B1A11;font-size:9px;font-weight:900}
+.ask-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.ask-chip{padding:7px 9px;border:1px solid var(--border);border-radius:999px;background:rgba(13,13,13,.32);color:#C9D1CD;font-size:7px;font-weight:800}.ask-chip:hover{border-color:rgba(111,197,90,.35);color:white}
+.ask-response{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(111,197,90,.20);border-radius:8px;background:rgba(18,53,36,.17);font-size:8px;line-height:1.55;color:#D8DEDB}.ask-response.show{display:block}.ask-response strong{color:var(--bright-green)}
+
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:26px}
 .metric{padding:16px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
 .metric-top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.6px}
@@ -167,6 +175,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   .topbar{padding:0 16px}
   .top-search{display:none}
   .content{padding:25px 16px 90px}
+  .ask-box{grid-template-columns:1fr}.ask-box button{height:44px}
   .welcome{display:block}
   .blueprint-link{display:inline-block;margin-top:12px}
   .metrics,.quick-grid{grid-template-columns:1fr 1fr}
@@ -204,40 +213,45 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
     </div>
 
     <div class="nav-group">
-      <div class="nav-label">My IMS</div>
-      <a class="nav-item" href="#governance"><span class="nav-symbol">Po</span>Governance</a>
-      <a class="nav-item" href="#controls"><span class="nav-symbol">Oc</span>Operational Controls</a>
-      <a class="nav-item" href="documents.html"><span class="nav-symbol">Dm</span>Documents & Records</a>
+      <div class="nav-label">Do</div>
+      <a class="nav-item" href="#"><span class="nav-symbol">!</span>Report an Event</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Assess a Risk</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Start an Inspection</a>
+      <a class="nav-item" href="new-document.html"><span class="nav-symbol">Nd</span>Create a Document</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Raise an Action</a>
     </div>
 
     <div class="nav-group">
       <div class="nav-label">Manage</div>
       <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Risks</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">IM</span>Incidents & Hazards</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">IM</span>Incidents and Hazards</a>
       <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Actions</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Co</span>Compliance</a>
+      <a class="nav-item" href="documents.html"><span class="nav-symbol">Dm</span>Documents and Records</a>
       <a class="nav-item" href="#"><span class="nav-symbol">Cm</span>Competency</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ct</span>Contractors</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Co</span>Compliance</a>
     </div>
 
     <div class="nav-group">
       <div class="nav-label">Assure</div>
       <a class="nav-item" href="#"><span class="nav-symbol">Au</span>Audits</a>
       <a class="nav-item" href="#"><span class="nav-symbol">In</span>Inspections</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Mt</span>Monitoring & Testing</a>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-label">Performance</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Pm</span>Dashboard</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ob</span>Objectives</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Mr</span>Management Review</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Mt</span>Monitoring and Testing</a>
     </div>
 
     <div class="nav-group">
       <div class="nav-label">Tools</div>
       <a class="nav-item" href="#"><span class="nav-symbol">Fo</span>Forms</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ai</span>AI Tools</a>
       <a class="nav-item" href="#"><span class="nav-symbol">Re</span>Registers</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ai</span>AI Tools</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">My IMS</div>
+      <a class="nav-item" href="#governance"><span class="nav-symbol">Go</span>Governance</a>
+      <a class="nav-item" href="#controls"><span class="nav-symbol">Oc</span>Operational Controls</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Po</span>Policies</a>
+      <a class="nav-item" href="#governance"><span class="nav-symbol">Mp</span>Management System Map</a>
     </div>
   </div>
 
@@ -280,6 +294,25 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   </section>
 
 
+  <section class="ask-hero">
+    <div class="eyebrow">✦ Ask Certicium</div>
+    <h2>What are you looking to do?</h2>
+    <p>Ask in plain language. Certicium can find information across your IMS or take you to the right tool, form, register or workflow.</p>
+    <div class="ask-box">
+      <input id="imsAsk" type="text" placeholder="e.g. I need to report a contractor incident">
+      <button onclick="routeIMS()">Ask Certicium →</button>
+    </div>
+    <div class="ask-chips">
+      <button class="ask-chip" onclick="askExample('Find our working near traffic procedure')">Find a procedure</button>
+      <button class="ask-chip" onclick="askExample('I need to report an incident')">Report an incident</button>
+      <button class="ask-chip" onclick="askExample('Help me assess a new risk')">Assess a risk</button>
+      <button class="ask-chip" onclick="askExample('Create a new controlled document')">Create a document</button>
+      <button class="ask-chip" onclick="askExample('Start an inspection')">Start an inspection</button>
+      <button class="ask-chip" onclick="askExample('Check our compliance obligations')">Check an obligation</button>
+    </div>
+    <div class="ask-response" id="askResponse"></div>
+  </section>
+
   <section class="metrics">
     <div class="metric">
       <div class="metric-top"><span>Actions overdue</span><span>Ac</span></div>
@@ -311,12 +344,12 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 
     <div class="panel" id="governance">
       <div class="panel-head">
-        <h2>Your management system</h2>
+        <h2>Explore your management system</h2>
         <span>8 core governance processes</span>
       </div>
 
       <div class="system-body">
-        <p class="system-copy">Your governance foundation. Each element connects the procedures, tools, records and evidence used to operate the IMS.</p>
+        <p class="system-copy">The governance architecture underneath Certicium. Explore how procedures, tools, records and evidence connect across your IMS.</p>
 
         <div class="element-grid">
 
@@ -330,7 +363,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
             <span class="element-num">02</span>
             <span class="element-status">Live</span>
             <div class="element-symbol">Dm</div>
-            <div class="element-name">Document & Records Management</div>
+            <div class="element-name">Document and Records Management</div>
           </a>
 
           <a class="element" href="#">
@@ -348,19 +381,19 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
           <a class="element" href="#">
             <span class="element-num">05</span>
             <div class="element-symbol">Cc</div>
-            <div class="element-name">Consultation & Communication</div>
+            <div class="element-name">Consultation and Communication</div>
           </a>
 
           <a class="element" href="#">
             <span class="element-num">06</span>
             <div class="element-symbol">IM</div>
-            <div class="element-name">Incident, Near Miss & Hazard Management</div>
+            <div class="element-name">Incident, Near Miss and Hazard Management</div>
           </a>
 
           <a class="element" href="#">
             <span class="element-num">07</span>
             <div class="element-symbol">Au</div>
-            <div class="element-name">Audit, Inspection, Monitoring & Testing</div>
+            <div class="element-name">Audit, Inspection, Monitoring and Testing</div>
           </a>
 
           <a class="element" href="#">
@@ -426,7 +459,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 
   <div class="section-title" id="controls">
     <div>
-      <div class="eyebrow">Do something</div>
+      <div class="eyebrow">Common tasks</div>
       <h2>Quick actions</h2>
     </div>
     <p>Common tasks from across your IMS</p>
@@ -463,7 +496,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
     <div class="dm-top">
       <div>
         <div class="eyebrow">First live Certicium module · Dm</div>
-        <h2>Document & Records Management</h2>
+        <h2>Document and Records Management</h2>
         <p>Controlled documents should not live as disconnected files. Certicium will manage their lifecycle, approvals, reviews, relationships, records and impact across the wider IMS.</p>
       </div>
 
@@ -516,17 +549,62 @@ if(blueprint.approvedAt){
     organisationName+"'s IMS blueprint is approved. Here is what needs attention across the live management system.";
 }
 
-function askIMS(){
-  alert(
-    "Ask Certicium\\n\\n"+
-    "This will become the whole-of-IMS assistant. It will understand controlled documents, risks, controls, actions, assurance and performance data."
-  );
+function askExample(text){
+  document.getElementById("imsAsk").value=text;
+  routeIMS();
 }
+
+function routeIMS(){
+  const input=document.getElementById("imsAsk");
+  const response=document.getElementById("askResponse");
+  const text=(input.value||"").trim();
+  const q=text.toLowerCase();
+  if(!text){input.focus();return;}
+
+  let message="", action="", href="";
+
+  if(q.includes("document")||q.includes("procedure")||q.includes("policy")||q.includes("record")){
+    if(q.includes("create")||q.includes("new")||q.includes("draft")){
+      message="I can help you create that. I’ll first check whether an existing controlled document should be revised before we create something new.";
+      action="Create with Document AI →"; href="new-document.html";
+    }else{
+      message="I’ll search your current controlled documents and records for the most relevant approved content.";
+      action="Search Document Management →"; href="documents.html";
+    }
+  }else if(q.includes("incident")||q.includes("near miss")||q.includes("hazard")||q.includes("event")){
+    message="This sounds like event reporting. I’ll take you to the Incident, Near Miss and Hazard workflow and use what you’ve told me to help pre-fill it."; action="Report an Event →";
+  }else if(q.includes("risk")||q.includes("assess")){
+    message="I can help assess this risk, check for similar existing risks and suggest causes, consequences and controls."; action="Open Risk Assessment →";
+  }else if(q.includes("inspect")||q.includes("audit")||q.includes("assurance")){
+    message="I’ll take you to the appropriate assurance activity and help identify the right inspection or audit."; action="Open Assurance →";
+  }else if(q.includes("compliance")||q.includes("obligation")||q.includes("legal")){
+    message="I’ll search the compliance register and connected IMS controls for the relevant obligation."; action="Open Compliance →";
+  }else{
+    message="I’ll search across your documents, risks, controls, actions, forms, registers and assurance data, then either answer you or take you to the right workflow."; action="Search the IMS →";
+  }
+
+  response.classList.add("show");
+  const click=href ? "window.location.href='"+href+"'" : "demoRoute()";
+  response.innerHTML="<strong>Certicium</strong><br>"+message+'<div style="margin-top:9px"><button class="ask-chip" onclick="'+click+'">'+action+"</button></div>";
+}
+
+function demoRoute(){
+  alert("This module will connect here as we build out the wider Certicium IMS.");
+}
+
+function askIMS(){
+  document.getElementById("imsAsk").scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>document.getElementById("imsAsk").focus(),350);
+}
+
+document.getElementById("imsAsk").addEventListener("keydown",function(event){
+  if(event.key==="Enter")routeIMS();
+});
 
 function documentAI(){
   alert(
     "Document AI\\n\\n"+
-    "Next we will build this into the Document & Records Management module: draft, review, compare, change summary and impact analysis."
+    "Next we will build this into the Document and Records Management module: draft, review, compare, change summary and impact analysis."
   );
 }
 </script>
