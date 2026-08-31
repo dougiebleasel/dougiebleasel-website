@@ -32,7 +32,7 @@ main{max-width:1500px;margin:auto;padding:24px 24px 80px}.crumb{color:var(--mute
 <div class="app">
 <aside>
 <a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium</strong><small>Build. Maintain. Embed.</small></div></a>
-<div class="nav-scroll">
+<div class="nav-scroll" id="certiciumNavScroll">
   <div class="nav-label">Workspace</div>
   <a class="nav-item" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
 
@@ -96,7 +96,70 @@ main{max-width:1500px;margin:auto;padding:24px 24px 80px}.crumb{color:var(--mute
 </div>
 
 <script>
-document.querySelectorAll("[data-nav-toggle]").forEach(btn=>btn.addEventListener("click",()=>{btn.classList.toggle("open");document.getElementById(btn.dataset.navToggle).classList.toggle("open")}));
+
+const CERTICIUM_NAV_STATE_KEY = "certiciumNavState";
+const CERTICIUM_NAV_SCROLL_KEY = "certiciumNavScrollTop";
+
+function readNavState(){
+  try{
+    return JSON.parse(localStorage.getItem(CERTICIUM_NAV_STATE_KEY) || "{}");
+  }catch(e){
+    return {};
+  }
+}
+
+function saveNavState(){
+  const state = {};
+  document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{
+    const target = document.getElementById(btn.dataset.navToggle);
+    state[btn.dataset.navToggle] = !!(target && target.classList.contains("open"));
+  });
+  localStorage.setItem(CERTICIUM_NAV_STATE_KEY, JSON.stringify(state));
+}
+
+function restoreNavState(){
+  const state = readNavState();
+
+  document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{
+    const target = document.getElementById(btn.dataset.navToggle);
+    if(!target) return;
+
+    if(Object.prototype.hasOwnProperty.call(state, btn.dataset.navToggle)){
+      const shouldOpen = !!state[btn.dataset.navToggle];
+      btn.classList.toggle("open", shouldOpen);
+      target.classList.toggle("open", shouldOpen);
+    }
+  });
+}
+
+document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const target = document.getElementById(btn.dataset.navToggle);
+    if(!target) return;
+
+    const nextState = !target.classList.contains("open");
+    btn.classList.toggle("open", nextState);
+    target.classList.toggle("open", nextState);
+    saveNavState();
+  });
+});
+
+const certiciumNavScroll = document.getElementById("certiciumNavScroll");
+
+restoreNavState();
+
+if(certiciumNavScroll){
+  const savedScroll = Number(localStorage.getItem(CERTICIUM_NAV_SCROLL_KEY) || 0);
+  if(Number.isFinite(savedScroll)){
+    certiciumNavScroll.scrollTop = savedScroll;
+  }
+
+  certiciumNavScroll.addEventListener("scroll",()=>{
+    localStorage.setItem(CERTICIUM_NAV_SCROLL_KEY, String(certiciumNavScroll.scrollTop));
+  }, {passive:true});
+}
+
+
 function readStorage(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}}
 const bp=readStorage("certiciumIMSBlueprint");document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
 
