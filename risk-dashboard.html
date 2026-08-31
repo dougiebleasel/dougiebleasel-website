@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | Risk Management</title>
+<style>
+:root{--phthalo:#0B3D2E;--dark-green:#123524;--accent:#2C8259;--bright-green:#6FC55A;--grey:#242526;--black:#0D0D0D;--white:#F4F6F5;--muted:#A9B2AE;--border:rgba(244,246,245,.10);--card:#141715;--sidebar:#09110E;--warning:#E6C96B;--orange:#D99055;--red:#D86666;--blue:#6FA8D8}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:18px 14px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:11px;padding:0 4px 18px}.brand img{width:44px;height:44px;object-fit:contain}.brand strong{font-size:16px}.brand small{display:block;color:var(--muted);font-size:8px;margin-top:3px}
+.nav-scroll{flex:1;overflow:auto}.nav-label{font-size:7px;color:#5F6A65;text-transform:uppercase;letter-spacing:1.2px;margin:16px 8px 6px}
+.nav-item,.nav-parent{min-height:40px;padding:0 10px;border-radius:7px;display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:800;width:100%;border:0;background:transparent;text-align:left}
+.nav-item:hover,.nav-parent:hover{background:rgba(44,130,89,.16);color:white}.nav-symbol{min-width:24px;font-size:9px;color:var(--bright-green);font-weight:900}.chevron{margin-left:auto;color:#66716B;transition:.18s}.nav-parent.open .chevron{transform:rotate(90deg);color:var(--bright-green)}
+.nav-sub{display:none;padding:4px 0 3px 37px}.nav-sub.open{display:grid}.nav-sub a{min-height:30px;padding:0 8px;border-radius:5px;display:flex;align-items:center;color:#89958F;font-size:9px;font-weight:700;line-height:1.3}.nav-sub a:hover,.nav-sub a.active{background:rgba(44,130,89,.10);color:white}
+.ask-side{margin-top:auto;padding:12px;border:1px solid rgba(111,197,90,.20);border-radius:9px;background:linear-gradient(180deg,rgba(18,53,36,.65),rgba(13,13,13,.8))}.ask-side strong{font-size:10px;color:var(--bright-green)}.ask-side p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}.ask-side button{width:100%;margin-top:9px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
+.workspace{min-width:0}.topbar{height:64px;padding:0 24px;position:sticky;top:0;z-index:30;background:rgba(13,13,13,.96);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.company strong{font-size:10px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}.top-actions{display:flex;gap:8px;align-items:center}.top-actions button{height:36px;padding:0 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:white;font-size:8px;font-weight:800}.top-actions .primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}.avatar{width:34px;height:34px;border-radius:50%;background:var(--phthalo);display:grid;place-items:center;font-size:9px;font-weight:900}
+main{max-width:1500px;margin:auto;padding:24px 24px 80px}.crumb{color:var(--muted);font-size:8px;margin-bottom:15px}.crumb a{color:var(--bright-green)}.hero{display:flex;justify-content:space-between;align-items:end;gap:25px}.eyebrow{color:var(--bright-green);font-size:7px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:7px}h1{font-size:25px;letter-spacing:-1px}.hero p{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.55;max-width:800px}
+.summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0}.metric{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.metric span{font-size:7px;color:var(--muted);text-transform:uppercase}.metric strong{display:block;margin-top:7px;font-size:22px}.metric .sig{color:var(--red)}.metric .high{color:var(--orange)}.metric .mod{color:var(--blue)}.metric .low{color:var(--bright-green)}
+.grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(320px,.8fr);gap:12px;margin-top:12px}.panel{border:1px solid var(--border);border-radius:9px;background:var(--card);overflow:hidden}.panel-head{padding:15px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:12px}.panel-head h2{font-size:12px}.panel-head p{font-size:8px;color:var(--muted);margin-top:4px}.panel-body{padding:14px 16px}
+.ai-insight{padding:14px;border:1px solid rgba(111,197,90,.23);border-radius:8px;background:linear-gradient(135deg,rgba(44,130,89,.12),rgba(13,13,13,.4));margin-bottom:12px}.ai-insight strong{font-size:9px;color:var(--bright-green)}.ai-insight p{margin-top:6px;font-size:8px;line-height:1.55;color:#BBC4BF}
+.toolbar{display:flex;gap:8px;margin-bottom:10px;justify-content:space-between}.search{height:38px;flex:1;max-width:410px;padding:0 11px;border:1px solid var(--border);border-radius:6px;background:#101311;color:white}.filters{display:flex;gap:7px}.filters select{height:38px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:#101311;color:white;font-size:8px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1020px}th{text-align:left;padding:10px 11px;background:#101311;color:#707A75;font-size:7px;text-transform:uppercase;letter-spacing:.6px}td{padding:12px 11px;border-top:1px solid rgba(244,246,245,.06);font-size:8px;color:#D6DCD9}tr:hover td{background:rgba(44,130,89,.055)}.risk-name{font-weight:800;color:white}.risk-id{display:block;color:#66716B;font-size:7px;margin-top:3px}.badge{display:inline-block;padding:5px 7px;border-radius:999px;font-size:7px;font-weight:900}.b-sig{background:rgba(216,102,102,.13);color:var(--red)}.b-high{background:rgba(217,144,85,.13);color:var(--orange)}.b-mod{background:rgba(111,168,216,.13);color:var(--blue)}.b-low{background:rgba(111,197,90,.13);color:var(--bright-green)}.status{color:#C7D0CB}.action{color:var(--bright-green);font-weight:900;cursor:pointer}
+.attention{display:grid;gap:8px}.attention-item{padding:12px;border:1px solid var(--border);border-radius:7px;background:#101311}.attention-item strong{font-size:9px}.attention-item p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:4px}.attention-item span{display:inline-block;margin-top:7px;color:var(--bright-green);font-size:7px;font-weight:900}
+.matrix{display:grid;grid-template-columns:70px repeat(5,1fr);gap:4px;align-items:stretch;margin-top:10px}.mx-label{display:grid;place-items:center;color:#7E8983;font-size:7px;min-height:45px}.mx-cell{min-height:45px;border-radius:5px;display:grid;place-items:center;font-size:7px;font-weight:900}.mx-low{background:rgba(111,197,90,.14);color:var(--bright-green)}.mx-mod{background:rgba(111,168,216,.14);color:var(--blue)}.mx-high{background:rgba(217,144,85,.14);color:var(--orange)}.mx-sig{background:rgba(216,102,102,.14);color:var(--red)}
+.controls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.control-card{padding:13px;border:1px solid var(--border);border-radius:7px;background:#101311}.control-card strong{font-size:18px}.control-card span{display:block;color:var(--muted);font-size:7px;margin-top:4px}
+.drawer{position:fixed;top:0;right:-480px;width:460px;height:100vh;background:#101311;border-left:1px solid var(--border);z-index:60;transition:.22s ease;overflow:auto;padding:22px}.drawer.open{right:0}.drawer-close{float:right;border:0;background:transparent;color:var(--muted);font-size:20px}.drawer h2{font-size:20px;margin-top:30px}.drawer .sub{color:var(--muted);font-size:8px;margin-top:5px}.drawer-section{margin-top:18px;padding-top:15px;border-top:1px solid var(--border)}.drawer-section h3{font-size:9px;color:var(--bright-green);text-transform:uppercase;letter-spacing:.8px}.kv{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.kv div{padding:9px;border:1px solid var(--border);border-radius:6px}.kv span{display:block;color:var(--muted);font-size:7px}.kv strong{display:block;margin-top:4px;font-size:9px}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;place-items:center;z-index:80;padding:20px}.modal-backdrop.open{display:grid}.modal{width:min(760px,100%);max-height:92vh;overflow:auto;background:#101311;border:1px solid var(--border);border-radius:10px;padding:20px}.modal h2{font-size:19px}.modal p{font-size:8px;color:var(--muted);margin-top:5px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:7px;color:#8D9792;text-transform:uppercase;font-weight:900}.field input,.field select,.field textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:6px;background:#0D100E;color:white;font-size:9px}.field textarea{min-height:80px;resize:vertical}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}.modal-actions button{height:36px;padding:0 12px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}.modal-actions .primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
+@media(max-width:1100px){.summary{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}.controls{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 14px}main{padding:20px 14px 60px}.summary{grid-template-columns:1fr 1fr}.hero{display:block}.toolbar{display:block}.search{max-width:none;width:100%}.filters{margin-top:8px}.drawer{width:100%}.form-grid{grid-template-columns:1fr}.controls{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+<a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium</strong><small>Build. Maintain. Embed.</small></div></a>
+<div class="nav-scroll" id="certiciumNavScroll">
+  <div class="nav-label">Workspace</div>
+  <a class="nav-item" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
+  <div class="nav-label">Explore</div>
+  <button class="nav-parent" type="button" data-nav-toggle="riskNav"><span class="nav-symbol">Rm</span>Risks<span class="chevron">›</span></button>
+  <div class="nav-sub" id="riskNav">
+    <a class="active" href="risk.html">Overall Risk Dashboard</a>
+    <a href="risk.html?category=Driving">Driving</a>
+    <a href="risk.html?category=Contractor%20Management">Contractor Management</a>
+    <a href="risk.html?category=Electrical%20Works">Electrical Works</a>
+    <a href="risk.html?category=Manual%20Handling">Manual Handling</a>
+    <a href="risk.html?category=Working%20Near%20Traffic">Working Near Traffic</a>
+    <a href="risk.html?category=Plant%20and%20Equipment">Plant and Equipment</a>
+    <a href="risk.html?category=Psychosocial">Psychosocial</a>
+    <a href="risk.html?category=Lone%20Working">Lone Working</a>
+  </div>
+  <button class="nav-parent open" type="button" data-nav-toggle="imsNav"><span class="nav-symbol">IMS</span>My IMS<span class="chevron">›</span></button>
+  <div class="nav-sub open" id="imsNav">
+    <a href="#">Governance Management</a>
+    <a href="documents.html">Document and Records Management</a>
+    <a class="active" href="risk.html">Risk Management</a>
+    <a href="competency.html">Competency Management</a>
+    <a href="#">Consultation and Communication Management</a>
+    <a href="incidents.html">Incident, Near Miss and Hazard Management</a>
+    <a href="#">Audit, Inspection, Monitoring and Testing Management</a>
+    <a href="performance.html">Performance and Continuous Improvement Management</a>
+  </div>
+</div>
+<div class="ask-side"><strong>✦ Ask Certicium</strong><p>Ask about risk exposure, overdue reviews, ineffective controls or what needs your attention.</p><button onclick="alert('Risk AI will connect here.')">Open Risk AI</button></div>
+</aside>
+
+<div class="workspace">
+<header class="topbar"><div class="company"><strong id="companyName">Your organisation</strong><small>Risk Management</small></div><div class="top-actions"><button>Export</button><button class="primary" onclick="openRiskModal()">+ Add Risk</button><div class="avatar">DB</div></div></header>
+
+<main>
+<div class="crumb"><a href="ims.html">Home</a> / Risk Management</div>
+<section class="hero"><div><div class="eyebrow">My IMS · Risk Management</div><h1>Risk Management</h1><p>Understand current exposure, manage controls and keep risk reviews connected to incidents, assurance, actions, documents and competency across the IMS.</p></div></section>
+
+<section class="summary">
+<div class="metric"><span>Open risks</span><strong>42</strong></div>
+<div class="metric"><span>Significant</span><strong class="sig">3</strong></div>
+<div class="metric"><span>High</span><strong class="high">9</strong></div>
+<div class="metric"><span>Reviews overdue</span><strong>6</strong></div>
+<div class="metric"><span>Controls requiring action</span><strong class="mod">11</strong></div>
+</section>
+
+<div class="ai-insight"><strong>✦ Certicium insight</strong><p>Driving remains the largest source of current exposure. Four open actions relate to reversing controls and two recent incidents are linked to the same control theme. Review whether the current control set is operating effectively before the next scheduled risk review.</p></div>
+
+<div class="grid">
+<section class="panel">
+<div class="panel-head"><div><h2>Risk Register</h2><p>Current organisational risk exposure and review status.</p></div><button class="top-actions primary" style="border:0;background:transparent;color:var(--bright-green);font-size:8px;font-weight:900" onclick="openRiskModal()">+ Add risk</button></div>
+<div class="panel-body">
+<div class="toolbar"><input id="riskSearch" class="search" placeholder="Search risks..." oninput="renderRisks()"><div class="filters"><select id="riskRating" onchange="renderRisks()"><option value="">All ratings</option><option>Significant</option><option>High</option><option>Moderate</option><option>Low</option></select><select id="riskTier" onchange="renderRisks()"><option value="">All tiers</option><option>1LoD Site</option><option>2LoD Local</option><option>2LoD Global</option><option>Strategic</option></select></div></div>
+<div class="table-wrap"><table><thead><tr><th>Risk</th><th>Category</th><th>Tier</th><th>Owner</th><th>Current</th><th>Target</th><th>Status</th><th>Next Review</th><th></th></tr></thead><tbody id="riskRows"></tbody></table></div>
+</div>
+</section>
+
+<div>
+<section class="panel" style="margin-bottom:12px">
+<div class="panel-head"><div><h2>What needs my attention</h2><p>Items Certicium would surface first.</p></div></div>
+<div class="panel-body attention">
+<div class="attention-item"><strong>6 risk reviews are overdue</strong><p>Two are High-rated risks and should be prioritised.</p><span>Review risks →</span></div>
+<div class="attention-item"><strong>Driving control theme repeating</strong><p>Reversing controls are linked to two incidents and four open actions.</p><span>View relationship →</span></div>
+<div class="attention-item"><strong>3 risks remain Significant</strong><p>All three require executive visibility and current treatment plans.</p><span>View Significant risks →</span></div>
+</div>
+</section>
+
+<section class="panel">
+<div class="panel-head"><div><h2>Risk distribution</h2><p>Current risk profile by rating.</p></div></div>
+<div class="panel-body controls">
+<div class="control-card"><strong style="color:var(--red)">3</strong><span>Significant</span></div>
+<div class="control-card"><strong style="color:var(--orange)">9</strong><span>High</span></div>
+<div class="control-card"><strong style="color:var(--blue)">21</strong><span>Moderate</span></div>
+</div>
+</section>
+</div>
+</div>
+
+<section class="panel" style="margin-top:12px">
+<div class="panel-head"><div><h2>Risk Matrix</h2><p>Likelihood uses 5 / 10 / 15 / 20 / 25 and impact uses 1–5. Significant ≥75, High ≥45, Moderate ≥20, Low &lt;20.</p></div></div>
+<div class="panel-body">
+<div class="matrix">
+<div></div><div class="mx-label">Impact 1</div><div class="mx-label">Impact 2</div><div class="mx-label">Impact 3</div><div class="mx-label">Impact 4</div><div class="mx-label">Impact 5</div>
+<div class="mx-label">Rare · 5</div><div class="mx-cell mx-low">5</div><div class="mx-cell mx-low">10</div><div class="mx-cell mx-low">15</div><div class="mx-cell mx-mod">20</div><div class="mx-cell mx-mod">25</div>
+<div class="mx-label">Unlikely · 10</div><div class="mx-cell mx-low">10</div><div class="mx-cell mx-mod">20</div><div class="mx-cell mx-mod">30</div><div class="mx-cell mx-mod">40</div><div class="mx-cell mx-high">50</div>
+<div class="mx-label">Possible · 15</div><div class="mx-cell mx-low">15</div><div class="mx-cell mx-mod">30</div><div class="mx-cell mx-high">45</div><div class="mx-cell mx-high">60</div><div class="mx-cell mx-sig">75</div>
+<div class="mx-label">Likely · 20</div><div class="mx-cell mx-mod">20</div><div class="mx-cell mx-mod">40</div><div class="mx-cell mx-high">60</div><div class="mx-cell mx-sig">80</div><div class="mx-cell mx-sig">100</div>
+<div class="mx-label">Almost Certain · 25</div><div class="mx-cell mx-mod">25</div><div class="mx-cell mx-high">50</div><div class="mx-cell mx-sig">75</div><div class="mx-cell mx-sig">100</div><div class="mx-cell mx-sig">125</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+</div>
+
+<div class="drawer" id="riskDrawer">
+<button class="drawer-close" onclick="closeDrawer()">×</button>
+<div class="eyebrow">Risk record</div><h2 id="drawerTitle">Risk</h2><div class="sub" id="drawerId">RSK-0000</div>
+<div class="drawer-section"><h3>Exposure</h3><div class="kv"><div><span>Inherent</span><strong id="dInherent">—</strong></div><div><span>Current</span><strong id="dCurrent">—</strong></div><div><span>Target</span><strong id="dTarget">—</strong></div><div><span>Status</span><strong id="dStatus">—</strong></div></div></div>
+<div class="drawer-section"><h3>Controls</h3><p style="font-size:8px;color:var(--muted);line-height:1.55">Vehicle technology controls; safe operating procedure; competency verification; supervisor oversight; incident review and corrective actions.</p></div>
+<div class="drawer-section"><h3>Connected IMS</h3><div class="attention"><div class="attention-item"><strong>2 linked incidents</strong><p>Recent events may indicate control effectiveness should be reviewed.</p></div><div class="attention-item"><strong>4 open actions</strong><p>Improvement actions are tracked in Performance and Continuous Improvement.</p></div><div class="attention-item"><strong>3 linked documents</strong><p>Risk procedure, driving procedure and vehicle inspection instruction.</p></div></div></div>
+</div>
+
+<div class="modal-backdrop" id="riskModal">
+<div class="modal"><div class="eyebrow">New risk</div><h2>Add a risk</h2><p>Create the risk record first. Controls, relationships and review workflow can then be managed from the record.</p>
+<div class="form-grid">
+<div class="field full"><label>Risk title</label><input id="fTitle" placeholder="Describe the risk"></div>
+<div class="field"><label>Category</label><select id="fCategory"><option>Driving</option><option>Contractor Management</option><option>Electrical Works</option><option>Manual Handling</option><option>Working Near Traffic</option><option>Plant and Equipment</option><option>Psychosocial</option><option>Lone Working</option></select></div>
+<div class="field"><label>Tier</label><select id="fTier"><option>1LoD Site</option><option>2LoD Local</option><option>2LoD Global</option><option>Strategic</option></select></div>
+<div class="field"><label>Owner</label><input id="fOwner" placeholder="Risk owner"></div>
+<div class="field"><label>Status</label><select id="fStatus"><option>Open</option><option>Mitigating</option><option>Escalated</option><option>ALARP</option><option>Closed</option></select></div>
+<div class="field"><label>Current impact</label><select id="fImpact"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
+<div class="field"><label>Current likelihood</label><select id="fLikelihood"><option value="5">Rare · 5</option><option value="10">Unlikely · 10</option><option value="15" selected>Possible · 15</option><option value="20">Likely · 20</option><option value="25">Almost Certain · 25</option></select></div>
+<div class="field full"><label>Risk statement / context</label><textarea id="fContext" placeholder="What could happen, why and what could be affected?"></textarea></div>
+</div>
+<div class="modal-actions"><button onclick="closeRiskModal()">Cancel</button><button class="primary" onclick="addRisk()">Create Risk</button></div>
+</div>
+</div>
+
+<script>
+const CERTICIUM_NAV_STATE_KEY="certiciumNavState";
+const CERTICIUM_NAV_SCROLL_KEY="certiciumNavScrollTop";
+function readNavState(){try{return JSON.parse(localStorage.getItem(CERTICIUM_NAV_STATE_KEY)||"{}")}catch(e){return{}}}
+function saveNavState(){const state={};document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{const target=document.getElementById(btn.dataset.navToggle);state[btn.dataset.navToggle]=!!(target&&target.classList.contains("open"))});localStorage.setItem(CERTICIUM_NAV_STATE_KEY,JSON.stringify(state))}
+function restoreNavState(){const state=readNavState();document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{const target=document.getElementById(btn.dataset.navToggle);if(!target)return;if(Object.prototype.hasOwnProperty.call(state,btn.dataset.navToggle)){const shouldOpen=!!state[btn.dataset.navToggle];btn.classList.toggle("open",shouldOpen);target.classList.toggle("open",shouldOpen)}})}
+document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{btn.addEventListener("click",()=>{const target=document.getElementById(btn.dataset.navToggle);if(!target)return;const nextState=!target.classList.contains("open");btn.classList.toggle("open",nextState);target.classList.toggle("open",nextState);saveNavState()})});
+const certiciumNavScroll=document.getElementById("certiciumNavScroll");restoreNavState();if(certiciumNavScroll){const savedScroll=Number(localStorage.getItem(CERTICIUM_NAV_SCROLL_KEY)||0);if(Number.isFinite(savedScroll))certiciumNavScroll.scrollTop=savedScroll;certiciumNavScroll.addEventListener("scroll",()=>localStorage.setItem(CERTICIUM_NAV_SCROLL_KEY,String(certiciumNavScroll.scrollTop)),{passive:true})}
+
+function readStorage(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return{}}}
+const bp=readStorage("certiciumIMSBlueprint");document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
+
+const risks=[
+{id:"RSK-0042",title:"Vehicle collision during roadside operations",category:"Driving",tier:"2LoD Local",owner:"Operations",current:80,target:40,inherent:100,status:"Mitigating",review:"28 Aug 2026"},
+{id:"RSK-0038",title:"Worker struck by passing traffic",category:"Working Near Traffic",tier:"2LoD Local",owner:"HSEQ",current:75,target:30,inherent:100,status:"Mitigating",review:"02 Sep 2026"},
+{id:"RSK-0031",title:"Contractor fails to meet critical safety requirements",category:"Contractor Management",tier:"2LoD Local",owner:"Projects",current:60,target:30,inherent:80,status:"Open",review:"08 Sep 2026"},
+{id:"RSK-0027",title:"Electric shock during field maintenance",category:"Electrical Works",tier:"1LoD Site",owner:"Field Services",current:50,target:20,inherent:75,status:"Mitigating",review:"18 Sep 2026"},
+{id:"RSK-0023",title:"Psychological harm from excessive workload",category:"Psychosocial",tier:"Strategic",owner:"People",current:45,target:30,inherent:60,status:"Open",review:"30 Sep 2026"},
+{id:"RSK-0019",title:"Manual handling injury while moving equipment",category:"Manual Handling",tier:"1LoD Site",owner:"Operations",current:30,target:15,inherent:45,status:"ALARP",review:"12 Oct 2026"},
+{id:"RSK-0014",title:"Unexpected plant movement during maintenance",category:"Plant and Equipment",tier:"1LoD Site",owner:"Production",current:25,target:15,inherent:60,status:"Open",review:"20 Oct 2026"},
+{id:"RSK-0009",title:"Delayed assistance during lone field work",category:"Lone Working",tier:"2LoD Local",owner:"Operations",current:20,target:10,inherent:45,status:"Open",review:"04 Nov 2026"}
+];
+
+function rating(score){if(score>=75)return"Significant";if(score>=45)return"High";if(score>=20)return"Moderate";return"Low"}
+function badgeClass(r){return r==="Significant"?"b-sig":r==="High"?"b-high":r==="Moderate"?"b-mod":"b-low"}
+function renderRisks(){
+ const q=document.getElementById("riskSearch").value.toLowerCase(), r=document.getElementById("riskRating").value, t=document.getElementById("riskTier").value;
+ const params=new URLSearchParams(location.search);const cat=params.get("category");
+ const filtered=risks.filter(x=>(!q||(x.title+" "+x.id+" "+x.category+" "+x.owner).toLowerCase().includes(q))&&(!r||rating(x.current)===r)&&(!t||x.tier===t)&&(!cat||x.category===cat));
+ document.getElementById("riskRows").innerHTML=filtered.map(x=>`<tr><td><span class="risk-name">${x.title}</span><span class="risk-id">${x.id}</span></td><td>${x.category}</td><td>${x.tier}</td><td>${x.owner}</td><td><span class="badge ${badgeClass(rating(x.current))}">${rating(x.current)} · ${x.current}</span></td><td>${rating(x.target)} · ${x.target}</td><td class="status">${x.status}</td><td>${x.review}</td><td><span class="action" onclick="openRisk('${x.id}')">Open →</span></td></tr>`).join("")
+}
+function openRisk(id){const x=risks.find(r=>r.id===id);if(!x)return;drawerTitle.innerText=x.title;drawerId.innerText=x.id+" · "+x.category;dInherent.innerText=rating(x.inherent)+" · "+x.inherent;dCurrent.innerText=rating(x.current)+" · "+x.current;dTarget.innerText=rating(x.target)+" · "+x.target;dStatus.innerText=x.status;riskDrawer.classList.add("open")}
+function closeDrawer(){riskDrawer.classList.remove("open")}
+function openRiskModal(){riskModal.classList.add("open")}
+function closeRiskModal(){riskModal.classList.remove("open")}
+function addRisk(){const title=fTitle.value.trim();if(!title){alert("Add a risk title first.");return}const score=Number(fImpact.value)*Number(fLikelihood.value);const id="RSK-"+String(Math.floor(Math.random()*9000)+1000);risks.unshift({id,title,category:fCategory.value,tier:fTier.value,owner:fOwner.value||"Unassigned",current:score,target:Math.max(5,Math.round(score*.5/5)*5),inherent:Math.max(score,score+15),status:fStatus.value,review:"Not scheduled"});closeRiskModal();renderRisks();fTitle.value="";fOwner.value="";fContext.value=""}
+renderRisks();
+</script>
+</body>
+</html>
