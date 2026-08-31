@@ -1,3 +1,802 @@
+Pasted text(20260831-224405).txt
+Document
+I will send you the IMS Html
+
+Done — I’ve updated the IMS Home page with the new navigation and shortcut concept.
+
+The sidebar is now much leaner: Home at the top, then collapsible Risks and My IMS sections. The old Do / Manage / Assure / Tools grouping is gone.
+
+On the main dashboard, directly under Ask Certicium, there is now a Your Shortcuts section using periodic-table-style tiles. It starts with Report an Event, Risk Register, Training Matrix, Documents and Records, and Start an Inspection, plus an Ad / Add shortcut tile.
+
+The Add Shortcut tile opens a working selector so you can add things like Actions, Audit Schedule, Contractors, Forms, Compliance and Create a Document to the grid.
+
+Download the updated ims.html 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | Integrated Management System</title>
+
+<style>
+:root{
+  --phthalo:#0B3D2E;
+  --dark-green:#123524;
+  --accent:#2C8259;
+  --bright-green:#6FC55A;
+  --grey:#242526;
+  --black:#0D0D0D;
+  --white:#F4F6F5;
+  --muted:#A9B2AE;
+  --border:rgba(244,246,245,.10);
+  --card:#141715;
+  --sidebar:#09110E;
+  --warning:#E6C96B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+
+.app{min-height:100vh;display:grid;grid-template-columns:245px minmax(0,1fr)}
+.sidebar{
+  position:sticky;top:0;height:100vh;padding:20px 16px;
+  background:linear-gradient(180deg,#08100D,#06100D);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:50
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 7px 21px;border-bottom:1px solid var(--border)}
+.brand-logo{width:45px;height:45px;object-fit:contain;border-radius:7px}
+.brand-name{font-size:21px;font-weight:800;letter-spacing:-.8px}
+.brand-name span{color:var(--bright-green)}
+.brand-tag{display:block;margin-top:4px;color:var(--muted);font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.nav-scroll{padding-top:18px;overflow:auto}
+.nav-group{margin-bottom:22px}
+.nav-label{padding:0 10px;margin-bottom:7px;color:#65716B;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.nav-item{
+  min-height:38px;padding:0 10px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:700;
+  transition:.18s ease
+}
+.nav-item:hover,.nav-item.active{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-item.active{box-shadow:inset 2px 0 0 var(--bright-green)}
+.nav-symbol{
+  width:27px;height:27px;border:1px solid rgba(111,197,90,.20);border-radius:5px;
+  display:grid;place-items:center;color:var(--bright-green);font-size:9px;font-weight:900;flex:0 0 27px
+}
+.ask-side{
+  margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;
+  background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))
+}
+.ask-side strong{font-size:11px}
+.ask-side p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.45}
+.ask-side button{width:100%;margin-top:10px;min-height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900}
+
+.workspace{min-width:0}
+.topbar{
+  height:72px;padding:0 30px;position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)
+}
+.company{display:flex;align-items:center;gap:9px}
+.company-dot{width:8px;height:8px;border-radius:50%;background:var(--bright-green);box-shadow:0 0 12px rgba(111,197,90,.45)}
+.company strong{font-size:12px}
+.company span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:9px}
+.top-search{
+  width:250px;height:38px;padding:0 12px;border:1px solid var(--border);border-radius:7px;
+  background:var(--card);color:var(--white);outline:none
+}
+.icon-button{width:38px;height:38px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--white)}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--dark-green);color:var(--bright-green);font-size:10px;font-weight:900}
+
+.content{max-width:1500px;margin:auto;padding:34px 34px 80px}
+.welcome{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:25px}
+.eyebrow{color:var(--bright-green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
+.welcome p{margin-top:10px;max-width:690px;color:var(--muted);font-size:11px;line-height:1.6}
+.blueprint-link{color:var(--muted);font-size:9px;white-space:nowrap}
+
+.ask-hero{margin:0 0 20px;padding:20px 22px;border:1px solid rgba(111,197,90,.30);border-radius:11px;background:radial-gradient(circle at 88% 18%,rgba(44,130,89,.15),transparent 27%),linear-gradient(135deg,rgba(18,53,36,.34),rgba(13,13,13,.94))}
+.ask-hero h2{font-size:20px;letter-spacing:-.6px}
+.ask-hero p{margin-top:5px;color:var(--muted);font-size:9px;line-height:1.5}
+.ask-box{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}
+.ask-box input{min-width:0;height:48px;padding:0 15px;border:1px solid rgba(244,246,245,.13);border-radius:8px;background:#0B0E0C;color:var(--white);outline:none;font-size:10px}
+.ask-box input:focus{border-color:rgba(111,197,90,.48)}
+.ask-box button{min-width:126px;border:0;border-radius:8px;background:var(--bright-green);color:#0B1A11;font-size:9px;font-weight:900}
+.ask-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.ask-chip{padding:7px 9px;border:1px solid var(--border);border-radius:999px;background:rgba(13,13,13,.32);color:#C9D1CD;font-size:7px;font-weight:800}
+.ask-chip:hover{border-color:rgba(111,197,90,.35);color:white}
+.ask-response{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(111,197,90,.20);border-radius:8px;background:rgba(18,53,36,.17);font-size:8px;line-height:1.55;color:#D8DEDB}
+.ask-response.show{display:block}
+.ask-response strong{color:var(--bright-green)}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:26px}
+.metric{padding:16px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
+.metric-top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.6px}
+.metric strong{display:block;margin-top:10px;font-size:25px;letter-spacing:-1px}
+.metric .good{color:var(--bright-green)}
+.metric .warning{color:var(--warning)}
+.metric small{display:block;margin-top:4px;color:#737D78;font-size:8px}
+
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(330px,.8fr);gap:14px}
+.panel{border:1px solid var(--border);border-radius:10px;background:var(--card);overflow:hidden}
+.panel-head{padding:17px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.panel-head h2{font-size:15px}
+.panel-head span,.panel-head a{color:var(--muted);font-size:8px}
+
+.attention-list{display:grid}
+.attention{
+  padding:14px 17px;border-bottom:1px solid rgba(244,246,245,.06);
+  display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center
+}
+.attention:last-child{border-bottom:0}
+.attention-icon{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;background:rgba(44,130,89,.15);color:var(--bright-green);font-size:10px;font-weight:900}
+.attention strong{display:block;font-size:10px}
+.attention p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
+.attention-count{color:var(--bright-green);font-size:17px;font-weight:900}
+
+.task-list{display:grid}
+.task-row{
+  min-height:68px;padding:12px 15px;border-bottom:1px solid rgba(244,246,245,.06);
+  display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;transition:.18s ease
+}
+.task-row:last-child{border-bottom:0}
+.task-row:hover{background:rgba(44,130,89,.06)}
+.task-icon{
+  width:32px;height:32px;border-radius:6px;display:grid;place-items:center;
+  background:var(--dark-green);color:var(--bright-green);font-size:9px;font-weight:900
+}
+.task-row strong{display:block;font-size:10px}
+.task-row p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
+.task-row > span{color:var(--bright-green);font-size:13px}
+
+.section-title{margin:27px 0 12px;display:flex;justify-content:space-between;align-items:end}
+.section-title h2{font-size:20px;letter-spacing:-.7px}
+.section-title p{color:var(--muted);font-size:8px}
+
+.risk-module-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.risk-module{
+  min-height:150px;padding:13px;position:relative;border:1px solid rgba(111,197,90,.24);
+  border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.9));
+  transition:.18s ease
+}
+.risk-module:hover{transform:translateY(-3px);border-color:rgba(111,197,90,.48)}
+.risk-num{color:#66716B;font-size:7px}
+.risk-symbol{margin-top:18px;color:var(--bright-green);font-size:31px;font-weight:900;letter-spacing:-1px}
+.risk-name{position:absolute;left:13px;right:13px;bottom:13px;color:#D6DCD9;font-size:8px;font-weight:800;line-height:1.25}
+
+.governance-summary{
+  margin-top:28px;padding:20px;border:1px solid var(--border);border-radius:10px;
+  background:linear-gradient(135deg,rgba(20,23,21,.88),rgba(13,13,13,.92));
+  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end
+}
+.governance-summary h2{font-size:22px;letter-spacing:-.8px}
+.governance-summary p{margin-top:7px;color:var(--muted);font-size:8px;line-height:1.55;max-width:720px}
+.governance-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(111,197,90,.35);background:transparent;color:var(--white);font-size:9px;font-weight:900}
+.button.primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
+
+
+.nav-parent{
+  min-height:40px;padding:0 10px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:800;
+  width:100%;border:0;background:transparent;text-align:left
+}
+.nav-parent:hover{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-parent .chevron{margin-left:auto;color:#66716B;font-size:11px;transition:.18s ease}
+.nav-parent.open .chevron{transform:rotate(90deg);color:var(--bright-green)}
+.nav-sub{display:none;padding:5px 0 3px 37px}
+.nav-sub.open{display:grid}
+.nav-sub a{
+  min-height:30px;padding:0 8px;border-radius:5px;display:flex;align-items:center;
+  color:#89958F;font-size:9px;font-weight:700
+}
+.nav-sub a:hover{background:rgba(44,130,89,.10);color:var(--white)}
+
+.shortcut-section{margin:0 0 22px}
+.shortcut-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:10px}
+.shortcut-head h2{font-size:20px;letter-spacing:-.7px}
+.shortcut-head p{margin-top:4px;color:var(--muted);font-size:8px}
+.shortcut-grid{display:grid;grid-template-columns:repeat(6,minmax(105px,1fr));gap:9px}
+.shortcut-tile{
+  min-height:116px;padding:10px;position:relative;border:1px solid rgba(111,197,90,.24);
+  border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.92));
+  transition:.18s ease;overflow:hidden
+}
+.shortcut-tile:hover{transform:translateY(-3px);border-color:rgba(111,197,90,.52)}
+.shortcut-num{position:absolute;top:9px;left:10px;color:#65716B;font-size:7px;font-weight:800}
+.shortcut-arrow{position:absolute;top:8px;right:9px;color:#63706A;font-size:8px}
+.shortcut-symbol{
+  margin-top:25px;color:var(--bright-green);font-size:29px;font-weight:900;letter-spacing:-1px
+}
+.shortcut-name{
+  position:absolute;left:10px;right:10px;bottom:10px;color:#D8DEDB;
+  font-size:8px;font-weight:800;line-height:1.25
+}
+.shortcut-tile.add{
+  border-style:dashed;background:rgba(20,23,21,.55)
+}
+.shortcut-tile.add .shortcut-symbol{color:#8B9690}
+.shortcut-tile.add:hover .shortcut-symbol{color:var(--bright-green)}
+.shortcut-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;align-items:center;justify-content:center;
+  z-index:120;padding:20px
+}
+.shortcut-modal.show{display:flex}
+.shortcut-dialog{
+  width:min(640px,100%);max-height:80vh;overflow:auto;padding:20px;border:1px solid var(--border);
+  border-radius:12px;background:#0F1311
+}
+.shortcut-dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:14px}
+.shortcut-dialog-head h3{font-size:16px}
+.shortcut-close{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--white)}
+.shortcut-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.shortcut-option{
+  min-height:76px;padding:11px;border:1px solid var(--border);border-radius:8px;background:var(--card);
+  color:var(--white);text-align:left
+}
+.shortcut-option:hover{border-color:rgba(111,197,90,.38)}
+.shortcut-option strong{display:block;color:var(--bright-green);font-size:11px}
+.shortcut-option span{display:block;margin-top:5px;color:var(--muted);font-size:8px;line-height:1.35}
+
+.mobile-nav{display:none}
+
+@media(max-width:1100px){
+  .shortcut-grid{grid-template-columns:repeat(3,1fr)}
+  .app{grid-template-columns:205px minmax(0,1fr)}
+  .metrics,.risk-module-grid{grid-template-columns:repeat(2,1fr)}
+  .dashboard-grid{grid-template-columns:1fr}
+  .governance-summary{grid-template-columns:1fr}
+  .governance-actions{justify-content:flex-start}
+}
+@media(max-width:760px){
+  .shortcut-grid{grid-template-columns:repeat(2,1fr)}
+  .shortcut-options{grid-template-columns:1fr 1fr}
+  .app{display:block}
+  .sidebar{display:none}
+  .topbar{padding:0 16px}
+  .top-search{display:none}
+  .content{padding:25px 16px 90px}
+  .ask-box{grid-template-columns:1fr}
+  .ask-box button{height:44px}
+  .welcome{display:block}
+  .blueprint-link{display:inline-block;margin-top:12px}
+  .metrics,.risk-module-grid{grid-template-columns:1fr 1fr}
+  .mobile-nav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;height:62px;z-index:100;
+    background:#08100D;border-top:1px solid var(--border);justify-content:space-around;align-items:center
+  }
+  .mobile-nav a{font-size:8px;color:var(--muted);text-align:center}
+  .mobile-nav strong{display:block;color:var(--bright-green);font-size:13px;margin-bottom:3px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+  <a href="ims.html" class="brand">
+    <img src="certicium-logo.png" alt="Certicium logo" class="brand-logo">
+    <div>
+      <div class="brand-name">Certicium<span>.</span></div>
+      <span class="brand-tag">Build. Maintain. Embed.</span>
+    </div>
+  </a>
+
+  <div class="nav-scroll">
+    <div class="nav-group">
+      <div class="nav-label">Workspace</div>
+      <a class="nav-item active" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Explore</div>
+
+      <button class="nav-parent" type="button" data-nav-toggle="riskNav">
+        <span class="nav-symbol">Rm</span>Risks
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="riskNav">
+        <a href="#">Overall Risk Dashboard</a>
+        <a href="#">Driving</a>
+        <a href="#">Contractor Management</a>
+        <a href="#">Electrical Works</a>
+        <a href="#">Manual Handling</a>
+        <a href="#">Working Near Traffic</a>
+        <a href="#">Plant and Equipment</a>
+        <a href="#">Psychosocial</a>
+        <a href="#">Lone Working</a>
+      </div>
+
+      <button class="nav-parent" type="button" data-nav-toggle="imsNav">
+        <span class="nav-symbol">Im</span>My IMS
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="imsNav">
+        <a href="#">Organisation</a>
+        <a href="#">Operations</a>
+        <a href="#">Requirements</a>
+        <a href="#">Existing System</a>
+        <a href="#">Risks</a>
+        <a href="#">Incidents</a>
+        <a href="#">Audits and Assurance</a>
+        <a href="competency.html">Training and Competency</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ask-side">
+    <strong>✦ Ask Certicium</strong>
+    <p>Your IMS assistant will understand your documents, risks, controls, actions and assurance data.</p>
+    <button onclick="askIMS()">Open Assistant</button>
+  </div>
+</aside>
+
+<div class="workspace">
+
+<header class="topbar">
+  <div class="company">
+    <span class="company-dot"></span>
+    <div>
+      <strong id="companyName">Your organisation</strong>
+      <span>Integrated Management System</span>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <input class="top-search" id="globalSearch" type="text" placeholder="Search your IMS...">
+    <button class="icon-button" title="Notifications">●</button>
+    <div class="avatar">DB</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <section class="welcome">
+    <div>
+      <div class="eyebrow">Your Integrated Management System</div>
+      <h1 id="welcomeHeading">Good morning.</h1>
+      <p id="welcomeCopy">Here is what is happening across your management system and what needs your attention.</p>
+    </div>
+    <a class="blueprint-link" href="blueprint.html">Review IMS Blueprint →</a>
+  </section>
+
+  <section class="ask-hero">
+    <div class="eyebrow">✦ Ask Certicium</div>
+    <h2>What are you looking to do?</h2>
+    <p>Ask in plain language. Certicium can find information across your IMS or take you to the right tool, form, register or workflow.</p>
+    <div class="ask-box">
+      <input id="imsAsk" type="text" placeholder="e.g. I need to report a contractor incident">
+      <button onclick="routeIMS()">Ask Certicium →</button>
+    </div>
+    <div class="ask-chips">
+      <button class="ask-chip" onclick="askExample('Find our working near traffic procedure')">Find a procedure</button>
+      <button class="ask-chip" onclick="askExample('I need to report an incident')">Report an incident</button>
+      <button class="ask-chip" onclick="askExample('Help me assess a new risk')">Assess a risk</button>
+      <button class="ask-chip" onclick="askExample('Create a new controlled document')">Create a document</button>
+      <button class="ask-chip" onclick="askExample('Start an inspection')">Start an inspection</button>
+      <button class="ask-chip" onclick="askExample('Check our compliance obligations')">Check an obligation</button>
+    </div>
+    <div class="ask-response" id="askResponse"></div>
+  </section>
+
+
+  <section class="shortcut-section">
+    <div class="shortcut-head">
+      <div>
+        <div class="eyebrow">Your workspace</div>
+        <h2>Your shortcuts</h2>
+        <p>Pin the Certicium tools you use most often.</p>
+      </div>
+    </div>
+
+    <div class="shortcut-grid" id="shortcutGrid">
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">01</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">!</div>
+        <div class="shortcut-name">Report an Event</div>
+      </a>
+
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">02</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Rm</div>
+        <div class="shortcut-name">Risk Register</div>
+      </a>
+
+      <a class="shortcut-tile" href="competency.html">
+        <span class="shortcut-num">03</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Cm</div>
+        <div class="shortcut-name">Training Matrix</div>
+      </a>
+
+      <a class="shortcut-tile" href="documents.html">
+        <span class="shortcut-num">04</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Dm</div>
+        <div class="shortcut-name">Documents and Records</div>
+      </a>
+
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">05</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">In</div>
+        <div class="shortcut-name">Start an Inspection</div>
+      </a>
+
+      <button class="shortcut-tile add" type="button" id="addShortcut">
+        <span class="shortcut-num">+</span>
+        <div class="shortcut-symbol">Ad</div>
+        <div class="shortcut-name">Add shortcut</div>
+      </button>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <div class="metric">
+      <div class="metric-top"><span>Actions overdue</span><span>Ac</span></div>
+      <strong class="warning">3</strong>
+      <small>Across your IMS</small>
+    </div>
+    <div class="metric">
+      <div class="metric-top"><span>Documents due</span><span>Dm</span></div>
+      <strong class="warning">2</strong>
+      <small>Review due in the next 30 days</small>
+    </div>
+    <div class="metric">
+      <div class="metric-top"><span>Open high risks</span><span>Rm</span></div>
+      <strong>1</strong>
+      <small>Requires management attention</small>
+    </div>
+    <div class="metric">
+      <div class="metric-top"><span>IMS health</span><span>Pm</span></div>
+      <strong class="good">94%</strong>
+      <small>Illustrative demo status</small>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>What needs my attention</h2>
+        <a href="#">View all →</a>
+      </div>
+
+      <div class="attention-list">
+        <a class="attention" href="documents.html">
+          <div class="attention-icon">Dm</div>
+          <div>
+            <strong>Documents due for review</strong>
+            <p>Controlled content requiring owner review.</p>
+          </div>
+          <div class="attention-count">2</div>
+        </a>
+
+        <a class="attention" href="#">
+          <div class="attention-icon">Ac</div>
+          <div>
+            <strong>Overdue actions</strong>
+            <p>Corrective or improvement actions past due.</p>
+          </div>
+          <div class="attention-count">3</div>
+        </a>
+
+        <a class="attention" href="#">
+          <div class="attention-icon">Rm</div>
+          <div>
+            <strong>High risks requiring review</strong>
+            <p>Risk exposures requiring management attention.</p>
+          </div>
+          <div class="attention-count">1</div>
+        </a>
+
+        <a class="attention" href="#">
+          <div class="attention-icon">Au</div>
+          <div>
+            <strong>Upcoming assurance</strong>
+            <p>Audits and inspections scheduled this month.</p>
+          </div>
+          <div class="attention-count">4</div>
+        </a>
+
+        <a class="attention" href="competency.html">
+          <div class="attention-icon">Cm</div>
+          <div>
+            <strong>Training and competency expiries</strong>
+            <p>Training or evidence approaching expiry.</p>
+          </div>
+          <div class="attention-count">6</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Common tasks</h2>
+        <span>Do something</span>
+      </div>
+
+      <div class="task-list">
+        <a class="task-row" href="#">
+          <div class="task-icon">!</div>
+          <div>
+            <strong>Report an Event</strong>
+            <p>Incident, near miss or hazard.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">Rm</div>
+          <div>
+            <strong>Assess a Risk</strong>
+            <p>Start or update a risk assessment.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">In</div>
+          <div>
+            <strong>Start an Inspection</strong>
+            <p>Assigned or ad hoc assurance activity.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="new-document.html">
+          <div class="task-icon">Nd</div>
+          <div>
+            <strong>Create a Document</strong>
+            <p>Build controlled content with Certicium AI.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">Ac</div>
+          <div>
+            <strong>Raise an Action</strong>
+            <p>Create a corrective or improvement action.</p>
+          </div>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="section-title" id="controls">
+    <div>
+      <div class="eyebrow">Your operating environment</div>
+      <h2>Your risks</h2>
+    </div>
+    <p>Risk modules enabled for your organisation</p>
+  </div>
+
+  <section class="risk-module-grid">
+    <a class="risk-module" href="#"><span class="risk-num">01</span><div class="risk-symbol">Dr</div><div class="risk-name">Driving</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">02</span><div class="risk-symbol">Ct</div><div class="risk-name">Contractor Management</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">03</span><div class="risk-symbol">Ew</div><div class="risk-name">Electrical Works</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">04</span><div class="risk-symbol">Mh</div><div class="risk-name">Manual Handling</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">05</span><div class="risk-symbol">Wt</div><div class="risk-name">Working Near Traffic</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">06</span><div class="risk-symbol">Pe</div><div class="risk-name">Plant and Equipment</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">07</span><div class="risk-symbol">Ps</div><div class="risk-name">Psychosocial</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">08</span><div class="risk-symbol">Lw</div><div class="risk-name">Lone Working</div></a>
+  </section>
+
+  <section class="governance-summary" id="governance">
+    <div>
+      <div class="eyebrow">My IMS</div>
+      <h2>Governance and system architecture</h2>
+      <p>Your core governance processes remain the foundation of Certicium, but they sit behind the daily tools and risk controls your people use most often.</p>
+    </div>
+
+    <div class="governance-actions">
+      <a href="documents.html" class="button">Documents and Records</a>
+      <a href="competency.html" class="button">Training and Competency</a>
+      <a href="#" class="button">Governance</a>
+      <a href="#" class="button">Policies</a>
+      <a href="#" class="button">Management System Map</a>
+    </div>
+  </section>
+
+</main>
+</div>
+</div>
+
+
+<div class="shortcut-modal" id="shortcutModal">
+  <div class="shortcut-dialog">
+    <div class="shortcut-dialog-head">
+      <div>
+        <div class="eyebrow">Personalise Home</div>
+        <h3>Add a shortcut</h3>
+      </div>
+      <button class="shortcut-close" type="button" id="shortcutClose">×</button>
+    </div>
+    <div class="shortcut-options">
+      <button class="shortcut-option" type="button" data-symbol="Ac" data-name="Actions" data-href="#">
+        <strong>Ac · Actions</strong><span>Open corrective and improvement actions.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Au" data-name="Audit Schedule" data-href="#">
+        <strong>Au · Audit Schedule</strong><span>View upcoming assurance activities.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Ct" data-name="Contractors" data-href="#">
+        <strong>Ct · Contractors</strong><span>Open contractor management.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Fo" data-name="Forms" data-href="#">
+        <strong>Fo · Forms</strong><span>Open commonly used IMS forms.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Co" data-name="Compliance" data-href="#">
+        <strong>Co · Compliance</strong><span>Review obligations and controls.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Nd" data-name="Create a Document" data-href="new-document.html">
+        <strong>Nd · Create Document</strong><span>Start controlled content with Certicium.</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<nav class="mobile-nav">
+  <a href="ims.html"><strong>⌂</strong>Home</a>
+  <a href="documents.html"><strong>Dm</strong>Documents</a>
+  <a href="competency.html"><strong>Cm</strong>Training</a>
+  <a href="#"><strong>✦</strong>Ask</a>
+</nav>
+
+<script>
+function readStorage(key){
+  try{return JSON.parse(localStorage.getItem(key)||"{}")}
+  catch(error){return {}}
+}
+
+const blueprint=readStorage("certiciumIMSBlueprint");
+const organisationName=blueprint.organisation||"Your organisation";
+
+document.getElementById("companyName").innerText=organisationName;
+
+const hour=new Date().getHours();
+const greeting=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+document.getElementById("welcomeHeading").innerText=greeting+".";
+
+if(blueprint.approvedAt){
+  document.getElementById("welcomeCopy").innerText=
+    organisationName+"'s IMS blueprint is approved. Here is what needs attention across the live management system.";
+}
+
+function askExample(text){
+  document.getElementById("imsAsk").value=text;
+  routeIMS();
+}
+
+function routeIMS(){
+  const input=document.getElementById("imsAsk");
+  const response=document.getElementById("askResponse");
+  const text=(input.value||"").trim();
+  const q=text.toLowerCase();
+  if(!text){input.focus();return;}
+
+  let message="", action="", href="";
+
+  if(q.includes("training")||q.includes("competency")||q.includes("qualification")||q.includes("licence")||q.includes("license")){
+    message="I’ll take you to Training and Competency so you can check role requirements, training status, evidence and upcoming expiries.";
+    action="Open Training and Competency →";
+    href="competency.html";
+  }else if(q.includes("document")||q.includes("procedure")||q.includes("policy")||q.includes("record")){
+    if(q.includes("create")||q.includes("new")||q.includes("draft")){
+      message="I can help you create that. I’ll first check whether an existing controlled document should be revised before we create something new.";
+      action="Create with Document AI →";
+      href="new-document.html";
+    }else{
+      message="I’ll search your current controlled documents and records for the most relevant approved content.";
+      action="Search Document Management →";
+      href="documents.html";
+    }
+  }else if(q.includes("incident")||q.includes("near miss")||q.includes("hazard")||q.includes("event")){
+    message="This sounds like event reporting. I’ll take you to the Incident, Near Miss and Hazard workflow and use what you’ve told me to help pre-fill it.";
+    action="Report an Event →";
+  }else if(q.includes("risk")||q.includes("assess")){
+    message="I can help assess this risk, check for similar existing risks and suggest causes, consequences and controls.";
+    action="Open Risk Assessment →";
+  }else if(q.includes("inspect")||q.includes("audit")||q.includes("assurance")){
+    message="I’ll take you to the appropriate assurance activity and help identify the right inspection or audit.";
+    action="Open Assurance →";
+  }else if(q.includes("compliance")||q.includes("obligation")||q.includes("legal")){
+    message="I’ll search the compliance register and connected IMS controls for the relevant obligation.";
+    action="Open Compliance →";
+  }else{
+    message="I’ll search across your documents, risks, controls, actions, forms, registers and assurance data, then either answer you or take you to the right workflow.";
+    action="Search the IMS →";
+  }
+
+  response.classList.add("show");
+  const click=href ? "window.location.href='"+href+"'" : "demoRoute()";
+  response.innerHTML="<strong>Certicium</strong><br>"+message+'<div style="margin-top:9px"><button class="ask-chip" onclick="'+click+'">'+action+"</button></div>";
+}
+
+function demoRoute(){
+  alert("This module will connect here as we build out the wider Certicium IMS.");
+}
+
+function askIMS(){
+  document.getElementById("imsAsk").scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>document.getElementById("imsAsk").focus(),350);
+}
+
+document.getElementById("imsAsk").addEventListener("keydown",function(event){
+  if(event.key==="Enter")routeIMS();
+});
+
+document.querySelectorAll("[data-nav-toggle]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const target=document.getElementById(button.dataset.navToggle);
+    button.classList.toggle("open");
+    target.classList.toggle("open");
+  });
+});
+
+const shortcutModal=document.getElementById("shortcutModal");
+const addShortcut=document.getElementById("addShortcut");
+const shortcutClose=document.getElementById("shortcutClose");
+
+addShortcut.addEventListener("click",()=>shortcutModal.classList.add("show"));
+shortcutClose.addEventListener("click",()=>shortcutModal.classList.remove("show"));
+shortcutModal.addEventListener("click",event=>{
+  if(event.target===shortcutModal) shortcutModal.classList.remove("show");
+});
+
+document.querySelectorAll(".shortcut-option").forEach(option=>{
+  option.addEventListener("click",()=>{
+    const grid=document.getElementById("shortcutGrid");
+    const count=grid.querySelectorAll(".shortcut-tile:not(.add)").length+1;
+    const tile=document.createElement("a");
+    tile.className="shortcut-tile";
+    tile.href=option.dataset.href;
+    tile.innerHTML=`
+      <span class="shortcut-num">${String(count).padStart(2,"0")}</span>
+      <span class="shortcut-arrow">↗</span>
+      <div class="shortcut-symbol">${option.dataset.symbol}</div>
+      <div class="shortcut-name">${option.dataset.name}</div>
+    `;
+    grid.insertBefore(tile,addShortcut);
+    shortcutModal.classList.remove("show");
+  });
+});
+
+</script>
+
+</body>
+</html>
+ims.html
+HTML
+so looks great, just with My IMS, can we have the governance modules only, so 
+Governance Management
+Document and Records Management
+Risk Management
+Competency Management
+Consultation and Communication Management
+Incident, Near Miss and Hazard Management
+Audit, Inspection, Monitoring and Testing Management
+Performance and Continuous Improvement Management
+
+Done. My IMS now contains only the eight governance modules:
+
+Governance Management; Document and Records Management; Risk Management; Competency Management; Consultation and Communication Management; Incident, Near Miss and Hazard Management; Audit, Inspection, Monitoring and Testing Management; and Performance and Continuous Improvement Management.
+
+I also kept the existing links where we already have pages: Document and Records Management → documents.html and Competency Management → competency.html.
+
+Download the updated ims.html 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -763,3 +1562,780 @@ document.querySelectorAll(".shortcut-option").forEach(option=>{
 
 </body>
 </html>
+ims.html
+HTML
+Is such a small details but for the My IMS logo you have, instead of Im, can we have IMS, sorry
+
+Of course 😂 — tiny detail, but IMS definitely looks better.
+
+Changed Im → IMS and left everything else untouched.
+
+Download updated ims.html 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | Integrated Management System</title>
+
+<style>
+:root{
+  --phthalo:#0B3D2E;
+  --dark-green:#123524;
+  --accent:#2C8259;
+  --bright-green:#6FC55A;
+  --grey:#242526;
+  --black:#0D0D0D;
+  --white:#F4F6F5;
+  --muted:#A9B2AE;
+  --border:rgba(244,246,245,.10);
+  --card:#141715;
+  --sidebar:#09110E;
+  --warning:#E6C96B;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+
+.app{min-height:100vh;display:grid;grid-template-columns:245px minmax(0,1fr)}
+.sidebar{
+  position:sticky;top:0;height:100vh;padding:20px 16px;
+  background:linear-gradient(180deg,#08100D,#06100D);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:50
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 7px 21px;border-bottom:1px solid var(--border)}
+.brand-logo{width:45px;height:45px;object-fit:contain;border-radius:7px}
+.brand-name{font-size:21px;font-weight:800;letter-spacing:-.8px}
+.brand-name span{color:var(--bright-green)}
+.brand-tag{display:block;margin-top:4px;color:var(--muted);font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.nav-scroll{padding-top:18px;overflow:auto}
+.nav-group{margin-bottom:22px}
+.nav-label{padding:0 10px;margin-bottom:7px;color:#65716B;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.nav-item{
+  min-height:38px;padding:0 10px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:700;
+  transition:.18s ease
+}
+.nav-item:hover,.nav-item.active{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-item.active{box-shadow:inset 2px 0 0 var(--bright-green)}
+.nav-symbol{
+  width:27px;height:27px;border:1px solid rgba(111,197,90,.20);border-radius:5px;
+  display:grid;place-items:center;color:var(--bright-green);font-size:9px;font-weight:900;flex:0 0 27px
+}
+.ask-side{
+  margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;
+  background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))
+}
+.ask-side strong{font-size:11px}
+.ask-side p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.45}
+.ask-side button{width:100%;margin-top:10px;min-height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900}
+
+.workspace{min-width:0}
+.topbar{
+  height:72px;padding:0 30px;position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)
+}
+.company{display:flex;align-items:center;gap:9px}
+.company-dot{width:8px;height:8px;border-radius:50%;background:var(--bright-green);box-shadow:0 0 12px rgba(111,197,90,.45)}
+.company strong{font-size:12px}
+.company span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:9px}
+.top-search{
+  width:250px;height:38px;padding:0 12px;border:1px solid var(--border);border-radius:7px;
+  background:var(--card);color:var(--white);outline:none
+}
+.icon-button{width:38px;height:38px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--white)}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--dark-green);color:var(--bright-green);font-size:10px;font-weight:900}
+
+.content{max-width:1500px;margin:auto;padding:34px 34px 80px}
+.welcome{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:25px}
+.eyebrow{color:var(--bright-green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
+.welcome p{margin-top:10px;max-width:690px;color:var(--muted);font-size:11px;line-height:1.6}
+.blueprint-link{color:var(--muted);font-size:9px;white-space:nowrap}
+
+.ask-hero{margin:0 0 20px;padding:20px 22px;border:1px solid rgba(111,197,90,.30);border-radius:11px;background:radial-gradient(circle at 88% 18%,rgba(44,130,89,.15),transparent 27%),linear-gradient(135deg,rgba(18,53,36,.34),rgba(13,13,13,.94))}
+.ask-hero h2{font-size:20px;letter-spacing:-.6px}
+.ask-hero p{margin-top:5px;color:var(--muted);font-size:9px;line-height:1.5}
+.ask-box{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}
+.ask-box input{min-width:0;height:48px;padding:0 15px;border:1px solid rgba(244,246,245,.13);border-radius:8px;background:#0B0E0C;color:var(--white);outline:none;font-size:10px}
+.ask-box input:focus{border-color:rgba(111,197,90,.48)}
+.ask-box button{min-width:126px;border:0;border-radius:8px;background:var(--bright-green);color:#0B1A11;font-size:9px;font-weight:900}
+.ask-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.ask-chip{padding:7px 9px;border:1px solid var(--border);border-radius:999px;background:rgba(13,13,13,.32);color:#C9D1CD;font-size:7px;font-weight:800}
+.ask-chip:hover{border-color:rgba(111,197,90,.35);color:white}
+.ask-response{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(111,197,90,.20);border-radius:8px;background:rgba(18,53,36,.17);font-size:8px;line-height:1.55;color:#D8DEDB}
+.ask-response.show{display:block}
+.ask-response strong{color:var(--bright-green)}
+
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:26px}
+.metric{padding:16px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
+.metric-top{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.6px}
+.metric strong{display:block;margin-top:10px;font-size:25px;letter-spacing:-1px}
+.metric .good{color:var(--bright-green)}
+.metric .warning{color:var(--warning)}
+.metric small{display:block;margin-top:4px;color:#737D78;font-size:8px}
+
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(330px,.8fr);gap:14px}
+.panel{border:1px solid var(--border);border-radius:10px;background:var(--card);overflow:hidden}
+.panel-head{padding:17px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.panel-head h2{font-size:15px}
+.panel-head span,.panel-head a{color:var(--muted);font-size:8px}
+
+.attention-list{display:grid}
+.attention{
+  padding:14px 17px;border-bottom:1px solid rgba(244,246,245,.06);
+  display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center
+}
+.attention:last-child{border-bottom:0}
+.attention-icon{width:30px;height:30px;border-radius:6px;display:grid;place-items:center;background:rgba(44,130,89,.15);color:var(--bright-green);font-size:10px;font-weight:900}
+.attention strong{display:block;font-size:10px}
+.attention p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
+.attention-count{color:var(--bright-green);font-size:17px;font-weight:900}
+
+.task-list{display:grid}
+.task-row{
+  min-height:68px;padding:12px 15px;border-bottom:1px solid rgba(244,246,245,.06);
+  display:grid;grid-template-columns:34px 1fr auto;gap:10px;align-items:center;transition:.18s ease
+}
+.task-row:last-child{border-bottom:0}
+.task-row:hover{background:rgba(44,130,89,.06)}
+.task-icon{
+  width:32px;height:32px;border-radius:6px;display:grid;place-items:center;
+  background:var(--dark-green);color:var(--bright-green);font-size:9px;font-weight:900
+}
+.task-row strong{display:block;font-size:10px}
+.task-row p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
+.task-row > span{color:var(--bright-green);font-size:13px}
+
+.section-title{margin:27px 0 12px;display:flex;justify-content:space-between;align-items:end}
+.section-title h2{font-size:20px;letter-spacing:-.7px}
+.section-title p{color:var(--muted);font-size:8px}
+
+.risk-module-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.risk-module{
+  min-height:150px;padding:13px;position:relative;border:1px solid rgba(111,197,90,.24);
+  border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.9));
+  transition:.18s ease
+}
+.risk-module:hover{transform:translateY(-3px);border-color:rgba(111,197,90,.48)}
+.risk-num{color:#66716B;font-size:7px}
+.risk-symbol{margin-top:18px;color:var(--bright-green);font-size:31px;font-weight:900;letter-spacing:-1px}
+.risk-name{position:absolute;left:13px;right:13px;bottom:13px;color:#D6DCD9;font-size:8px;font-weight:800;line-height:1.25}
+
+.governance-summary{
+  margin-top:28px;padding:20px;border:1px solid var(--border);border-radius:10px;
+  background:linear-gradient(135deg,rgba(20,23,21,.88),rgba(13,13,13,.92));
+  display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:end
+}
+.governance-summary h2{font-size:22px;letter-spacing:-.8px}
+.governance-summary p{margin-top:7px;color:var(--muted);font-size:8px;line-height:1.55;max-width:720px}
+.governance-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(111,197,90,.35);background:transparent;color:var(--white);font-size:9px;font-weight:900}
+.button.primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
+
+
+.nav-parent{
+  min-height:40px;padding:0 10px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:800;
+  width:100%;border:0;background:transparent;text-align:left
+}
+.nav-parent:hover{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-parent .chevron{margin-left:auto;color:#66716B;font-size:11px;transition:.18s ease}
+.nav-parent.open .chevron{transform:rotate(90deg);color:var(--bright-green)}
+.nav-sub{display:none;padding:5px 0 3px 37px}
+.nav-sub.open{display:grid}
+.nav-sub a{
+  min-height:30px;padding:0 8px;border-radius:5px;display:flex;align-items:center;
+  color:#89958F;font-size:9px;font-weight:700
+}
+.nav-sub a:hover{background:rgba(44,130,89,.10);color:var(--white)}
+
+.shortcut-section{margin:0 0 22px}
+.shortcut-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:10px}
+.shortcut-head h2{font-size:20px;letter-spacing:-.7px}
+.shortcut-head p{margin-top:4px;color:var(--muted);font-size:8px}
+.shortcut-grid{display:grid;grid-template-columns:repeat(6,minmax(105px,1fr));gap:9px}
+.shortcut-tile{
+  min-height:116px;padding:10px;position:relative;border:1px solid rgba(111,197,90,.24);
+  border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.92));
+  transition:.18s ease;overflow:hidden
+}
+.shortcut-tile:hover{transform:translateY(-3px);border-color:rgba(111,197,90,.52)}
+.shortcut-num{position:absolute;top:9px;left:10px;color:#65716B;font-size:7px;font-weight:800}
+.shortcut-arrow{position:absolute;top:8px;right:9px;color:#63706A;font-size:8px}
+.shortcut-symbol{
+  margin-top:25px;color:var(--bright-green);font-size:29px;font-weight:900;letter-spacing:-1px
+}
+.shortcut-name{
+  position:absolute;left:10px;right:10px;bottom:10px;color:#D8DEDB;
+  font-size:8px;font-weight:800;line-height:1.25
+}
+.shortcut-tile.add{
+  border-style:dashed;background:rgba(20,23,21,.55)
+}
+.shortcut-tile.add .shortcut-symbol{color:#8B9690}
+.shortcut-tile.add:hover .shortcut-symbol{color:var(--bright-green)}
+.shortcut-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;align-items:center;justify-content:center;
+  z-index:120;padding:20px
+}
+.shortcut-modal.show{display:flex}
+.shortcut-dialog{
+  width:min(640px,100%);max-height:80vh;overflow:auto;padding:20px;border:1px solid var(--border);
+  border-radius:12px;background:#0F1311
+}
+.shortcut-dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:14px}
+.shortcut-dialog-head h3{font-size:16px}
+.shortcut-close{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--white)}
+.shortcut-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.shortcut-option{
+  min-height:76px;padding:11px;border:1px solid var(--border);border-radius:8px;background:var(--card);
+  color:var(--white);text-align:left
+}
+.shortcut-option:hover{border-color:rgba(111,197,90,.38)}
+.shortcut-option strong{display:block;color:var(--bright-green);font-size:11px}
+.shortcut-option span{display:block;margin-top:5px;color:var(--muted);font-size:8px;line-height:1.35}
+
+.mobile-nav{display:none}
+
+@media(max-width:1100px){
+  .shortcut-grid{grid-template-columns:repeat(3,1fr)}
+  .app{grid-template-columns:205px minmax(0,1fr)}
+  .metrics,.risk-module-grid{grid-template-columns:repeat(2,1fr)}
+  .dashboard-grid{grid-template-columns:1fr}
+  .governance-summary{grid-template-columns:1fr}
+  .governance-actions{justify-content:flex-start}
+}
+@media(max-width:760px){
+  .shortcut-grid{grid-template-columns:repeat(2,1fr)}
+  .shortcut-options{grid-template-columns:1fr 1fr}
+  .app{display:block}
+  .sidebar{display:none}
+  .topbar{padding:0 16px}
+  .top-search{display:none}
+  .content{padding:25px 16px 90px}
+  .ask-box{grid-template-columns:1fr}
+  .ask-box button{height:44px}
+  .welcome{display:block}
+  .blueprint-link{display:inline-block;margin-top:12px}
+  .metrics,.risk-module-grid{grid-template-columns:1fr 1fr}
+  .mobile-nav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;height:62px;z-index:100;
+    background:#08100D;border-top:1px solid var(--border);justify-content:space-around;align-items:center
+  }
+  .mobile-nav a{font-size:8px;color:var(--muted);text-align:center}
+  .mobile-nav strong{display:block;color:var(--bright-green);font-size:13px;margin-bottom:3px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="sidebar">
+  <a href="ims.html" class="brand">
+    <img src="certicium-logo.png" alt="Certicium logo" class="brand-logo">
+    <div>
+      <div class="brand-name">Certicium<span>.</span></div>
+      <span class="brand-tag">Build. Maintain. Embed.</span>
+    </div>
+  </a>
+
+  <div class="nav-scroll">
+    <div class="nav-group">
+      <div class="nav-label">Workspace</div>
+      <a class="nav-item active" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Explore</div>
+
+      <button class="nav-parent" type="button" data-nav-toggle="riskNav">
+        <span class="nav-symbol">Rm</span>Risks
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="riskNav">
+        <a href="#">Overall Risk Dashboard</a>
+        <a href="#">Driving</a>
+        <a href="#">Contractor Management</a>
+        <a href="#">Electrical Works</a>
+        <a href="#">Manual Handling</a>
+        <a href="#">Working Near Traffic</a>
+        <a href="#">Plant and Equipment</a>
+        <a href="#">Psychosocial</a>
+        <a href="#">Lone Working</a>
+      </div>
+
+      <button class="nav-parent" type="button" data-nav-toggle="imsNav">
+        <span class="nav-symbol">IMS</span>My IMS
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="imsNav">
+        <a href="#">Governance Management</a>
+        <a href="documents.html">Document and Records Management</a>
+        <a href="#">Risk Management</a>
+        <a href="competency.html">Competency Management</a>
+        <a href="#">Consultation and Communication Management</a>
+        <a href="#">Incident, Near Miss and Hazard Management</a>
+        <a href="#">Audit, Inspection, Monitoring and Testing Management</a>
+        <a href="#">Performance and Continuous Improvement Management</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="ask-side">
+    <strong>✦ Ask Certicium</strong>
+    <p>Your IMS assistant will understand your documents, risks, controls, actions and assurance data.</p>
+    <button onclick="askIMS()">Open Assistant</button>
+  </div>
+</aside>
+
+<div class="workspace">
+
+<header class="topbar">
+  <div class="company">
+    <span class="company-dot"></span>
+    <div>
+      <strong id="companyName">Your organisation</strong>
+      <span>Integrated Management System</span>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <input class="top-search" id="globalSearch" type="text" placeholder="Search your IMS...">
+    <button class="icon-button" title="Notifications">●</button>
+    <div class="avatar">DB</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <section class="welcome">
+    <div>
+      <div class="eyebrow">Your Integrated Management System</div>
+      <h1 id="welcomeHeading">Good morning.</h1>
+      <p id="welcomeCopy">Here is what is happening across your management system and what needs your attention.</p>
+    </div>
+    <a class="blueprint-link" href="blueprint.html">Review IMS Blueprint →</a>
+  </section>
+
+  <section class="ask-hero">
+    <div class="eyebrow">✦ Ask Certicium</div>
+    <h2>What are you looking to do?</h2>
+    <p>Ask in plain language. Certicium can find information across your IMS or take you to the right tool, form, register or workflow.</p>
+    <div class="ask-box">
+      <input id="imsAsk" type="text" placeholder="e.g. I need to report a contractor incident">
+      <button onclick="routeIMS()">Ask Certicium →</button>
+    </div>
+    <div class="ask-chips">
+      <button class="ask-chip" onclick="askExample('Find our working near traffic procedure')">Find a procedure</button>
+      <button class="ask-chip" onclick="askExample('I need to report an incident')">Report an incident</button>
+      <button class="ask-chip" onclick="askExample('Help me assess a new risk')">Assess a risk</button>
+      <button class="ask-chip" onclick="askExample('Create a new controlled document')">Create a document</button>
+      <button class="ask-chip" onclick="askExample('Start an inspection')">Start an inspection</button>
+      <button class="ask-chip" onclick="askExample('Check our compliance obligations')">Check an obligation</button>
+    </div>
+    <div class="ask-response" id="askResponse"></div>
+  </section>
+
+
+  <section class="shortcut-section">
+    <div class="shortcut-head">
+      <div>
+        <div class="eyebrow">Your workspace</div>
+        <h2>Your shortcuts</h2>
+        <p>Pin the Certicium tools you use most often.</p>
+      </div>
+    </div>
+
+    <div class="shortcut-grid" id="shortcutGrid">
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">01</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">!</div>
+        <div class="shortcut-name">Report an Event</div>
+      </a>
+
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">02</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Rm</div>
+        <div class="shortcut-name">Risk Register</div>
+      </a>
+
+      <a class="shortcut-tile" href="competency.html">
+        <span class="shortcut-num">03</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Cm</div>
+        <div class="shortcut-name">Training Matrix</div>
+      </a>
+
+      <a class="shortcut-tile" href="documents.html">
+        <span class="shortcut-num">04</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Dm</div>
+        <div class="shortcut-name">Documents and Records</div>
+      </a>
+
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">05</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">In</div>
+        <div class="shortcut-name">Start an Inspection</div>
+      </a>
+
+      <button class="shortcut-tile add" type="button" id="addShortcut">
+        <span class="shortcut-num">+</span>
+        <div class="shortcut-symbol">Ad</div>
+        <div class="shortcut-name">Add shortcut</div>
+      </button>
+    </div>
+  </section>
+
+  <section class="metrics">
+    <div class="metric">
+      <div class="metric-top"><span>Actions overdue</span><span>Ac</span></div>
+      <strong class="warning">3</strong>
+      <small>Across your IMS</small>
+    </div>
+    <div class="metric">
+      <div class="metric-top"><span>Documents due</span><span>Dm</span></div>
+      <strong class="warning">2</strong>
+      <small>Review due in the next 30 days</small>
+    </div>
+    <div class="metric">
+      <div class="metric-top"><span>Open high risks</span><span>Rm</span></div>
+      <strong>1</strong>
+      <small>Requires management attention</small>
+    </div>
+    <div class="metric">
+      <div class="metric-top"><span>IMS health</span><span>Pm</span></div>
+      <strong class="good">94%</strong>
+      <small>Illustrative demo status</small>
+    </div>
+  </section>
+
+  <section class="dashboard-grid">
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>What needs my attention</h2>
+        <a href="#">View all →</a>
+      </div>
+
+      <div class="attention-list">
+        <a class="attention" href="documents.html">
+          <div class="attention-icon">Dm</div>
+          <div>
+            <strong>Documents due for review</strong>
+            <p>Controlled content requiring owner review.</p>
+          </div>
+          <div class="attention-count">2</div>
+        </a>
+
+        <a class="attention" href="#">
+          <div class="attention-icon">Ac</div>
+          <div>
+            <strong>Overdue actions</strong>
+            <p>Corrective or improvement actions past due.</p>
+          </div>
+          <div class="attention-count">3</div>
+        </a>
+
+        <a class="attention" href="#">
+          <div class="attention-icon">Rm</div>
+          <div>
+            <strong>High risks requiring review</strong>
+            <p>Risk exposures requiring management attention.</p>
+          </div>
+          <div class="attention-count">1</div>
+        </a>
+
+        <a class="attention" href="#">
+          <div class="attention-icon">Au</div>
+          <div>
+            <strong>Upcoming assurance</strong>
+            <p>Audits and inspections scheduled this month.</p>
+          </div>
+          <div class="attention-count">4</div>
+        </a>
+
+        <a class="attention" href="competency.html">
+          <div class="attention-icon">Cm</div>
+          <div>
+            <strong>Training and competency expiries</strong>
+            <p>Training or evidence approaching expiry.</p>
+          </div>
+          <div class="attention-count">6</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h2>Common tasks</h2>
+        <span>Do something</span>
+      </div>
+
+      <div class="task-list">
+        <a class="task-row" href="#">
+          <div class="task-icon">!</div>
+          <div>
+            <strong>Report an Event</strong>
+            <p>Incident, near miss or hazard.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">Rm</div>
+          <div>
+            <strong>Assess a Risk</strong>
+            <p>Start or update a risk assessment.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">In</div>
+          <div>
+            <strong>Start an Inspection</strong>
+            <p>Assigned or ad hoc assurance activity.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="new-document.html">
+          <div class="task-icon">Nd</div>
+          <div>
+            <strong>Create a Document</strong>
+            <p>Build controlled content with Certicium AI.</p>
+          </div>
+          <span>→</span>
+        </a>
+
+        <a class="task-row" href="#">
+          <div class="task-icon">Ac</div>
+          <div>
+            <strong>Raise an Action</strong>
+            <p>Create a corrective or improvement action.</p>
+          </div>
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="section-title" id="controls">
+    <div>
+      <div class="eyebrow">Your operating environment</div>
+      <h2>Your risks</h2>
+    </div>
+    <p>Risk modules enabled for your organisation</p>
+  </div>
+
+  <section class="risk-module-grid">
+    <a class="risk-module" href="#"><span class="risk-num">01</span><div class="risk-symbol">Dr</div><div class="risk-name">Driving</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">02</span><div class="risk-symbol">Ct</div><div class="risk-name">Contractor Management</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">03</span><div class="risk-symbol">Ew</div><div class="risk-name">Electrical Works</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">04</span><div class="risk-symbol">Mh</div><div class="risk-name">Manual Handling</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">05</span><div class="risk-symbol">Wt</div><div class="risk-name">Working Near Traffic</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">06</span><div class="risk-symbol">Pe</div><div class="risk-name">Plant and Equipment</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">07</span><div class="risk-symbol">Ps</div><div class="risk-name">Psychosocial</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">08</span><div class="risk-symbol">Lw</div><div class="risk-name">Lone Working</div></a>
+  </section>
+
+  <section class="governance-summary" id="governance">
+    <div>
+      <div class="eyebrow">My IMS</div>
+      <h2>Governance and system architecture</h2>
+      <p>Your core governance processes remain the foundation of Certicium, but they sit behind the daily tools and risk controls your people use most often.</p>
+    </div>
+
+    <div class="governance-actions">
+      <a href="documents.html" class="button">Documents and Records</a>
+      <a href="competency.html" class="button">Training and Competency</a>
+      <a href="#" class="button">Governance</a>
+      <a href="#" class="button">Policies</a>
+      <a href="#" class="button">Management System Map</a>
+    </div>
+  </section>
+
+</main>
+</div>
+</div>
+
+
+<div class="shortcut-modal" id="shortcutModal">
+  <div class="shortcut-dialog">
+    <div class="shortcut-dialog-head">
+      <div>
+        <div class="eyebrow">Personalise Home</div>
+        <h3>Add a shortcut</h3>
+      </div>
+      <button class="shortcut-close" type="button" id="shortcutClose">×</button>
+    </div>
+    <div class="shortcut-options">
+      <button class="shortcut-option" type="button" data-symbol="Ac" data-name="Actions" data-href="#">
+        <strong>Ac · Actions</strong><span>Open corrective and improvement actions.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Au" data-name="Audit Schedule" data-href="#">
+        <strong>Au · Audit Schedule</strong><span>View upcoming assurance activities.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Ct" data-name="Contractors" data-href="#">
+        <strong>Ct · Contractors</strong><span>Open contractor management.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Fo" data-name="Forms" data-href="#">
+        <strong>Fo · Forms</strong><span>Open commonly used IMS forms.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Co" data-name="Compliance" data-href="#">
+        <strong>Co · Compliance</strong><span>Review obligations and controls.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Nd" data-name="Create a Document" data-href="new-document.html">
+        <strong>Nd · Create Document</strong><span>Start controlled content with Certicium.</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<nav class="mobile-nav">
+  <a href="ims.html"><strong>⌂</strong>Home</a>
+  <a href="documents.html"><strong>Dm</strong>Documents</a>
+  <a href="competency.html"><strong>Cm</strong>Training</a>
+  <a href="#"><strong>✦</strong>Ask</a>
+</nav>
+
+<script>
+function readStorage(key){
+  try{return JSON.parse(localStorage.getItem(key)||"{}")}
+  catch(error){return {}}
+}
+
+const blueprint=readStorage("certiciumIMSBlueprint");
+const organisationName=blueprint.organisation||"Your organisation";
+
+document.getElementById("companyName").innerText=organisationName;
+
+const hour=new Date().getHours();
+const greeting=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+document.getElementById("welcomeHeading").innerText=greeting+".";
+
+if(blueprint.approvedAt){
+  document.getElementById("welcomeCopy").innerText=
+    organisationName+"'s IMS blueprint is approved. Here is what needs attention across the live management system.";
+}
+
+function askExample(text){
+  document.getElementById("imsAsk").value=text;
+  routeIMS();
+}
+
+function routeIMS(){
+  const input=document.getElementById("imsAsk");
+  const response=document.getElementById("askResponse");
+  const text=(input.value||"").trim();
+  const q=text.toLowerCase();
+  if(!text){input.focus();return;}
+
+  let message="", action="", href="";
+
+  if(q.includes("training")||q.includes("competency")||q.includes("qualification")||q.includes("licence")||q.includes("license")){
+    message="I’ll take you to Training and Competency so you can check role requirements, training status, evidence and upcoming expiries.";
+    action="Open Training and Competency →";
+    href="competency.html";
+  }else if(q.includes("document")||q.includes("procedure")||q.includes("policy")||q.includes("record")){
+    if(q.includes("create")||q.includes("new")||q.includes("draft")){
+      message="I can help you create that. I’ll first check whether an existing controlled document should be revised before we create something new.";
+      action="Create with Document AI →";
+      href="new-document.html";
+    }else{
+      message="I’ll search your current controlled documents and records for the most relevant approved content.";
+      action="Search Document Management →";
+      href="documents.html";
+    }
+  }else if(q.includes("incident")||q.includes("near miss")||q.includes("hazard")||q.includes("event")){
+    message="This sounds like event reporting. I’ll take you to the Incident, Near Miss and Hazard workflow and use what you’ve told me to help pre-fill it.";
+    action="Report an Event →";
+  }else if(q.includes("risk")||q.includes("assess")){
+    message="I can help assess this risk, check for similar existing risks and suggest causes, consequences and controls.";
+    action="Open Risk Assessment →";
+  }else if(q.includes("inspect")||q.includes("audit")||q.includes("assurance")){
+    message="I’ll take you to the appropriate assurance activity and help identify the right inspection or audit.";
+    action="Open Assurance →";
+  }else if(q.includes("compliance")||q.includes("obligation")||q.includes("legal")){
+    message="I’ll search the compliance register and connected IMS controls for the relevant obligation.";
+    action="Open Compliance →";
+  }else{
+    message="I’ll search across your documents, risks, controls, actions, forms, registers and assurance data, then either answer you or take you to the right workflow.";
+    action="Search the IMS →";
+  }
+
+  response.classList.add("show");
+  const click=href ? "window.location.href='"+href+"'" : "demoRoute()";
+  response.innerHTML="<strong>Certicium</strong><br>"+message+'<div style="margin-top:9px"><button class="ask-chip" onclick="'+click+'">'+action+"</button></div>";
+}
+
+function demoRoute(){
+  alert("This module will connect here as we build out the wider Certicium IMS.");
+}
+
+function askIMS(){
+  document.getElementById("imsAsk").scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>document.getElementById("imsAsk").focus(),350);
+}
+
+document.getElementById("imsAsk").addEventListener("keydown",function(event){
+  if(event.key==="Enter")routeIMS();
+});
+
+document.querySelectorAll("[data-nav-toggle]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const target=document.getElementById(button.dataset.navToggle);
+    button.classList.toggle("open");
+    target.classList.toggle("open");
+  });
+});
+
+const shortcutModal=document.getElementById("shortcutModal");
+const addShortcut=document.getElementById("addShortcut");
+const shortcutClose=document.getElementById("shortcutClose");
+
+addShortcut.addEventListener("click",()=>shortcutModal.classList.add("show"));
+shortcutClose.addEventListener("click",()=>shortcutModal.classList.remove("show"));
+shortcutModal.addEventListener("click",event=>{
+  if(event.target===shortcutModal) shortcutModal.classList.remove("show");
+});
+
+document.querySelectorAll(".shortcut-option").forEach(option=>{
+  option.addEventListener("click",()=>{
+    const grid=document.getElementById("shortcutGrid");
+    const count=grid.querySelectorAll(".shortcut-tile:not(.add)").length+1;
+    const tile=document.createElement("a");
+    tile.className="shortcut-tile";
+    tile.href=option.dataset.href;
+    tile.innerHTML=`
+      <span class="shortcut-num">${String(count).padStart(2,"0")}</span>
+      <span class="shortcut-arrow">↗</span>
+      <div class="shortcut-symbol">${option.dataset.symbol}</div>
+      <div class="shortcut-name">${option.dataset.name}</div>
+    `;
+    grid.insertBefore(tile,addShortcut);
+    shortcutModal.classList.remove("show");
+  });
+});
+
+</script>
+
+</body>
+</html>
+ims.html
+HTML
