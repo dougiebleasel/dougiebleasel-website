@@ -166,9 +166,73 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(111,197,90,.35);background:transparent;color:var(--white);font-size:9px;font-weight:900}
 .button.primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
 
+
+.nav-parent{
+  min-height:40px;padding:0 10px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:800;
+  width:100%;border:0;background:transparent;text-align:left
+}
+.nav-parent:hover{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-parent .chevron{margin-left:auto;color:#66716B;font-size:11px;transition:.18s ease}
+.nav-parent.open .chevron{transform:rotate(90deg);color:var(--bright-green)}
+.nav-sub{display:none;padding:5px 0 3px 37px}
+.nav-sub.open{display:grid}
+.nav-sub a{
+  min-height:30px;padding:0 8px;border-radius:5px;display:flex;align-items:center;
+  color:#89958F;font-size:9px;font-weight:700
+}
+.nav-sub a:hover{background:rgba(44,130,89,.10);color:var(--white)}
+
+.shortcut-section{margin:0 0 22px}
+.shortcut-head{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:10px}
+.shortcut-head h2{font-size:20px;letter-spacing:-.7px}
+.shortcut-head p{margin-top:4px;color:var(--muted);font-size:8px}
+.shortcut-grid{display:grid;grid-template-columns:repeat(6,minmax(105px,1fr));gap:9px}
+.shortcut-tile{
+  min-height:116px;padding:10px;position:relative;border:1px solid rgba(111,197,90,.24);
+  border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.92));
+  transition:.18s ease;overflow:hidden
+}
+.shortcut-tile:hover{transform:translateY(-3px);border-color:rgba(111,197,90,.52)}
+.shortcut-num{position:absolute;top:9px;left:10px;color:#65716B;font-size:7px;font-weight:800}
+.shortcut-arrow{position:absolute;top:8px;right:9px;color:#63706A;font-size:8px}
+.shortcut-symbol{
+  margin-top:25px;color:var(--bright-green);font-size:29px;font-weight:900;letter-spacing:-1px
+}
+.shortcut-name{
+  position:absolute;left:10px;right:10px;bottom:10px;color:#D8DEDB;
+  font-size:8px;font-weight:800;line-height:1.25
+}
+.shortcut-tile.add{
+  border-style:dashed;background:rgba(20,23,21,.55)
+}
+.shortcut-tile.add .shortcut-symbol{color:#8B9690}
+.shortcut-tile.add:hover .shortcut-symbol{color:var(--bright-green)}
+.shortcut-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.58);display:none;align-items:center;justify-content:center;
+  z-index:120;padding:20px
+}
+.shortcut-modal.show{display:flex}
+.shortcut-dialog{
+  width:min(640px,100%);max-height:80vh;overflow:auto;padding:20px;border:1px solid var(--border);
+  border-radius:12px;background:#0F1311
+}
+.shortcut-dialog-head{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:14px}
+.shortcut-dialog-head h3{font-size:16px}
+.shortcut-close{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--white)}
+.shortcut-options{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.shortcut-option{
+  min-height:76px;padding:11px;border:1px solid var(--border);border-radius:8px;background:var(--card);
+  color:var(--white);text-align:left
+}
+.shortcut-option:hover{border-color:rgba(111,197,90,.38)}
+.shortcut-option strong{display:block;color:var(--bright-green);font-size:11px}
+.shortcut-option span{display:block;margin-top:5px;color:var(--muted);font-size:8px;line-height:1.35}
+
 .mobile-nav{display:none}
 
 @media(max-width:1100px){
+  .shortcut-grid{grid-template-columns:repeat(3,1fr)}
   .app{grid-template-columns:205px minmax(0,1fr)}
   .metrics,.risk-module-grid{grid-template-columns:repeat(2,1fr)}
   .dashboard-grid{grid-template-columns:1fr}
@@ -176,6 +240,8 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   .governance-actions{justify-content:flex-start}
 }
 @media(max-width:760px){
+  .shortcut-grid{grid-template-columns:repeat(2,1fr)}
+  .shortcut-options{grid-template-columns:1fr 1fr}
   .app{display:block}
   .sidebar{display:none}
   .topbar{padding:0 16px}
@@ -216,45 +282,38 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
     </div>
 
     <div class="nav-group">
-      <div class="nav-label">Do</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">!</span>Report an Event</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Assess a Risk</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Start an Inspection</a>
-      <a class="nav-item" href="new-document.html"><span class="nav-symbol">Nd</span>Create a Document</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Raise an Action</a>
-    </div>
+      <div class="nav-label">Explore</div>
 
-    <div class="nav-group">
-      <div class="nav-label">Manage</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Risks</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">IM</span>Incidents and Hazards</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Actions</a>
-      <a class="nav-item" href="documents.html"><span class="nav-symbol">Dm</span>Documents and Records</a>
-      <a class="nav-item" href="competency.html"><span class="nav-symbol">Cm</span>Training and Competency</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ct</span>Contractors</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Co</span>Compliance</a>
-    </div>
+      <button class="nav-parent" type="button" data-nav-toggle="riskNav">
+        <span class="nav-symbol">Rm</span>Risks
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="riskNav">
+        <a href="#">Overall Risk Dashboard</a>
+        <a href="#">Driving</a>
+        <a href="#">Contractor Management</a>
+        <a href="#">Electrical Works</a>
+        <a href="#">Manual Handling</a>
+        <a href="#">Working Near Traffic</a>
+        <a href="#">Plant and Equipment</a>
+        <a href="#">Psychosocial</a>
+        <a href="#">Lone Working</a>
+      </div>
 
-    <div class="nav-group">
-      <div class="nav-label">Assure</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Au</span>Audits</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Inspections</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Mt</span>Monitoring and Testing</a>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-label">Tools</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Fo</span>Forms</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Re</span>Registers</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ai</span>AI Tools</a>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-label">My IMS</div>
-      <a class="nav-item" href="#governance"><span class="nav-symbol">Go</span>Governance</a>
-      <a class="nav-item" href="#controls"><span class="nav-symbol">Oc</span>Operational Controls</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Po</span>Policies</a>
-      <a class="nav-item" href="#governance"><span class="nav-symbol">Mp</span>Management System Map</a>
+      <button class="nav-parent" type="button" data-nav-toggle="imsNav">
+        <span class="nav-symbol">Im</span>My IMS
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="imsNav">
+        <a href="#">Organisation</a>
+        <a href="#">Operations</a>
+        <a href="#">Requirements</a>
+        <a href="#">Existing System</a>
+        <a href="#">Risks</a>
+        <a href="#">Incidents</a>
+        <a href="#">Audits and Assurance</a>
+        <a href="competency.html">Training and Competency</a>
+      </div>
     </div>
   </div>
 
@@ -311,6 +370,60 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
       <button class="ask-chip" onclick="askExample('Check our compliance obligations')">Check an obligation</button>
     </div>
     <div class="ask-response" id="askResponse"></div>
+  </section>
+
+
+  <section class="shortcut-section">
+    <div class="shortcut-head">
+      <div>
+        <div class="eyebrow">Your workspace</div>
+        <h2>Your shortcuts</h2>
+        <p>Pin the Certicium tools you use most often.</p>
+      </div>
+    </div>
+
+    <div class="shortcut-grid" id="shortcutGrid">
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">01</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">!</div>
+        <div class="shortcut-name">Report an Event</div>
+      </a>
+
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">02</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Rm</div>
+        <div class="shortcut-name">Risk Register</div>
+      </a>
+
+      <a class="shortcut-tile" href="competency.html">
+        <span class="shortcut-num">03</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Cm</div>
+        <div class="shortcut-name">Training Matrix</div>
+      </a>
+
+      <a class="shortcut-tile" href="documents.html">
+        <span class="shortcut-num">04</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">Dm</div>
+        <div class="shortcut-name">Documents and Records</div>
+      </a>
+
+      <a class="shortcut-tile" href="#">
+        <span class="shortcut-num">05</span>
+        <span class="shortcut-arrow">↗</span>
+        <div class="shortcut-symbol">In</div>
+        <div class="shortcut-name">Start an Inspection</div>
+      </a>
+
+      <button class="shortcut-tile add" type="button" id="addShortcut">
+        <span class="shortcut-num">+</span>
+        <div class="shortcut-symbol">Ad</div>
+        <div class="shortcut-name">Add shortcut</div>
+      </button>
+    </div>
   </section>
 
   <section class="metrics">
@@ -487,6 +600,39 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 </div>
 </div>
 
+
+<div class="shortcut-modal" id="shortcutModal">
+  <div class="shortcut-dialog">
+    <div class="shortcut-dialog-head">
+      <div>
+        <div class="eyebrow">Personalise Home</div>
+        <h3>Add a shortcut</h3>
+      </div>
+      <button class="shortcut-close" type="button" id="shortcutClose">×</button>
+    </div>
+    <div class="shortcut-options">
+      <button class="shortcut-option" type="button" data-symbol="Ac" data-name="Actions" data-href="#">
+        <strong>Ac · Actions</strong><span>Open corrective and improvement actions.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Au" data-name="Audit Schedule" data-href="#">
+        <strong>Au · Audit Schedule</strong><span>View upcoming assurance activities.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Ct" data-name="Contractors" data-href="#">
+        <strong>Ct · Contractors</strong><span>Open contractor management.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Fo" data-name="Forms" data-href="#">
+        <strong>Fo · Forms</strong><span>Open commonly used IMS forms.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Co" data-name="Compliance" data-href="#">
+        <strong>Co · Compliance</strong><span>Review obligations and controls.</span>
+      </button>
+      <button class="shortcut-option" type="button" data-symbol="Nd" data-name="Create a Document" data-href="new-document.html">
+        <strong>Nd · Create Document</strong><span>Start controlled content with Certicium.</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <nav class="mobile-nav">
   <a href="ims.html"><strong>⌂</strong>Home</a>
   <a href="documents.html"><strong>Dm</strong>Documents</a>
@@ -576,6 +722,43 @@ function askIMS(){
 document.getElementById("imsAsk").addEventListener("keydown",function(event){
   if(event.key==="Enter")routeIMS();
 });
+
+document.querySelectorAll("[data-nav-toggle]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const target=document.getElementById(button.dataset.navToggle);
+    button.classList.toggle("open");
+    target.classList.toggle("open");
+  });
+});
+
+const shortcutModal=document.getElementById("shortcutModal");
+const addShortcut=document.getElementById("addShortcut");
+const shortcutClose=document.getElementById("shortcutClose");
+
+addShortcut.addEventListener("click",()=>shortcutModal.classList.add("show"));
+shortcutClose.addEventListener("click",()=>shortcutModal.classList.remove("show"));
+shortcutModal.addEventListener("click",event=>{
+  if(event.target===shortcutModal) shortcutModal.classList.remove("show");
+});
+
+document.querySelectorAll(".shortcut-option").forEach(option=>{
+  option.addEventListener("click",()=>{
+    const grid=document.getElementById("shortcutGrid");
+    const count=grid.querySelectorAll(".shortcut-tile:not(.add)").length+1;
+    const tile=document.createElement("a");
+    tile.className="shortcut-tile";
+    tile.href=option.dataset.href;
+    tile.innerHTML=`
+      <span class="shortcut-num">${String(count).padStart(2,"0")}</span>
+      <span class="shortcut-arrow">↗</span>
+      <div class="shortcut-symbol">${option.dataset.symbol}</div>
+      <div class="shortcut-name">${option.dataset.name}</div>
+    `;
+    grid.insertBefore(tile,addShortcut);
+    shortcutModal.classList.remove("show");
+  });
+});
+
 </script>
 
 </body>
