@@ -1,1 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | Training and Competency</title>
 
+<style>
+:root{
+  --phthalo:#0B3D2E;
+  --dark-green:#123524;
+  --accent:#2C8259;
+  --bright-green:#6FC55A;
+  --grey:#242526;
+  --black:#0D0D0D;
+  --white:#F4F6F5;
+  --muted:#A9B2AE;
+  --border:rgba(244,246,245,.10);
+  --card:#141715;
+  --sidebar:#09110E;
+  --warning:#E6C96B;
+  --danger:#D96B6B;
+  --info:#70A8E8;
+  --purple:#A38BE0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+
+.app{min-height:100vh;display:grid;grid-template-columns:245px minmax(0,1fr)}
+.sidebar{
+  position:sticky;top:0;height:100vh;padding:20px 16px;
+  background:linear-gradient(180deg,#08100D,#06100D);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;z-index:50
+}
+.brand{display:flex;align-items:center;gap:11px;padding:0 7px 21px;border-bottom:1px solid var(--border)}
+.brand-logo{width:45px;height:45px;object-fit:contain;border-radius:7px}
+.brand-name{font-size:21px;font-weight:800;letter-spacing:-.8px}
+.brand-name span{color:var(--bright-green)}
+.brand-tag{display:block;margin-top:4px;color:var(--muted);font-size:7px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.nav-scroll{padding-top:18px;overflow:auto}
+.nav-group{margin-bottom:22px}
+.nav-label{padding:0 10px;margin-bottom:7px;color:#65716B;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}
+.nav-item{
+  min-height:38px;padding:0 10px;border-radius:7px;
+  display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:700;
+  transition:.18s ease
+}
+.nav-item:hover,.nav-item.active{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-item.active{box-shadow:inset 2px 0 0 var(--bright-green)}
+.nav-symbol{
+  width:27px;height:27px;border:1px solid rgba(111,197,90,.20);border-radius:5px;
+  display:grid;place-items:center;color:var(--bright-green);font-size:9px;font-weight:900;flex:0 0 27px
+}
+.ask-side{
+  margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;
+  background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))
+}
+.ask-side strong{font-size:11px}
+.ask-side p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.45}
+.ask-side button{width:100%;margin-top:10px;min-height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900}
+
+.workspace{min-width:0}
+.topbar{
+  height:72px;padding:0 30px;position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  background:rgba(13,13,13,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)
+}
+.company{display:flex;align-items:center;gap:9px}
+.company-dot{width:8px;height:8px;border-radius:50%;background:var(--bright-green);box-shadow:0 0 12px rgba(111,197,90,.45)}
+.company strong{font-size:12px}
+.company span{display:block;color:var(--muted);font-size:8px;margin-top:2px}
+.top-actions{display:flex;align-items:center;gap:9px}
+.top-search{
+  width:250px;height:38px;padding:0 12px;border:1px solid var(--border);border-radius:7px;
+  background:var(--card);color:var(--white);outline:none
+}
+.icon-button{width:38px;height:38px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--white)}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--dark-green);color:var(--bright-green);font-size:10px;font-weight:900}
+
+.content{max-width:1500px;margin:auto;padding:34px 34px 80px}
+.page-head{display:flex;justify-content:space-between;gap:30px;align-items:end;margin-bottom:20px}
+.eyebrow{color:var(--bright-green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+h1{font-size:clamp(34px,4vw,50px);line-height:1;letter-spacing:-2.2px}
+.page-head p{margin-top:10px;max-width:720px;color:var(--muted);font-size:11px;line-height:1.6}
+.head-actions{display:flex;gap:8px;flex-wrap:wrap}
+.button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(111,197,90,.35);background:transparent;color:var(--white);font-size:9px;font-weight:900}
+.button.primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
+
+.tabs{display:flex;gap:20px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.tab{padding:10px 0 12px;color:var(--muted);font-size:9px;font-weight:900;border-bottom:2px solid transparent}
+.tab.active{color:var(--white);border-color:var(--bright-green)}
+
+.summary-grid{display:grid;grid-template-columns:1.45fr repeat(3,1fr);gap:11px;margin-bottom:18px}
+.summary-card{padding:16px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
+.summary-card.ai{background:linear-gradient(135deg,rgba(18,53,36,.78),rgba(13,13,13,.96));border-color:rgba(111,197,90,.28)}
+.summary-label{color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.7px}
+.summary-card strong{display:block;margin-top:9px;font-size:25px;letter-spacing:-1px}
+.summary-card.ai strong{font-size:16px;letter-spacing:-.3px}
+.summary-card p{margin-top:5px;color:var(--muted);font-size:8px;line-height:1.5}
+
+.matrix-panel{border:1px solid var(--border);border-radius:10px;background:var(--card);overflow:hidden}
+.matrix-head{padding:17px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:14px}
+.matrix-head h2{font-size:15px}
+.matrix-tools{display:flex;gap:8px}
+.matrix-search{width:230px;height:36px;padding:0 11px;border:1px solid var(--border);border-radius:6px;background:#0B0E0C;color:var(--white);outline:none;font-size:9px}
+.table-wrap{overflow:auto;max-height:610px}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1150px}
+th,td{padding:12px 10px;border-bottom:1px solid rgba(244,246,245,.06);border-right:1px solid rgba(244,246,245,.045);font-size:9px;text-align:center;background:var(--card)}
+th{position:sticky;top:0;z-index:4;background:#111512;color:#8F9994;font-size:7px;text-transform:uppercase;letter-spacing:.7px}
+th:first-child,td:first-child{position:sticky;left:0;z-index:5;text-align:left;min-width:175px}
+th:nth-child(2),td:nth-child(2){position:sticky;left:175px;z-index:5;text-align:left;min-width:210px;box-shadow:7px 0 12px rgba(0,0,0,.18)}
+th:first-child,th:nth-child(2){background:#111512;z-index:6}
+td:first-child,td:nth-child(2){background:var(--card)}
+.person-link{font-weight:900;color:var(--white);cursor:pointer}
+.person-link:hover{color:var(--bright-green)}
+.role-tags{display:flex;gap:5px;flex-wrap:wrap}
+.role-tag{padding:5px 7px;border:1px solid rgba(111,197,90,.18);border-radius:999px;background:rgba(44,130,89,.10);color:#CFE0D7;font-size:7px;font-weight:800;white-space:nowrap}
+.status{width:28px;height:28px;border-radius:6px;margin:auto;display:grid;place-items:center;font-size:10px;font-weight:900}
+.current{background:rgba(111,197,90,.13);color:var(--bright-green);border:1px solid rgba(111,197,90,.20)}
+.due{background:rgba(230,201,107,.12);color:var(--warning);border:1px solid rgba(230,201,107,.20)}
+.expired{background:rgba(217,107,107,.12);color:var(--danger);border:1px solid rgba(217,107,107,.20)}
+.assigned{background:rgba(112,168,232,.12);color:var(--info);border:1px solid rgba(112,168,232,.20)}
+.pending{background:rgba(163,139,224,.12);color:var(--purple);border:1px solid rgba(163,139,224,.20)}
+.na{color:#5F6863}
+.legend{padding:12px 18px;display:flex;gap:14px;flex-wrap:wrap;border-top:1px solid var(--border);color:var(--muted);font-size:7px}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend-dot{width:7px;height:7px;border-radius:50%}
+
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.42);opacity:0;pointer-events:none;transition:.22s;z-index:80}
+.overlay.open{opacity:1;pointer-events:auto}
+.profile-drawer{
+  position:fixed;top:0;right:-480px;width:455px;max-width:94vw;height:100vh;z-index:90;
+  background:#0D100E;border-left:1px solid var(--border);box-shadow:-20px 0 50px rgba(0,0,0,.35);
+  padding:18px;overflow:auto;transition:right .25s ease
+}
+.profile-drawer.open{right:0}
+.drawer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.drawer-top strong{font-size:10px}
+.drawer-close{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--white)}
+
+.id-card{
+  position:relative;overflow:hidden;padding:20px;border-radius:14px;
+  border:1px solid rgba(111,197,90,.26);
+  background:radial-gradient(circle at 88% 18%,rgba(111,197,90,.12),transparent 26%),linear-gradient(145deg,#0A0E0C,#123524);
+  box-shadow:0 18px 40px rgba(0,0,0,.22)
+}
+.id-card:after{content:"";position:absolute;width:190px;height:190px;border:1px solid rgba(111,197,90,.10);border-radius:50%;right:-75px;top:-58px}
+.id-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative;z-index:2}
+.id-brand{display:flex;align-items:center;gap:8px}
+.id-logo{width:38px;height:38px;object-fit:contain}
+.id-brand strong{font-size:9px;letter-spacing:1px}
+.active-pill{padding:5px 8px;border-radius:999px;background:rgba(111,197,90,.10);border:1px solid rgba(111,197,90,.20);color:var(--bright-green);font-size:7px;font-weight:900}
+.identity{display:flex;gap:14px;align-items:center;margin-top:20px;position:relative;z-index:2}
+.person-avatar{width:72px;height:72px;border-radius:11px;background:#D5DDD9;color:#183A2C;display:grid;place-items:center;font-size:22px;font-weight:900}
+.identity h2{font-size:21px;letter-spacing:-.7px}
+.identity p{margin-top:4px;color:#BAC5BF;font-size:9px}
+.id-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px;position:relative;z-index:2}
+.id-cell{padding:9px 10px;border:1px solid rgba(244,246,245,.08);border-radius:7px;background:rgba(244,246,245,.035)}
+.id-cell span{display:block;color:#829089;font-size:6px;text-transform:uppercase;letter-spacing:.8px}
+.id-cell strong{display:block;margin-top:3px;font-size:9px}
+.compliance{margin-top:16px;position:relative;z-index:2}
+.compliance-top{display:flex;justify-content:space-between;color:#CFD8D3;font-size:7px;font-weight:900;margin-bottom:6px}
+.bar{height:7px;border-radius:999px;background:rgba(244,246,245,.10);overflow:hidden}
+.bar div{height:100%;background:var(--bright-green);border-radius:999px}
+.auth{margin-top:13px;padding-top:12px;border-top:1px solid rgba(244,246,245,.09);color:var(--bright-green);font-size:8px;font-weight:900;position:relative;z-index:2}
+
+.drawer-card{margin-top:11px;padding:14px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
+.drawer-card h3{font-size:10px;margin-bottom:10px}
+.credential-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.credential-box{padding:9px;border-radius:7px;background:#101411;text-align:center}
+.credential-box strong{display:block;font-size:15px}
+.credential-box span{display:block;margin-top:2px;color:var(--muted);font-size:6px;text-transform:uppercase}
+.training-row{padding:10px 0;border-bottom:1px solid rgba(244,246,245,.06);display:grid;grid-template-columns:1fr auto;gap:10px}
+.training-row:last-child{border-bottom:0}
+.training-row strong{font-size:9px}
+.training-row p{margin-top:3px;color:var(--muted);font-size:7px}
+.training-status{font-size:7px;font-weight:900}
+.green{color:var(--bright-green)} .amber{color:var(--warning)} .red{color:var(--danger)} .blue{color:var(--info)} .purple{color:var(--purple)}
+.mobile-nav{display:none}
+
+@media(max-width:1100px){
+  .app{grid-template-columns:205px minmax(0,1fr)}
+  .summary-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .app{display:block}
+  .sidebar{display:none}
+  .topbar{padding:0 16px}
+  .top-search{display:none}
+  .content{padding:25px 16px 90px}
+  .page-head{display:block}
+  .head-actions{margin-top:15px}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .matrix-tools .button{display:none}
+  .matrix-search{width:180px}
+  .mobile-nav{
+    display:flex;position:fixed;left:0;right:0;bottom:0;height:62px;z-index:100;
+    background:#08100D;border-top:1px solid var(--border);justify-content:space-around;align-items:center
+  }
+  .mobile-nav a{font-size:8px;color:var(--muted);text-align:center}
+  .mobile-nav strong{display:block;color:var(--bright-green);font-size:13px;margin-bottom:3px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <a href="ims.html" class="brand">
+    <img src="certicium-logo.png" alt="Certicium logo" class="brand-logo">
+    <div>
+      <div class="brand-name">Certicium<span>.</span></div>
+      <span class="brand-tag">Build. Maintain. Embed.</span>
+    </div>
+  </a>
+
+  <div class="nav-scroll">
+    <div class="nav-group">
+      <div class="nav-label">Workspace</div>
+      <a class="nav-item" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Do</div>
+      <a class="nav-item" href="#"><span class="nav-symbol">!</span>Report an Event</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Assess a Risk</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Start an Inspection</a>
+      <a class="nav-item" href="new-document.html"><span class="nav-symbol">Nd</span>Create a Document</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Raise an Action</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Manage</div>
+      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Risks</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">IM</span>Incidents and Hazards</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Actions</a>
+      <a class="nav-item" href="documents.html"><span class="nav-symbol">Dm</span>Documents and Records</a>
+      <a class="nav-item active" href="competency.html"><span class="nav-symbol">Cm</span>Training and Competency</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ct</span>Contractors</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Co</span>Compliance</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Assure</div>
+      <a class="nav-item" href="#"><span class="nav-symbol">Au</span>Audits</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Inspections</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Mt</span>Monitoring and Testing</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">Tools</div>
+      <a class="nav-item" href="#"><span class="nav-symbol">Fo</span>Forms</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Re</span>Registers</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Ai</span>AI Tools</a>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-label">My IMS</div>
+      <a class="nav-item" href="ims.html#governance"><span class="nav-symbol">Go</span>Governance</a>
+      <a class="nav-item" href="ims.html#controls"><span class="nav-symbol">Oc</span>Operational Controls</a>
+      <a class="nav-item" href="#"><span class="nav-symbol">Po</span>Policies</a>
+      <a class="nav-item" href="ims.html#governance"><span class="nav-symbol">Mp</span>Management System Map</a>
+    </div>
+  </div>
+
+  <div class="ask-side">
+    <strong>✦ Ask Certicium</strong>
+    <p>Ask about training gaps, role requirements, expired evidence or competency status.</p>
+    <button onclick="focusSearch()">Open Assistant</button>
+  </div>
+</aside>
+
+<div class="workspace">
+
+<header class="topbar">
+  <div class="company">
+    <span class="company-dot"></span>
+    <div>
+      <strong id="companyName">Your organisation</strong>
+      <span>Integrated Management System</span>
+    </div>
+  </div>
+
+  <div class="top-actions">
+    <input class="top-search" id="globalSearch" type="text" placeholder="Search your IMS...">
+    <button class="icon-button" title="Notifications">●</button>
+    <div class="avatar">DB</div>
+  </div>
+</header>
+
+<main class="content">
+
+  <section class="page-head">
+    <div>
+      <div class="eyebrow">Manage</div>
+      <h1>Training and Competency</h1>
+      <p>See which training packages apply to each person based on the roles defined in your IMS, and whether those requirements are current, due, missing or awaiting verification.</p>
+    </div>
+    <div class="head-actions">
+      <button class="button">Export Matrix</button>
+      <button class="button primary">+ Training Package</button>
+    </div>
+  </section>
+
+  <div class="tabs">
+    <a class="tab" href="#">Overview</a>
+    <a class="tab active" href="#">Matrix</a>
+    <a class="tab" href="#">Training Packages</a>
+    <a class="tab" href="#">IMS Roles</a>
+  </div>
+
+  <section class="summary-grid">
+    <div class="summary-card ai">
+      <div class="summary-label">✦ Certicium AI</div>
+      <strong>3 competency gaps need attention</strong>
+      <p>One expired requirement affects role authorisation. Two training packages are due within the next 30 days.</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Training Compliance</div>
+      <strong style="color:var(--bright-green)">92%</strong>
+      <p>Across assigned IMS roles</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Due Soon</div>
+      <strong style="color:var(--warning)">6</strong>
+      <p>Within the next 30 days</p>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Expired or Missing</div>
+      <strong style="color:var(--danger)">3</strong>
+      <p>Require action</p>
+    </div>
+  </section>
+
+  <section class="matrix-panel">
+    <div class="matrix-head">
+      <div>
+        <h2>Training Matrix</h2>
+        <div style="margin-top:4px;color:var(--muted);font-size:7px">People and IMS roles ↓ &nbsp;&nbsp; Training packages →</div>
+      </div>
+      <div class="matrix-tools">
+        <input class="matrix-search" id="matrixSearch" type="text" placeholder="Search people or roles...">
+        <button class="button">Filter</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="matrix">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>IMS Role(s)</th>
+            <th>IMS Induction</th>
+            <th>Field Worker</th>
+            <th>Working Near Traffic</th>
+            <th>Working at Heights</th>
+            <th>Driver Competency</th>
+            <th>First Aid</th>
+            <th>Incident Investigator</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-person="sarah">
+            <td><span class="person-link">Sarah Thompson</span></td>
+            <td><div class="role-tags"><span class="role-tag">Field Technician</span><span class="role-tag">First Aider</span></div></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status due">!</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status expired">×</span></td>
+            <td><span class="status na">—</span></td>
+          </tr>
+
+          <tr data-person="james">
+            <td><span class="person-link">James Miller</span></td>
+            <td><div class="role-tags"><span class="role-tag">Field Technician</span></div></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+          </tr>
+
+          <tr data-person="emily">
+            <td><span class="person-link">Emily Chen</span></td>
+            <td><div class="role-tags"><span class="role-tag">Manager</span><span class="role-tag">Incident Investigator</span></div></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status due">!</span></td>
+            <td><span class="status current">✓</span></td>
+          </tr>
+
+          <tr data-person="michael">
+            <td><span class="person-link">Michael Jones</span></td>
+            <td><div class="role-tags"><span class="role-tag">Contractor Manager</span></div></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status assigned">○</span></td>
+          </tr>
+
+          <tr data-person="amy">
+            <td><span class="person-link">Amy Roberts</span></td>
+            <td><div class="role-tags"><span class="role-tag">Operations Manager</span><span class="role-tag">Emergency Warden</span></div></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status na">—</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status current">✓</span></td>
+            <td><span class="status pending">?</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="legend">
+      <span><i class="legend-dot" style="background:var(--bright-green)"></i> Current</span>
+      <span><i class="legend-dot" style="background:var(--warning)"></i> Due soon</span>
+      <span><i class="legend-dot" style="background:var(--danger)"></i> Expired or missing</span>
+      <span><i class="legend-dot" style="background:var(--info)"></i> Assigned</span>
+      <span><i class="legend-dot" style="background:var(--purple)"></i> Awaiting verification</span>
+      <span><i class="legend-dot" style="background:#5F6863"></i> Not required</span>
+    </div>
+  </section>
+
+</main>
+</div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="profile-drawer" id="profileDrawer">
+  <div class="drawer-top">
+    <strong>Person Profile</strong>
+    <button class="drawer-close" id="drawerClose">×</button>
+  </div>
+
+  <section class="id-card">
+    <div class="id-top">
+      <div class="id-brand">
+        <img src="certicium-logo.png" alt="Certicium" class="id-logo">
+        <strong>CERTICIUM</strong>
+      </div>
+      <span class="active-pill">● ACTIVE</span>
+    </div>
+
+    <div class="identity">
+      <div class="person-avatar" id="personAvatar">ST</div>
+      <div>
+        <h2 id="personName">Sarah Thompson</h2>
+        <p id="personRole">Field Technician</p>
+      </div>
+    </div>
+
+    <div class="id-grid">
+      <div class="id-cell"><span>Employee ID</span><strong id="personId">CT-00284</strong></div>
+      <div class="id-cell"><span>Location</span><strong id="personLocation">Melbourne</strong></div>
+    </div>
+
+    <div class="compliance">
+      <div class="compliance-top"><span>TRAINING COMPLIANCE</span><span id="complianceLabel">92%</span></div>
+      <div class="bar"><div id="complianceBar" style="width:92%"></div></div>
+    </div>
+
+    <div class="auth" id="authorisation">⚠ ROLE RESTRICTION — ACTION REQUIRED</div>
+  </section>
+
+  <section class="drawer-card">
+    <h3>Credential Status</h3>
+    <div class="credential-strip">
+      <div class="credential-box"><strong id="currentCount">4</strong><span>Current</span></div>
+      <div class="credential-box"><strong id="dueCount">1</strong><span>Due soon</span></div>
+      <div class="credential-box"><strong id="expiredCount">1</strong><span>Expired</span></div>
+    </div>
+  </section>
+
+  <section class="drawer-card">
+    <h3>IMS Roles</h3>
+    <div class="role-tags" id="drawerRoles"></div>
+  </section>
+
+  <section class="drawer-card">
+    <h3>Training and Competency</h3>
+    <div id="trainingList"></div>
+  </section>
+</aside>
+
+<nav class="mobile-nav">
+  <a href="ims.html"><strong>⌂</strong>Home</a>
+  <a href="documents.html"><strong>Dm</strong>Documents</a>
+  <a href="#"><strong>Rm</strong>Risks</a>
+  <a href="competency.html"><strong>Cm</strong>Training</a>
+</nav>
+
+<script>
+function readStorage(key){
+  try{return JSON.parse(localStorage.getItem(key)||"{}")}
+  catch(error){return {}}
+}
+const blueprint=readStorage("certiciumIMSBlueprint");
+document.getElementById("companyName").innerText=blueprint.organisation||"Your organisation";
+
+const people={
+  sarah:{
+    name:"Sarah Thompson",initials:"ST",role:"Field Technician",id:"CT-00284",location:"Melbourne",
+    compliance:92,authorised:false,current:4,due:1,expired:1,
+    roles:["Field Technician","First Aider"],
+    training:[
+      ["IMS Induction","Current","Completed 12 Jan 2026","green"],
+      ["Field Worker","Current","Completed 18 Jan 2026","green"],
+      ["Working Near Traffic","Current","Expires 14 Mar 2027","green"],
+      ["Working at Heights","Due Soon","Expires 22 Sep 2026","amber"],
+      ["Driver Competency","Current","Expires 18 Jun 2027","green"],
+      ["First Aid","Expired","Expired 18 Aug 2026","red"]
+    ]
+  },
+  james:{
+    name:"James Miller",initials:"JM",role:"Field Technician",id:"CT-00316",location:"Melbourne",
+    compliance:100,authorised:true,current:5,due:0,expired:0,
+    roles:["Field Technician"],
+    training:[
+      ["IMS Induction","Current","Completed 03 Feb 2026","green"],
+      ["Field Worker","Current","Completed 05 Feb 2026","green"],
+      ["Working Near Traffic","Current","Expires 04 Feb 2028","green"],
+      ["Working at Heights","Current","Expires 19 May 2028","green"],
+      ["Driver Competency","Current","Expires 02 Jul 2027","green"]
+    ]
+  },
+  emily:{
+    name:"Emily Chen",initials:"EC",role:"Manager",id:"CT-00108",location:"South Melbourne",
+    compliance:96,authorised:true,current:3,due:1,expired:0,
+    roles:["Manager","Incident Investigator"],
+    training:[
+      ["IMS Induction","Current","Completed 10 Nov 2025","green"],
+      ["Driver Competency","Current","Expires 10 Nov 2027","green"],
+      ["First Aid","Due Soon","Expires 29 Sep 2026","amber"],
+      ["Incident Investigator","Current","Completed 22 Jul 2026","green"]
+    ]
+  },
+  michael:{
+    name:"Michael Jones",initials:"MJ",role:"Contractor Manager",id:"CT-00372",location:"Sydney",
+    compliance:75,authorised:true,current:1,due:0,expired:0,
+    roles:["Contractor Manager"],
+    training:[
+      ["IMS Induction","Current","Completed 01 Aug 2026","green"],
+      ["Incident Investigator","Assigned","Assigned 25 Aug 2026","blue"]
+    ]
+  },
+  amy:{
+    name:"Amy Roberts",initials:"AR",role:"Operations Manager",id:"CT-00177",location:"Melbourne",
+    compliance:94,authorised:true,current:3,due:0,expired:0,
+    roles:["Operations Manager","Emergency Warden"],
+    training:[
+      ["IMS Induction","Current","Completed 08 Dec 2025","green"],
+      ["Driver Competency","Current","Expires 08 Dec 2027","green"],
+      ["First Aid","Current","Expires 14 Feb 2028","green"],
+      ["Incident Investigator","Awaiting Verification","Assessment submitted","purple"]
+    ]
+  }
+};
+
+const drawer=document.getElementById("profileDrawer");
+const overlay=document.getElementById("overlay");
+
+function openProfile(key){
+  const p=people[key];
+  document.getElementById("personAvatar").innerText=p.initials;
+  document.getElementById("personName").innerText=p.name;
+  document.getElementById("personRole").innerText=p.role;
+  document.getElementById("personId").innerText=p.id;
+  document.getElementById("personLocation").innerText=p.location;
+  document.getElementById("complianceLabel").innerText=p.compliance+"%";
+  document.getElementById("complianceBar").style.width=p.compliance+"%";
+  document.getElementById("currentCount").innerText=p.current;
+  document.getElementById("dueCount").innerText=p.due;
+  document.getElementById("expiredCount").innerText=p.expired;
+
+  const auth=document.getElementById("authorisation");
+  if(p.authorised){
+    auth.innerText="✓ AUTHORISED FOR ASSIGNED ROLES";
+    auth.style.color="var(--bright-green)";
+  }else{
+    auth.innerText="⚠ ROLE RESTRICTION — ACTION REQUIRED";
+    auth.style.color="var(--warning)";
+  }
+
+  document.getElementById("drawerRoles").innerHTML=p.roles.map(r=>`<span class="role-tag">${r}</span>`).join("");
+  document.getElementById("trainingList").innerHTML=p.training.map(t=>`
+    <div class="training-row">
+      <div>
+        <strong>${t[0]}</strong>
+        <p>${t[2]}</p>
+      </div>
+      <div class="training-status ${t[3]}">${t[1]}</div>
+    </div>
+  `).join("");
+
+  drawer.classList.add("open");
+  overlay.classList.add("open");
+}
+function closeProfile(){
+  drawer.classList.remove("open");
+  overlay.classList.remove("open");
+}
+document.querySelectorAll("tr[data-person] .person-link").forEach(link=>{
+  link.addEventListener("click",()=>openProfile(link.closest("tr").dataset.person));
+});
+document.getElementById("drawerClose").addEventListener("click",closeProfile);
+overlay.addEventListener("click",closeProfile);
+
+document.getElementById("matrixSearch").addEventListener("input",function(){
+  const q=this.value.toLowerCase();
+  document.querySelectorAll("#matrix tbody tr").forEach(row=>{
+    row.style.display=row.innerText.toLowerCase().includes(q)?"":"none";
+  });
+});
+
+function focusSearch(){
+  document.getElementById("matrixSearch").scrollIntoView({behavior:"smooth",block:"center"});
+  setTimeout(()=>document.getElementById("matrixSearch").focus(),300);
+}
+</script>
+
+</body>
+</html>
