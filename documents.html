@@ -3,78 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Certicium | Document & Records Management</title>
+<title>Certicium | Document and Records Management</title>
 <style>
 :root{--phthalo:#0B3D2E;--dark:#123524;--accent:#2C8259;--green:#6FC55A;--grey:#242526;--black:#0D0D0D;--white:#F4F6F5;--muted:#A9B2AE;--border:rgba(244,246,245,.10);--card:#141715;--warn:#E6C96B}
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}a{color:inherit;text-decoration:none}button,input,select{font:inherit}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:var(--black);color:var(--white);min-height:100vh}
+a{color:inherit;text-decoration:none}button,input,select{font:inherit}button{cursor:pointer}
 .app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
-aside{position:sticky;top:0;height:100vh;padding:20px 16px;background:linear-gradient(180deg,#08100D,#06100D);border-right:1px solid var(--border);display:flex;flex-direction:column}
-.brand{display:flex;align-items:center;gap:11px;padding:0 7px 21px;border-bottom:1px solid var(--border)}.brand img{width:45px;height:45px;object-fit:contain}.brand strong{font-size:21px}.brand strong span{color:var(--green)}.brand small{display:block;color:var(--muted);font-size:7px;margin-top:4px;letter-spacing:1px;text-transform:uppercase}
-.nav{padding-top:18px}.label{padding:0 10px;margin:16px 0 7px;color:#65716B;font-size:8px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase}.nav a{min-height:38px;padding:0 10px;border-radius:7px;display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:700}.nav a:hover,.nav a.active{background:rgba(44,130,89,.16);color:white}.nav a.active{box-shadow:inset 2px 0 0 var(--green)}.sym{width:27px;height:27px;border:1px solid rgba(111,197,90,.2);border-radius:5px;display:grid;place-items:center;color:var(--green);font-size:9px;font-weight:900}
-.ai-side{margin-top:auto;padding:14px;border:1px solid rgba(111,197,90,.24);border-radius:9px;background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(18,53,36,.18))}.ai-side strong{font-size:11px}.ai-side p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}.ai-side button{width:100%;margin-top:10px;height:36px;border:0;border-radius:6px;background:var(--accent);color:white;font-size:9px;font-weight:900;cursor:pointer}
-.workspace{min-width:0}.topbar{height:72px;padding:0 30px;position:sticky;top:0;z-index:30;background:rgba(13,13,13,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.company strong{font-size:12px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}.top-actions{display:flex;gap:8px}.top-actions button{height:38px;padding:0 13px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:white;font-size:9px;font-weight:800}.top-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}
-main{max-width:1500px;margin:auto;padding:34px 34px 80px}.crumb{color:var(--muted);font-size:8px;margin-bottom:15px}.crumb a{color:var(--green)}.hero{display:flex;justify-content:space-between;align-items:end;gap:25px}.eyebrow{color:var(--green);font-size:9px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}h1{font-size:clamp(35px,4vw,54px);letter-spacing:-2.4px;line-height:1}.hero p{margin-top:10px;color:var(--muted);font-size:10px;line-height:1.6;max-width:690px}
-.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:25px 0}.metric{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.metric span{font-size:7px;color:var(--muted);text-transform:uppercase}.metric strong{display:block;margin-top:7px;font-size:22px}.metric .green{color:var(--green)}.metric .warn{color:var(--warn)}
-.tabs{display:flex;gap:5px;border-bottom:1px solid var(--border);margin-bottom:16px;overflow:auto}.tab{padding:12px 15px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:9px;font-weight:900;white-space:nowrap;cursor:pointer}.tab.active{color:white;border-bottom-color:var(--green)}
+aside{position:sticky;top:0;height:100vh;padding:18px 14px;background:#09110E;border-right:1px solid var(--border);display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:11px;padding:0 4px 18px}.brand img{width:44px;height:44px;object-fit:contain}.brand strong{display:block;font-size:16px}.brand small{display:block;color:var(--muted);font-size:8px;margin-top:3px}
+.nav-scroll{flex:1;overflow:auto}.nav-label{font-size:7px;color:#5F6A65;text-transform:uppercase;letter-spacing:1.2px;margin:16px 8px 6px}
+.nav-item,.nav-parent{min-height:40px;padding:0 10px;border-radius:7px;display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:800;width:100%;border:0;background:transparent;text-align:left}
+.nav-item:hover,.nav-parent:hover{background:rgba(44,130,89,.16);color:white}.nav-symbol{min-width:24px;font-size:9px;color:var(--green);font-weight:900}.chevron{margin-left:auto;color:#66716B;transition:.18s}.nav-parent.open .chevron{transform:rotate(90deg);color:var(--green)}
+.nav-sub{display:none;padding:4px 0 3px 37px}.nav-sub.open{display:grid}.nav-sub a{min-height:30px;padding:0 8px;border-radius:5px;display:flex;align-items:center;color:#89958F;font-size:9px;font-weight:700;line-height:1.3}.nav-sub a:hover,.nav-sub a.active{background:rgba(44,130,89,.10);color:white}
+.ai-side{margin-top:auto;padding:12px;border:1px solid rgba(111,197,90,.20);border-radius:9px;background:linear-gradient(180deg,rgba(18,53,36,.65),rgba(13,13,13,.8))}.ai-side strong{font-size:10px;color:var(--green)}.ai-side p{font-size:8px;color:var(--muted);line-height:1.45;margin-top:5px}.ai-side button{width:100%;margin-top:9px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:white;font-size:8px;font-weight:900}
+.workspace{min-width:0}.topbar{height:64px;padding:0 24px;position:sticky;top:0;z-index:30;background:rgba(13,13,13,.96);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.company strong{font-size:10px}.company small{display:block;color:var(--muted);font-size:8px;margin-top:3px}.top-actions{display:flex;gap:8px;align-items:center}.top-actions button{height:36px;padding:0 12px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:white;font-size:8px;font-weight:800}.top-actions .primary{background:var(--green);color:#0B1A11;border-color:var(--green)}.avatar{width:34px;height:34px;border-radius:50%;background:var(--phthalo);display:grid;place-items:center;font-size:9px;font-weight:900}
+main{max-width:1500px;margin:auto;padding:24px 24px 80px}.crumb{color:var(--muted);font-size:8px;margin-bottom:15px}.crumb a{color:var(--green)}.hero{display:flex;justify-content:space-between;align-items:end;gap:25px}.eyebrow{color:var(--green);font-size:7px;font-weight:900;letter-spacing:1.3px;text-transform:uppercase;margin-bottom:7px}h1{font-size:25px;letter-spacing:-1px}.hero p{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.55;max-width:760px}
+.metrics{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin:20px 0}.metric{padding:14px;border:1px solid var(--border);border-radius:8px;background:var(--card)}.metric span{font-size:7px;color:var(--muted);text-transform:uppercase}.metric strong{display:block;margin-top:7px;font-size:22px}.metric .green{color:var(--green)}.metric .warn{color:var(--warn)}
+.tabs{display:flex;gap:5px;border-bottom:1px solid var(--border);margin-bottom:16px;overflow:auto}.tab{padding:11px 14px;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:9px;font-weight:900;white-space:nowrap}.tab.active{color:white;border-bottom-color:var(--green)}
 .toolbar{display:flex;gap:8px;justify-content:space-between;margin-bottom:12px}.search{flex:1;max-width:430px;height:40px;padding:0 13px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:white;outline:none}.filters{display:flex;gap:7px}.filters select{height:40px;padding:0 11px;border:1px solid var(--border);border-radius:7px;background:var(--card);color:white;font-size:9px}
 .panel{border:1px solid var(--border);border-radius:9px;background:var(--card);overflow:hidden}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:950px}th{text-align:left;padding:11px 12px;background:#101311;color:#707A75;font-size:7px;text-transform:uppercase;letter-spacing:.7px}td{padding:13px 12px;border-top:1px solid rgba(244,246,245,.06);font-size:9px;color:#D6DCD9}tr:hover td{background:rgba(44,130,89,.055)}.doc-title{font-weight:800;color:white}.doc-id{display:block;color:#68736D;font-size:7px;margin-top:3px}.badge{display:inline-block;padding:5px 7px;border-radius:999px;font-size:7px;font-weight:900}.published{background:rgba(111,197,90,.12);color:var(--green)}.review{background:rgba(230,201,107,.12);color:var(--warn)}.draft{background:rgba(169,178,174,.12);color:#C6CECA}.action{color:var(--green);font-weight:900;cursor:pointer}
-.cards{display:none;grid-template-columns:repeat(3,1fr);gap:10px}.feature{padding:18px;border:1px solid var(--border);border-radius:9px;background:var(--card)}.feature .icon{width:36px;height:36px;display:grid;place-items:center;border-radius:6px;background:var(--dark);color:var(--green);font-weight:900}.feature h3{margin-top:13px;font-size:12px}.feature p{margin-top:6px;color:var(--muted);font-size:8px;line-height:1.5}.feature button{margin-top:13px;border:0;background:transparent;color:var(--green);font-size:8px;font-weight:900;cursor:pointer}
-.impact{display:none;padding:20px}.impact-head{display:flex;justify-content:space-between;gap:20px;align-items:start}.impact h2{font-size:22px}.impact p{color:var(--muted);font-size:9px;line-height:1.6;margin-top:7px;max-width:720px}.impact-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px}.impact-item{padding:13px;border:1px solid rgba(111,197,90,.18);border-radius:7px;background:rgba(18,53,36,.22)}.impact-item strong{font-size:18px;color:var(--green)}.impact-item span{display:block;margin-top:4px;color:var(--muted);font-size:7px}.ai-box{display:none;padding:22px;border:1px solid rgba(111,197,90,.28);border-radius:9px;background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(13,13,13,.8))}.ai-box h2{font-size:22px}.ai-box p{color:var(--muted);font-size:9px;line-height:1.55;margin-top:6px}.prompts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:16px}.prompt{padding:12px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.45);font-size:8px;cursor:pointer}.prompt:hover{border-color:rgba(111,197,90,.35)}
-@media(max-width:1050px){.app{grid-template-columns:205px 1fr}.metrics{grid-template-columns:repeat(3,1fr)}.impact-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:25px 16px 70px}.hero{display:block}.top-actions button:not(.primary){display:none}.metrics{grid-template-columns:1fr 1fr}.toolbar{display:block}.search{max-width:none;width:100%}.filters{margin-top:8px}.cards{grid-template-columns:1fr}.impact-grid{grid-template-columns:1fr 1fr}.prompts{grid-template-columns:1fr}}
+.cards{display:none;grid-template-columns:repeat(3,1fr);gap:10px}.feature{padding:18px;border:1px solid var(--border);border-radius:9px;background:var(--card)}.feature .icon{width:36px;height:36px;display:grid;place-items:center;border-radius:6px;background:var(--dark);color:var(--green);font-weight:900}.feature h3{margin-top:13px;font-size:12px}.feature p{margin-top:6px;color:var(--muted);font-size:8px;line-height:1.5}.feature button{margin-top:13px;border:0;background:transparent;color:var(--green);font-size:8px;font-weight:900}
+.impact{display:none;padding:20px}.impact h2,.ai-box h2{font-size:20px}.impact p,.ai-box p{color:var(--muted);font-size:9px;line-height:1.55;margin-top:7px}.impact-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px}.impact-item{padding:13px;border:1px solid rgba(111,197,90,.18);border-radius:7px;background:rgba(18,53,36,.22)}.impact-item strong{font-size:18px;color:var(--green)}.impact-item span{display:block;margin-top:4px;color:var(--muted);font-size:7px}.ai-box{display:none;padding:22px;border:1px solid rgba(111,197,90,.28);border-radius:9px;background:linear-gradient(135deg,rgba(44,130,89,.13),rgba(13,13,13,.8))}.prompts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:16px}.prompt{padding:12px;border:1px solid var(--border);border-radius:7px;background:rgba(13,13,13,.45);font-size:8px}.prompt:hover{border-color:rgba(111,197,90,.35)}
+@media(max-width:1050px){.app{grid-template-columns:205px 1fr}.metrics{grid-template-columns:repeat(3,1fr)}.impact-grid{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.app{display:block}aside{display:none}.topbar{padding:0 16px}main{padding:20px 16px 70px}.hero{display:block}.top-actions button:not(.primary){display:none}.metrics{grid-template-columns:1fr 1fr}.toolbar{display:block}.search{max-width:none;width:100%}.filters{margin-top:8px}.cards{grid-template-columns:1fr}.impact-grid{grid-template-columns:1fr 1fr}.prompts{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app">
 <aside>
-<a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium<span>.</span></strong><small>Build. Maintain. Embed.</small></div></a>
-<div class="nav">
-<div class="label">Workspace</div><a href="ims.html"><span class="sym">⌂</span>Home</a>
-<div class="label">Document Management</div>
-<a class="active" href="#" onclick="showTab('register',this)"><span class="sym">Dm</span>Document Register</a>
-<a href="#" onclick="showTab('mine',this)"><span class="sym">My</span>My Documents</a>
-<a href="#" onclick="showTab('records',this)"><span class="sym">Rc</span>Records</a>
-<a href="#" onclick="showTab('impact',this)"><span class="sym">Ia</span>Impact Analysis</a>
-<a href="#" onclick="showTab('ai',this)"><span class="sym">Da</span>Document AI</a>
-<div class="label">My IMS</div><a href="ims.html#governance"><span class="sym">Po</span>Governance</a><a href="#"><span class="sym">Rm</span>Risk Management</a><a href="#"><span class="sym">Au</span>Assurance</a>
+<a href="ims.html" class="brand"><img src="certicium-logo.png" alt="Certicium"><div><strong>Certicium</strong><small>Build. Maintain. Embed.</small></div></a>
+<div class="nav-scroll">
+  <div class="nav-label">Workspace</div>
+  <a class="nav-item" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
+
+  <div class="nav-label">Explore</div>
+  <button class="nav-parent" type="button" data-nav-toggle="riskNav"><span class="nav-symbol">Rm</span>Risks<span class="chevron">›</span></button>
+  <div class="nav-sub" id="riskNav">
+    <a href="#">Overall Risk Dashboard</a><a href="#">Driving</a><a href="#">Contractor Management</a><a href="#">Electrical Works</a><a href="#">Manual Handling</a><a href="#">Working Near Traffic</a><a href="#">Plant and Equipment</a><a href="#">Psychosocial</a><a href="#">Lone Working</a>
+  </div>
+
+  <button class="nav-parent open" type="button" data-nav-toggle="imsNav"><span class="nav-symbol">IMS</span>My IMS<span class="chevron">›</span></button>
+  <div class="nav-sub open" id="imsNav">
+    <a href="#">Governance Management</a>
+    <a class="active" href="documents.html">Document and Records Management</a>
+    <a href="#">Risk Management</a>
+    <a href="competency.html">Competency Management</a>
+    <a href="#">Consultation and Communication Management</a>
+    <a href="incidents.html">Incident, Near Miss and Hazard Management</a>
+    <a href="#">Audit, Inspection, Monitoring and Testing Management</a>
+    <a href="performance.html">Performance and Continuous Improvement Management</a>
+  </div>
 </div>
-<div class="ai-side"><strong>✦ Document AI</strong><p>Draft, review, compare and understand the impact of controlled-document changes.</p><button onclick="showTab('ai')">Open Document AI</button></div>
+<div class="ai-side"><strong>✦ Ask Certicium</strong><p>Draft, review, compare and understand controlled documents and their relationships across the IMS.</p><button onclick="showTab('ai')">Open Document AI</button></div>
 </aside>
 
 <div class="workspace">
-<header class="topbar"><div class="company"><strong id="companyName">Your organisation</strong><small>Document & Records Management</small></div><div class="top-actions"><button onclick="showTab('ai')">✦ Document AI</button><button class="primary" onclick="newDocument()">+ New Document</button></div></header>
+<header class="topbar"><div class="company"><strong id="companyName">Your organisation</strong><small>Document and Records Management</small></div><div class="top-actions"><button onclick="showTab('ai')">✦ Document AI</button><button class="primary" onclick="newDocument()">+ New Document</button><div class="avatar">DB</div></div></header>
 
 <main>
-<div class="crumb"><a href="ims.html">Home</a> / Document & Records Management</div>
-<section class="hero"><div><div class="eyebrow">02 · Dm · Core Governance</div><h1>Document & Records Management</h1><p>Control the information that defines your management system. Manage ownership, versions, approvals, reviews, records and the relationships between controlled content and the rest of your IMS.</p></div></section>
+<div class="crumb"><a href="ims.html">Home</a> / Document and Records Management</div>
+<section class="hero"><div><div class="eyebrow">My IMS · Document Management</div><h1>Document and Records Management</h1><p>Control the information that defines your management system. Manage ownership, versions, approvals, reviews, records and the relationships between controlled content and the rest of your IMS.</p></div></section>
 
 <section class="metrics">
-<div class="metric"><span>Controlled documents</span><strong id="mTotal">12</strong></div>
-<div class="metric"><span>Published</span><strong class="green" id="mPublished">8</strong></div>
-<div class="metric"><span>Awaiting approval</span><strong id="mReview">2</strong></div>
-<div class="metric"><span>Due for review</span><strong class="warn">2</strong></div>
-<div class="metric"><span>Overdue</span><strong>0</strong></div><div class="metric"><span>Superseded versions</span><strong id="mSuperseded">0</strong></div>
+<div class="metric"><span>Controlled documents</span><strong id="mTotal">12</strong></div><div class="metric"><span>Published</span><strong class="green" id="mPublished">8</strong></div><div class="metric"><span>Awaiting approval</span><strong id="mReview">2</strong></div><div class="metric"><span>Due for review</span><strong class="warn">2</strong></div><div class="metric"><span>Overdue</span><strong>0</strong></div><div class="metric"><span>Superseded versions</span><strong id="mSuperseded">0</strong></div>
 </section>
 
-<div class="tabs">
-<button class="tab active" onclick="showTab('register',this)">Document Register</button>
-<button class="tab" onclick="showTab('mine',this)">My Documents</button>
-<button class="tab" onclick="showTab('records',this)">Records</button>
-<button class="tab" onclick="showTab('impact',this)">Impact Analysis</button>
-<button class="tab" onclick="showTab('ai',this)">✦ Document AI</button>
-</div>
+<div class="tabs"><button class="tab active" onclick="showTab('register',this)">Document Register</button><button class="tab" onclick="showTab('mine',this)">My Documents</button><button class="tab" onclick="showTab('records',this)">Records</button><button class="tab" onclick="showTab('impact',this)">Impact Analysis</button><button class="tab" onclick="showTab('ai',this)">✦ Document AI</button></div>
 
 <section id="register" class="tabview">
 <div class="toolbar"><input id="search" class="search" placeholder="Search controlled documents..." oninput="renderDocs()"><div class="filters"><select id="status" onchange="renderDocs()"><option value="">All statuses</option><option>Published</option><option>Review</option><option>Approval</option><option>Draft</option><option>Superseded</option></select><select id="type" onchange="renderDocs()"><option value="">All types</option><option>Policy</option><option>Procedure</option><option>Work Instruction</option><option>Standard</option><option>Template</option></select></div></div>
-<div style="margin-bottom:10px;color:#737D78;font-size:8px;line-height:1.5;">
-Workflow states shown here are read from the live Certicium demo lifecycle. Published revisions become the current version; drafts, reviews and approvals remain visible until publication.
-</div>
+<div style="margin-bottom:10px;color:#737D78;font-size:8px;line-height:1.5">Workflow states are read from the Certicium document lifecycle. Published revisions become the current version; drafts, reviews and approvals remain visible until publication.</div>
 <div class="panel table-wrap"><table><thead><tr><th>Document</th><th>Type</th><th>Owner</th><th>Version</th><th>Status</th><th>Effective</th><th>Next Review</th><th></th></tr></thead><tbody id="docRows"></tbody></table></div>
 </section>
 
 <section id="mine" class="tabview cards">
-<div class="feature"><div class="icon">Rv</div><h3>Review required</h3><p>Two controlled documents are approaching their scheduled review date.</p><button onclick="showTab('register')">View documents →</button></div>
+<div class="feature"><div class="icon">Rv</div><h3>Review required</h3><p>Controlled documents approaching their scheduled review date.</p><button onclick="showTab('register')">View documents →</button></div>
 <div class="feature"><div class="icon">Ap</div><h3>Awaiting my approval</h3><p>Documents submitted through the controlled-document workflow appear here.</p><button>Review approvals →</button></div>
-<div class="feature"><div class="icon">Ak</div><h3>Acknowledgements</h3><p>Track documents that require acknowledgement following material changes.</p><button>View acknowledgements →</button></div>
+<div class="feature"><div class="icon">Ak</div><h3>Acknowledgements</h3><p>Track documents requiring acknowledgement following material changes.</p><button>View acknowledgements →</button></div>
 </section>
 
 <section id="records" class="tabview cards">
@@ -83,324 +88,53 @@ Workflow states shown here are read from the live Certicium demo lifecycle. Publ
 <div class="feature"><div class="icon">Ev</div><h3>Evidence</h3><p>Connect records to risks, controls, assurance activities, incidents and actions.</p><button onclick="demo('Evidence Library')">View evidence →</button></div>
 </section>
 
-<section id="impact" class="tabview panel impact">
-<div class="impact-head"><div><div class="eyebrow">Certicium Relationship Engine</div><h2>Document Impact Analysis</h2><p>Before approving a material document change, Certicium can identify other parts of the management system that may also need review.</p></div></div>
-<div class="impact-grid"><div class="impact-item"><strong>4</strong><span>Controls potentially affected</span></div><div class="impact-item"><strong>2</strong><span>Competencies linked</span></div><div class="impact-item"><strong>3</strong><span>Forms & templates</span></div><div class="impact-item"><strong>2</strong><span>Assurance activities</span></div><div class="impact-item"><strong>1</strong><span>Risk module linked</span></div></div>
-</section>
+<section id="impact" class="tabview panel impact"><div class="eyebrow">Certicium Relationship Engine</div><h2>Document Impact Analysis</h2><p>Before approving a material document change, Certicium can identify other parts of the management system that may also need review.</p><div class="impact-grid"><div class="impact-item"><strong>4</strong><span>Controls potentially affected</span></div><div class="impact-item"><strong>2</strong><span>Competencies linked</span></div><div class="impact-item"><strong>3</strong><span>Forms and templates</span></div><div class="impact-item"><strong>2</strong><span>Assurance activities</span></div><div class="impact-item"><strong>1</strong><span>Risk module linked</span></div></div></section>
 
-<section id="ai" class="tabview ai-box">
-<div class="eyebrow">Da · Document AI</div><h2>What do you want to do with this document?</h2><p>Document AI will work within the controlled IMS architecture rather than as a generic chatbot. It can use document standards, relationships and approved organisational context.</p>
-<div class="prompts"><div class="prompt" onclick="demo('Review document')">Review this procedure against our document standard.</div><div class="prompt" onclick="demo('Compare versions')">Compare the current version with the proposed revision.</div><div class="prompt" onclick="demo('Change summary')">Draft a concise change summary for approval.</div><div class="prompt" onclick="showTab('impact')">What else in the IMS could this change affect?</div><div class="prompt" onclick="demo('Draft document')">Draft a new controlled document from an approved template.</div><div class="prompt" onclick="demo('Control relationships')">Which risks and controls does this document support?</div></div>
-</section>
+<section id="ai" class="tabview ai-box"><div class="eyebrow">Da · Document AI</div><h2>What do you want to do with this document?</h2><p>Document AI works within the controlled IMS architecture rather than as a generic chatbot. It can use document standards, relationships and approved organisational context.</p><div class="prompts"><div class="prompt" onclick="demo('Review document')">Review this procedure against our document standard.</div><div class="prompt" onclick="demo('Compare versions')">Compare the current version with the proposed revision.</div><div class="prompt" onclick="demo('Change summary')">Draft a concise change summary for approval.</div><div class="prompt" onclick="showTab('impact')">What else in the IMS could this change affect?</div><div class="prompt" onclick="demo('Draft document')">Draft a new controlled document from an approved template.</div><div class="prompt" onclick="demo('Control relationships')">Which risks and controls does this document support?</div></div></section>
 </main>
 </div>
 </div>
 
 <script>
+document.querySelectorAll("[data-nav-toggle]").forEach(btn=>btn.addEventListener("click",()=>{btn.classList.toggle("open");document.getElementById(btn.dataset.navToggle).classList.toggle("open")}));
 function readStorage(k){try{return JSON.parse(localStorage.getItem(k)||"{}")}catch(e){return {}}}
-const bp=readStorage("certiciumIMSBlueprint");
-document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
+const bp=readStorage("certiciumIMSBlueprint");document.getElementById("companyName").innerText=bp.organisation||"Your organisation";
 
 const docs=[
 {id:"IMS.01.01",title:"Integrated Management System Policy",type:"Policy",owner:"Managing Director",version:"2.0",status:"Published",effective:"12 Aug 2026",review:"12 Aug 2027"},
-{id:"IMS.02.01",title:"Document & Records Management",type:"Procedure",owner:"Governance",version:"1.4",status:"Published",effective:"18 Aug 2026",review:"18 Aug 2027"},
+{id:"IMS.02.01",title:"Document and Records Management",type:"Procedure",owner:"Governance",version:"1.4",status:"Published",effective:"18 Aug 2026",review:"18 Aug 2027"},
 {id:"IMS.03.00",title:"Risk Management",type:"Procedure",owner:"Governance",version:"2.1",status:"Review",effective:"03 Sep 2025",review:"03 Sep 2026"},
-{id:"IMS.05.01",title:"Competency Management",type:"Procedure",owner:"People & Culture",version:"1.3",status:"Published",effective:"21 Oct 2025",review:"21 Oct 2026"},
-{id:"IMS.06.01",title:"Incident, Near Miss & Hazard Management",type:"Procedure",owner:"Governance",version:"2.2",status:"Published",effective:"14 Feb 2026",review:"14 Feb 2027"},
-{id:"IMS.07.01",title:"Audit, Inspection, Monitoring & Testing",type:"Procedure",owner:"Governance",version:"1.6",status:"Review",effective:"10 Sep 2025",review:"10 Sep 2026"},
+{id:"IMS.05.01",title:"Competency Management",type:"Procedure",owner:"People and Culture",version:"1.3",status:"Published",effective:"21 Oct 2025",review:"21 Oct 2026"},
+{id:"IMS.06.01",title:"Incident, Near Miss and Hazard Management",type:"Procedure",owner:"Governance",version:"2.2",status:"Published",effective:"14 Feb 2026",review:"14 Feb 2027"},
+{id:"IMS.07.01",title:"Audit, Inspection, Monitoring and Testing",type:"Procedure",owner:"Governance",version:"1.6",status:"Review",effective:"10 Sep 2025",review:"10 Sep 2026"},
 {id:"IMS.03.21",title:"Working at Heights",type:"Procedure",owner:"Operations",version:"1.1",status:"Published",effective:"01 Mar 2026",review:"01 Mar 2027"},
 {id:"IMS.03.23",title:"Working Near Traffic",type:"Procedure",owner:"Operations",version:"1.8",status:"Published",effective:"06 May 2026",review:"06 May 2027"},
 {id:"IMS.WI.04",title:"Document Approval Workflow",type:"Work Instruction",owner:"Governance",version:"0.8",status:"Draft",effective:"—",review:"—"},
 {id:"IMS.STD.02",title:"Controlled Document Standard",type:"Standard",owner:"Governance",version:"1.0",status:"Published",effective:"01 Jul 2026",review:"01 Jul 2027"},
 {id:"IMS.TMP.01",title:"Procedure Template",type:"Template",owner:"Governance",version:"1.2",status:"Published",effective:"01 Jul 2026",review:"01 Jul 2027"},
-{id:"IMS.TMP.02",title:"Work Instruction Template",type:"Template",owner:"Governance",version:"0.9",status:"Draft",effective:"—",review:"—"}
-];
+{id:"IMS.TMP.02",title:"Work Instruction Template",type:"Template",owner:"Governance",version:"0.9",status:"Draft",effective:"—",review:"—"}];
 
-
-function getNewDocuments(){
-  const items=[];
-
-  for(let i=0;i<localStorage.length;i++){
-    const key=localStorage.key(i);
-
-    if(key && key.startsWith("certiciumNewDocument_")){
-      try{
-        const item=JSON.parse(localStorage.getItem(key)||"{}");
-
-        if(item && item.id){
-          items.push(item);
-        }
-      }catch(e){}
-    }
-  }
-
-  return items;
-}
-
-function normaliseNewDocument(item){
-  const effectiveDate=
-    item.publishedAt
-      ? new Date(item.publishedAt).toLocaleDateString()
-      : "—";
-
-  let reviewDate="—";
-
-  if(item.publishedAt && item.reviewFrequency){
-    const monthsMap={
-      "12 months":12,
-      "24 months":24,
-      "36 months":36
-    };
-
-    const months=monthsMap[item.reviewFrequency];
-
-    if(months){
-      const d=new Date(item.publishedAt);
-      d.setMonth(d.getMonth()+months);
-      reviewDate=d.toLocaleDateString();
-    }
-  }
-
-  return{
-    id:item.id,
-    title:item.title,
-    type:item.type||"Procedure",
-    owner:item.owner||"Governance",
-    version:item.version||"0.1",
-    status:item.status||"Draft",
-    effective:effectiveDate,
-    review:reviewDate,
-    isNewDocument:true
-  };
-}
-
-function getWorkflowState(id){
-  try{
-    return JSON.parse(localStorage.getItem("certiciumDraft_"+id)||"{}");
-  }catch(e){
-    return {};
-  }
-}
-
-function getVersionHistory(id){
-  try{
-    return JSON.parse(localStorage.getItem("certiciumVersionHistory_"+id)||"[]");
-  }catch(e){
-    return [];
-  }
-}
-
-function effectiveDoc(d){
-  const workflow=getWorkflowState(d.id);
-
-  if(!workflow.version){
-    return {...d,workflowStatus:"",currentVersion:d.version};
-  }
-
-  if(workflow.status==="Published"){
-    return {
-      ...d,
-      version:workflow.version,
-      status:"Published",
-      effective:new Date(workflow.publishedAt||workflow.approvedAt||Date.now()).toLocaleDateString(),
-      workflowStatus:"Published",
-      currentVersion:workflow.version,
-      previousVersion:workflow.previousVersion||d.version
-    };
-  }
-
-  return {
-    ...d,
-    workflowStatus:workflow.status||"Draft",
-    draftVersion:workflow.version,
-    currentVersion:d.version
-  };
-}
-
-function supersededRows(d){
-  return getVersionHistory(d.id).map(item=>({
-    ...d,
-    version:item.version,
-    status:"Superseded",
-    effective:item.effective||"—",
-    review:"—",
-    workflowStatus:"Superseded",
-    historical:true,
-    supersededAt:item.supersededAt||""
-  }));
-}
-
-function statusClass(status){
-  const value=String(status||"").toLowerCase();
-
-  if(value==="published"){
-    return "published";
-  }
-
-  if(value==="review"||value==="approval"){
-    return "review";
-  }
-
-  if(value==="superseded"){
-    return "draft";
-  }
-
-  return "draft";
-}
+function getNewDocuments(){const items=[];for(let i=0;i<localStorage.length;i++){const key=localStorage.key(i);if(key&&key.startsWith("certiciumNewDocument_")){try{const item=JSON.parse(localStorage.getItem(key)||"{}");if(item&&item.id)items.push(item)}catch(e){}}}return items}
+function normaliseNewDocument(item){const effectiveDate=item.publishedAt?new Date(item.publishedAt).toLocaleDateString():"—";let reviewDate="—";if(item.publishedAt&&item.reviewFrequency){const monthsMap={"12 months":12,"24 months":24,"36 months":36};const months=monthsMap[item.reviewFrequency];if(months){const d=new Date(item.publishedAt);d.setMonth(d.getMonth()+months);reviewDate=d.toLocaleDateString()}}return{id:item.id,title:item.title,type:item.type||"Procedure",owner:item.owner||"Governance",version:item.version||"0.1",status:item.status||"Draft",effective:effectiveDate,review:reviewDate,isNewDocument:true}}
+function getWorkflowState(id){try{return JSON.parse(localStorage.getItem("certiciumDraft_"+id)||"{}")}catch(e){return {}}}
+function getVersionHistory(id){try{return JSON.parse(localStorage.getItem("certiciumVersionHistory_"+id)||"[]")}catch(e){return []}}
+function effectiveDoc(d){const workflow=getWorkflowState(d.id);if(!workflow.version)return{...d,workflowStatus:"",currentVersion:d.version};if(workflow.status==="Published")return{...d,version:workflow.version,status:"Published",effective:new Date(workflow.publishedAt||workflow.approvedAt||Date.now()).toLocaleDateString(),workflowStatus:"Published",currentVersion:workflow.version,previousVersion:workflow.previousVersion||d.version};return{...d,workflowStatus:workflow.status||"Draft",draftVersion:workflow.version,currentVersion:d.version}}
+function supersededRows(d){return getVersionHistory(d.id).map(item=>({...d,version:item.version,status:"Superseded",effective:item.effective||"—",review:"—",workflowStatus:"Superseded",historical:true,supersededAt:item.supersededAt||""}))}
+function statusClass(status){const value=String(status||"").toLowerCase();if(value==="published")return"published";if(value==="review"||value==="approval")return"review";return"draft"}
 
 function renderDocs(){
-  const q=document.getElementById("search").value.toLowerCase();
-  const s=document.getElementById("status").value;
-  const t=document.getElementById("type").value;
-
-  const currentDocs=[...docs.map(effectiveDoc),...getNewDocuments().map(normaliseNewDocument)];
-
-  const allRows=[
-    ...currentDocs,
-    ...docs.flatMap(supersededRows)
-  ];
-
-  const filtered=allRows.filter(d=>{
-    const searchable=(
-      d.title+" "+
-      d.id+" "+
-      d.owner+" "+
-      (d.workflowStatus||"")+" "+
-      (d.draftVersion||"")+" "+
-      (d.version||"")
-    ).toLowerCase();
-
-    const effectiveStatus=
-      d.historical
-        ? "Superseded"
-        : (
-            d.workflowStatus && d.workflowStatus!=="Published"
-              ? d.workflowStatus
-              : d.status
-          );
-
-    /*
-     * Historical versions stay hidden in the normal register unless
-     * specifically requested by search or the Superseded filter.
-     */
-    const wantsHistory=
-      s==="Superseded"
-      ||
-      (q && searchable.includes(q));
-
-    if(d.historical && !wantsHistory){
-      return false;
-    }
-
-    return (
-      (!q||searchable.includes(q))
-      &&
-      (!s||effectiveStatus===s)
-      &&
-      (!t||d.type===t)
-    );
-  });
-
-  document.getElementById("docRows").innerHTML=
-    filtered.map(d=>{
-
-      const workflow=
-        !d.historical &&
-        d.workflowStatus &&
-        d.workflowStatus!=="Published"
-          ? `<div style="margin-top:5px;color:#E6C96B;font-size:7px;font-weight:800;">
-               Draft v${d.draftVersion} · ${d.workflowStatus}
-             </div>`
-          : "";
-
-      const historical=
-        d.historical
-          ? `<div style="margin-top:5px;color:#8E9993;font-size:7px;font-weight:800;">
-               Historical controlled version
-             </div>`
-          : "";
-
-      const displayStatus=
-        d.historical
-          ? "Superseded"
-          : (
-              d.workflowStatus&&d.workflowStatus!=="Published"
-                ? d.workflowStatus
-                : d.status
-            );
-
-      const openLabel=
-        d.historical
-          ? "View history →"
-          : "Open →";
-
-      return `
-        <tr>
-          <td>
-            <span class="doc-title">${d.title}</span>
-            <span class="doc-id">${d.id}</span>
-            ${workflow}
-            ${historical}
-          </td>
-          <td>${d.type}</td>
-          <td>${d.owner}</td>
-          <td>${d.version}</td>
-          <td>
-            <span class="badge ${statusClass(displayStatus)}">
-              ${displayStatus}
-            </span>
-          </td>
-          <td>${d.effective}</td>
-          <td>${d.review}</td>
-          <td>
-            <span class="action" onclick="openDoc('${d.id}')">
-              ${openLabel}
-            </span>
-          </td>
-        </tr>
-      `;
-    }).join("");
-
-  updateRegisterMetrics(currentDocs);
+ const q=document.getElementById("search").value.toLowerCase(),s=document.getElementById("status").value,t=document.getElementById("type").value;
+ const currentDocs=[...docs.map(effectiveDoc),...getNewDocuments().map(normaliseNewDocument)];
+ const allRows=[...currentDocs,...docs.flatMap(supersededRows)];
+ const filtered=allRows.filter(d=>{const searchable=(d.title+" "+d.id+" "+d.owner+" "+(d.workflowStatus||"")+" "+(d.draftVersion||"")+" "+(d.version||"")).toLowerCase();const effectiveStatus=d.historical?"Superseded":(d.workflowStatus&&d.workflowStatus!=="Published"?d.workflowStatus:d.status);const wantsHistory=s==="Superseded"||(q&&searchable.includes(q));if(d.historical&&!wantsHistory)return false;return(!q||searchable.includes(q))&&(!s||effectiveStatus===s)&&(!t||d.type===t)});
+ document.getElementById("docRows").innerHTML=filtered.map(d=>{const workflow=!d.historical&&d.workflowStatus&&d.workflowStatus!=="Published"?`<div style="margin-top:5px;color:#E6C96B;font-size:7px;font-weight:800">Draft v${d.draftVersion} · ${d.workflowStatus}</div>`:"";const historical=d.historical?`<div style="margin-top:5px;color:#8E9993;font-size:7px;font-weight:800">Historical controlled version</div>`:"";const displayStatus=d.historical?"Superseded":(d.workflowStatus&&d.workflowStatus!=="Published"?d.workflowStatus:d.status);return`<tr><td><span class="doc-title">${d.title}</span><span class="doc-id">${d.id}</span>${workflow}${historical}</td><td>${d.type}</td><td>${d.owner}</td><td>${d.version}</td><td><span class="badge ${statusClass(displayStatus)}">${displayStatus}</span></td><td>${d.effective}</td><td>${d.review}</td><td><span class="action" onclick="openDoc('${d.id}')">${d.historical?"View history →":"Open →"}</span></td></tr>`}).join("");
+ updateRegisterMetrics(currentDocs)
 }
-
-function updateRegisterMetrics(currentDocs){
-  const published=currentDocs.filter(d=>{
-    const status=d.workflowStatus&&d.workflowStatus!=="Published"
-      ? d.workflowStatus
-      : d.status;
-    return status==="Published";
-  }).length;
-
-  const review=currentDocs.filter(d=>{
-    const status=d.workflowStatus&&d.workflowStatus!=="Published"
-      ? d.workflowStatus
-      : d.status;
-    return status==="Review"||status==="Approval";
-  }).length;
-
-  const superseded=
-    docs.reduce(
-      (total,d)=>total+getVersionHistory(d.id).length,
-      0
-    );
-
-  document.getElementById("mTotal").innerText=currentDocs.length;
-  document.getElementById("mPublished").innerText=published;
-  document.getElementById("mReview").innerText=review;
-  document.getElementById("mSuperseded").innerText=superseded;
-}
-
-function showTab(id,el){
- document.querySelectorAll(".tabview").forEach(x=>x.style.display="none");
- document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
- const target=document.getElementById(id);
- target.style.display=(id==="register")?"block":(id==="impact"||id==="ai")?"block":"grid";
- if(el&&el.classList.contains("tab"))el.classList.add("active");
-}
+function updateRegisterMetrics(currentDocs){const published=currentDocs.filter(d=>(d.workflowStatus&&d.workflowStatus!=="Published"?d.workflowStatus:d.status)==="Published").length;const review=currentDocs.filter(d=>{const status=d.workflowStatus&&d.workflowStatus!=="Published"?d.workflowStatus:d.status;return status==="Review"||status==="Approval"}).length;const superseded=docs.reduce((total,d)=>total+getVersionHistory(d.id).length,0);mTotal.innerText=currentDocs.length;mPublished.innerText=published;mReview.innerText=review;mSuperseded.innerText=superseded}
+function showTab(id,el){document.querySelectorAll(".tabview").forEach(x=>x.style.display="none");document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));const target=document.getElementById(id);target.style.display=id==="register"?"block":(id==="impact"||id==="ai")?"block":"grid";if(el&&el.classList.contains("tab"))el.classList.add("active")}
 function openDoc(id){window.location.href="document.html?id="+encodeURIComponent(id)}
 function newDocument(){window.location.href="new-document.html"}
-function demo(name){alert(name+"\\n\\nThis interaction is staged for the Demo IMS and will become functional as we build the Dm module.")}
+function demo(name){alert(name+"\n\nThis interaction is staged for the Certicium demo and will become functional as the module is connected.")}
 renderDocs();
 </script>
 </body>
