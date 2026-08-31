@@ -86,13 +86,19 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .welcome p{margin-top:10px;max-width:690px;color:var(--muted);font-size:11px;line-height:1.6}
 .blueprint-link{color:var(--muted);font-size:9px;white-space:nowrap}
 
-
 .ask-hero{margin:0 0 20px;padding:20px 22px;border:1px solid rgba(111,197,90,.30);border-radius:11px;background:radial-gradient(circle at 88% 18%,rgba(44,130,89,.15),transparent 27%),linear-gradient(135deg,rgba(18,53,36,.34),rgba(13,13,13,.94))}
-.ask-hero h2{font-size:20px;letter-spacing:-.6px}.ask-hero p{margin-top:5px;color:var(--muted);font-size:9px;line-height:1.5}
-.ask-box{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}.ask-box input{min-width:0;height:48px;padding:0 15px;border:1px solid rgba(244,246,245,.13);border-radius:8px;background:#0B0E0C;color:var(--white);outline:none;font-size:10px}.ask-box input:focus{border-color:rgba(111,197,90,.48)}
+.ask-hero h2{font-size:20px;letter-spacing:-.6px}
+.ask-hero p{margin-top:5px;color:var(--muted);font-size:9px;line-height:1.5}
+.ask-box{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:14px}
+.ask-box input{min-width:0;height:48px;padding:0 15px;border:1px solid rgba(244,246,245,.13);border-radius:8px;background:#0B0E0C;color:var(--white);outline:none;font-size:10px}
+.ask-box input:focus{border-color:rgba(111,197,90,.48)}
 .ask-box button{min-width:126px;border:0;border-radius:8px;background:var(--bright-green);color:#0B1A11;font-size:9px;font-weight:900}
-.ask-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.ask-chip{padding:7px 9px;border:1px solid var(--border);border-radius:999px;background:rgba(13,13,13,.32);color:#C9D1CD;font-size:7px;font-weight:800}.ask-chip:hover{border-color:rgba(111,197,90,.35);color:white}
-.ask-response{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(111,197,90,.20);border-radius:8px;background:rgba(18,53,36,.17);font-size:8px;line-height:1.55;color:#D8DEDB}.ask-response.show{display:block}.ask-response strong{color:var(--bright-green)}
+.ask-chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.ask-chip{padding:7px 9px;border:1px solid var(--border);border-radius:999px;background:rgba(13,13,13,.32);color:#C9D1CD;font-size:7px;font-weight:800}
+.ask-chip:hover{border-color:rgba(111,197,90,.35);color:white}
+.ask-response{display:none;margin-top:12px;padding:12px 13px;border:1px solid rgba(111,197,90,.20);border-radius:8px;background:rgba(18,53,36,.17);font-size:8px;line-height:1.55;color:#D8DEDB}
+.ask-response.show{display:block}
+.ask-response strong{color:var(--bright-green)}
 
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:26px}
 .metric{padding:16px;border:1px solid var(--border);border-radius:9px;background:var(--card)}
@@ -107,20 +113,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .panel-head{padding:17px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:14px}
 .panel-head h2{font-size:15px}
 .panel-head span,.panel-head a{color:var(--muted);font-size:8px}
-.system-body{padding:17px}
-.system-copy{color:var(--muted);font-size:9px;line-height:1.55;margin-bottom:14px}
-.element-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.element{
-  min-height:116px;padding:10px;position:relative;border:1px solid rgba(111,197,90,.22);
-  border-radius:7px;background:linear-gradient(180deg,rgba(18,53,36,.55),rgba(13,13,13,.86));
-  transition:.18s ease
-}
-.element:hover{transform:translateY(-2px);border-color:rgba(111,197,90,.5)}
-.element.live{border-color:rgba(111,197,90,.55);box-shadow:0 0 22px rgba(44,130,89,.08)}
-.element-num{color:#68736D;font-size:6px}
-.element-symbol{margin-top:9px;font-size:25px;font-weight:900;letter-spacing:-1px}
-.element-name{position:absolute;left:10px;right:10px;bottom:10px;color:#D3DAD6;font-size:7px;line-height:1.2;font-weight:700}
-.element-status{position:absolute;top:8px;right:8px;color:var(--bright-green);font-size:6px;font-weight:900;text-transform:uppercase}
 
 .attention-list{display:grid}
 .attention{
@@ -132,35 +124,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .attention strong{display:block;font-size:10px}
 .attention p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
 .attention-count{color:var(--bright-green);font-size:17px;font-weight:900}
-
-.section-title{margin:27px 0 12px;display:flex;justify-content:space-between;align-items:end}
-.section-title h2{font-size:20px;letter-spacing:-.7px}
-.section-title p{color:var(--muted);font-size:8px}
-.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.quick{
-  min-height:118px;padding:15px;border:1px solid var(--border);border-radius:9px;background:var(--card);
-  transition:.18s ease
-}
-.quick:hover{transform:translateY(-2px);border-color:rgba(111,197,90,.32)}
-.quick-icon{width:32px;height:32px;border-radius:6px;display:grid;place-items:center;background:var(--dark-green);color:var(--bright-green);font-size:10px;font-weight:900}
-.quick h3{font-size:11px;margin-top:12px}
-.quick p{color:var(--muted);font-size:8px;line-height:1.45;margin-top:4px}
-
-.dm-preview{
-  margin-top:27px;padding:22px;border:1px solid rgba(111,197,90,.30);border-radius:11px;
-  background:radial-gradient(circle at 85% 25%,rgba(44,130,89,.12),transparent 30%),linear-gradient(135deg,rgba(18,53,36,.32),rgba(13,13,13,.9))
-}
-.dm-top{display:grid;grid-template-columns:1.25fr .75fr;gap:25px;align-items:end}
-.dm-preview h2{font-size:27px;letter-spacing:-1px}
-.dm-preview p{margin-top:7px;color:var(--muted);font-size:9px;line-height:1.6;max-width:700px}
-.dm-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(111,197,90,.35);background:transparent;color:var(--white);font-size:9px;font-weight:900}
-.button.primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
-.dm-features{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:18px}
-.dm-feature{padding:11px;border:1px solid rgba(244,246,245,.07);border-radius:7px;background:rgba(13,13,13,.32)}
-.dm-feature strong{display:block;font-size:8px}
-.dm-feature span{display:block;margin-top:4px;color:var(--muted);font-size:7px;line-height:1.4}
-
 
 .task-list{display:grid}
 .task-row{
@@ -177,9 +140,11 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .task-row p{margin-top:3px;color:var(--muted);font-size:8px;line-height:1.4}
 .task-row > span{color:var(--bright-green);font-size:13px}
 
-.risk-module-grid{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px
-}
+.section-title{margin:27px 0 12px;display:flex;justify-content:space-between;align-items:end}
+.section-title h2{font-size:20px;letter-spacing:-.7px}
+.section-title p{color:var(--muted);font-size:8px}
+
+.risk-module-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
 .risk-module{
   min-height:150px;padding:13px;position:relative;border:1px solid rgba(111,197,90,.24);
   border-radius:8px;background:linear-gradient(180deg,rgba(18,53,36,.54),rgba(13,13,13,.9));
@@ -198,15 +163,17 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 .governance-summary h2{font-size:22px;letter-spacing:-.8px}
 .governance-summary p{margin-top:7px;color:var(--muted);font-size:8px;line-height:1.55;max-width:720px}
 .governance-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-
+.button{min-height:40px;padding:0 14px;border-radius:6px;border:1px solid rgba(111,197,90,.35);background:transparent;color:var(--white);font-size:9px;font-weight:900}
+.button.primary{background:var(--bright-green);color:#0B1A11;border-color:var(--bright-green)}
 
 .mobile-nav{display:none}
 
 @media(max-width:1100px){
   .app{grid-template-columns:205px minmax(0,1fr)}
-  .metrics,.quick-grid,.risk-module-grid{grid-template-columns:repeat(2,1fr)}
+  .metrics,.risk-module-grid{grid-template-columns:repeat(2,1fr)}
   .dashboard-grid{grid-template-columns:1fr}
-  .governance-summary{grid-template-columns:1fr}.governance-actions{justify-content:flex-start}
+  .governance-summary{grid-template-columns:1fr}
+  .governance-actions{justify-content:flex-start}
 }
 @media(max-width:760px){
   .app{display:block}
@@ -214,14 +181,11 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   .topbar{padding:0 16px}
   .top-search{display:none}
   .content{padding:25px 16px 90px}
-  .ask-box{grid-template-columns:1fr}.ask-box button{height:44px}
+  .ask-box{grid-template-columns:1fr}
+  .ask-box button{height:44px}
   .welcome{display:block}
   .blueprint-link{display:inline-block;margin-top:12px}
-  .metrics,.quick-grid,.risk-module-grid{grid-template-columns:1fr 1fr}
-  .element-grid{grid-template-columns:repeat(2,1fr)}
-  .dm-top{grid-template-columns:1fr}
-  .dm-actions{justify-content:flex-start}
-  .dm-features{grid-template-columns:1fr 1fr}
+  .metrics,.risk-module-grid{grid-template-columns:1fr 1fr}
   .mobile-nav{
     display:flex;position:fixed;left:0;right:0;bottom:0;height:62px;z-index:100;
     background:#08100D;border-top:1px solid var(--border);justify-content:space-around;align-items:center
@@ -266,7 +230,7 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
       <a class="nav-item" href="#"><span class="nav-symbol">IM</span>Incidents and Hazards</a>
       <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Actions</a>
       <a class="nav-item" href="documents.html"><span class="nav-symbol">Dm</span>Documents and Records</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Cm</span>Competency</a>
+      <a class="nav-item" href="competency.html"><span class="nav-symbol">Cm</span>Training and Competency</a>
       <a class="nav-item" href="#"><span class="nav-symbol">Ct</span>Contractors</a>
       <a class="nav-item" href="#"><span class="nav-symbol">Co</span>Compliance</a>
     </div>
@@ -301,7 +265,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   </div>
 </aside>
 
-
 <div class="workspace">
 
 <header class="topbar">
@@ -320,7 +283,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   </div>
 </header>
 
-
 <main class="content">
 
   <section class="welcome">
@@ -331,7 +293,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
     </div>
     <a class="blueprint-link" href="blueprint.html">Review IMS Blueprint →</a>
   </section>
-
 
   <section class="ask-hero">
     <div class="eyebrow">✦ Ask Certicium</div>
@@ -358,26 +319,22 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
       <strong class="warning">3</strong>
       <small>Across your IMS</small>
     </div>
-
     <div class="metric">
       <div class="metric-top"><span>Documents due</span><span>Dm</span></div>
       <strong class="warning">2</strong>
       <small>Review due in the next 30 days</small>
     </div>
-
     <div class="metric">
       <div class="metric-top"><span>Open high risks</span><span>Rm</span></div>
       <strong>1</strong>
       <small>Requires management attention</small>
     </div>
-
     <div class="metric">
       <div class="metric-top"><span>IMS health</span><span>Pm</span></div>
       <strong class="good">94%</strong>
       <small>Illustrative demo status</small>
     </div>
   </section>
-
 
   <section class="dashboard-grid">
 
@@ -388,7 +345,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
       </div>
 
       <div class="attention-list">
-
         <a class="attention" href="documents.html">
           <div class="attention-icon">Dm</div>
           <div>
@@ -425,18 +381,16 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
           <div class="attention-count">4</div>
         </a>
 
-        <a class="attention" href="#">
+        <a class="attention" href="competency.html">
           <div class="attention-icon">Cm</div>
           <div>
-            <strong>Competency expiries</strong>
+            <strong>Training and competency expiries</strong>
             <p>Training or evidence approaching expiry.</p>
           </div>
           <div class="attention-count">6</div>
         </a>
-
       </div>
     </div>
-
 
     <div class="panel">
       <div class="panel-head">
@@ -445,7 +399,6 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
       </div>
 
       <div class="task-list">
-
         <a class="task-row" href="#">
           <div class="task-icon">!</div>
           <div>
@@ -490,12 +443,10 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
           </div>
           <span>→</span>
         </a>
-
       </div>
     </div>
 
   </section>
-
 
   <div class="section-title" id="controls">
     <div>
@@ -506,57 +457,15 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
   </div>
 
   <section class="risk-module-grid">
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">01</span>
-      <div class="risk-symbol">Dr</div>
-      <div class="risk-name">Driving</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">02</span>
-      <div class="risk-symbol">Ct</div>
-      <div class="risk-name">Contractor Management</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">03</span>
-      <div class="risk-symbol">Ew</div>
-      <div class="risk-name">Electrical Works</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">04</span>
-      <div class="risk-symbol">Mh</div>
-      <div class="risk-name">Manual Handling</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">05</span>
-      <div class="risk-symbol">Wt</div>
-      <div class="risk-name">Working Near Traffic</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">06</span>
-      <div class="risk-symbol">Pe</div>
-      <div class="risk-name">Plant and Equipment</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">07</span>
-      <div class="risk-symbol">Ps</div>
-      <div class="risk-name">Psychosocial</div>
-    </a>
-
-    <a class="risk-module" href="#">
-      <span class="risk-num">08</span>
-      <div class="risk-symbol">Lw</div>
-      <div class="risk-name">Lone Working</div>
-    </a>
-
+    <a class="risk-module" href="#"><span class="risk-num">01</span><div class="risk-symbol">Dr</div><div class="risk-name">Driving</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">02</span><div class="risk-symbol">Ct</div><div class="risk-name">Contractor Management</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">03</span><div class="risk-symbol">Ew</div><div class="risk-name">Electrical Works</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">04</span><div class="risk-symbol">Mh</div><div class="risk-name">Manual Handling</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">05</span><div class="risk-symbol">Wt</div><div class="risk-name">Working Near Traffic</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">06</span><div class="risk-symbol">Pe</div><div class="risk-name">Plant and Equipment</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">07</span><div class="risk-symbol">Ps</div><div class="risk-name">Psychosocial</div></a>
+    <a class="risk-module" href="#"><span class="risk-num">08</span><div class="risk-symbol">Lw</div><div class="risk-name">Lone Working</div></a>
   </section>
-
 
   <section class="governance-summary" id="governance">
     <div>
@@ -567,27 +476,23 @@ h1{font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-2.5px}
 
     <div class="governance-actions">
       <a href="documents.html" class="button">Documents and Records</a>
+      <a href="competency.html" class="button">Training and Competency</a>
       <a href="#" class="button">Governance</a>
       <a href="#" class="button">Policies</a>
       <a href="#" class="button">Management System Map</a>
     </div>
   </section>
 
-
-
 </main>
-
 </div>
 </div>
-
 
 <nav class="mobile-nav">
   <a href="ims.html"><strong>⌂</strong>Home</a>
   <a href="documents.html"><strong>Dm</strong>Documents</a>
-  <a href="#"><strong>Rm</strong>Risks</a>
+  <a href="competency.html"><strong>Cm</strong>Training</a>
   <a href="#"><strong>✦</strong>Ask</a>
 </nav>
-
 
 <script>
 function readStorage(key){
@@ -623,24 +528,35 @@ function routeIMS(){
 
   let message="", action="", href="";
 
-  if(q.includes("document")||q.includes("procedure")||q.includes("policy")||q.includes("record")){
+  if(q.includes("training")||q.includes("competency")||q.includes("qualification")||q.includes("licence")||q.includes("license")){
+    message="I’ll take you to Training and Competency so you can check role requirements, training status, evidence and upcoming expiries.";
+    action="Open Training and Competency →";
+    href="competency.html";
+  }else if(q.includes("document")||q.includes("procedure")||q.includes("policy")||q.includes("record")){
     if(q.includes("create")||q.includes("new")||q.includes("draft")){
       message="I can help you create that. I’ll first check whether an existing controlled document should be revised before we create something new.";
-      action="Create with Document AI →"; href="new-document.html";
+      action="Create with Document AI →";
+      href="new-document.html";
     }else{
       message="I’ll search your current controlled documents and records for the most relevant approved content.";
-      action="Search Document Management →"; href="documents.html";
+      action="Search Document Management →";
+      href="documents.html";
     }
   }else if(q.includes("incident")||q.includes("near miss")||q.includes("hazard")||q.includes("event")){
-    message="This sounds like event reporting. I’ll take you to the Incident, Near Miss and Hazard workflow and use what you’ve told me to help pre-fill it."; action="Report an Event →";
+    message="This sounds like event reporting. I’ll take you to the Incident, Near Miss and Hazard workflow and use what you’ve told me to help pre-fill it.";
+    action="Report an Event →";
   }else if(q.includes("risk")||q.includes("assess")){
-    message="I can help assess this risk, check for similar existing risks and suggest causes, consequences and controls."; action="Open Risk Assessment →";
+    message="I can help assess this risk, check for similar existing risks and suggest causes, consequences and controls.";
+    action="Open Risk Assessment →";
   }else if(q.includes("inspect")||q.includes("audit")||q.includes("assurance")){
-    message="I’ll take you to the appropriate assurance activity and help identify the right inspection or audit."; action="Open Assurance →";
+    message="I’ll take you to the appropriate assurance activity and help identify the right inspection or audit.";
+    action="Open Assurance →";
   }else if(q.includes("compliance")||q.includes("obligation")||q.includes("legal")){
-    message="I’ll search the compliance register and connected IMS controls for the relevant obligation."; action="Open Compliance →";
+    message="I’ll search the compliance register and connected IMS controls for the relevant obligation.";
+    action="Open Compliance →";
   }else{
-    message="I’ll search across your documents, risks, controls, actions, forms, registers and assurance data, then either answer you or take you to the right workflow."; action="Search the IMS →";
+    message="I’ll search across your documents, risks, controls, actions, forms, registers and assurance data, then either answer you or take you to the right workflow.";
+    action="Search the IMS →";
   }
 
   response.classList.add("show");
@@ -660,13 +576,6 @@ function askIMS(){
 document.getElementById("imsAsk").addEventListener("keydown",function(event){
   if(event.key==="Enter")routeIMS();
 });
-
-function documentAI(){
-  alert(
-    "Document AI\\n\\n"+
-    "Next we will build this into the Document and Records Management module: draft, review, compare, change summary and impact analysis."
-  );
-}
 </script>
 
 </body>
