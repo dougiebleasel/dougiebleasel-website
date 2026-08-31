@@ -58,7 +58,7 @@ button{cursor:pointer}
 <div class="app">
 <aside class="sidebar">
   <div class="brand"><img src="certicium-logo.png" alt="Certicium logo"><div><strong>Certicium</strong><span>Build. Maintain. Embed.</span></div></div>
-  <div class="nav-scroll">
+  <div class="nav-scroll" id="certiciumNavScroll">
     <div class="nav-label">Workspace</div><a class="nav-item" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
     <div class="nav-label">Explore</div>
     <button class="nav-parent" type="button" data-nav-toggle="riskNav"><span class="nav-symbol">Rm</span>Risks<span class="chevron">›</span></button>
@@ -177,7 +177,63 @@ button{cursor:pointer}
 </div>
 
 <script>
-document.querySelectorAll("[data-nav-toggle]").forEach(btn=>btn.addEventListener("click",()=>{btn.classList.toggle("open");document.getElementById(btn.dataset.navToggle).classList.toggle("open")}));
+
+const CERTICIUM_NAV_STATE_KEY = "certiciumNavState";
+const CERTICIUM_NAV_SCROLL_KEY = "certiciumNavScrollTop";
+
+function readNavState(){
+  try{
+    return JSON.parse(localStorage.getItem(CERTICIUM_NAV_STATE_KEY) || "{}");
+  }catch(e){
+    return {};
+  }
+}
+
+function saveNavState(){
+  const state = {};
+  document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{
+    const target = document.getElementById(btn.dataset.navToggle);
+    state[btn.dataset.navToggle] = !!(target && target.classList.contains("open"));
+  });
+  localStorage.setItem(CERTICIUM_NAV_STATE_KEY, JSON.stringify(state));
+}
+
+function restoreNavState(){
+  const state = readNavState();
+  document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{
+    const target = document.getElementById(btn.dataset.navToggle);
+    if(!target) return;
+    if(Object.prototype.hasOwnProperty.call(state, btn.dataset.navToggle)){
+      const shouldOpen = !!state[btn.dataset.navToggle];
+      btn.classList.toggle("open", shouldOpen);
+      target.classList.toggle("open", shouldOpen);
+    }
+  });
+}
+
+document.querySelectorAll("[data-nav-toggle]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const target = document.getElementById(btn.dataset.navToggle);
+    if(!target) return;
+    const nextState = !target.classList.contains("open");
+    btn.classList.toggle("open", nextState);
+    target.classList.toggle("open", nextState);
+    saveNavState();
+  });
+});
+
+const certiciumNavScroll = document.getElementById("certiciumNavScroll");
+restoreNavState();
+
+if(certiciumNavScroll){
+  const savedScroll = Number(localStorage.getItem(CERTICIUM_NAV_SCROLL_KEY) || 0);
+  if(Number.isFinite(savedScroll)) certiciumNavScroll.scrollTop = savedScroll;
+  certiciumNavScroll.addEventListener("scroll",()=>{
+    localStorage.setItem(CERTICIUM_NAV_SCROLL_KEY, String(certiciumNavScroll.scrollTop));
+  }, {passive:true});
+}
+
+
 const modal=document.getElementById("actionModal");
 document.getElementById("newActionBtn").addEventListener("click",()=>modal.classList.add("show"));
 document.getElementById("closeModal").addEventListener("click",()=>modal.classList.remove("show"));
