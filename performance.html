@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certicium | Performance and Continuous Improvement</title>
+<style>
+:root{
+  --phthalo:#0B3D2E;--dark-green:#123524;--accent:#2C8259;--bright-green:#6FC55A;
+  --grey:#242526;--black:#0D0D0D;--white:#F4F6F5;--muted:#A9B2AE;
+  --border:rgba(244,246,245,.10);--card:#141715;--sidebar:#09110E;--warning:#E6C96B;
+  --danger:#D86E6E;--info:#6E9FD8;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--black);color:var(--white);font-family:Inter,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}
+.sidebar{background:var(--sidebar);border-right:1px solid var(--border);padding:18px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:11px;padding:0 4px 18px}
+.brand img{width:44px;height:44px;object-fit:contain}.brand strong{display:block;font-size:16px}.brand span{font-size:8px;color:var(--muted)}
+.nav-scroll{flex:1;overflow:auto}.nav-label{font-size:7px;color:#5F6A65;text-transform:uppercase;letter-spacing:1.2px;margin:16px 8px 6px}
+.nav-item,.nav-parent{min-height:40px;padding:0 10px;border-radius:7px;display:flex;align-items:center;gap:10px;color:#C8D0CC;font-size:11px;font-weight:800;width:100%;border:0;background:transparent;text-align:left}
+.nav-item:hover,.nav-parent:hover{background:rgba(44,130,89,.16);color:var(--white)}
+.nav-symbol{min-width:24px;font-size:9px;color:var(--bright-green);font-weight:900}.chevron{margin-left:auto;color:#66716B}
+.nav-parent.open .chevron{transform:rotate(90deg);color:var(--bright-green)}
+.nav-sub{display:none;padding:4px 0 3px 37px}.nav-sub.open{display:grid}
+.nav-sub a{min-height:30px;padding:0 8px;border-radius:5px;display:flex;align-items:center;color:#89958F;font-size:9px;font-weight:700;line-height:1.3}
+.nav-sub a:hover,.nav-sub a.active{background:rgba(44,130,89,.10);color:var(--white)}
+.ask-side{border:1px solid rgba(111,197,90,.20);background:linear-gradient(180deg,rgba(18,53,36,.65),rgba(13,13,13,.8));padding:12px;border-radius:9px}
+.ask-side strong{font-size:10px;color:var(--bright-green)}.ask-side p{font-size:8px;color:var(--muted);line-height:1.45;margin:6px 0 0}
+.workspace{min-width:0}.topbar{height:64px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;background:rgba(13,13,13,.96);z-index:20}
+.company{font-size:10px;font-weight:800}.ims-name{font-size:8px;color:var(--muted)}.top-actions{display:flex;align-items:center;gap:10px}
+.search{width:230px;background:#121512;border:1px solid var(--border);border-radius:7px;color:var(--white);padding:9px 11px;font-size:9px}.avatar{width:34px;height:34px;border-radius:50%;background:var(--phthalo);display:grid;place-items:center;font-size:9px;font-weight:900}
+.content{padding:24px;max-width:1500px;margin:auto}.eyebrow{font-size:7px;color:var(--bright-green);font-weight:900;letter-spacing:1.25px;text-transform:uppercase}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px}.page-head h1{font-size:25px;margin:5px 0 6px;letter-spacing:-1px}.page-head p{margin:0;color:var(--muted);font-size:9px}
+.primary{border:0;border-radius:7px;background:var(--bright-green);color:#10200F;padding:10px 14px;font-size:9px;font-weight:900}.secondary{border:1px solid var(--border);border-radius:7px;background:var(--card);color:var(--white);padding:9px 12px;font-size:9px;font-weight:800}
+.card{background:var(--card);border:1px solid var(--border);border-radius:9px}.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}.summary{padding:14px}.summary-label{font-size:7px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}.summary-value{font-size:25px;font-weight:900;margin-top:5px}.summary-foot{font-size:8px;color:var(--muted);margin-top:5px}
+.two-col{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(310px,.7fr);gap:12px;margin-bottom:16px}.panel{padding:16px}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:13px}.panel h2{margin:0;font-size:14px}
+.insight{background:linear-gradient(135deg,rgba(18,53,36,.75),rgba(20,23,21,.9));border:1px solid rgba(111,197,90,.20);padding:15px;border-radius:9px;margin-bottom:12px}.insight strong{display:block;color:var(--bright-green);font-size:10px}.insight p{font-size:9px;color:#CDD5D1;line-height:1.55;margin:8px 0 0}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.kpi-card{padding:13px;position:relative;overflow:hidden}.kpi-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.kpi-card h3{font-size:9px;margin:0;line-height:1.35}.kpi-owner{font-size:7px;color:var(--muted);margin-top:3px}
+.kpi-number{font-size:22px;font-weight:900;margin:14px 0 4px}.kpi-target{font-size:7px;color:var(--muted)}.progress{height:5px;background:#242925;border-radius:10px;overflow:hidden;margin-top:9px}.bar{height:100%;background:var(--bright-green);border-radius:10px}.bar.warn{background:var(--warning)}.bar.bad{background:var(--danger)}
+.status{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:900}.good{background:rgba(111,197,90,.10);color:var(--bright-green)}.watch{background:rgba(230,201,107,.12);color:var(--warning)}.off{background:rgba(216,110,110,.12);color:#E69292}
+.attention{display:grid;gap:0}.attention-item{padding:10px 0;border-bottom:1px solid var(--border);display:flex;gap:9px}.attention-item:last-child{border-bottom:0}.dot{width:8px;height:8px;border-radius:50%;margin-top:3px;background:var(--warning)}.dot.red{background:var(--danger)}.attention-item strong{font-size:9px;display:block}.attention-item span{font-size:8px;color:var(--muted);display:block;margin-top:3px;line-height:1.35}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tab{border:1px solid var(--border);background:transparent;color:var(--muted);padding:8px 11px;border-radius:6px;font-size:8px;font-weight:800}.tab.active{background:rgba(44,130,89,.17);border-color:rgba(111,197,90,.25);color:var(--bright-green)}
+.table-wrap{overflow:auto}.action-table{width:100%;border-collapse:collapse;min-width:950px}.action-table th{font-size:7px;color:#75817B;text-align:left;padding:9px;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.6px}.action-table td{font-size:8px;padding:10px 9px;border-bottom:1px solid rgba(244,246,245,.06)}.action-table tr:hover td{background:rgba(255,255,255,.015)}
+.source{display:inline-flex;padding:4px 7px;border-radius:999px;background:rgba(110,159,216,.10);color:#8CB1DD;font-size:7px;font-weight:900}.priority{display:inline-flex;padding:4px 7px;border-radius:999px;font-size:7px;font-weight:900}.high{background:rgba(216,110,110,.12);color:#E69292}.medium{background:rgba(230,201,107,.12);color:var(--warning)}.low{background:rgba(111,197,90,.10);color:var(--bright-green)}
+.flow{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-top:10px}.flow-step{padding:10px;border:1px solid var(--border);border-radius:7px;background:#111411}.flow-step b{display:block;color:var(--bright-green);font-size:9px}.flow-step span{display:block;color:var(--muted);font-size:7px;margin-top:4px;line-height:1.3}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:80;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.dialog{width:min(720px,100%);max-height:88vh;overflow:auto;background:#101310;border:1px solid var(--border);border-radius:12px}.modal-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid var(--border)}.modal-head h2{font-size:16px;margin:0}.close{width:34px;height:34px;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--white)}
+.form{padding:18px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field.full{grid-column:1/-1}.field label{display:block;font-size:7px;color:var(--muted);margin-bottom:5px;font-weight:800}.field input,.field select,.field textarea{width:100%;background:#0D0F0E;color:var(--white);border:1px solid var(--border);border-radius:7px;padding:10px;font-size:9px}.field textarea{min-height:90px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+@media(max-width:1100px){.summary-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:760px){.app{grid-template-columns:1fr}.sidebar{display:none}.topbar{padding:0 14px}.search{display:none}.content{padding:15px}.page-head{flex-direction:column}.summary-grid,.kpi-grid,.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.flow{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><img src="certicium-logo.png" alt="Certicium logo"><div><strong>Certicium</strong><span>Build. Maintain. Embed.</span></div></div>
+  <div class="nav-scroll">
+    <div class="nav-label">Workspace</div><a class="nav-item" href="ims.html"><span class="nav-symbol">⌂</span>Home</a>
+    <div class="nav-label">Explore</div>
+    <button class="nav-parent" type="button" data-nav-toggle="riskNav"><span class="nav-symbol">Rm</span>Risks<span class="chevron">›</span></button>
+    <div class="nav-sub" id="riskNav"><a href="#">Overall Risk Dashboard</a><a href="#">Driving</a><a href="#">Contractor Management</a><a href="#">Electrical Works</a><a href="#">Manual Handling</a><a href="#">Working Near Traffic</a><a href="#">Plant and Equipment</a><a href="#">Psychosocial</a><a href="#">Lone Working</a></div>
+    <button class="nav-parent open" type="button" data-nav-toggle="imsNav"><span class="nav-symbol">IMS</span>My IMS<span class="chevron">›</span></button>
+    <div class="nav-sub open" id="imsNav">
+      <a href="#">Governance Management</a>
+      <a href="documents.html">Document and Records Management</a>
+      <a href="#">Risk Management</a>
+      <a href="competency.html">Competency Management</a>
+      <a href="#">Consultation and Communication Management</a>
+      <a href="incidents.html">Incident, Near Miss and Hazard Management</a>
+      <a href="#">Audit, Inspection, Monitoring and Testing Management</a>
+      <a class="active" href="performance.html">Performance and Continuous Improvement Management</a>
+    </div>
+  </div>
+  <div class="ask-side"><strong>✦ Ask Certicium</strong><p>Ask about KPI performance, overdue actions, trends or improvement opportunities.</p></div>
+</aside>
+
+<main class="workspace">
+<header class="topbar">
+  <div><div class="company">Example Organisation</div><div class="ims-name">Integrated Management System</div></div>
+  <div class="top-actions"><input class="search" placeholder="Search Certicium..."><div class="avatar">DB</div></div>
+</header>
+
+<div class="content">
+  <div class="page-head">
+    <div><div class="eyebrow">My IMS · Performance and Improvement</div><h1>Performance and Continuous Improvement Management</h1><p>Measure IMS performance through KPIs and manage improvement actions arising from across the management system.</p></div>
+    <button class="primary" id="newActionBtn">+ Raise an Action</button>
+  </div>
+
+  <section class="summary-grid">
+    <div class="card summary"><div class="summary-label">KPIs on target</div><div class="summary-value">9 / 12</div><div class="summary-foot">75% currently meeting target</div></div>
+    <div class="card summary"><div class="summary-label">Open actions</div><div class="summary-value">24</div><div class="summary-foot">Across 7 IMS activity types</div></div>
+    <div class="card summary"><div class="summary-label">Overdue actions</div><div class="summary-value">6</div><div class="summary-foot">2 are high priority</div></div>
+    <div class="card summary"><div class="summary-label">Closed this month</div><div class="summary-value">17</div><div class="summary-foot">Median closure time: 11 days</div></div>
+  </section>
+
+  <section class="two-col">
+    <div>
+      <div class="insight"><strong>✦ Certicium Insight</strong><p>Three KPIs are below target. Two relate to overdue corrective actions and competency completion. Incident investigations are generating the highest number of improvement actions this quarter. Certicium recommends reviewing action ownership and due-date performance at the next management review.</p></div>
+      <div class="card panel">
+        <div class="panel-head"><div><div class="eyebrow">Performance</div><h2>IMS KPIs</h2></div><button class="secondary">Manage KPIs</button></div>
+        <div class="kpi-grid">
+          <div class="card kpi-card"><div class="kpi-top"><div><h3>Corrective actions closed on time</h3><div class="kpi-owner">Owner · Governance</div></div><span class="status off">Off target</span></div><div class="kpi-number">71%</div><div class="kpi-target">Target ≥ 90%</div><div class="progress"><div class="bar bad" style="width:71%"></div></div></div>
+          <div class="card kpi-card"><div class="kpi-top"><div><h3>Mandatory competency current</h3><div class="kpi-owner">Owner · People</div></div><span class="status watch">Watch</span></div><div class="kpi-number">92%</div><div class="kpi-target">Target ≥ 95%</div><div class="progress"><div class="bar warn" style="width:92%"></div></div></div>
+          <div class="card kpi-card"><div class="kpi-top"><div><h3>Incident investigations on time</h3><div class="kpi-owner">Owner · Operations</div></div><span class="status good">On target</span></div><div class="kpi-number">96%</div><div class="kpi-target">Target ≥ 90%</div><div class="progress"><div class="bar" style="width:96%"></div></div></div>
+          <div class="card kpi-card"><div class="kpi-top"><div><h3>Internal audit plan complete</h3><div class="kpi-owner">Owner · Assurance</div></div><span class="status good">On target</span></div><div class="kpi-number">83%</div><div class="kpi-target">Target ≥ 80% YTD</div><div class="progress"><div class="bar" style="width:83%"></div></div></div>
+          <div class="card kpi-card"><div class="kpi-top"><div><h3>Risk reviews completed</h3><div class="kpi-owner">Owner · Risk</div></div><span class="status good">On target</span></div><div class="kpi-number">94%</div><div class="kpi-target">Target ≥ 90%</div><div class="progress"><div class="bar" style="width:94%"></div></div></div>
+          <div class="card kpi-card"><div class="kpi-top"><div><h3>Worker consultation actions closed</h3><div class="kpi-owner">Owner · Leadership</div></div><span class="status off">Off target</span></div><div class="kpi-number">76%</div><div class="kpi-target">Target ≥ 90%</div><div class="progress"><div class="bar bad" style="width:76%"></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card panel">
+      <div class="panel-head"><h2>What needs my attention</h2></div>
+      <div class="attention">
+        <div class="attention-item"><span class="dot red"></span><div><strong>6 actions are overdue</strong><span>2 high-priority actions require escalation.</span></div></div>
+        <div class="attention-item"><span class="dot red"></span><div><strong>Corrective action KPI below target</strong><span>71% closed on time against a 90% target.</span></div></div>
+        <div class="attention-item"><span class="dot"></span><div><strong>Competency KPI trending down</strong><span>Three mandatory credentials expire this week.</span></div></div>
+        <div class="attention-item"><span class="dot"></span><div><strong>Repeated improvement theme detected</strong><span>Vehicle reversing controls appear in 4 separate actions.</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card panel" style="margin-bottom:16px">
+    <div class="panel-head"><div><div class="eyebrow">Continuous improvement</div><h2>One action system across the IMS</h2></div></div>
+    <div class="flow">
+      <div class="flow-step"><b>In</b><span>Incidents and investigations</span></div>
+      <div class="flow-step"><b>Au</b><span>Audits and inspections</span></div>
+      <div class="flow-step"><b>Rm</b><span>Risk reviews and controls</span></div>
+      <div class="flow-step"><b>Cc</b><span>Consultation and feedback</span></div>
+      <div class="flow-step"><b>Mr</b><span>Management review</span></div>
+      <div class="flow-step"><b>→ Ac</b><span>Central improvement action</span></div>
+    </div>
+  </section>
+
+  <section class="card panel">
+    <div class="panel-head"><div><div class="eyebrow">Continuous improvement register</div><h2>Actions arising from IMS activities</h2></div><button class="secondary">Export</button></div>
+    <div class="tabs"><button class="tab active">All Actions</button><button class="tab">My Actions</button><button class="tab">Overdue</button><button class="tab">High Priority</button><button class="tab">Completed</button></div>
+    <div class="table-wrap">
+      <table class="action-table">
+        <thead><tr><th>ID</th><th>Action</th><th>Source</th><th>Linked item</th><th>Owner</th><th>Priority</th><th>Due</th><th>Status</th></tr></thead>
+        <tbody id="actionRows">
+          <tr><td>ACT-0148</td><td>Review customer-site reversing controls</td><td><span class="source">Incident</span></td><td>INC-0261</td><td>J. Miller</td><td><span class="priority high">High</span></td><td>04 Sep 2026</td><td><span class="status watch">In progress</span></td></tr>
+          <tr><td>ACT-0146</td><td>Update contractor induction evidence requirements</td><td><span class="source">Audit</span></td><td>AUD-0084</td><td>S. Thompson</td><td><span class="priority medium">Medium</span></td><td>08 Sep 2026</td><td><span class="status watch">Open</span></td></tr>
+          <tr><td>ACT-0142</td><td>Replace damaged depot access ladder</td><td><span class="source">Hazard</span></td><td>HZ-0254</td><td>A. Roberts</td><td><span class="priority high">High</span></td><td>30 Aug 2026</td><td><span class="status off">Overdue</span></td></tr>
+          <tr><td>ACT-0139</td><td>Refresh working near traffic supervisor briefing</td><td><span class="source">Risk Review</span></td><td>RSK-0031</td><td>E. Chen</td><td><span class="priority medium">Medium</span></td><td>12 Sep 2026</td><td><span class="status watch">In progress</span></td></tr>
+          <tr><td>ACT-0136</td><td>Close employee feedback loop on roster changes</td><td><span class="source">Consultation</span></td><td>CON-0019</td><td>M. Jones</td><td><span class="priority low">Low</span></td><td>15 Sep 2026</td><td><span class="status good">Assigned</span></td></tr>
+          <tr><td>ACT-0131</td><td>Introduce monthly action ageing review</td><td><span class="source">Management Review</span></td><td>MR-0007</td><td>D. Brown</td><td><span class="priority medium">Medium</span></td><td>02 Sep 2026</td><td><span class="status watch">In progress</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+</main>
+</div>
+
+<div class="modal" id="actionModal">
+  <div class="dialog">
+    <div class="modal-head"><div><div class="eyebrow">Continuous improvement</div><h2>Raise an Action</h2></div><button class="close" id="closeModal">×</button></div>
+    <form class="form" id="actionForm">
+      <div class="form-grid">
+        <div class="field full"><label>Action required</label><textarea id="actionText" placeholder="What needs to be done?" required></textarea></div>
+        <div class="field"><label>Source IMS activity</label><select id="source"><option>Incident / Investigation</option><option>Audit</option><option>Inspection</option><option>Risk Review</option><option>Consultation</option><option>Management Review</option><option>KPI / Performance Review</option><option>Document Review</option><option>Other</option></select></div>
+        <div class="field"><label>Linked item</label><input id="linked" placeholder="e.g. INC-0261"></div>
+        <div class="field"><label>Owner</label><input id="owner" placeholder="Action owner" required></div>
+        <div class="field"><label>Priority</label><select id="priority"><option>Medium</option><option>High</option><option>Low</option></select></div>
+        <div class="field"><label>Due date</label><input id="due" type="date" required></div>
+        <div class="field"><label>Verification required?</label><select><option>Yes</option><option>No</option></select></div>
+        <div class="field full"><label>Success / closure criteria</label><textarea placeholder="What evidence will demonstrate that this action is effective and can be closed?"></textarea></div>
+      </div>
+      <div class="form-actions"><button type="button" class="secondary" id="cancelAction">Cancel</button><button type="submit" class="primary">Create Action</button></div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll("[data-nav-toggle]").forEach(btn=>btn.addEventListener("click",()=>{btn.classList.toggle("open");document.getElementById(btn.dataset.navToggle).classList.toggle("open")}));
+const modal=document.getElementById("actionModal");
+document.getElementById("newActionBtn").addEventListener("click",()=>modal.classList.add("show"));
+document.getElementById("closeModal").addEventListener("click",()=>modal.classList.remove("show"));
+document.getElementById("cancelAction").addEventListener("click",()=>modal.classList.remove("show"));
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show")});
+document.getElementById("actionForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const text=document.getElementById("actionText").value.trim();
+  const source=document.getElementById("source").value;
+  const linked=document.getElementById("linked").value.trim()||"—";
+  const owner=document.getElementById("owner").value.trim();
+  const priority=document.getElementById("priority").value;
+  const due=document.getElementById("due").value;
+  if(!text||!owner||!due)return;
+  const rows=document.getElementById("actionRows");
+  const id="ACT-"+String(149+rows.children.length).padStart(4,"0");
+  const cls=priority==="High"?"high":priority==="Low"?"low":"medium";
+  const tr=document.createElement("tr");
+  tr.innerHTML=`<td>${id}</td><td>${text}</td><td><span class="source">${source}</span></td><td>${linked}</td><td>${owner}</td><td><span class="priority ${cls}">${priority}</span></td><td>${due}</td><td><span class="status good">Assigned</span></td>`;
+  rows.prepend(tr);
+  e.target.reset();modal.classList.remove("show");
+});
+</script>
+</body>
+</html>
