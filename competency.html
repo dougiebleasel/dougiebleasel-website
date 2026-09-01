@@ -227,52 +227,44 @@ td:first-child,td:nth-child(2){background:var(--card)}
     </div>
 
     <div class="nav-group">
-      <div class="nav-label">Do</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">!</span>Report an Event</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Assess a Risk</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Start an Inspection</a>
-      <a class="nav-item" href="new-document.html"><span class="nav-symbol">Nd</span>Create a Document</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Raise an Action</a>
+      <div class="nav-label">Explore</div>
+
+      <button class="nav-parent open" type="button" data-nav-toggle="riskNav">
+      <span class="nav-symbol">Rm</span>Risks<span class="chevron">›</span>
+    </button>
+    <div class="nav-sub open" id="riskNav">
+      <a href="risk-areas.html">Risk Areas</a>
+      <a href="risk-areas.html?category=Driving">Driving</a>
+      <a href="risk-areas.html?category=Contractor%20Management">Contractor Management</a>
+      <a href="risk-areas.html?category=Electrical%20Works">Electrical Works</a>
+      <a href="risk-areas.html?category=Manual%20Handling">Manual Handling</a>
+      <a href="risk-areas.html?category=Working%20Near%20Traffic">Working Near Traffic</a>
+      <a href="risk-areas.html?category=Plant%20and%20Equipment">Plant and Equipment</a>
+      <a href="risk-areas.html?category=Psychosocial">Psychosocial</a>
+      <a href="risk-areas.html?category=Lone%20Working">Lone Working</a>
     </div>
 
-    <div class="nav-group">
-      <div class="nav-label">Manage</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Rm</span>Risks</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">IM</span>Incidents and Hazards</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ac</span>Actions</a>
-      <a class="nav-item" href="documents.html"><span class="nav-symbol">Dm</span>Documents and Records</a>
-      <a class="nav-item active" href="competency.html"><span class="nav-symbol">Cm</span>Training and Competency</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ct</span>Contractors</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Co</span>Compliance</a>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-label">Assure</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Au</span>Audits</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">In</span>Inspections</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Mt</span>Monitoring and Testing</a>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-label">Tools</div>
-      <a class="nav-item" href="#"><span class="nav-symbol">Fo</span>Forms</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Re</span>Registers</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Ai</span>AI Tools</a>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-label">My IMS</div>
-      <a class="nav-item" href="ims.html#governance"><span class="nav-symbol">Go</span>Governance</a>
-      <a class="nav-item" href="ims.html#controls"><span class="nav-symbol">Oc</span>Operational Controls</a>
-      <a class="nav-item" href="#"><span class="nav-symbol">Po</span>Policies</a>
-      <a class="nav-item" href="ims.html#governance"><span class="nav-symbol">Mp</span>Management System Map</a>
+      <button class="nav-parent" type="button" data-nav-toggle="imsNav">
+        <span class="nav-symbol">IMS</span>My IMS
+        <span class="chevron">›</span>
+      </button>
+      <div class="nav-sub" id="imsNav">
+        <a href="#">Governance Management</a>
+        <a href="documents.html">Document and Records Management</a>
+        <a href="risk.html">Risk Management</a>
+        <a href="competency.html" class="active">Competency Management</a>
+        <a href="#">Consultation and Communication Management</a>
+        <a href="incidents.html">Incident, Near Miss and Hazard Management</a>
+        <a href="#">Audit, Inspection, Monitoring and Testing Management</a>
+        <a href="performance.html">Performance and Continuous Improvement Management</a>
+      </div>
     </div>
   </div>
 
   <div class="ask-side">
     <strong>✦ Ask Certicium</strong>
-    <p>Ask about training gaps, role requirements, expired evidence or competency status.</p>
-    <button onclick="focusSearch()">Open Assistant</button>
+    <p>Your IMS assistant will understand your documents, risks, controls, actions and assurance data.</p>
+    <button onclick="askIMS()">Open Assistant</button>
   </div>
 </aside>
 
